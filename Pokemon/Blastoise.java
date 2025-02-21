@@ -29,6 +29,7 @@ public class Blastoise extends Pokemon {
         }
     }
     public void useHydroPump(Pokemon defender){
+        System.out.println("Cool");
         int random = randomNum(100); // random is a random int between 1-100.
         if (random <= 80){ // If random is less than or equal 80
             BPpower = 110;

@@ -60,16 +60,6 @@ public class GameLogic
     }
     public void useFlameThrower(Pokemon attacker, Pokemon defender)
     {
-        // attacker.damageCalc(this.SpA, 90, this.SpD); Pretty sure this needs finetuning
-        /**
-         * Thoughts leading up to are that I need to refer to a field from the attacker and the defender.
-         * Possible this needs to further be broken up, since I want to refer the SpA of the Attacker and SpDef of the
-         * defender. Would be nice if I could do something like this, but I could also just break it up.
-         * The core question here is how would I access the field of type Pokemon that is SpA and SpD or SpDef don't remember.
-         * Further question would be is if the extender value would "lock" or the value of the class extender that is would it
-         * be transfererred through the reference this methods parameter is refering, and thereafter when called as the
-         * extender class does the compiler understand this as what I'm referring to?
-         */
 
         DMGgiven = damageCalc(attacker.getSpA(), 90, defender.getSpDef());
         System.out.println(attacker.getPokeName() + " used flamethrower " + defender.getPokeName() + " takes damage and loses "

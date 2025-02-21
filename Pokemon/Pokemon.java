@@ -9,8 +9,12 @@ public class Pokemon {
     private int SpA;
     private int SpDef;
     private int Spd;
+    private String type1;
+    private String type2;
+    private int Level;
+    private int CritBoost;
 
-    public Pokemon(String name, int HealthPoints, int Attack, int Defence, int SpecialAttack, int SpecialDefence, int Speed) {
+    public Pokemon(String name, int HealthPoints, int Attack, int Defence, int SpecialAttack, int SpecialDefence, int Speed, String type1, String type2, int Level) {
         // Something that should refer to the extenders somehow
         // Maybe this whole code is meaningless, or I need to take args as to pass in stuff.
         // Yup needed to take args for all the values and assign them
@@ -21,6 +25,9 @@ public class Pokemon {
         this.SpA = SpecialAttack;
         this.SpDef = SpecialDefence;
         this.Spd = Speed;
+        this.type1 = type1;
+        this.type2 = type2;
+        this.Level = Level;
     }
 
     // Ville gerne kunne få adgang i metoder til alle disse fields
@@ -48,8 +55,23 @@ public class Pokemon {
     public int getSpd() {
         return this.Spd;
     }
+    public String getType() {
+        return this.type1 + (this.type2 == null || this.type2.isEmpty() ? "" : "/" + this.type2);
+    }
+    public String getType1() {
+        return this.type1;
+    }
+    public String getType2() {
+        return this.type2;
+    }
+    public int getLevel() {
+        return this.Level;
+    }
+    public int getCritBoost() {
+        return this.CritBoost;
+    }
 
-    // Jeg var nødt til at have at have en setter for at kunne ændre på HP værdien midt kamp
+    // I needed to have a setter to be able to change the HP value during battle
     public void setHP(int changeHP)
     {
         this.HP = changeHP;

@@ -3,14 +3,17 @@ public class Blastoise extends Pokemon {
     int DefenseOpp;
     int BPpower;
     int totalDMGSpA = (this.getSpA()-DefenseOpp/2) * BPpower/100;
+
+
     public Blastoise() {
-        super("Blastoise", 362, 291, 328, 295, 339, 280);
+        super("Blastoise", 362, 291, 328, 295, 339, 280, "Water", null, 100);
     }
+
+
     public void useWaterGun(Pokemon defender){
         BPpower = 40;
         DefenseOpp = defender.getSpDef();
         totalDMGSpA += totalDMGSpA/4; // Stab
-        System.out.println("Watergun what a chad!");
         System.out.println(this.getPokeName() + " used watergun " + defender.getPokeName() +
                 " takes damage and loses " + totalDMGSpA + " HP");
         defender.setHP(defender.getHP() - totalDMGSpA);
@@ -20,6 +23,8 @@ public class Blastoise extends Pokemon {
             System.out.println(defender.getPokeName() + " gets wet, " + defender.getPokeName() + " freezes and faints.");
         }
     }
+
+
     public void useIronDefense(){
         if (getDef() < 328 * 6) {
             this.setDef(getDef() + 328); // Den bør tage den nuværende Def stat og pluse den med base
@@ -34,7 +39,8 @@ public class Blastoise extends Pokemon {
         if (random <= 80){ // If random is less than or equal 80
             BPpower = 110;
             DefenseOpp = defender.getSpDef();
-            totalDMGSpA += totalDMGSpA/4; // Stab
+            totalDMGSpA *= 1 / 4; // Stab
+            totalDMGSpA = totalDMGSpA * 1 / 4;
             System.out.println(this.getPokeName() + " used hydro pump " + defender.getPokeName() +
                     " takes damage and loses " + totalDMGSpA + " HP");
             defender.setHP(defender.getHP() - totalDMGSpA);

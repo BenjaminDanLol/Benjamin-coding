@@ -1,4 +1,3 @@
-import java.util.Random;
 public class Pokemon {
     // may need to be changed to public, so extenders have access or getters
     // are enough
@@ -14,7 +13,8 @@ public class Pokemon {
     private int Level;
     private int CritBoost;
 
-    public Pokemon(String name, int HealthPoints, int Attack, int Defence, int SpecialAttack, int SpecialDefence, int Speed, String type1, String type2, int Level) {
+    public Pokemon(String name, int HealthPoints, int Attack, int Defence, 
+    int SpecialAttack, int SpecialDefence, int Speed, String type1, String type2, int Level) {
         // Something that should refer to the extenders somehow
         // Maybe this whole code is meaningless, or I need to take args as to pass in stuff.
         // Yup needed to take args for all the values and assign them
@@ -86,9 +86,5 @@ public class Pokemon {
         else {
             return false;
         }
-    }
-    public int randomNum(int range){
-        Random random = new Random();
-        return random.nextInt(range) + 1; // Returns a random number from 1 - int range.
     }
 }

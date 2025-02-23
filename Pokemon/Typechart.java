@@ -1,82 +1,113 @@
 public class Typechart {
 
     private double attackerTypeMultiplier = 1;
-    // Actual strings
-    // What they are mapped to
-    private String[][] Typing;
-    // Lavede en array ved ikke om det er nødvendigt, men hvis jeg vil "mappe" bliver den nok brugbar.
+    private String[] OppTypings;
+    private final String moveTyping;
 
     // Til constructeren, kan man bare indsætte i parametrene nogle getters af specifikke pokemon Objekter.
-    public Typechart(String pubP1Type1, String pubP1Type2, String pubP2Type1, String pubP2Type2){
-    // making it into an array, maybe used later.
-    this.Typing = new String[][]{
-        {"player1", "player2"},
-        {pubP1Type1, pubP1Type2, pubP2Type1, pubP2Type2}};
-        /**
-         * Here (Typing[0][0] + Typing[1][0] would display player1's typing.
-         * Whilst (Typing[0][1] + Typing[1][2]) would display player2's typing
-         * Deepseek recommended to make Typing an instance variable as to have it in scope for calcX
-         * Prob unneccasary but sure. ie. adding the new String storing it as object
-        */
+    public Typechart(String moveTyping, String OppType1, String OppType2){
+    // Bør være klassens moveTyping og ikke parameterens moveTyping.
+    this.moveTyping = moveTyping;
+    this.OppTypings = new String[]
+        {OppType1, OppType2};
     }
+    public boolean DetectTyping(String whichType){
+        // Loop så mange typings modstanderen har, og check om et af deres typings == typen af whichType
+        // Hvis et af dem er det samme, stop metoden og returnere true, i alle andre tilfælde returnere false.
+        for (int i = 0, n = OppTypings.length; i < n; i++) { 
+            if (whichType.equals(OppTypings[i])) { 
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean ShouldApplyStatus(){
+    /*
+     * I virkeligheden skal if statmenten have en && metode som tjekker om angrebet ramte (accuracy).
+     * && nok også en der ser om procent chancen gik af.
+     */
+        if (DetectTyping(moveTyping)){
+            switch (moveTyping) {
+                case("Fire"):
+                return false;
+                case("Grass"):
+                return false;
+                case("Electric"):
+                return false;
+                case("Ice"):
+                return false;
+                case("Poison"):
+                return false;
+            }
+        }
+        if (moveTyping.equals("Electric") && DetectTyping("Ground")){
+            return false;
+        }
+        else if(moveTyping.equals("Poison") && DetectTyping("Steel")){
+            return false;
+        }
+        // Could also check for abilities here
+        return true;
+    }
+        // Hvis der kommer flere typings, kunne jeg loope igennem Arrayen her
     public void calcX(){
     // Victim type 1
-    attackerTypeMultiplier *= NormalCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= NormalCalc(moveTyping, OppTypings[0]);
     // Victim's type 2
-    attackerTypeMultiplier *= NormalCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= NormalCalc(moveTyping, OppTypings[1]);
     // Same thing for calc of other types
-    attackerTypeMultiplier *= FireCalc((Typing[1][0]), (Typing[1][2]));
-    attackerTypeMultiplier *= FireCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= FireCalc(moveTyping, OppTypings[0]);
+    attackerTypeMultiplier *= FireCalc(moveTyping, OppTypings[1]);
 
-    attackerTypeMultiplier *= WaterCalc((Typing[1][0]), (Typing[1][2]));
-    attackerTypeMultiplier *= WaterCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= WaterCalc(moveTyping, OppTypings[0]);
+    attackerTypeMultiplier *= WaterCalc(moveTyping, OppTypings[1]);
 
-    attackerTypeMultiplier *= GrassCalc((Typing[1][0]), (Typing[1][2]));
-    attackerTypeMultiplier *= GrassCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= GrassCalc(moveTyping, OppTypings[0]);
+    attackerTypeMultiplier *= GrassCalc(moveTyping, OppTypings[1]);
 
-    attackerTypeMultiplier *= ElectricCalc((Typing[1][0]), (Typing[1][2]));
-    attackerTypeMultiplier *= ElectricCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= ElectricCalc(moveTyping, OppTypings[0]);
+    attackerTypeMultiplier *= ElectricCalc(moveTyping, OppTypings[1]);
 
-    attackerTypeMultiplier *= IceCalc((Typing[1][0]), (Typing[1][2]));
-    attackerTypeMultiplier *= IceCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= IceCalc(moveTyping, OppTypings[0]);
+    attackerTypeMultiplier *= IceCalc(moveTyping, OppTypings[1]);
 
-    attackerTypeMultiplier *= FightingCalc((Typing[1][0]), (Typing[1][2]));
-    attackerTypeMultiplier *= FightingCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= FightingCalc(moveTyping, OppTypings[0]);
+    attackerTypeMultiplier *= FightingCalc(moveTyping, OppTypings[1]);
 
-    attackerTypeMultiplier *= PoisonCalc((Typing[1][0]), (Typing[1][2]));
-    attackerTypeMultiplier *= PoisonCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= PoisonCalc(moveTyping, OppTypings[0]);
+    attackerTypeMultiplier *= PoisonCalc(moveTyping, OppTypings[1]);
 
-    attackerTypeMultiplier *= GroundCalc((Typing[1][0]), (Typing[1][2]));
-    attackerTypeMultiplier *= GroundCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= GroundCalc(moveTyping, OppTypings[0]);
+    attackerTypeMultiplier *= GroundCalc(moveTyping, OppTypings[1]);
 
-    attackerTypeMultiplier *= FlyingCalc((Typing[1][0]), (Typing[1][2]));
-    attackerTypeMultiplier *= FlyingCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= FlyingCalc(moveTyping, OppTypings[0]);
+    attackerTypeMultiplier *= FlyingCalc(moveTyping, OppTypings[1]);
 
-    attackerTypeMultiplier *= PsychicCalc((Typing[1][0]), (Typing[1][2]));
-    attackerTypeMultiplier *= PsychicCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= PsychicCalc(moveTyping, OppTypings[0]);
+    attackerTypeMultiplier *= PsychicCalc(moveTyping, OppTypings[1]);
 
-    attackerTypeMultiplier *= BugCalc((Typing[1][0]), (Typing[1][2]));
-    attackerTypeMultiplier *= BugCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= BugCalc(moveTyping, OppTypings[0]);
+    attackerTypeMultiplier *= BugCalc(moveTyping, OppTypings[1]);
 
-    attackerTypeMultiplier *= RockCalc((Typing[1][0]), (Typing[1][2]));
-    attackerTypeMultiplier *= RockCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= RockCalc(moveTyping, OppTypings[0]);
+    attackerTypeMultiplier *= RockCalc(moveTyping, OppTypings[1]);
 
-    attackerTypeMultiplier *= GhostCalc((Typing[1][0]), (Typing[1][2]));
-    attackerTypeMultiplier *= GhostCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= GhostCalc(moveTyping, OppTypings[0]);
+    attackerTypeMultiplier *= GhostCalc(moveTyping, OppTypings[1]);
 
-    attackerTypeMultiplier *= DragonCalc((Typing[1][0]), (Typing[1][2]));
-    attackerTypeMultiplier *= DragonCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= DragonCalc(moveTyping, OppTypings[0]);
+    attackerTypeMultiplier *= DragonCalc(moveTyping, OppTypings[1]);
 
-    attackerTypeMultiplier *= DarkCalc((Typing[1][0]), (Typing[1][2]));
-    attackerTypeMultiplier *= DarkCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= DarkCalc(moveTyping, OppTypings[0]);
+    attackerTypeMultiplier *= DarkCalc(moveTyping, OppTypings[1]);
 
-    attackerTypeMultiplier *= SteelCalc((Typing[1][0]), (Typing[1][2]));
-    attackerTypeMultiplier *= SteelCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= SteelCalc(moveTyping, OppTypings[0]);
+    attackerTypeMultiplier *= SteelCalc(moveTyping, OppTypings[1]);
 
-    attackerTypeMultiplier *= FairyCalc((Typing[1][0]), (Typing[1][2]));
-    attackerTypeMultiplier *= FairyCalc((Typing[1][0]), (Typing[1][3]));
+    attackerTypeMultiplier *= FairyCalc(moveTyping, OppTypings[0]);
+    attackerTypeMultiplier *= FairyCalc(moveTyping, OppTypings[1]);
     }
-
     public double FireCalc(String moveType, String oneofVictimTypes){
     // Doing the exact same as in NormalCalc
         if (!moveType.equals("Fire")){
@@ -110,7 +141,7 @@ public class Typechart {
         // Methods like these may or may not breakdown if type = null, since whilst using switch
     // functions, the compilers "default" function doesn't read null.
     public double NormalCalc(String moveType, String oneofVictimType){
-        // Give no meaningful modifier value if not Normal attack
+        // Give no meaningful modifier value if not Normal attack and exit.
         if (!moveType.equals("Normal"))
         {
             return 1;

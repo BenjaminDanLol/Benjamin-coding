@@ -1,4 +1,6 @@
-
+/**
+Low key easy at lave alt til en kommentar. Bare kigge ovenfor denne linje, og den nederste
+linje i koden.
 public class GameLogic
 {
     private int DMGgiven;
@@ -73,3 +75,4 @@ public class GameLogic
         }
     }
 }
+*/

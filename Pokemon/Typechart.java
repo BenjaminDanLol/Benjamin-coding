@@ -1,55 +1,526 @@
 public class Typechart {
-    private double attackerTypeMultiplier = 1;
 
-    public void NormalCalc(String type, String typeVictim){
-    // Check if type is Normal
-        if (!type.equals("Normal")) {
-        return;
-        }
-    // Here are all opposing weaknesses of Normal.
-    if (typeVictim.equals("Rock")) {
-    attackerTypeMultiplier *= 0.5;
-        }
-    
-    else if (typeVictim.equals("Steel")) {
-    attackerTypeMultiplier *= 0.5;
-        }
-    // And an immunity
-    else if (typeVictim.equals("Ghost")) {
-    attackerTypeMultiplier = 0.0;
-        }
+    private double attackerTypeMultiplier = 1;
+    // Actual strings
+    // What they are mapped to
+    private String[][] Typing;
+    // Lavede en array ved ikke om det er nødvendigt, men hvis jeg vil "mappe" bliver den nok brugbar.
+
+    // Til constructeren, kan man bare indsætte i parametrene nogle getters af specifikke pokemon Objekter.
+    public Typechart(String pubP1Type1, String pubP1Type2, String pubP2Type1, String pubP2Type2){
+    // making it into an array, maybe used later.
+    this.Typing = new String[][]{
+        {"player1", "player2"},
+        {pubP1Type1, pubP1Type2, pubP2Type1, pubP2Type2}};
+        /**
+         * Here (Typing[0][0] + Typing[1][0] would display player1's typing.
+         * Whilst (Typing[0][1] + Typing[1][2]) would display player2's typing
+         * Deepseek recommended to make Typing an instance variable as to have it in scope for calcX
+         * Prob unneccasary but sure. ie. adding the new String storing it as object
+        */
+    }
+    public void calcX(){
+    // Victim type 1
+    attackerTypeMultiplier *= NormalCalc((Typing[1][0]), (Typing[1][2]));
+    // Victim's type 2
+    attackerTypeMultiplier *= NormalCalc((Typing[1][0]), (Typing[1][3]));
+    // Same thing for calc of other types
+    attackerTypeMultiplier *= FireCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= FireCalc((Typing[1][0]), (Typing[1][3]));
+
+    attackerTypeMultiplier *= WaterCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= WaterCalc((Typing[1][0]), (Typing[1][3]));
+
+    attackerTypeMultiplier *= GrassCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= GrassCalc((Typing[1][0]), (Typing[1][3]));
+
+    attackerTypeMultiplier *= ElectricCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= ElectricCalc((Typing[1][0]), (Typing[1][3]));
+
+    attackerTypeMultiplier *= IceCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= IceCalc((Typing[1][0]), (Typing[1][3]));
+
+    attackerTypeMultiplier *= FightingCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= FightingCalc((Typing[1][0]), (Typing[1][3]));
+
+    attackerTypeMultiplier *= PoisonCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= PoisonCalc((Typing[1][0]), (Typing[1][3]));
+
+    attackerTypeMultiplier *= GroundCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= GroundCalc((Typing[1][0]), (Typing[1][3]));
+
+    attackerTypeMultiplier *= FlyingCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= FlyingCalc((Typing[1][0]), (Typing[1][3]));
+
+    attackerTypeMultiplier *= PsychicCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= PsychicCalc((Typing[1][0]), (Typing[1][3]));
+
+    attackerTypeMultiplier *= BugCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= BugCalc((Typing[1][0]), (Typing[1][3]));
+
+    attackerTypeMultiplier *= RockCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= RockCalc((Typing[1][0]), (Typing[1][3]));
+
+    attackerTypeMultiplier *= GhostCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= GhostCalc((Typing[1][0]), (Typing[1][3]));
+
+    attackerTypeMultiplier *= DragonCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= DragonCalc((Typing[1][0]), (Typing[1][3]));
+
+    attackerTypeMultiplier *= DarkCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= DarkCalc((Typing[1][0]), (Typing[1][3]));
+
+    attackerTypeMultiplier *= SteelCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= SteelCalc((Typing[1][0]), (Typing[1][3]));
+
+    attackerTypeMultiplier *= FairyCalc((Typing[1][0]), (Typing[1][2]));
+    attackerTypeMultiplier *= FairyCalc((Typing[1][0]), (Typing[1][3]));
     }
 
-    public void FireCalc(String type, String typeVictim){
+    public double FireCalc(String moveType, String oneofVictimTypes){
     // Doing the exact same as in NormalCalc
-        if (!type.equals("Fire")){
-        return;
+        if (!moveType.equals("Fire")){
+        return 1;
         }
     // Super effective:
-    if (typeVictim.equals("Grass")){
-    attackerTypeMultiplier *= 2;
+    else {
+        switch (oneofVictimTypes)  {
+            case ("Grass"): // Grass
+            return 2;
+            case ("Ice"): // Ice
+            return 2;
+            case ("Bug"): // Bug
+            return 2;
+            case ("Steel"): // Steel
+            return 2;
+    // Not very effective:
+            case ("Fire"): // Fire
+            return 0.5;
+            case ("Water"): // Water
+            return 0.5;
+            case ("Rock"): // Rock
+            return 0.5;
+            case ("Dragon"): // Dragon
+            return 0.5;
+        default:
+        return 1;
+            }
         }
-    else if (typeVictim.equals("Ice")){
-    attackerTypeMultiplier *= 2;
+    }
+        // Methods like these may or may not breakdown if type = null, since whilst using switch
+    // functions, the compilers "default" function doesn't read null.
+    public double NormalCalc(String moveType, String oneofVictimType){
+        // Give no meaningful modifier value if not Normal attack
+        if (!moveType.equals("Normal"))
+        {
+            return 1;
         }
-    else if (typeVictim.equals("Bug")){
-    attackerTypeMultiplier *= 2;
+        else {
+        // Here are all opposing weaknesses of Normal.
+        switch (oneofVictimType) {
+            case ("Rock"): // Rock
+            return 0.5;
+            case ("Ghost"): // Ghost Immune
+            return 0.0;
+            case ("Steel"): // Steel
+            return 0.5;
+            default:
+            // Denne her bør ikke trigger, men compileren ønsker at alle paths er taget højde for
+            return 1;
+            }
         }
-    else if (typeVictim.equals("Steel")){
-    attackerTypeMultiplier *= 2;
+    }
+    public double WaterCalc(String moveType, String oneofVictimType){
+        if (!moveType.equals("Water")){
+            return 1;
         }
-    // Weaknesses;
-    else if (typeVictim.equals("Fire")){
-    attackerTypeMultiplier *= 0.5;
+        else {
+        switch (oneofVictimType) {
+            case ("Fire"):
+            return 2;
+            case ("Water"):
+            return 0.5;
+            case ("Grass"):
+            return 0.5;
+            case ("Poison"):
+            return 2;
+            case ("Rock"):
+            return 2;
+            case ("Dragon"):
+            return 0.5;
+        default:
+        return 1;
+            }
         }
-    else if (typeVictim.equals("Water")){
-    attackerTypeMultiplier *= 0.5; 
+    }
+    public double GrassCalc(String moveType, String oneofVictimType){
+        if (!moveType.equals("Grass")){
+            return 1;
         }
-    else if (typeVictim.equals("Rock")){
-    attackerTypeMultiplier *= 0.5;
+        else {
+        switch (oneofVictimType) {
+            case ("Fire"):
+            return 0.5;
+            case ("Water"):
+            return 2;
+            case ("Grass"):
+            return 0.5;
+            case ("Poison"):
+            return 0.5;
+            case ("Ground"):
+            return 2;
+            case ("Flying"):
+            return 0.5;
+            case ("Bug"):
+            return 0.5;
+            case ("Rock"):
+            return 2;
+            case ("Dragon"):
+            return 0.5;
+            case ("Steel"):
+            return 0.5;
+        default:
+        return 1;
+            }
         }
-    else if (typeVictim.equals("Dragon")){
-    attackerTypeMultiplier *= 0.5;
+    }
+    public double ElectricCalc(String moveType, String oneofVictimType){
+        if (!moveType.equals("Electric")){
+            return 1;
+        }
+        else {
+            switch (oneofVictimType){
+                case ("Water"):
+                return 2;
+                case ("Grass"):
+                return 0.5;
+                case ("Electric"):
+                return 0.5;
+                case ("Ground"):
+                return 0.0;
+                case ("Flying"):
+                return 2;
+                case ("Dragon"):
+                return 0.5;
+            default:
+            return 1;
+            }
+        }
+    }
+    public double IceCalc(String moveType, String oneofVictimType){
+        if (!moveType.equals("Ice")){
+            return 1;
+        }
+        else {
+            switch (oneofVictimType){
+                case ("Fire"):
+                return 0.5;
+                case("Water"):
+                return 0.5;
+                case("Grass"):
+                return 2;
+                case("Ice"):
+                return 0.5;
+                case("Ground"):
+                return 2;
+                case("Flying"):
+                return 2;
+                case("Dragon"):
+                return 2;
+                case("Steel"):
+                return 0.5;
+            default:
+            return 1;
+            }
+        }
+    }
+    public double FightingCalc(String moveType, String oneofVictimType){
+        if (!moveType.equals("Fighting")){
+            return 1;
+        }
+        else {
+            switch (oneofVictimType){
+                case("Normal"):
+                return 2;
+                case("Ice"):
+                return 2;
+                case("Poison"):
+                return 0.5;
+                case("Flying"):
+                return 0.5;
+                case("Psychic"):
+                return 0.5;
+                case("Bug"):
+                return 0.5;
+                case("Rock"):
+                return 2;
+                case("Ghost"):
+                return 0;
+                case("Dark"):
+                return 2;
+                case("Steel"):
+                return 2;
+                case("Fairy"):
+                return 0.5;
+            default:
+            return 1;
+            }
+        }
+    }
+    public double PoisonCalc(String moveType, String oneofVictimType){
+        if (!moveType.equals("Poison")){
+            return 1;
+        }
+        else {
+            switch (oneofVictimType){
+                case("Grass"):
+                return 2;
+                case("Poison"):
+                return 0.5;
+                case("Ground"):
+                return 0.5;
+                case("Rock"):
+                return 0.5;
+                case("Ghost"):
+                return 0.5;
+                case("Steel"):
+                return 0;
+                case("Fairy"):
+                return 2;
+            default:
+            return 1;
+            }
+        }
+    }
+    public double GroundCalc(String moveType, String oneofVictimType){
+        if (!moveType.equals("Ground")){
+            return 1;
+        }
+        else {
+            switch (oneofVictimType){
+                case("Fire"):
+                return 2;
+                case("Grass"):
+                return 0.5;
+                case("Electric"):
+                return 2;
+                case("Poison"):
+                return 2;
+                case("Flying"):
+                return 0;
+                case("Bug"):
+                return 0.5;
+                case("Rock"):
+                return 2;
+                case("Steel"):
+                return 2;
+            default:
+            return 1;
+            }
+        }
+    }
+    public double FlyingCalc(String moveType, String oneofVictimType){
+        if (!moveType.equals("Flying")){
+            return 1;
+        }
+        else {
+            switch (oneofVictimType){
+                case("Grass"):
+                return 2;
+                case("Electric"):
+                return 0.5;
+                case("Fighting"):
+                return 2;
+                case("Bug"):
+                return 2;
+                case("Rock"):
+                return 0.5;
+                case("Steel"):
+                return 0.5;
+            default:
+            return 1;
+            }
+        }
+    }
+    public double PsychicCalc(String moveType, String oneofVictimType){
+        if (!moveType.equals("Psychic")){
+            return 1;
+        }
+        else {
+            switch (oneofVictimType){
+                case("Fighting"):
+                return 2;
+                case("Poison"):
+                return 2;
+                case("Psychic"):
+                return 0.5;
+                case("Dark"):
+                return 0.0;
+                case("Steel"):
+                return 0.5;
+            default:
+            return 1;
+            }
+        }
+    }
+    public double BugCalc(String moveType, String oneofVictimType){
+        if (!moveType.equals("Bug")){
+            return 1;
+        }
+        else {
+            switch (oneofVictimType){
+                case("Fire"):
+                return 0.5;
+                case("Grass"):
+                return 2;
+                case("Fighting"):
+                return 0.5;
+                case("Poison"):
+                return 0.5;
+                case("Flying"):
+                return 0.5;
+                case("Psychic"):
+                return 2;
+                case("Ghost"):
+                return 0.5;
+                case("Dark"):
+                return 2;
+                case("Steel"):
+                return 0.5;
+                case("Fairy"):
+                return 0.5;
+            default:
+            return 1;
+            }
+        }
+    }
+    public double RockCalc(String moveType, String oneofVictimType){
+        if (!moveType.equals("Rock")){
+            return 1;
+        }
+        else {
+            switch (oneofVictimType){
+                case("Fire"):
+                return 2;
+                case("Ice"):
+                return 2;
+                case("Fighting"):
+                return 0.5;
+                case("Ground"):
+                return 0.5;
+                case("Flying"):
+                return 2;
+                case("Bug"):
+                return 2;
+                case("Steel"):
+                return 0.5;
+            default:
+            return 1;
+            }
+        }
+    }
+    public double GhostCalc(String moveType, String oneofVictimType){
+        if (!moveType.equals("Ghost")){
+            return 1;
+        }
+        else {
+            switch (oneofVictimType){
+                case("Normal"):
+                return 0.0;
+                case("Psychic"):
+                return 2;
+                case("Ghost"):
+                return 2;
+                case("Dark"):
+                return 0.5;
+            default:
+            return 1;
+            }
+        }
+    }
+    public double DragonCalc(String moveType, String oneofVictimType){
+        if (!moveType.equals("Dragon")){
+            return 1;
+        }
+        else {
+            switch (oneofVictimType){
+                case("Dragon"):
+                return 2;
+                case("Steel"):
+                return 0.5;
+                case("Fairy"):
+                return 0.0;
+            default:
+            return 1;
+            }
+        }
+    }
+    public double DarkCalc(String moveType, String oneofVictimType){
+        if (!moveType.equals("Dark")){
+            return 1;
+        }
+        else {
+            switch (oneofVictimType){
+                case("Fighting"):
+                return 0.5;
+                case("Psychic"):
+                return 2;
+                case("Ghost"):
+                return 2;
+                case("Dark"):
+                return 0.5;
+                case("Fairy"):
+                return 0.5;
+            default:
+            return 1;
+            }
+        }
+    }
+    public double SteelCalc(String moveType, String oneofVictimType){
+        if (!moveType.equals("Steel")){
+            return 1;
+        }
+        else {
+            switch (oneofVictimType){
+                case("Fire"):
+                return 0.5;
+                case("Water"):
+                return 0.5;
+                case("Electric"):
+                return 0.5;
+                case("Ice"):
+                return 2;
+                case("Rock"):
+                return 2;
+                case("Steel"):
+                return 0.5;
+                case("Fairy"):
+                return 2;
+            default:
+            return 1;
+            }
+        }
+    }
+    public double FairyCalc(String moveType, String oneofVictimType){
+        if (!moveType.equals("Fairy")){
+            return 1;
+        }
+        else {
+            switch (oneofVictimType){
+                case("Fire"):
+                return 0.5;
+                case("Fighting"):
+                return 2;
+                case("Poison"):
+                return 0.5;
+                case("Dragon"):
+                return 2;
+                case("Dark"):
+                return 2;
+                case("Steel"):
+            default:
+            return 1;
+            }
         }
     }
 }
@@ -60,7 +531,7 @@ public class Typechart {
              * Den inderste skal loope fra n's plads (yderste loops boolean og int) af type 1 og type 2
              * muligvis skal de laves om til en array.
              * Men hvad er if statementen bare (Type[n] == Type[n])?
-             * Nej, det er super effective derfor skal jeg lave (Type[n] == Type[3] eller tegn Type[n] Type[4])
+             * Nej, det er super effective derfor skal jeg lave (Type[n] == Type[3] eller-tegn Type[n] Type[4])
              * Her er det vigtigt at forstå Type[3] og Type[4] skal mappe, til den Type, Type[n] er super effective
              * imod. 
              * Denne metode virker, men det virker lidt lige meget, da jeg er nødt til at have en metode/funktion

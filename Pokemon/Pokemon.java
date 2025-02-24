@@ -59,9 +59,8 @@ public class Pokemon {
         return this.type1 + (this.type2 == null || this.type2.isEmpty() ? "" : "/" + this.type2);
     }
 
-    public String[] getTypeArray(Pokemon thisPokemon) {
-        
-        
+    public String[] getTypeArray() {
+        return new String[] {getType1(), (getType2() == null ? "" : getType2())};
     }
 
     public String getType1() {

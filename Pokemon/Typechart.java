@@ -2,12 +2,10 @@ public class Typechart {
 
     private double attackerTypeMultiplier = 1;
     private String[] OppTypings;
-    private String moveTyping;
 
     // Til constructeren, kan man bare indsætte i parametrene nogle getters af specifikke pokemon Objekter.
-    public Typechart(Move thisMove, String OppType1, String OppType2){
+    public Typechart(String OppType1, String OppType2){
     // Bør være klassens moveTyping og ikke parameterens moveTyping.
-        this.moveTyping = thisMove.getType();
         this.OppTypings = new String[] {
             OppType1, OppType2
             };
@@ -26,10 +24,17 @@ public class Typechart {
     }
     //FRA OLIVER ****** VI KAN EVT TJEKKE LÆNGDEN AF INDIVIDUELLE STRINGS (TYPES) FOR AT SKIPPE NOGET AF SØGNINGEN
 
-    
+    public boolean detectType(Pokemon thisPokemon, String moveType){
+
+        for (int i = 0, n = thisPokemon.getTypeArray().length; i < n; i++) {
+            if (moveType.equals(thisPokemon.getTypeArray()[i])) {
+                return true;
+        }
+        return false;
+    }
 
 
-    public boolean ShouldApplyStatus(){
+    public boolean ShouldApplyStatus(String moveTyping){
     /*
      * I virkeligheden skal if statmenten have en && metode som tjekker om angrebet ramte (accuracy).
      * && nok også en der ser om procent chancen gik af.

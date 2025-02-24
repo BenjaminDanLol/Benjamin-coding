@@ -7,45 +7,56 @@ public class Move {
     private int Accuracy;
     private boolean isSpecial;
     private boolean hasPriority;
-    private boolean isStab;
     private final double Stab = 0.25;
     // if (isStab) { Power *= Stab;}
     private String type;
-    private String typeReq;
+    private String learnReq;
     private boolean inflictsStatus;
     private String StatusType;
     private int StatusChance;
     private int critChance;
     private final double critMultiplier = 2.0;
-    private int Damage = 0;
+    private double Damage = 0.0;
     private double randomMultiplier;
     private Typechart typechart;
 
     public Move(String Name, int Pwr, int Acc, boolean isSpcl, boolean hasPrio, boolean isStab, 
-    String type, String typeReq, boolean inflictsStatus, String StatusType, int StatusChance, 
+    String type, String learnReq, boolean inflictsStatus, String StatusType, int StatusChance, 
     int critChance) {
         this.Power = Pwr;
         this.Accuracy = Acc;
         this.isSpecial = isSpcl;
         this.hasPriority = hasPrio;
-        this.isStab = isStab; 
-        //stab should be a string called stabReq to check for the type of the user
         this.type = type;
-        this.typeReq = typeReq;
+        this.learnReq = learnReq;
         this.StatusChance = StatusChance;
         this.critChance = critChance;
-        this.randomMultiplier = (217 + randomNum(38) / 255);
-
     }
 
     public void performMove(Pokemon user, Pokemon victim) {
-        Typechart typechart = new Typechart(user, victim);
+        typechart = new Typechart(victim.getType1(), victim.getType2());
+        randomMultiplier = (217.0 + randomNum(38) / 255.0);
         // Mangler CritBoost metode logik (skal implementeres i Move som setter Boost parametre i Pokemon)
         if (this.Power > 0) {
             // Gen 1 dmg calc https://imgur.com/a/KxmCrKD
-            int Damage = (((((2 * user.getLevel() * (this.critChance <= 6 * user.getCritBoost() ? critMultiplier : 1)) / 5 + 2) * this.Power * 
-            (this.isSpecial == true ? user.getSpA() / victim.getSpDef() : user.getAtt() / victim.getSpDef()))+100) / 50) * (this.isStab == true ? 1.5 : 1)
-            * (typechart.detectType(getType(), user) ? 1.5 : 1) * )
+            double DamageNoRand = (((((2 * user.getLevel() * (this.critChance <= 6 * user.getCritBoost() 
+            ? critMultiplier : 1.0)) / 5.0 + 2.0) * this.Power 
+            * (this.isSpecial == true ? user.getSpA() / victim.getSpDef() : user.getAtt() 
+            / victim.getSpDef()))+100) / 50.0) 
+
+            //determine whether STAB because of user type 1
+            * (typechart.detectType(user, getType()) == true ? 1.5 : 1.0) 
+            // Her kunne, 1 ex parameteren være variabel i, for vi har en loop der kører x gange og booleanen er baseret på længden af Type arrayen
+            //calculate type advantage for victim type 1
+            * (typechart.detectType(victim, getType()) == true ? 1.5 : 1.0);
+            
+            if (DamageNoRand > 1.0) {
+            Damage = DamageNoRand * (randomMultiplier );
+            }
+            else if (DamageNoRand != 0.0) {
+                Damage = 1.0;
+                }
+            }
             /* 
              Mig ikke forstå (Move.getRandomMultiplier() != 1.0 ? getRandomMultiplier() : 1.0) hvorfor ikke virke?
              Fordi jeg vil gerne have en unik randomMultiplier for alle instanser af Move.
@@ -57,7 +68,7 @@ public class Move {
     }
 
     public String getType() {
-        return this.type;
+        return type;
     }
 
     public double getRandomMultiplier(){
@@ -68,15 +79,5 @@ public class Move {
         return random.nextInt(range) + 1; // Returns a random number from 1 - int range.
     }
 
-    public boolean DetectType(Pokemon thisPokemon){
-        // Loop så mange typings modstanderen har, og check om et af deres typings == typen af whichType
-        // Hvis et af dem er det samme, stop metoden og returnere true, i alle andre tilfælde returnere false.
-        for (int i = 0, n = OppTypings.length; i < n; i++) { 
-            if (getType().equals(thisPokemon.getTypeArray()[i])) { 
-                return true;
-            }
-        }
-        return false;
-    }
 
 }

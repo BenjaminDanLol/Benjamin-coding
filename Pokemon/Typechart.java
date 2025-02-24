@@ -66,59 +66,26 @@ public class Typechart {
 
         // Hvis der kommer flere typings, kunne jeg loope igennem Arrayen her
     public void calcX(String moveTyping){
-    attackerTypeMultiplier *= NormalCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= NormalCalc(moveTyping, VictimTypings[1]);
-
-    attackerTypeMultiplier *= FireCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= FireCalc(moveTyping, VictimTypings[1]);
-
-    attackerTypeMultiplier *= WaterCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= WaterCalc(moveTyping, VictimTypings[1]);
-
-    attackerTypeMultiplier *= GrassCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= GrassCalc(moveTyping, VictimTypings[1]);
-
-    attackerTypeMultiplier *= ElectricCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= ElectricCalc(moveTyping, VictimTypings[1]);
-
-    attackerTypeMultiplier *= IceCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= IceCalc(moveTyping, VictimTypings[1]);
-
-    attackerTypeMultiplier *= FightingCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= FightingCalc(moveTyping, VictimTypings[1]);
-
-    attackerTypeMultiplier *= PoisonCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= PoisonCalc(moveTyping, VictimTypings[1]);
-
-    attackerTypeMultiplier *= GroundCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= GroundCalc(moveTyping, VictimTypings[1]);
-
-    attackerTypeMultiplier *= FlyingCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= FlyingCalc(moveTyping, VictimTypings[1]);
-
-    attackerTypeMultiplier *= PsychicCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= PsychicCalc(moveTyping, VictimTypings[1]);
-
-    attackerTypeMultiplier *= BugCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= BugCalc(moveTyping, VictimTypings[1]);
-
-    attackerTypeMultiplier *= RockCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= RockCalc(moveTyping, VictimTypings[1]);
-
-    attackerTypeMultiplier *= GhostCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= GhostCalc(moveTyping, VictimTypings[1]);
-
-    attackerTypeMultiplier *= DragonCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= DragonCalc(moveTyping, VictimTypings[1]);
-
-    attackerTypeMultiplier *= DarkCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= DarkCalc(moveTyping, VictimTypings[1]);
-
-    attackerTypeMultiplier *= SteelCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= SteelCalc(moveTyping, VictimTypings[1]);
-
-    attackerTypeMultiplier *= FairyCalc(moveTyping, VictimTypings[0]);
-    attackerTypeMultiplier *= FairyCalc(moveTyping, VictimTypings[1]);
+        for (int i = 0; i > 2; i++){    
+    attackerTypeMultiplier *= NormalCalc(moveTyping, VictimTypings[i]);
+    attackerTypeMultiplier *= FireCalc(moveTyping, VictimTypings[i]);
+    attackerTypeMultiplier *= WaterCalc(moveTyping, VictimTypings[i]);
+    attackerTypeMultiplier *= GrassCalc(moveTyping, VictimTypings[i]);
+    attackerTypeMultiplier *= ElectricCalc(moveTyping, VictimTypings[i]);
+    attackerTypeMultiplier *= IceCalc(moveTyping, VictimTypings[i]);
+    attackerTypeMultiplier *= FightingCalc(moveTyping, VictimTypings[i]);
+    attackerTypeMultiplier *= PoisonCalc(moveTyping, VictimTypings[i]);
+    attackerTypeMultiplier *= GroundCalc(moveTyping, VictimTypings[i]);
+    attackerTypeMultiplier *= FlyingCalc(moveTyping, VictimTypings[i]);
+    attackerTypeMultiplier *= PsychicCalc(moveTyping, VictimTypings[i]);
+    attackerTypeMultiplier *= BugCalc(moveTyping, VictimTypings[i]);
+    attackerTypeMultiplier *= RockCalc(moveTyping, VictimTypings[i]);
+    attackerTypeMultiplier *= GhostCalc(moveTyping, VictimTypings[i]);
+    attackerTypeMultiplier *= DragonCalc(moveTyping, VictimTypings[i]);
+    attackerTypeMultiplier *= DarkCalc(moveTyping, VictimTypings[i]);
+    attackerTypeMultiplier *= SteelCalc(moveTyping, VictimTypings[i]);
+    attackerTypeMultiplier *= FairyCalc(moveTyping, VictimTypings[i]);
+        }
     }
 
 

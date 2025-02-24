@@ -14,7 +14,7 @@ public class Pokemon {
     private int CritBoost;
 
     public Pokemon(String name, int HealthPoints, int Attack, int Defence, 
-    int SpecialAttack, int SpecialDefence, int Speed, String type1, String type2, int Level) {
+    int SpecialAttack, int SpecialDefence, int Speed, int Level, String... type) {
         // Something that should refer to the extenders somehow
         // Maybe this whole code is meaningless, or I need to take args as to pass in stuff.
         // Yup needed to take args for all the values and assign them
@@ -25,8 +25,8 @@ public class Pokemon {
         this.SpA = SpecialAttack;
         this.SpDef = SpecialDefence;
         this.Spd = Speed;
-        this.type1 = type1;
-        this.type2 = type2;
+        this.type1 = type[0];
+        this.type2 = type[1];
         this.Level = Level;
     }
 

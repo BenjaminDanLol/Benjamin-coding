@@ -26,7 +26,7 @@ public class Move {
         this.Accuracy = Acc;
         this.isSpecial = isSpcl;
         this.hasPriority = hasPrio;
-        this.isStab = isStab; //stab should be a string called stabReq to check for the type of the pokemon
+        this.isStab = isStab; //stab should be a string called stabReq to check for the type of the user
         this.type = type;
         this.typeReq = typeReq;
         this.StatusChance = StatusChance;
@@ -41,7 +41,7 @@ public class Move {
             // Gen 1 dmg calc
             int Damage = (((((2 * user.getLevel() * (this.critChance <= 6 * user.getCritBoost() ? critMultiplier : 1)) / 5 + 2) * this.Power * 
             (this.isSpecial == true ? user.getSpA() / victim.getSpDef() : user.getAtt() / victim.getSpDef()))+100) / 50) * (this.isStab == true ? 1.5 : 1)
-            * 
+            * (Typechart.DetectTyping() ? 1.5 : 1) * )
             /* 
              Mig ikke forstå (Move.getRandomMultiplier() != 1.0 ? getRandomMultiplier() : 1.0) hvorfor ikke virke?
              Fordi jeg vil gerne have en unik randomMultiplier for alle instanser af Move.
@@ -52,10 +52,14 @@ public class Move {
         }
     }
 
+    public String getType() {
+        return this.type;
+    }
+
     public double getRandomMultiplier(){
         return randomMultiplier;
     }
-    public int randomNum(int range){
+    public double randomNum(int range){
         Random random = new Random();
         return random.nextInt(range) + 1; // Returns a random number from 1 - int range.
     }

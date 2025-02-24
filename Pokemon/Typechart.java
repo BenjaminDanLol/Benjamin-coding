@@ -5,12 +5,15 @@ public class Typechart {
     private final String moveTyping;
 
     // Til constructeren, kan man bare indsætte i parametrene nogle getters af specifikke pokemon Objekter.
-    public Typechart(String moveTyping, String OppType1, String OppType2){
+    public Typechart(Move thisMove, String OppType1, String OppType2){
     // Bør være klassens moveTyping og ikke parameterens moveTyping.
-    this.moveTyping = moveTyping;
-    this.OppTypings = new String[]
-        {OppType1, OppType2};
+        this.moveTyping = thisMove.getType();
+        this.OppTypings = new String[] {
+            OppType1, OppType2
+            };
     }
+
+
     public boolean DetectTyping(String whichType){
         // Loop så mange typings modstanderen har, og check om et af deres typings == typen af whichType
         // Hvis et af dem er det samme, stop metoden og returnere true, i alle andre tilfælde returnere false.
@@ -21,6 +24,8 @@ public class Typechart {
         }
         return false;
     }
+    //FRA OLIVER ****** VI KAN EVT TJEKKE LÆNGDEN AF INDIVIDUELLE STRINGS (TYPES) FOR AT SKIPPE NOGET AF SØGNINGEN
+
 
     public boolean ShouldApplyStatus(){
     /*
@@ -50,9 +55,12 @@ public class Typechart {
         // Could also check for abilities here
         return true;
     }
+
+
         // Hvis der kommer flere typings, kunne jeg loope igennem Arrayen her
     public void calcX(){
     // Victim type 1
+    if (arraylist)
     attackerTypeMultiplier *= NormalCalc(moveTyping, OppTypings[0]);
     // Victim's type 2
     attackerTypeMultiplier *= NormalCalc(moveTyping, OppTypings[1]);
@@ -108,6 +116,8 @@ public class Typechart {
     attackerTypeMultiplier *= FairyCalc(moveTyping, OppTypings[0]);
     attackerTypeMultiplier *= FairyCalc(moveTyping, OppTypings[1]);
     }
+
+
     public double FireCalc(String moveType, String oneofVictimTypes){
     // Doing the exact same as in NormalCalc
         if (!moveType.equals("Fire")){
@@ -138,6 +148,8 @@ public class Typechart {
             }
         }
     }
+
+
         // Methods like these may or may not breakdown if type = null, since whilst using switch
     // functions, the compilers "default" function doesn't read null.
     public double NormalCalc(String moveType, String oneofVictimType){
@@ -161,6 +173,8 @@ public class Typechart {
             }
         }
     }
+
+
     public double WaterCalc(String moveType, String oneofVictimType){
         if (!moveType.equals("Water")){
             return 1;
@@ -184,6 +198,8 @@ public class Typechart {
             }
         }
     }
+
+
     public double GrassCalc(String moveType, String oneofVictimType){
         if (!moveType.equals("Grass")){
             return 1;
@@ -215,6 +231,8 @@ public class Typechart {
             }
         }
     }
+
+
     public double ElectricCalc(String moveType, String oneofVictimType){
         if (!moveType.equals("Electric")){
             return 1;
@@ -238,6 +256,8 @@ public class Typechart {
             }
         }
     }
+
+
     public double IceCalc(String moveType, String oneofVictimType){
         if (!moveType.equals("Ice")){
             return 1;
@@ -265,6 +285,8 @@ public class Typechart {
             }
         }
     }
+
+
     public double FightingCalc(String moveType, String oneofVictimType){
         if (!moveType.equals("Fighting")){
             return 1;
@@ -298,6 +320,8 @@ public class Typechart {
             }
         }
     }
+
+
     public double PoisonCalc(String moveType, String oneofVictimType){
         if (!moveType.equals("Poison")){
             return 1;
@@ -323,6 +347,8 @@ public class Typechart {
             }
         }
     }
+
+
     public double GroundCalc(String moveType, String oneofVictimType){
         if (!moveType.equals("Ground")){
             return 1;
@@ -350,6 +376,8 @@ public class Typechart {
             }
         }
     }
+
+
     public double FlyingCalc(String moveType, String oneofVictimType){
         if (!moveType.equals("Flying")){
             return 1;
@@ -373,6 +401,8 @@ public class Typechart {
             }
         }
     }
+
+
     public double PsychicCalc(String moveType, String oneofVictimType){
         if (!moveType.equals("Psychic")){
             return 1;
@@ -394,6 +424,8 @@ public class Typechart {
             }
         }
     }
+
+
     public double BugCalc(String moveType, String oneofVictimType){
         if (!moveType.equals("Bug")){
             return 1;
@@ -425,6 +457,8 @@ public class Typechart {
             }
         }
     }
+
+
     public double RockCalc(String moveType, String oneofVictimType){
         if (!moveType.equals("Rock")){
             return 1;
@@ -450,6 +484,8 @@ public class Typechart {
             }
         }
     }
+
+
     public double GhostCalc(String moveType, String oneofVictimType){
         if (!moveType.equals("Ghost")){
             return 1;
@@ -469,6 +505,8 @@ public class Typechart {
             }
         }
     }
+
+
     public double DragonCalc(String moveType, String oneofVictimType){
         if (!moveType.equals("Dragon")){
             return 1;
@@ -486,6 +524,8 @@ public class Typechart {
             }
         }
     }
+
+
     public double DarkCalc(String moveType, String oneofVictimType){
         if (!moveType.equals("Dark")){
             return 1;
@@ -507,6 +547,8 @@ public class Typechart {
             }
         }
     }
+
+
     public double SteelCalc(String moveType, String oneofVictimType){
         if (!moveType.equals("Steel")){
             return 1;
@@ -532,6 +574,8 @@ public class Typechart {
             }
         }
     }
+
+
     public double FairyCalc(String moveType, String oneofVictimType){
         if (!moveType.equals("Fairy")){
             return 1;

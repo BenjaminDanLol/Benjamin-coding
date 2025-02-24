@@ -84,8 +84,8 @@ public class Pokemon {
     public void setDef(int changeDef){
         this.Def = changeDef;
     }
-    public boolean checkFainted(Pokemon current) { // check the Pokemon in parameter if their HP 0 or less
-        if (current.getHP() <= 0) {
+    public boolean checkFainted() { // check the Pokemon in parameter if their HP 0 or less
+        if (getHP() <= 0) {
             return true;
         }
         else {

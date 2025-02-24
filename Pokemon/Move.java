@@ -21,13 +21,13 @@ public class Move{
     private Typechart typechart;
 
     public Move(String Name, int Pwr, int Acc, boolean isSpcl, boolean hasPrio, 
-    String type, String learnReq, boolean inflictsStatus, String StatusType, int StatusChance, 
+    String _type, String learnReq, boolean inflictsStatus, String StatusType, int StatusChance, 
     int critChance) {
         this.Power = Pwr;
         this.Accuracy = Acc;
         this.isSpecial = isSpcl;
         this.hasPriority = hasPrio;
-        this.type = type;
+        this.type = _type;
         this.learnReq = learnReq;
         this.StatusChance = StatusChance;
         this.critChance = critChance;
@@ -44,13 +44,11 @@ public class Move{
             * (this.isSpecial == true ? user.getSpA() / victim.getSpDef() : user.getAtt() 
             / victim.getSpDef()))+100) / 50.0) 
 
-            //determine whether STAB because of user type 1
-            * (typechart.detectType(user, user.getType1()) == true ? 1.5 : 1.0) *
-            (typechart.detectType(user, user.getType2()) == true ? 1.5 : 1.0) *
-            // Før: * (typechart.detectType(victim, getType()) == true ? 1.5 : 1.0);
-            // Efter
-            (typechart.detectType(victim, victim.getType1()) == true ? 1.5 : 1.0) *
-            (typechart.detectType(victim, victim.getType2()) == true ? 1.5 : 1.0);
+            //determine whether STAB because of user types
+            * (typechart.detectType(user, getType()) == true ? 1.5 : 1.0)
+
+            //determine type advantage/disadvantage of victim type 1 and 2 ()
+            * (typechart.detectType(victim, getType()) == true ? 1.5 : 1.0);
         }
             if (DamageNoRand > 1.0) {
             Damage = DamageNoRand * (randomMultiplier);
@@ -59,6 +57,10 @@ public class Move{
                 Damage = 1.0;
                 }
         }
+    
+
+    public String getType() {
+        return type;
     }
 
     public double getRandomMultiplier(){
@@ -75,3 +77,4 @@ public class Move{
         }
         return false;
     }
+}

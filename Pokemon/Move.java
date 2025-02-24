@@ -34,12 +34,13 @@ public class Move{
     }
 
     public void performMove(Pokemon user, Pokemon victim) {
+        double DamageNoRand = 0.0;
         typechart = new Typechart(victim.getType1(), victim.getType2());
         randomMultiplier = (217.0 + randomNum(38) / 255.0);
         // Mangler CritBoost metode logik (skal implementeres i Move som setter Boost parametre i Pokemon)
         if (this.Power > 0) {
             // Gen 1 dmg calc https://imgur.com/a/KxmCrKD
-            double DamageNoRand = (((((2 * user.getLevel() * (this.critChance <= 6 * user.getCritBoost() 
+            DamageNoRand = (((((2 * user.getLevel() * (this.critChance <= 6 * user.getCritBoost() 
             ? critMultiplier : 1.0)) / 5.0 + 2.0) * this.Power 
             * (this.isSpecial == true ? user.getSpA() / victim.getSpDef() : user.getAtt() 
             / victim.getSpDef()))+100) / 50.0) 
@@ -47,7 +48,7 @@ public class Move{
             //determine whether STAB because of user types
             * (typechart.detectType(user, getType()) == true ? 1.5 : 1.0)
 
-            //determine type advantage/disadvantage of victim type 1 and 2 ()
+            //determine type advantage/disadvantage of victim type 1 and 2 (CALC X SKAL IMPLEMENTERES HER)
             * (typechart.detectType(victim, getType()) == true ? 1.5 : 1.0);
         }
             if (DamageNoRand > 1.0) {
@@ -61,6 +62,10 @@ public class Move{
 
     public String getType() {
         return type;
+    }
+
+    public String getName() {
+        return Name;
     }
 
     public double getRandomMultiplier(){

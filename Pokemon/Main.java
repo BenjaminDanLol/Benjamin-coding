@@ -2,10 +2,12 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Flamethrower f1 = new Flamethrower();
         int a = 0;
         Charizard p1 = new Charizard();
         Venusaur p2 = new Venusaur();
         
+
         Scanner myObj = new Scanner(System.in);
         String moveChoice;
         do {
@@ -16,7 +18,7 @@ public class Main {
         moveChoice = myObj.nextLine();
         
             switch (moveChoice) {
-            case ("1"), ("2"), ("3"), ("4"):
+            case (f1.getName()), ("2"), ("3"), ("4"):
                 System.out.println(p1.getPokeName() + " uses " + moveChoice);
                 a += 1;
                 break;

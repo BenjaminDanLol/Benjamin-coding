@@ -20,7 +20,7 @@ public class Move{
     private double randomMultiplier;
     private Typechart typechart;
 
-    public Move(String Name, int Pwr, int Acc, boolean isSpcl, boolean hasPrio, boolean isStab, 
+    public Move(String Name, int Pwr, int Acc, boolean isSpcl, boolean hasPrio, 
     String type, String learnReq, boolean inflictsStatus, String StatusType, int StatusChance, 
     int critChance) {
         this.Power = Pwr;

@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Move {
+public class Move{
 
     private String Name;
     private int Power;
@@ -57,13 +57,6 @@ public class Move {
                 Damage = 1.0;
                 }
             }
-            /* 
-             Mig ikke forstå (Move.getRandomMultiplier() != 1.0 ? getRandomMultiplier() : 1.0) hvorfor ikke virke?
-             Fordi jeg vil gerne have en unik randomMultiplier for alle instanser af Move.
-
-             type chart missing (skal implementeres som en class med separate metoder for hver type, for immune, effektiv, normal og ueffektiv)
-             if (Damage <1 && victim.getType1MODIFIER * victim.getType2MODIFIER > 0)
-            */ 
         }
     }
 
@@ -78,6 +71,10 @@ public class Move {
         Random random = new Random();
         return random.nextInt(range) + 1; // Returns a random number from 1 - int range.
     }
-
-
-}
+    public boolean randomSuccess(int range) {
+        double localRange = randomNum(100);
+        if (range > localRange) {
+            return true;
+        }
+        return false;
+    }

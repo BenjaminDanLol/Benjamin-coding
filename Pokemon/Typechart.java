@@ -65,7 +65,7 @@ public class Typechart {
 
 
         // Hvis der kommer flere typings, kunne jeg loope igennem Arrayen her
-    public void calcX(String moveTyping){
+    public double calcX(String moveTyping){
         /*
          * Hvis der er
          */
@@ -89,6 +89,7 @@ public class Typechart {
     attackerTypeMultiplier *= SteelCalc(moveTyping, VictimTypings[i]);
     attackerTypeMultiplier *= FairyCalc(moveTyping, VictimTypings[i]);
         }
+        return attackerTypeMultiplier;
     }
 
 

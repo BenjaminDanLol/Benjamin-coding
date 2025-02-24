@@ -37,19 +37,22 @@ public class Move{
         double DamageNoRand = 0.0;
         typechart = new Typechart(victim.getType1(), victim.getType2());
         randomMultiplier = (217.0 + randomNum(38) / 255.0);
-        // Mangler CritBoost metode logik (skal implementeres i Move som setter Boost parametre i Pokemon)
+        // Critboosten er indbygget i logikken efter isCrit som er bare baseret på CritChance.
         if (this.Power > 0) {
             // Gen 1 dmg calc https://imgur.com/a/KxmCrKD
-            DamageNoRand = (((((2 * user.getLevel() * (this.critChance <= 6 * user.getCritBoost() 
-            ? critMultiplier : 1.0)) / 5.0 + 2.0) * this.Power 
+            DamageNoRand = (((2 * user.getLevel() * (isCrit() == true ? 2 : 1) / 5.0 + 2.0) * this.Power 
+            // Her mangler vi noget som checker at hvis critChance er true så skal den tage unmodified Def/SpDef
             * (this.isSpecial == true ? user.getSpA() / victim.getSpDef() : user.getAtt() 
-            / victim.getSpDef()))+100) / 50.0) 
+            / victim.getDef()))+100) / 50.0
 
             //determine whether STAB because of user types
             * (typechart.detectType(user, getType()) == true ? 1.5 : 1.0)
 
             //determine type advantage/disadvantage of victim type 1 and 2 (CALC X SKAL IMPLEMENTERES HER)
-            * (typechart.detectType(victim, getType()) == true ? 1.5 : 1.0);
+            * (typechart.detectType(victim, getType()) == true ? 1.5 : 1.0)
+
+            // Det her bør checke for typeChart's array af sig selv og sammenlign det hele med move typen
+            * (typechart.calcX(type));
         }
             if (DamageNoRand > 1.0) {
             Damage = DamageNoRand * (randomMultiplier);
@@ -59,6 +62,9 @@ public class Move{
                 }
         }
     
+    public boolean isCrit(){
+        return (randomSuccess(critChance));
+    }
 
     public String getType() {
         return type;

@@ -34,6 +34,11 @@ public class Move{
     }
 
     public void performMove(Pokemon user, Pokemon victim) {
+        // Checker først og fremmest om det er en miss eller ej, return er det samme som at exit.
+        if (randomSuccess(Accuracy)) {
+            System.out.println("You miss!");
+            return;
+        }
         double DamageNoRand = 0.0;
         typechart = new Typechart(victim.getType1(), victim.getType2());
         randomMultiplier = (217.0 + randomNum(38) / 255.0);
@@ -61,7 +66,6 @@ public class Move{
                 Damage = 1.0;
                 }
         }
-    
     public boolean isCrit(){
         return (randomSuccess(critChance));
     }

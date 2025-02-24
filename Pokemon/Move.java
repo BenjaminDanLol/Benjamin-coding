@@ -61,7 +61,7 @@ public class Move {
     }
     public boolean randomSuccess(int range){
         int localnum = randomNum(100);
-        if (range < localnum){
+        if (range > localnum){
         return true;
         }
         return false;

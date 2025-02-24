@@ -55,9 +55,15 @@ public class Pokemon {
     public int getSpd() {
         return this.Spd;
     }
-    public String getType() {
+    public String showType() {
         return this.type1 + (this.type2 == null || this.type2.isEmpty() ? "" : "/" + this.type2);
     }
+
+    public String[] getTypeArray(Pokemon thisPokemon) {
+        
+        
+    }
+
     public String getType1() {
         return this.type1;
     }

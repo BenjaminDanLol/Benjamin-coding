@@ -2,7 +2,7 @@ public class Typechart {
 
     private double attackerTypeMultiplier = 1;
     private String[] OppTypings;
-    private final String moveTyping;
+    private String moveTyping;
 
     // Til constructeren, kan man bare indsætte i parametrene nogle getters af specifikke pokemon Objekter.
     public Typechart(Move thisMove, String OppType1, String OppType2){
@@ -14,7 +14,7 @@ public class Typechart {
     }
 
 
-    public boolean DetectTyping(String whichType){
+    public boolean DetectTypingLocal(String whichType){
         // Loop så mange typings modstanderen har, og check om et af deres typings == typen af whichType
         // Hvis et af dem er det samme, stop metoden og returnere true, i alle andre tilfælde returnere false.
         for (int i = 0, n = OppTypings.length; i < n; i++) { 
@@ -26,13 +26,15 @@ public class Typechart {
     }
     //FRA OLIVER ****** VI KAN EVT TJEKKE LÆNGDEN AF INDIVIDUELLE STRINGS (TYPES) FOR AT SKIPPE NOGET AF SØGNINGEN
 
+    
+
 
     public boolean ShouldApplyStatus(){
     /*
      * I virkeligheden skal if statmenten have en && metode som tjekker om angrebet ramte (accuracy).
      * && nok også en der ser om procent chancen gik af.
      */
-        if (DetectTyping(moveTyping)){
+        if (DetectTypingLocal(moveTyping)){
             switch (moveTyping) {
                 case("Fire"):
                 return false;
@@ -46,10 +48,10 @@ public class Typechart {
                 return false;
             }
         }
-        if (moveTyping.equals("Electric") && DetectTyping("Ground")){
+        if (moveTyping.equals("Electric") && DetectTypingLocal("Ground")){
             return false;
         }
-        else if(moveTyping.equals("Poison") && DetectTyping("Steel")){
+        else if(moveTyping.equals("Poison") && DetectTypingLocal("Steel")){
             return false;
         }
         // Could also check for abilities here

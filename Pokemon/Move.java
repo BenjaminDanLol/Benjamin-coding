@@ -59,5 +59,12 @@ public class Move {
         Random random = new Random();
         return random.nextInt(range) + 1; // Returns a random number from 1 - int range.
     }
+    public boolean randomSuccess(int range){
+        int localnum = randomNum(100);
+        if (range < localnum){
+        return true;
+        }
+        return false;
+    }
 
 }

@@ -13,6 +13,7 @@ public class Pokemon {
     private int Level;
     private int CritBoost;
     private boolean statusCondition = false;
+    private String currentCondition = "None";
     // Tilføjer modifiers
     private double HPMod = 1;
     private double AttMod = 1;
@@ -194,5 +195,11 @@ public class Pokemon {
         else {
             statusCondition = false;
         }
+    }
+    public String getCurrentCondition() {
+        return currentCondition;
+    }
+    public void setCurrentCondition(String newCondition) {
+        currentCondition = newCondition;
     }
 }

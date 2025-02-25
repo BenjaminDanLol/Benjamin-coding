@@ -18,6 +18,7 @@ public class Move{
     private double randomMultiplier;
     private Typechart typechart;
     private String whatStatus;
+    private int howManyTics;
 
     public Move(String Name, int Pwr, int Acc, boolean isSpcl, boolean hasPrio, 
     String moveType, String StatusType, int StatusChance, 
@@ -41,7 +42,8 @@ public class Move{
             System.out.println(user.getPokeName() + "is faster and should move first.");
         }
         // Checker først og fremmest om det er en miss eller ej, return er det samme som at exit.
-        if (randomSuccess(accuracy)) {
+        // Her er paralysis og sleep også inkluderet
+        if (randomSuccess(accuracy) || paraOrSleepTic(user.getCurrentCondition(), user)) {
             System.out.println("You miss!");
             return 0;
         }
@@ -73,7 +75,7 @@ public class Move{
             }
             else if (DamageNoRand != 0.0) {
                 damage = 1.0;
-                }
+            }
         // inflictStatus bliver true/false, til scenariet, kan der så bare efter moven bliver
         // udført en p1move1.getInflictStatus.
         inflictsStatus = applyStatus(statusChance);
@@ -92,28 +94,65 @@ public class Move{
         victim.setHPMod(1+damage/victim.getHP());
         // doubles er upræcise derfor tager jeg range for at være sikker
         if (typechart.calcX(type) > 1 && typechart.calcX(type) <= 2) {
-        System.out.println("Super effective!");
+            System.out.println("Super effective!");
         } else if (typechart.calcX(type) > 2 && typechart.calcX(type) <= 4) {
-        System.out.println("Super DUPER effective!!");
+            System.out.println("Super DUPER effective!!");
         } else if (typechart.calcX(type) < 1 && typechart.calcX(type) >= 0.5) {
-        System.out.println("Not very effective"); 
+            System.out.println("Not very effective"); 
         } else if (typechart.calcX(type) < 0.5 && typechart.calcX(type) > 0.05) {
-        System.out.println("Pathetic");
+            System.out.println("Pathetic");
         } else {
-        System.out.println("Opponent is immune");
+            System.out.println("Opponent is immune!");
         }
-        System.out.println(user.getPokeName() + " uses " + moveName + " and " +
-        victim.getPokeName() + " loses " + damage + " HP!");
-        System.out.println(victim.getPokeName() + " HP is now: " + victim.getHPMod()
-        * victim.getHP());
+            System.out.println(user.getPokeName() + " uses " + moveName + " and " +
+            victim.getPokeName() + " loses " + damage + " HP!");
+            System.out.println(victim.getPokeName() + " HP is now: " + victim.getHPMod()
+            * victim.getHP());
         if (!victim.getStatusCondition() && inflictsStatus){
-        System.out.println(victim.getPokeName() + " received " + whatStatus);
-        victim.revertStatusCondition();
-    }
+            System.out.println(victim.getPokeName() + " receives " + whatStatus);
+                // Sleep er tic baseret
+                howManyTics = 0;
+                victim.setCurrentCondition(whatStatus);
+                victim.revertStatusCondition();
+
+        }
     // Tror ikke at return damage er nødvendigt her, ihvertfald med min kode, fordi alle modifier ændringer
     // og bliver lavet inde i functionen.
-        return damage;
+    return damage;
+}
+    // need more fields from Pokemon class, and can add status methods, if there are more
+    /*
+     * To have this as usable code I could do the following. Add a String field in Pokemon class,
+     * and also add a getter / setter method for that String.
+     * Now when the status chance applies, I use the setter for that field and have moveName as parameter.
+     */
+    public boolean paraOrSleepTic(String _StatusName, Pokemon user) {
+        return switch (_StatusName) {
+            case "paralysis" -> {
+            paralysisTic();
+            yield true; 
         }
+            case "Sleep" -> {
+            sleepTic(user);
+            yield true; 
+        } default -> {
+            yield false;
+        }
+
+    };
+    }
+    public boolean paralysisTic() {
+        return randomSuccess(25);
+    }
+    public boolean sleepTic(Pokemon user) {
+        if (howManyTics < 3) {
+        howManyTics++;
+        return randomSuccess(25); 
+        }
+        // Parametren er højst sandsynligt midlertidigt
+        user.revertStatusCondition();
+        return false;
+    }
     public boolean applyStatus(int StatusChance){
         Random random = new Random();
         int localRange = random.nextInt(100) + 1;

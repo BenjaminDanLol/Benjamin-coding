@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Typechart {
 
     private double attackerTypeMultiplier = 1;
@@ -91,7 +93,14 @@ public class Typechart {
         }
         return attackerTypeMultiplier;
     }
-
+    public boolean applyStatusNum(int _StatusChance){
+        Random random = new Random();
+        int localRange = random.nextInt(100) + 1;
+        if (_StatusChance > localRange) {
+            return true;
+        }
+        return false;
+    }
     public double FireCalc(String moveType, String oneofVictimTypes){
         if (!moveType.equals("Fire")){
         return 1;

@@ -8,11 +8,8 @@ public class Move{
     private int accuracy;
     private boolean isSpecial;
     private boolean hasPriority;
-    private final double stab = 0.25;
-    // if (isStab) { Power *= Stab;}
     private String type;
-    private String learnReq;
-    private boolean inflictsStatus;
+    private boolean inflictsStatus = false;
     private String statusType;
     private int statusChance;
     private int critChance;
@@ -20,26 +17,33 @@ public class Move{
     private double damage = 0.0;
     private double randomMultiplier;
     private Typechart typechart;
+    private String whatStatus;
 
     public Move(String Name, int Pwr, int Acc, boolean isSpcl, boolean hasPrio, 
-    String _type, String learnReq, boolean inflictsStatus, String StatusType, int StatusChance, 
-    int critChance) {
+    String moveType, String StatusType, int StatusChance, 
+    int critChance, String whatStatusCondition) {
         this.name = Name;
         this.power = Pwr;
         this.accuracy = Acc;
         this.isSpecial = isSpcl;
         this.hasPriority = hasPrio;
-        this.type = _type;
-        this.learnReq = learnReq;
+        this.type = moveType;
+        this.statusType = StatusType;
         this.statusChance = StatusChance;
         this.critChance = critChance;
+        this.whatStatus = whatStatusCondition;
     }
 
-    public void performMove(Pokemon user, Pokemon victim) {
+    public double performMove(Pokemon user, Pokemon victim) {
+        // Denne linje skal laves før en "runde" går igang men gør ikke noget p.t.
+        if (user.getSpd() > victim.getSpd())
+        {
+            System.out.println(user.getPokeName() + "is faster and should move first.");
+        }
         // Checker først og fremmest om det er en miss eller ej, return er det samme som at exit.
         if (randomSuccess(accuracy)) {
             System.out.println("You miss!");
-            return;
+            return 0;
         }
         double DamageNoRand = 0.0;
         typechart = new Typechart(victim.getType1(), victim.getType2());
@@ -47,7 +51,7 @@ public class Move{
         // Critboosten er indbygget i logikken efter isCrit som er bare baseret på CritChance.
         if (this.power > 0) {
             // Gen 1 dmg calc https://imgur.com/a/KxmCrKD
-            DamageNoRand = (((2 * user.getLevel() * (isCrit() == true ? 2 : 1) / 5.0 + 2.0) * this.power 
+            DamageNoRand = (((2 * user.getLevel() * (isCrit() == true ? critMultiplier : 1) / 5.0 + 2.0) * this.power 
             // Her mangler vi noget som checker at hvis critChance er true så skal den tage unmodified Def/SpDef
             * (this.isSpecial == true ? user.getSpA() / victim.getSpDef() : user.getAtt() 
             / victim.getDef()))+100) / 50.0
@@ -67,7 +71,19 @@ public class Move{
             else if (DamageNoRand != 0.0) {
                 damage = 1.0;
                 }
+        // inflictStatus bliver true/false, til scenariet, kan der så bare efter moven bliver
+        // udført en p1move1.getInflictStatus.
+        inflictsStatus = applyStatus(statusChance);
+        return damage;
         }
+    public boolean applyStatus(int StatusChance){
+        Random random = new Random();
+        int localRange = random.nextInt(100) + 1;
+        return (StatusChance > localRange && typechart.ShouldApplyStatus(statusType));
+    }
+    public boolean shouldInflictStatus(){
+        return inflictsStatus;
+    }
     public boolean isCrit(){
         return (randomSuccess(critChance));
     }

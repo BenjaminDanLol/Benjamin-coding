@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Move{
 
-    private String name;
+    public String name;
     private int power;
     private int accuracy;
     private boolean isSpecial;
@@ -23,6 +23,7 @@ public class Move{
     public Move(String Name, int Pwr, int Acc, boolean isSpcl, boolean hasPrio, 
     String _type, String learnReq, boolean inflictsStatus, String StatusType, int StatusChance, 
     int critChance) {
+        this.name = Name;
         this.power = Pwr;
         this.accuracy = Acc;
         this.isSpecial = isSpcl;

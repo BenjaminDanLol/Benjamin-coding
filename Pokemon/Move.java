@@ -138,7 +138,6 @@ public class Move{
         } default -> {
             yield false;
         }
-
     };
     }
     public boolean paralysisTic() {

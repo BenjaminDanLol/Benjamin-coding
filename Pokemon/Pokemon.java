@@ -12,6 +12,14 @@ public class Pokemon {
     private String type2;
     private int Level;
     private int CritBoost;
+    private boolean statusCondition = false;
+    // Tilføjer modifiers
+    private double HPMod = 1;
+    private double AttMod = 1;
+    private double SpAMod = 1;
+    private double DefMod = 1;
+    private double SpDefMod = 1;
+    private double SpdMod = 1;
     public Pokemon(String name, int HealthPoints, int Attack, int Defence, 
     int SpecialAttack, int SpecialDefence, int Speed, int Level, String... type) {
         // Something that should refer to the extenders somehow
@@ -71,24 +79,120 @@ public class Pokemon {
     public int getLevel() {
         return this.Level;
     }
-    public int getCritBoost() {
-        return this.CritBoost;
+
+    public double getHPMod() {
+        return HPMod;
+    }
+    public void setHPMod(double modifierChange) {
+        HPMod -= modifierChange;
+    }
+    public double getAttMod() {
+        return AttMod;
+    }
+    public void setAttMod(double modifierChange) {
+        if (AttMod * modifierChange > 6) {
+            AttMod = 6;
+            System.out.println("Attack is at Stage: " + SpAMod + ", attack won't go higher!");
+            return;
+        }
+        
+        if (AttMod * modifierChange < 1/6) {
+            AttMod = 1/6;
+            System.out.println("Attack is at Stage: -6, attack won't go lower!");
+            return;
+        }
+        AttMod *= modifierChange;
+    }
+    public double getSpAMod() {
+        return SpAMod;
+    }
+    public void setSpAMod(double modifierChange) {
+        if (SpAMod * modifierChange > 6) {
+            SpAMod = 6;
+            System.out.println("Special Attack is at Stage: " + SpAMod + ", special attack won't go higher!");
+            return;
+        }
+        
+        if (SpAMod * modifierChange < 1/6) {
+            SpAMod = 1/6;
+            System.out.println("Special Attack is at Stage: -6, special attack won't go lower!");
+            return;
+        }
+        SpAMod *= modifierChange;
+    }
+    public double getDefMod() {
+        return DefMod;
+    }
+    public void setDefMod(double modifierChange) {
+        if (DefMod * modifierChange > 6) {
+            DefMod = 6;
+            System.out.println("Defense is at Stage: " + SpAMod + ", defense won't go higher!");
+            return;
+        }
+        
+        if (DefMod * modifierChange < 1/6) {
+            DefMod = 1/6;
+            System.out.println("Defense is at Stage: -6, defense won't go lower!");
+            return;
+        }
+        DefMod *= modifierChange;
+    }
+    public double getSpDefMod() {
+        return SpDefMod;
+    }
+    public void setSpDefMod(double modifierChange) {
+        if (SpDefMod * modifierChange > 6) {
+            SpDefMod = 6;
+            System.out.println("Special Defense is at Stage: " + SpAMod + ", special defense won't go higher!");
+            return;
+        }
+        
+        if (SpDefMod * modifierChange < 1/6) {
+            SpDefMod = 1/6;
+            System.out.println("Special Defense is at Stage: -6, special defense won't go lower!");
+            return;
+        }
+        SpDefMod *= modifierChange;
+    }
+    public double getSpdMod() {
+        return SpdMod;
+    }
+    public void setSpdMod(double modifierChange) {
+        if (SpdMod * modifierChange > 6) {
+            SpdMod = 6;
+            System.out.println("Speed is at Stage: " + SpAMod + ", speed won't go higher!");
+            return;
+        }
+        
+        if (SpdMod * modifierChange < 1/6) {
+            SpdMod = 1/6;
+            System.out.println("Speed is at Stage: " + SpAMod + ", speed won't go lower!");
+
+            return;
+        }
+        SpdMod *= modifierChange;
     }
 
-    // I needed to have a setter to be able to change the HP value during battle
-    public void setHP(int changeHP)
-    {
-        this.HP = changeHP;
-    }
-    public void setDef(int changeDef){
-        this.Def = changeDef;
-    }
+
     public boolean checkFainted() { // check the Pokemon in parameter if their HP 0 or less
-        if (getHP() <= 0) {
+        if (getHPMod() <= 0) {
             return true;
         }
         else {
             return false;
+        }
+    }
+
+    public boolean getStatusCondition() {
+        return statusCondition;
+    }
+    public void revertStatusCondition() {
+        // Den her burde gøre at den får en status condition, hvis den ikke har en og omvendt.
+        if(!statusCondition){
+            statusCondition = true;
+        }
+        else {
+            statusCondition = false;
         }
     }
 }

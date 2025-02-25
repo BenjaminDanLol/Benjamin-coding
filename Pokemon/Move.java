@@ -3,7 +3,7 @@ import java.util.Random;
 public class Move{
 
     // Name er public
-    public String name;
+    public String moveName;
     private int power;
     private int accuracy;
     private boolean isSpecial;
@@ -22,7 +22,7 @@ public class Move{
     public Move(String Name, int Pwr, int Acc, boolean isSpcl, boolean hasPrio, 
     String moveType, String StatusType, int StatusChance, 
     int critChance, String whatStatusCondition) {
-        this.name = Name;
+        this.moveName = Name;
         this.power = Pwr;
         this.accuracy = Acc;
         this.isSpecial = isSpcl;
@@ -74,6 +74,41 @@ public class Move{
         // inflictStatus bliver true/false, til scenariet, kan der så bare efter moven bliver
         // udført en p1move1.getInflictStatus.
         inflictsStatus = applyStatus(statusChance);
+        /*
+         * Tur 1: Pikachu 80 HP, tager 10 DMG, Pikachu HP nu 70 HP
+         * Tur 2: Pikachu 70 HP, tager 10 DMG, Pikachu HP nu 60 HP
+         * 3. Pikachu 60 HP, tager 10 DMG, Pikachu HP nu 50 HP
+         * 4. Pikachu 50 HP, tager 10 DMG, Pikachu HP nu 40 HP
+         * 
+         * Tur 1 Pikachu 80 HP, mister -10/80*80 = -10 HP, Pikachu HP nu 70 HP
+         * Modifier for denne tur 1 + (-10/80) = 0.875
+         * victim.setHPMod(1+(damage/victim.getHP()));
+         * Hvis man ganger modifier med Base så vil man få Pikachus HP hvis man gør det 
+         * ovenstående iterativt
+         */
+        victim.setHPMod(1+damage/victim.getHP());
+        // doubles er upræcise derfor tager jeg range for at være sikker
+        if (typechart.calcX(type) > 1 && typechart.calcX(type) <= 2) {
+        System.out.println("Super effective!");
+        } else if (typechart.calcX(type) > 2 && typechart.calcX(type) <= 4) {
+        System.out.println("Super DUPER effective!!");
+        } else if (typechart.calcX(type) < 1 && typechart.calcX(type) >= 0.5) {
+        System.out.println("Not very effective"); 
+        } else if (typechart.calcX(type) < 0.5 && typechart.calcX(type) > 0.05) {
+        System.out.println("Pathetic");
+        } else {
+        System.out.println("Opponent is immune");
+        }
+        System.out.println(user.getPokeName() + " uses " + moveName + " and " +
+        victim.getPokeName() + " takes " + damage + " dmg!");
+        System.out.println(victim.getPokeName() + " HP is now: " + victim.getHPMod()
+        * victim.getHP());
+        if (!victim.getStatusCondition()){
+        if (inflictsStatus) {
+            System.out.println(victim.getPokeName() + " received " + whatStatus);
+        }
+        victim.revertStatusCondition();
+    }
         return damage;
         }
     public boolean applyStatus(int StatusChance){
@@ -84,6 +119,10 @@ public class Move{
     public boolean shouldInflictStatus(){
         return inflictsStatus;
     }
+    // Tænker jeg laver Switch cases her, med en masse specifikke Status logik ved siden af.
+    public void applyStatusCondition(){
+
+    }
     public boolean isCrit(){
         return (randomSuccess(critChance));
     }
@@ -93,7 +132,7 @@ public class Move{
     }
 
     public String getName() {
-        return this.name;
+        return this.moveName;
     }
 
     public double getRandomMultiplier(){

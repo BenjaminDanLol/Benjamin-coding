@@ -2,40 +2,40 @@ import java.util.Random;
 
 public class Move{
 
-    private String Name;
-    private int Power;
-    private int Accuracy;
+    private String name;
+    private int power;
+    private int accuracy;
     private boolean isSpecial;
     private boolean hasPriority;
-    private final double Stab = 0.25;
+    private final double stab = 0.25;
     // if (isStab) { Power *= Stab;}
     private String type;
     private String learnReq;
     private boolean inflictsStatus;
-    private String StatusType;
-    private int StatusChance;
+    private String statusType;
+    private int statusChance;
     private int critChance;
     private final double critMultiplier = 2.0;
-    private double Damage = 0.0;
+    private double damage = 0.0;
     private double randomMultiplier;
     private Typechart typechart;
 
     public Move(String Name, int Pwr, int Acc, boolean isSpcl, boolean hasPrio, 
     String _type, String learnReq, boolean inflictsStatus, String StatusType, int StatusChance, 
     int critChance) {
-        this.Power = Pwr;
-        this.Accuracy = Acc;
+        this.power = Pwr;
+        this.accuracy = Acc;
         this.isSpecial = isSpcl;
         this.hasPriority = hasPrio;
         this.type = _type;
         this.learnReq = learnReq;
-        this.StatusChance = StatusChance;
+        this.statusChance = StatusChance;
         this.critChance = critChance;
     }
 
     public void performMove(Pokemon user, Pokemon victim) {
         // Checker først og fremmest om det er en miss eller ej, return er det samme som at exit.
-        if (randomSuccess(Accuracy)) {
+        if (randomSuccess(accuracy)) {
             System.out.println("You miss!");
             return;
         }
@@ -43,9 +43,9 @@ public class Move{
         typechart = new Typechart(victim.getType1(), victim.getType2());
         randomMultiplier = (217.0 + randomNum(38) / 255.0);
         // Critboosten er indbygget i logikken efter isCrit som er bare baseret på CritChance.
-        if (this.Power > 0) {
+        if (this.power > 0) {
             // Gen 1 dmg calc https://imgur.com/a/KxmCrKD
-            DamageNoRand = (((2 * user.getLevel() * (isCrit() == true ? 2 : 1) / 5.0 + 2.0) * this.Power 
+            DamageNoRand = (((2 * user.getLevel() * (isCrit() == true ? 2 : 1) / 5.0 + 2.0) * this.power 
             // Her mangler vi noget som checker at hvis critChance er true så skal den tage unmodified Def/SpDef
             * (this.isSpecial == true ? user.getSpA() / victim.getSpDef() : user.getAtt() 
             / victim.getDef()))+100) / 50.0
@@ -60,10 +60,10 @@ public class Move{
             * (typechart.calcX(type));
         }
             if (DamageNoRand > 1.0) {
-            Damage = DamageNoRand * (randomMultiplier);
+            damage = DamageNoRand * (randomMultiplier);
             }
             else if (DamageNoRand != 0.0) {
-                Damage = 1.0;
+                damage = 1.0;
                 }
         }
     public boolean isCrit(){
@@ -75,7 +75,7 @@ public class Move{
     }
 
     public String getName() {
-        return Name;
+        return this.name;
     }
 
     public double getRandomMultiplier(){

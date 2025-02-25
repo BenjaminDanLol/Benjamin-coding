@@ -7,19 +7,23 @@ public class Main {
         Charizard p1 = new Charizard();
         Venusaur p2 = new Venusaur();
         
-
+        
         Scanner myObj = new Scanner(System.in);
         String moveChoice;
         do {
         do {
         System.out.println("P1 turn");
-        System.out.println("Pick a move! (1-4)");
+        System.out.println("Pick a move!");
+        System.out.println("Move 1: " + f1.getName());
+        System.out.println("Move 2: " + f1.getName());
+
 
         moveChoice = myObj.nextLine();
         
             switch (moveChoice) {
-            case (f1.getName()), ("2"), ("3"), ("4"):
+            case ("1"), ("2"), ("3"), ("4"):
                 System.out.println(p1.getPokeName() + " uses " + moveChoice);
+                //execute the move on the victim
                 a += 1;
                 break;
             default :

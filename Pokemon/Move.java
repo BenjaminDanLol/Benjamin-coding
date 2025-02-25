@@ -52,9 +52,12 @@ public class Move{
         if (this.power > 0) {
             // Gen 1 dmg calc https://imgur.com/a/KxmCrKD
             DamageNoRand = (((2 * user.getLevel() * (isCrit() == true ? critMultiplier : 1) / 5.0 + 2.0) * this.power 
-            // Her mangler vi noget som checker at hvis critChance er true så skal den tage unmodified Def/SpDef
-            * (this.isSpecial == true ? user.getSpA() / victim.getSpDef() : user.getAtt() 
-            / victim.getDef()))+100) / 50.0
+            // Jeg tror at jeg har tjekket for crit nu
+            * (isCrit() == true ? (this.isSpecial == true ? user.getSpA() * user.getSpAMod() 
+            / (victim.getSpDef() * victim.getSpAMod()) 
+            : user.getAtt() * user.getAttMod() / (victim.getDef() * victim.getDefMod())) : 
+            this.isSpecial == true ? user.getSpA() / victim.getSpDef() :
+            user.getAtt() / victim.getDef())+100) / 50.0
 
             //determine whether STAB because of user types
             * (typechart.detectType(user, getType()) == true ? 1.5 : 1.0)
@@ -63,7 +66,7 @@ public class Move{
             * (typechart.detectType(victim, getType()) == true ? 1.5 : 1.0)
 
             // Det her bør checke for typeChart's array af sig selv og sammenlign det hele med move typen
-            * (typechart.calcX(type));
+            * (typechart.calcX(type)));
         }
             if (DamageNoRand > 1.0) {
             damage = DamageNoRand * (randomMultiplier);
@@ -100,15 +103,15 @@ public class Move{
         System.out.println("Opponent is immune");
         }
         System.out.println(user.getPokeName() + " uses " + moveName + " and " +
-        victim.getPokeName() + " takes " + damage + " dmg!");
+        victim.getPokeName() + " loses " + damage + " HP!");
         System.out.println(victim.getPokeName() + " HP is now: " + victim.getHPMod()
         * victim.getHP());
-        if (!victim.getStatusCondition()){
-        if (inflictsStatus) {
-            System.out.println(victim.getPokeName() + " received " + whatStatus);
-        }
+        if (!victim.getStatusCondition() && inflictsStatus){
+        System.out.println(victim.getPokeName() + " received " + whatStatus);
         victim.revertStatusCondition();
     }
+    // Tror ikke at return damage er nødvendigt her, ihvertfald med min kode, fordi alle modifier ændringer
+    // og bliver lavet inde i functionen.
         return damage;
         }
     public boolean applyStatus(int StatusChance){

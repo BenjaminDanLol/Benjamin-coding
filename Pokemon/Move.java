@@ -2,6 +2,7 @@ import java.util.Random;
 
 public class Move{
 
+    // Name er public
     public String name;
     private int power;
     private int accuracy;

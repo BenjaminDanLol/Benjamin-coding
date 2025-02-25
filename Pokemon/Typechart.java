@@ -92,18 +92,14 @@ public class Typechart {
         return attackerTypeMultiplier;
     }
 
-
     public double FireCalc(String moveType, String oneofVictimTypes){
-    // Doing the exact same as in NormalCalc
         if (!moveType.equals("Fire")){
         return 1;
         }
-    // Super effective:
     else {
         switch (oneofVictimTypes)  {
             case ("Grass"), ("Ice"), ("Bug"), ("Steel"):
             return 2;
-    // Not very effective:
             case ("Fire"), ("Water"), ("Rock"), ("Dragon"): // Fire
             return 0.5;
         default:
@@ -112,22 +108,18 @@ public class Typechart {
         }
     }
 
-
-    // Methods like these may or may not breakdown if type = null, since whilst using switch
-    // functions, the compilers "default" function doesn't read null.
     public double NormalCalc(String moveType, String oneofVictimType){
-        // Give no meaningful modifier value if not Normal attack and exit.
         if (!moveType.equals("Normal"))
         {
             return 1;
         }
         else {
-        // Here are all opposing weaknesses of Normal.
         switch (oneofVictimType) {
-            case ("Rock"), ("Ghost"), ("Steel"): // Rock
+            case ("Rock"), ("Steel"):
             return 0.5;
+            case ("Ghost"):
+            return 0.0;
             default:
-            // Denne her bør ikke trigger, men compileren ønsker at alle paths er taget højde for
             return 1;
             }
         }

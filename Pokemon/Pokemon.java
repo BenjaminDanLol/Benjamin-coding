@@ -12,7 +12,6 @@ public class Pokemon {
     private String type2;
     private int Level;
     private int CritBoost;
-
     public Pokemon(String name, int HealthPoints, int Attack, int Defence, 
     int SpecialAttack, int SpecialDefence, int Speed, int Level, String... type) {
         // Something that should refer to the extenders somehow

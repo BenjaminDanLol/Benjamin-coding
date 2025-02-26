@@ -94,19 +94,29 @@ public class Move{
         // doubles er upræcise derfor tager jeg range for at være sikker
         if (typechart.calcX(type) > 1 && typechart.calcX(type) <= 2) {
             System.out.println("Super effective!");
-        } else if (typechart.calcX(type) > 2 && typechart.calcX(type) <= 4) {
+        }
+        
+        else if (typechart.calcX(type) > 2 && typechart.calcX(type) <= 4) {
             System.out.println("Super DUPER effective!!");
-        } else if (typechart.calcX(type) < 1 && typechart.calcX(type) >= 0.5) {
+        }
+        
+        else if (typechart.calcX(type) < 1 && typechart.calcX(type) >= 0.5) {
             System.out.println("Not very effective"); 
-        } else if (typechart.calcX(type) < 0.5 && typechart.calcX(type) > 0.05) {
+        }
+        
+        else if (typechart.calcX(type) < 0.5 && typechart.calcX(type) > 0.05) {
             System.out.println("Pathetic");
-        } else {
+        }
+        
+        else {
             System.out.println("Opponent is immune!");
         }
-            System.out.println(user.getPokeName() + " uses " + moveName + " and " +
-            victim.getPokeName() + " loses " + damage + " HP!");
-            System.out.println(victim.getPokeName() + " HP is now: " + victim.getHPMod()
-            * victim.getHP());
+
+        System.out.println(user.getPokeName() + " uses " + moveName + " and " +
+        victim.getPokeName() + " loses " + damage + " HP!");
+        System.out.println(victim.getPokeName() + " HP is now: " + victim.getHPMod()
+        * victim.getHP());
+
         if (!victim.getStatusCondition() && inflictsStatus){
             System.out.println(victim.getPokeName() + " receives " + whatStatus);
                 // Sleep er tic baseret
@@ -139,9 +149,11 @@ public class Move{
         }
     };
     }
+
     public boolean paralysisTic() {
         return randomSuccess(25);
     }
+
     public boolean sleepTic(Pokemon user) {
         if (howManyTics < 3) {
         howManyTics++;
@@ -151,18 +163,22 @@ public class Move{
         user.revertStatusCondition();
         return false;
     }
+
     public boolean applyStatus(int StatusChance){
         Random random = new Random();
         int localRange = random.nextInt(100) + 1;
         return (StatusChance > localRange && typechart.ShouldApplyStatus(statusType));
     }
+
     public boolean shouldInflictStatus(){
         return inflictsStatus;
     }
+
     // Tænker jeg laver Switch cases her, med en masse specifikke Status logik ved siden af.
     public void applyStatusCondition(){
 
     }
+
     public boolean isCrit(){
         return (randomSuccess(critChance));
     }
@@ -178,15 +194,26 @@ public class Move{
     public double getRandomMultiplier(){
         return randomMultiplier;
     }
+
     public double randomNum(int range){
         Random random = new Random();
         return random.nextInt(range) + 1; // Returns a random number from 1 - int range.
     }
+
     public boolean randomSuccess(int range) {
         double localRange = randomNum(100);
         if (range > localRange) {
             return true;
         }
         return false;
+    }
+    public int divide(int numerator, int denominator) {
+        if (denominator == 0) {
+            return 0;
+        }
+        else {
+            double result = (double)numerator / denominator;
+            return (int) Math.round(result);
+        }
     }
 }

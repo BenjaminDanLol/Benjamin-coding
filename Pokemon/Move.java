@@ -19,6 +19,7 @@ public class Move{
     private Typechart typechart;
     private String whatStatus;
     private int howManyTics;
+    private boolean isCrit;
 
     public Move(String Name, int Pwr, int Acc, boolean isSpcl, boolean hasPrio, 
     String moveType, String StatusType, int StatusChance, 
@@ -36,15 +37,10 @@ public class Move{
     }
 
     public double performMove(Pokemon user, Pokemon victim) {
-        // Denne linje skal laves før en "runde" går igang men gør ikke noget p.t.
-        if ((user.getSpd() * user.getSpdMod()) > (victim.getSpd() * victim.getSpdMod()))
-        {
-            System.out.println(user.getPokeName() + "is faster and should move first.");
-        }
         // Checker først og fremmest om det er en miss eller ej, return er det samme som at exit.
         // Her er paralysis og sleep også inkluderet
         if (randomSuccess(accuracy) || paraOrSleepTic(user.getCurrentCondition(), user)) {
-            System.out.println("You miss!");
+            System.out.println(user.getPokeName() + " misses!");
             return 0;
         }
         double DamageNoRand = 0.0;
@@ -52,6 +48,7 @@ public class Move{
         randomMultiplier = (217.0 + randomNum(38) / 255.0);
         // Critboosten er indbygget i logikken efter isCrit som er bare baseret på CritChance.
         if (this.power > 0) {
+            isCrit = isCrit();
             // Gen 1 dmg calc https://imgur.com/a/KxmCrKD
             DamageNoRand = (((2 * user.getLevel() * (isCrit() == true ? critMultiplier : 1) / 5.0 + 2.0) * this.power 
             // Jeg tror at jeg har tjekket for crit nu

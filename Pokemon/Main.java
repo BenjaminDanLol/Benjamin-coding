@@ -57,120 +57,132 @@ public class Main {
                     moveChoicePlayer2 = myObj.nextLine();
 
         
-                    switch (moveChoicePlayer1) {
-                        case ("1"):
+                    while (moveChoicePlayer1.equals("1") && check == 1) {
                             switch (moveChoicePlayer2) {
                                 case "1" -> {
                                     System.out.println(p1.getPokeName() + " uses " + p1move1.getName());
                                     System.out.println(p2.getPokeName() + " uses " + p2move1.getName());
-                                    a += 1;
+                                    check += 1;
+                                    break;
                                 }
                                 case "2" -> {
                                     System.out.println(p1.getPokeName() + " uses " + p1move1.getName());
                                     System.out.println(p2.getPokeName() + " uses " + p2move2.getName());
-                                    a += 1;
+                                    check += 1;
+                                    break;
                                 }
                                 case "3" -> {
                                     System.out.println(p1.getPokeName() + " uses " + p1move1.getName());
                                     System.out.println(p2.getPokeName() + " uses " + p2move2.getName());
-                                    a += 1;
+                                    check += 1;
+                                    break;
                                 }
                                 case "4" -> {
                                     System.out.println(p1.getPokeName() + " uses " + p1move1.getName());
                                     System.out.println(p2.getPokeName() + " uses " + p2move2.getName());
-                                    a += 1;
+                                    check += 1;
+                                    break;
                                 }
                                 default -> System.out.println("Invalid move, try again.");
                             }
-
-                            break;
+                    }
                     
-                        case ("2"):
+                        while (moveChoicePlayer1.equals("2") && check == 1) {
                             switch (moveChoicePlayer2) {
                                 case "1" -> {
                                     System.out.println(p1.getPokeName() + " uses " + p1move2.getName());
                                     System.out.println(p2.getPokeName() + " uses " + p2move1.getName());
-                                    a += 1;
+                                    check += 1;
+                                    break;
                                 }
                                 case "2" -> {
                                     System.out.println(p1.getPokeName() + " uses " + p1move2.getName());
                                     System.out.println(p2.getPokeName() + " uses " + p2move2.getName());
-                                    a += 1;
+                                    check += 1;
+                                    break;
                                 }
                                 case "3" -> {
                                     System.out.println(p1.getPokeName() + " uses " + p1move2.getName());
                                     System.out.println(p2.getPokeName() + " uses " + p2move2.getName());
-                                    a += 1;
+                                    check += 1;
+                                    break;
                                 }
                                 case "4" -> {
                                     System.out.println(p1.getPokeName() + " uses " + p1move2.getName());
                                     System.out.println(p2.getPokeName() + " uses " + p2move2.getName());
-                                    a += 1;
+                                    check += 1;
+                                    break;
                                 }
                                 default -> System.out.println("Invalid move, try again.");
                             }
+                        }
 
-                        case ("3"):
+                        while (moveChoicePlayer1.equals("3") && check == 1) {
                             switch (moveChoicePlayer2) {
                                 case "1" -> {
                                     System.out.println(p1.getPokeName() + " uses " + p1move2.getName());
                                     System.out.println(p2.getPokeName() + " uses " + p2move1.getName());
-                                    a += 1;
+                                    check += 1;
+                                    break;
                                 }
                                 case "2" -> {
                                     System.out.println(p1.getPokeName() + " uses " + p1move2.getName());
                                     System.out.println(p2.getPokeName() + " uses " + p2move2.getName());
-                                    a += 1;
+                                    check += 1;
+                                    break;
                                 }
                                 case "3" -> {
                                     System.out.println(p1.getPokeName() + " uses " + p1move2.getName());
                                     System.out.println(p2.getPokeName() + " uses " + p2move2.getName());
-                                    a += 1;
+                                    check += 1;
+                                    break;
                                 }
                                 case "4" -> {
                                     System.out.println(p1.getPokeName() + " uses " + p1move2.getName());
                                     System.out.println(p2.getPokeName() + " uses " + p2move2.getName());
-                                    a += 1;
+                                    check += 1;
+                                    break;
                                 }
                                 default -> System.out.println("Invalid move, try again.");
                             }
+                        }
 
-                        case ("4"):
+                        while (moveChoicePlayer1.equals("4") && check == 1) {
                             switch (moveChoicePlayer2) {
                                 case "1" -> {
                                     System.out.println(p1.getPokeName() + " uses " + p1move2.getName());
                                     System.out.println(p2.getPokeName() + " uses " + p2move1.getName());
-                                    a += 1;
+                                    check += 1;
                                     break;
                                 }
                                 case "2" -> {
                                     System.out.println(p1.getPokeName() + " uses " + p1move2.getName());
                                     System.out.println(p2.getPokeName() + " uses " + p2move2.getName());
-                                    a += 1;
+                                    check += 1;
                                     break;
                                 }
                                 case "3" -> {
                                     System.out.println(p1.getPokeName() + " uses " + p1move2.getName());
                                     System.out.println(p2.getPokeName() + " uses " + p2move2.getName());
-                                    a += 1;
+                                    check += 1;
                                     break;
                                 }
                                 case "4" -> {
                                     System.out.println(p1.getPokeName() + " uses " + p1move2.getName());
                                     System.out.println(p2.getPokeName() + " uses " + p2move2.getName());
-                                    a += 1;
+                                    check += 1;
                                     break;
                                 }
                                 default -> {
                                     System.out.println("Invalid move, try again.");
                                 }
                             }
-
-                    
-                        default :
                         }
                         check = 0;
-                    }
+                    
+                        }
+                    
+                    
                 
                 } 
 

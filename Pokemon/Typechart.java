@@ -11,7 +11,7 @@ public class Typechart {
         this.VictimTypings = new String[] {
             OppType1, OppType2
             };
-    }
+}
 
 
     public boolean DetectTypingLocal(String whichType){

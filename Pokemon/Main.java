@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -21,8 +22,9 @@ public class Main {
         
 
         Scanner myObj = new Scanner(System.in);
-        //String moveChoicePlayer[] = new String[2];
+        String moveChoicePlayer[] = new String[2];
         String moveChoicePlayer1 = "0";
+        moveChoicePlayer.add(moveChoicePlayer1);
         String moveChoicePlayer2 = "0";
 
         int check = 0;

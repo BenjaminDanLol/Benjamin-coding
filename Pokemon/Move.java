@@ -2,8 +2,8 @@ import java.util.Random;
 
 public class Move{
 
-    // Name er public
-    public String moveName;
+    // Name er public (gjort private for at tjekke om det virker)
+    private String moveName;
     private int power;
     private int accuracy;
     private boolean isSpecial;

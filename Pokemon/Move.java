@@ -14,7 +14,7 @@ public class Move{
     private int statusChance;
     private int critChance;
     private final double critMultiplier = 2.0;
-    private double damage = 0.0;
+    private long damage = 0;
     private double randomMultiplier;
     private Typechart typechart;
     private String whatStatus;
@@ -70,10 +70,11 @@ public class Move{
             * (typechart.calcX(type)));
         }
             if (DamageNoRand > 1.0) {
-            damage = DamageNoRand * (randomMultiplier);
+            damage = Math.round(DamageNoRand * (randomMultiplier));
+
             }
             else if (DamageNoRand != 0.0) {
-                damage = 1.0;
+                damage = 1;
             }
         // inflictStatus bliver true/false, til scenariet, kan der så bare efter moven bliver
         // udført en p1move1.getInflictStatus.
@@ -93,23 +94,27 @@ public class Move{
         victim.setHPMod(1+damage/victim.getHP());
         // doubles er upræcise derfor tager jeg range for at være sikker
         if (typechart.calcX(type) > 1 && typechart.calcX(type) <= 2) {
-            System.out.println("Super effective!");
+            System.out.println("Super effective! (2x)");
         }
         
         else if (typechart.calcX(type) > 2 && typechart.calcX(type) <= 4) {
-            System.out.println("Super DUPER effective!!");
+            System.out.println("Super effective!! (4x)");
         }
         
         else if (typechart.calcX(type) < 1 && typechart.calcX(type) >= 0.5) {
-            System.out.println("Not very effective"); 
+            System.out.println("Not very effective (0.5x)"); 
         }
         
         else if (typechart.calcX(type) < 0.5 && typechart.calcX(type) > 0.05) {
-            System.out.println("Pathetic");
+            System.out.println("Pathetic (0.25x)");
         }
         
+        else if (typechart.calcX(type) == 0) {
+            System.out.println("Opponent is immune! (0x)");
+        }
+
         else {
-            System.out.println("Opponent is immune!");
+            System.out.println("Effective (1x)");
         }
 
         System.out.println(user.getPokeName() + " uses " + moveName + " and " +
@@ -159,6 +164,7 @@ public class Move{
         howManyTics++;
         return randomSuccess(25); 
         }
+
         // Parametren er højst sandsynligt midlertidigt
         user.revertStatusCondition();
         return false;
@@ -205,15 +211,7 @@ public class Move{
         if (range > localRange) {
             return true;
         }
+
         return false;
-    }
-    public int divide(int numerator, int denominator) {
-        if (denominator == 0) {
-            return 0;
-        }
-        else {
-            double result = (double)numerator / denominator;
-            return (int) Math.round(result);
-        }
     }
 }

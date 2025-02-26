@@ -1,4 +1,8 @@
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 
 public class TempMain {
     public static void main(String[] args) {
@@ -27,6 +31,10 @@ public class TempMain {
             }
         }
 
+        //Her skal vi dele den op i to forskellige situationer, 1 hvor man spiller mod computeren
+        //og en hvor man spiller imod en anden spiller.
+        //Jeg går ud fra at vi spiller med to spillere her:
+
         do {
             proceed = false;
             System.out.println("Player 1, please enter your name.");
@@ -38,14 +46,65 @@ public class TempMain {
                     proceed = true;
                 }
             }
-
         } 
         while (players == 2 && !proceed);
 
+        do {
+            proceed = false;
+            System.out.println("Player 2, please enter your name.");
+            String player2 = myObj.nextLine();
+            switch (player2) {
+                case "" -> {
+                    System.out.println("Invalid input, try again.");
+                } default -> {
+                    proceed = true;
+                }
+            }
+        } while (players == 2 && !proceed);
 
-        //Her skal vi dele den op i to forskellige situationer, 1 hvor man spiller mod computeren
-        //og en hvor man spiller imod en anden spiller.
-        //Jeg går ud fra at vi spiller med to spillere her:
+        do {
+            proceed = false;
+            
+            //Her skal vi lave en metode der henter (4) random pokemon fra en liste af pokemons.
+            //pokeFetch(4); 
 
+            Pokemon[] rMon = pokeFetch(4);
+            String p1 = scannedShit; 
+            Pokemon randomMon = new Pokemon("Charizard", 360, 293, 280, 348, 295, 328, 100, "Fire", "Flying");
+
+            System.out.println("Player 1, pick your Pokemon.");
+            System.out.println("1: " + rMon[0].getPokeName());
+            System.out.println("2: " + rMon[1].getPokeName());
+            System.out.println("3: " + rMon[2].getPokeName());
+            System.out.println("4: " + rMon[3].getPokeName());
+            String player1Pokemon = myObj.nextLine();
+
+            switch (player1Pokemon) {
+                case "1", "2", "3", "4" -> {
+                    proceed = true;
+                } default -> {
+                    System.out.println("Invalid input, try again.");
+                }
+            }
+
+        } while (players == 2 && !proceed);
+
+    }
+
+    
+
+    public static int pokeFetchGen() {
+        java.util.Random r = new java.util.Random();
+        int low = 1;
+        int high = 151;
+        int result = r.nextInt(high - low) + low;
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("PokeData.txt"));
+            String line = reader.readLine();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

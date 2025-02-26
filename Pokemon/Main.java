@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -24,8 +23,9 @@ public class Main {
         Scanner myObj = new Scanner(System.in);
         String moveChoicePlayer[] = new String[2];
         String moveChoicePlayer1 = "0";
-        moveChoicePlayer.add(moveChoicePlayer1);
         String moveChoicePlayer2 = "0";
+        moveChoicePlayer[0] = moveChoicePlayer1;
+        moveChoicePlayer[1] = moveChoicePlayer2;
 
         int check = 0;
 
@@ -38,9 +38,9 @@ public class Main {
                 System.out.println("Move 4: " + p1move4.getName());
 
                 //for (int i = 0; i > 2; i++)
-                moveChoicePlayer1 = myObj.nextLine();
+                moveChoicePlayer[0] = myObj.nextLine();
 
-                switch (moveChoicePlayer1) {
+                switch (moveChoicePlayer[0]) {
                     case "1", "2", "3", "4" -> {
                         check = 1;
                     }
@@ -56,10 +56,10 @@ public class Main {
                     System.out.println("Move 3: " + p2move3.getName());
                     System.out.println("Move 4: " + p2move4.getName());
 
-                    moveChoicePlayer2 = myObj.nextLine();
+                    moveChoicePlayer[1] = myObj.nextLine();
 
         
-                    while (moveChoicePlayer1.equals("1") && check == 1) {
+                    while (moveChoicePlayer[0].equals("1") && check == 1) {
                             switch (moveChoicePlayer2) {
                                 case "1" -> {
                                     System.out.println(p1.getPokeName() + " uses " + p1move1.getName());

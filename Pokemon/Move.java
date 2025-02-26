@@ -50,9 +50,9 @@ public class Move{
         if (this.power > 0) {
             isCrit = isCrit();
             // Gen 1 dmg calc https://imgur.com/a/KxmCrKD
-            DamageNoRand = (((2 * user.getLevel() * (isCrit() == true ? critMultiplier : 1) / 5.0 + 2.0) * this.power 
+            DamageNoRand = (((2 * user.getLevel() * (isCrit == true ? critMultiplier : 1) / 5.0 + 2.0) * this.power 
             // Jeg tror at jeg har tjekket for crit nu
-            * (isCrit() == true ? (this.isSpecial == true ? user.getSpA() * user.getSpAMod() 
+            * (isCrit == true ? (this.isSpecial == true ? user.getSpA() * user.getSpAMod() 
             / (victim.getCritSpDef()) 
             : user.getAtt() * user.getAttMod() / (victim.getCritDef())) : 
             // Hvis crit ikke er true

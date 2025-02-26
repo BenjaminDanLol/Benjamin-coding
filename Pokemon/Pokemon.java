@@ -15,7 +15,7 @@ public class Pokemon {
     private boolean statusCondition = false;
     private String currentCondition = "None";
     // Tilføjer modifiers
-    private double HPMod = 1;
+    private int HPMod = HP;
     private double AttMod = 1;
     private double SpAMod = 1;
     private double DefMod = 1;
@@ -81,11 +81,11 @@ public class Pokemon {
         return this.Level;
     }
 
-    public double getHPMod() {
+    public int getHPMod() {
         return HPMod;
     }
-    public void setHPMod(double modifierChange) {
-        HPMod -= modifierChange;
+    public void setHPMod(long changeModHP) {
+        HPMod -= changeModHP;
     }
     public double getAttMod() {
         return AttMod;
@@ -181,6 +181,7 @@ public class Pokemon {
             return Def;
         }
     }
+    // Wrong calculation
     public double getCritSpDef() {
         if (SpDef < 1) {
         return SpDefMod * SpDef;

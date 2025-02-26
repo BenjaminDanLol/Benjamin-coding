@@ -73,8 +73,12 @@ public class Move{
             damage = Math.round(DamageNoRand * (randomMultiplier));
 
             }
-            else if (DamageNoRand != 0.0) {
+            else if (DamageNoRand < 1 && DamageNoRand > 0) {
                 damage = 1;
+            }
+            else {
+                damage = 0;
+                System.out.println("Damage is < 0, revert to just 0 dmg");
             }
         // inflictStatus bliver true/false, til scenariet, kan der så bare efter moven bliver
         // udført en p1move1.getInflictStatus.
@@ -91,7 +95,7 @@ public class Move{
          * Hvis man ganger modifier med Base så vil man få Pikachus HP hvis man gør det 
          * ovenstående iterativt
          */
-        victim.setHPMod(1+damage/victim.getHP());
+        victim.setHPMod(damage);
         // doubles er upræcise derfor tager jeg range for at være sikker
         if (typechart.calcX(type) > 1 && typechart.calcX(type) <= 2) {
             System.out.println("Super effective! (2x)");
@@ -128,7 +132,6 @@ public class Move{
                 howManyTics = 0;
                 victim.setCurrentCondition(whatStatus);
                 victim.revertStatusCondition();
-
         }
     // Tror ikke at return damage er nødvendigt her, ihvertfald med min kode, fordi alle modifier ændringer
     // og bliver lavet inde i functionen.

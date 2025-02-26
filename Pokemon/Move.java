@@ -37,7 +37,7 @@ public class Move{
 
     public double performMove(Pokemon user, Pokemon victim) {
         // Denne linje skal laves før en "runde" går igang men gør ikke noget p.t.
-        if (user.getSpd() > victim.getSpd())
+        if ((user.getSpd() * user.getSpdMod()) > (victim.getSpd() * victim.getSpdMod()))
         {
             System.out.println(user.getPokeName() + "is faster and should move first.");
         }
@@ -56,10 +56,12 @@ public class Move{
             DamageNoRand = (((2 * user.getLevel() * (isCrit() == true ? critMultiplier : 1) / 5.0 + 2.0) * this.power 
             // Jeg tror at jeg har tjekket for crit nu
             * (isCrit() == true ? (this.isSpecial == true ? user.getSpA() * user.getSpAMod() 
-            / (victim.getSpDef() * victim.getSpAMod()) 
-            : user.getAtt() * user.getAttMod() / (victim.getDef() * victim.getDefMod())) : 
-            this.isSpecial == true ? user.getSpA() / victim.getSpDef() :
-            user.getAtt() / victim.getDef())+100) / 50.0
+            / (victim.getCritSpDef()) 
+            : user.getAtt() * user.getAttMod() / (victim.getCritDef())) : 
+            // Hvis crit ikke er true
+            this.isSpecial == true ? user.getSpA() * user.getSpAMod() / victim.getSpDef()
+            * victim.getSpDefMod() :
+            user.getAtt() * user.getAttMod() / victim.getDef() * victim.getDefMod())+100) / 50.0
 
             //determine whether STAB because of user types
             * (typechart.detectType(user, getType()) == true ? 1.5 : 1.0)

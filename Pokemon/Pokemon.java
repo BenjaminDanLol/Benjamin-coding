@@ -173,6 +173,21 @@ public class Pokemon {
         }
         SpdMod *= modifierChange;
     }
+    public double getCritDef() {
+        // Hvis defense modifieren er negativ så returner DefModifieren * Def
+        if (DefMod < 1) {
+        return DefMod * Def;
+        } else {
+            return Def;
+        }
+    }
+    public double getCritSpDef() {
+        if (SpDef < 1) {
+        return SpDefMod * SpDef;
+        } else {
+           return SpDef;
+        }
+    }
 
 
     public boolean checkFainted() { // check the Pokemon in parameter if their HP 0 or less

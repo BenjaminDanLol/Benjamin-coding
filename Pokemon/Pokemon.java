@@ -205,12 +205,7 @@ public class Pokemon {
     }
     public void revertStatusCondition() {
         // Den her burde gøre at den får en status condition, hvis den ikke har en og omvendt.
-        if(!statusCondition){
-            statusCondition = true;
-        }
-        else {
-            statusCondition = false;
-        }
+        statusCondition = !statusCondition;
     }
     public String getCurrentCondition() {
         return currentCondition;

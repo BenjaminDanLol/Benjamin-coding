@@ -128,21 +128,12 @@ public class Move{
 
         if (!victim.getStatusCondition() && inflictsStatus){
             System.out.println(victim.getPokeName() + " receives " + whatStatus);
-                // Sleep er tic baseret
                 howManyTics = 0;
                 victim.setCurrentCondition(whatStatus);
                 victim.revertStatusCondition();
         }
-    // Tror ikke at return damage er nødvendigt her, ihvertfald med min kode, fordi alle modifier ændringer
-    // og bliver lavet inde i functionen.
     return damage;
 }
-    // need more fields from Pokemon class, and can add status methods, if there are more
-    /*
-     * To have this as usable code I could do the following. Add a String field in Pokemon class,
-     * and also add a getter / setter method for that String.
-     * Now when the status chance applies, I use the setter for that field and have moveName as parameter.
-     */
     public boolean paraOrSleepTic(String _StatusName, Pokemon user) {
         return switch (_StatusName) {
             case "paralysis" -> {
@@ -181,11 +172,6 @@ public class Move{
 
     public boolean shouldInflictStatus(){
         return inflictsStatus;
-    }
-
-    // Tænker jeg laver Switch cases her, med en masse specifikke Status logik ved siden af.
-    public void applyStatusCondition(){
-
     }
 
     public boolean isCrit(){

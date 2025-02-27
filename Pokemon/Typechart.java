@@ -25,8 +25,8 @@ public class Typechart {
 
     public boolean detectType(Pokemon thisPokemon, String moveType){
 
-        for (int i = 0, n = thisPokemon.getTypeArray().length; i < n; i++) {
-            if (moveType.equals(thisPokemon.getTypeArray()[i])) {
+        for (int i = 0, n = thisPokemon.getTypings().length; i < n; i++) {
+            if (moveType.equals(thisPokemon.getTypings()[i])) {
                 return true;
         }
     }

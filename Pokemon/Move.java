@@ -39,12 +39,14 @@ public class Move{
     public double performMove(Pokemon user, Pokemon victim) {
         // Checker først og fremmest om det er en miss eller ej, return er det samme som at exit.
         // Her er paralysis og sleep også inkluderet
-        if (randomSuccess(accuracy) || paraOrSleepTic(user.getCurrentCondition(), user)) {
+        long realHitChance = Math.round(accuracy*user.getEvasionMod());
+        int fuck = (int) realHitChance;
+        if (randomSuccess(fuck) || paraOrSleepTic(user.getCurrentCondition(), user)) {
             System.out.println(user.getPokeName() + " misses!");
             return 0;
         }
         double DamageNoRand = 0.0;
-        typechart = new Typechart(victim.getType1(), victim.getType2());
+        typechart = new Typechart(victim.getTypings());
         randomMultiplier = (217.0 + randomNum(38) / 255.0);
         // Critboosten er indbygget i logikken efter isCrit som er bare baseret på CritChance.
         if (this.power > 0) {

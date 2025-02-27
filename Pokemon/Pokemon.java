@@ -8,10 +8,10 @@ public class Pokemon {
     private int SpA;
     private int SpDef;
     private int Spd;
-    private String type1;
-    private String type2;
     private int Level;
     private int CritBoost;
+    private String[] Typings;
+    private int evasion;
     private boolean statusCondition = false;
     private String currentCondition = "None";
     // Tilføjer modifiers
@@ -33,63 +33,87 @@ public class Pokemon {
         this.SpA = SpecialAttack;
         this.SpDef = SpecialDefence;
         this.Spd = Speed;
-        this.type1 = type[0];
-        this.type2 = type[1];
+        this.Typings = type;
         this.Level = Level;
     }
 
-    // Ville gerne kunne få adgang i metoder til alle disse fields
-    // I sidste ende blev det all på nær Spd.
+    public String[] getTypings(){
+        return Typings;
+    }
+
+    public String getASpecificTyping(int i) {
+        return Typings[i];
+    }
+
+    public void displayTypes() {
+        System.out.println(PokeName + " has the following types");
+        for (String i : Typings) {
+            int n = 0;
+            System.out.println(", " + getASpecificTyping(n));
+            n++;
+        }
+    }
+
+
+    public double getEvasionMod(){
+        if (evasion >  0)
+        {
+            return 3/(3+evasion);
+            } 
+        else if (evasion < 0)
+            {
+            return ((3-evasion)/3);
+        }
+        // Not writing else {}, cuz I'm lazy tihi
+        return evasion;
+    }
 
     public String getPokeName() {
         return this.PokeName;
     }
-    // For each move with stat change introduced I'll need to get a setter
+
     public int getHP() {
         return this.HP;
     }
+
     public int getAtt() {
         return this.Att;
     }
+
     public int getDef() {
         return this.Def;
     }
+
     public int getSpA() {
         return this.SpA;
     }
+
     public int getSpDef() {
         return this.SpDef;
     }
+
     public int getSpd() {
         return this.Spd;
     }
-    public String showType() {
-        return this.type1 + (this.type2 == null || this.type2.isEmpty() ? "" : "/" + this.type2);
-    }
 
-    public String[] getTypeArray() {
-        return new String[] {getType1(), (getType2() == null ? "" : getType2())};
-    }
 
-    public String getType1() {
-        return this.type1;
-    }
-    public String getType2() {
-        return this.type2;
-    }
     public int getLevel() {
         return this.Level;
     }
 
+
     public int getHPMod() {
         return HPMod;
     }
+
     public void setHPMod(long changeModHP) {
         HPMod -= changeModHP;
     }
+
     public double getAttMod() {
         return AttMod;
     }
+
     public void setAttMod(double modifierChange) {
         if (AttMod * modifierChange > 6) {
             AttMod = 6;
@@ -97,16 +121,18 @@ public class Pokemon {
             return;
         }
         
-        if (AttMod * modifierChange < 1/6) {
+        else if (AttMod * modifierChange < 1/6) {
             AttMod = 1/6;
             System.out.println("Attack is at Stage: -6, attack won't go lower!");
             return;
         }
         AttMod *= modifierChange;
     }
+
     public double getSpAMod() {
         return SpAMod;
     }
+
     public void setSpAMod(double modifierChange) {
         if (SpAMod * modifierChange > 6) {
             SpAMod = 6;
@@ -114,16 +140,18 @@ public class Pokemon {
             return;
         }
         
-        if (SpAMod * modifierChange < 1/6) {
+        else if (SpAMod * modifierChange < 1/6) {
             SpAMod = 1/6;
             System.out.println("Special Attack is at Stage: -6, special attack won't go lower!");
             return;
         }
         SpAMod *= modifierChange;
     }
+
     public double getDefMod() {
         return DefMod;
     }
+
     public void setDefMod(double modifierChange) {
         if (DefMod * modifierChange > 6) {
             DefMod = 6;
@@ -131,16 +159,18 @@ public class Pokemon {
             return;
         }
         
-        if (DefMod * modifierChange < 1/6) {
+        else if (DefMod * modifierChange < 1/6) {
             DefMod = 1/6;
             System.out.println("Defense is at Stage: -6, defense won't go lower!");
             return;
         }
         DefMod *= modifierChange;
     }
+
     public double getSpDefMod() {
         return SpDefMod;
     }
+
     public void setSpDefMod(double modifierChange) {
         if (SpDefMod * modifierChange > 6) {
             SpDefMod = 6;
@@ -148,16 +178,18 @@ public class Pokemon {
             return;
         }
         
-        if (SpDefMod * modifierChange < 1/6) {
+        else if (SpDefMod * modifierChange < 1/6) {
             SpDefMod = 1/6;
             System.out.println("Special Defense is at Stage: -6, special defense won't go lower!");
             return;
         }
         SpDefMod *= modifierChange;
     }
+
     public double getSpdMod() {
         return SpdMod;
     }
+
     public void setSpdMod(double modifierChange) {
         if (SpdMod * modifierChange > 6) {
             SpdMod = 6;
@@ -165,7 +197,7 @@ public class Pokemon {
             return;
         }
         
-        if (SpdMod * modifierChange < 1/6) {
+        else if (SpdMod * modifierChange < 1/6) {
             SpdMod = 1/6;
             System.out.println("Speed is at Stage: " + SpAMod + ", speed won't go lower!");
 
@@ -173,8 +205,8 @@ public class Pokemon {
         }
         SpdMod *= modifierChange;
     }
+
     public double getCritDef() {
-        // Hvis defense modifieren er negativ så returner DefModifieren * Def
         if (DefMod < 1) {
         return DefMod * Def;
         } else {
@@ -190,8 +222,8 @@ public class Pokemon {
         }
     }
 
-
-    public boolean checkFainted() { // check the Pokemon in parameter if their HP 0 or less
+    // check the if HP Mod is 0 or less
+    public boolean checkFainted() {
         if (getHPMod() <= 0) {
             return true;
         }
@@ -203,14 +235,17 @@ public class Pokemon {
     public boolean getStatusCondition() {
         return statusCondition;
     }
+
     public void revertStatusCondition() {
-        // Den her burde gøre at den får en status condition, hvis den ikke har en og omvendt.
         statusCondition = !statusCondition;
     }
+
     public String getCurrentCondition() {
         return currentCondition;
     }
+
     public void setCurrentCondition(String newCondition) {
         currentCondition = newCondition;
     }
+
 }

@@ -22,7 +22,6 @@ public class Typechart {
         return false;
     }
     //FRA OLIVER ****** VI KAN EVT TJEKKE LÆNGDEN AF INDIVIDUELLE STRINGS (TYPES) FOR AT SKIPPE NOGET AF SØGNINGEN
-
     public boolean detectType(Pokemon thisPokemon, String moveType){
 
         for (int i = 0, n = thisPokemon.getTypings().length; i < n; i++) {

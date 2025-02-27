@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Pokemon {
     // may need to be changed to public, so extenders have access or getters
     // are enough
@@ -21,6 +23,8 @@ public class Pokemon {
     private double DefMod = 1;
     private double SpDefMod = 1;
     private double SpdMod = 1;
+    private double accuracyMod = 1;
+    ArrayList<String> SecondaryConditions = new ArrayList<>();
     public Pokemon(String name, int HealthPoints, int Attack, int Defence, 
     int SpecialAttack, int SpecialDefence, int Speed, int Level, String... type) {
         // Something that should refer to the extenders somehow
@@ -35,6 +39,16 @@ public class Pokemon {
         this.Spd = Speed;
         this.Typings = type;
         this.Level = Level;
+    }
+
+    public void addSecondaryCondition(String secondaryCondition) {
+        SecondaryConditions.add(secondaryCondition);
+    }
+    public void removeSecondaryCondition(String secondaryCondition) {
+        SecondaryConditions.remove(secondaryCondition);
+    }
+    public ArrayList<String> getSecondaryCondtions() {
+        return SecondaryConditions;
     }
 
     public String[] getTypings(){
@@ -101,7 +115,11 @@ public class Pokemon {
         return this.Level;
     }
 
-
+    /*
+     * I'm tired rn but I belive that the stat changes are wrong since they start at 1, based off the logic.
+     * I.e. Speed, Attack, SpA can be 0, this calls for further adjustments.
+     * I'll probably need to change them into int's where there are division calculations inside.
+     */
     public int getHPMod() {
         return HPMod;
     }
@@ -213,9 +231,12 @@ public class Pokemon {
             return Def;
         }
     }
-    // Wrong calculation
+    /* Since we want to check for if the SpDef or Def modifiers are not in the negative, since
+    in the case of the mods being in the negative we would want the modified SpDef value.
+    But on the flip side we want piercing for positive Def/Spdef modifiers.
+    */
     public double getCritSpDef() {
-        if (SpDef < 1) {
+        if (SpDefMod < 1) {
         return SpDefMod * SpDef;
         } else {
            return SpDef;
@@ -225,6 +246,7 @@ public class Pokemon {
     // check the if HP Mod is 0 or less
     public boolean checkFainted() {
         if (getHPMod() <= 0) {
+            System.out.println(PokeName + "fainted");
             return true;
         }
         else {

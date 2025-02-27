@@ -41,7 +41,7 @@ public class Move{
         // Her er paralysis og sleep også inkluderet
         long realHitChance = Math.round(accuracy*user.getEvasionMod());
         int fuck = (int) realHitChance;
-        if (randomSuccess(fuck) || paraOrSleepTic(user.getCurrentCondition(), user)) {
+        if (randomSuccess(fuck)) {
             System.out.println(user.getPokeName() + " misses!");
             return 0;
         }
@@ -52,7 +52,7 @@ public class Move{
         if (this.power > 0) {
             isCrit = isCrit();
             // Gen 1 dmg calc https://imgur.com/a/KxmCrKD
-            DamageNoRand = (((2 * user.getLevel() * (isCrit == true ? critMultiplier : 1) / 5.0 + 2.0) * this.power 
+            DamageNoRand = ((((2 * user.getLevel() * (isCrit == true ? critMultiplier : 1) / 5.0 + 2.0) * this.power 
             // Jeg tror at jeg har tjekket for crit nu
             * (isCrit == true ? (this.isSpecial == true ? user.getSpA() * user.getSpAMod() 
             / (victim.getCritSpDef()) 
@@ -60,16 +60,10 @@ public class Move{
             // Hvis crit ikke er true
             this.isSpecial == true ? user.getSpA() * user.getSpAMod() / victim.getSpDef()
             * victim.getSpDefMod() :
-            user.getAtt() * user.getAttMod() / victim.getDef() * victim.getDefMod())+100) / 50.0
-
-            //determine whether STAB because of user types
-            * (typechart.detectType(user, getType()) == true ? 1.5 : 1.0)
-
-            //determine type advantage/disadvantage of victim type 1 and 2 (CALC X SKAL IMPLEMENTERES HER)
-            * (typechart.detectType(victim, getType()) == true ? 1.5 : 1.0)
-
-            // Det her bør checke for typeChart's array af sig selv og sammenlign det hele med move typen
-            * (typechart.calcX(type)));
+            // Ændret /50 og +2 i damage, til 100/50 her
+            user.getAtt() * user.getAttMod() / victim.getDef() * victim.getDefMod())+100) / 50.0)
+            * (typechart.detectType(user, type) == true ? 1.5 : 1.0) * (typechart.calcX(type)));
+            // Mere kompakt end før, ændrede getType til bare type fordi det virkede dumt at få et objekt til at kalde på sin egen field
         }
             if (DamageNoRand > 1.0) {
             damage = Math.round(DamageNoRand * (randomMultiplier));
@@ -85,20 +79,9 @@ public class Move{
         // inflictStatus bliver true/false, til scenariet, kan der så bare efter moven bliver
         // udført en p1move1.getInflictStatus.
         inflictsStatus = applyStatus(statusChance);
-        /*
-         * Tur 1: Pikachu 80 HP, tager 10 DMG, Pikachu HP nu 70 HP
-         * Tur 2: Pikachu 70 HP, tager 10 DMG, Pikachu HP nu 60 HP
-         * 3. Pikachu 60 HP, tager 10 DMG, Pikachu HP nu 50 HP
-         * 4. Pikachu 50 HP, tager 10 DMG, Pikachu HP nu 40 HP
-         * 
-         * Tur 1 Pikachu 80 HP, mister -10/80*80 = -10 HP, Pikachu HP nu 70 HP
-         * Modifier for denne tur 1 + (-10/80) = 0.875
-         * victim.setHPMod(1+(damage/victim.getHP()));
-         * Hvis man ganger modifier med Base så vil man få Pikachus HP hvis man gør det 
-         * ovenstående iterativt
-         */
+
         victim.setHPMod(damage);
-        // doubles er upræcise derfor tager jeg range for at være sikker
+        // doubles er upræcise derfor tager jeg range for at være sikker, men nok ikke nødvendigt
         if (typechart.calcX(type) > 1 && typechart.calcX(type) <= 2) {
             System.out.println("Super effective! (2x)");
         }
@@ -128,6 +111,7 @@ public class Move{
         System.out.println(victim.getPokeName() + " HP is now: " + victim.getHPMod()
         * victim.getHP());
 
+        
         if (!victim.getStatusCondition() && inflictsStatus){
             System.out.println(victim.getPokeName() + " receives " + whatStatus);
                 howManyTics = 0;
@@ -136,6 +120,7 @@ public class Move{
         }
     return damage;
 }
+
     public boolean paraOrSleepTic(String _StatusName, Pokemon user) {
         return switch (_StatusName) {
             case "paralysis" -> {
@@ -188,10 +173,6 @@ public class Move{
         return this.moveName;
     }
 
-    public double getRandomMultiplier(){
-        return randomMultiplier;
-    }
-
     public double randomNum(int range){
         Random random = new Random();
         return random.nextInt(range) + 1; // Returns a random number from 1 - int range.
@@ -202,7 +183,6 @@ public class Move{
         if (range > localRange) {
             return true;
         }
-
         return false;
     }
 }

@@ -2,6 +2,13 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        /*
+         * Something is obviously wrong, but this is the setup I was thinking about.
+         * Will add logic, but I'm not going to work on this project more this weekend. 
+         * Got stuff to do. Good luck coding, if your reading this.
+         */
+        BenjaminScenario runCustomScenario = new BenjaminScenario();
+        runCustomScenario.startNewBattle();
         // we need a movelist to choose from and define p1move1 etc as the picked move using the scanner. 
         Move p1move1 = new Flamethrower();
         Move p1move2 = new Flamethrower();

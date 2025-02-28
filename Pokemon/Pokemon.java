@@ -4,14 +4,13 @@ public class Pokemon {
     // may need to be changed to public, so extenders have access or getters
     // are enough
     private String PokeName;
-    private int HP; // Maybe float, any knowers?
+    private int HP;
     private int Att;
     private int Def;
     private int SpA;
     private int SpDef;
     private int Spd;
     private int Level;
-    private int CritBoost;
     private String[] Typings;
     private int evasion;
     private boolean statusCondition = false;

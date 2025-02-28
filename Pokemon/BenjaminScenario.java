@@ -1,3 +1,5 @@
+
+
 public class BenjaminScenario {
     /*
      * Starting the scenario itself, logic for randomize choices p1 or p2 will receive. Pokemon and possibly moves or even more shit.
@@ -37,5 +39,45 @@ public class BenjaminScenario {
      * Keep a count of who won the battle.
      * Iterate this the amount of rounds chosen.
      * Display a victory screen where the player who won is mentioned.
+     * 
+     * 
+     * I will program these functionalities inversely, i.e. the core and work my way up from the
+     * Simulate a turn and up from there.
      */
+    public void startNewBattle() {
+        Flamethrower p1q = new Flamethrower();
+        Flamethrower p1w = new Flamethrower();
+        Flamethrower p1e = new Flamethrower();
+        Flamethrower p1r = new Flamethrower();
+        VineWhip p2z = new VineWhip();
+        VineWhip p2x = new VineWhip();
+        VineWhip p2c = new VineWhip();
+        VineWhip p2v = new VineWhip();
+        Charizard p1 = new Charizard();
+        Venusaur p2 = new Venusaur();
+        // Doing it 7 times to see what happens
+        for (int i = 0; i < 7; i++) {
+        performATwoBasedTurn(p1, p1q, p1w, p1e, p1r, p2, p2z, p2x, p2c, p2v);
+        }
+    }
+    public void performATwoBasedTurn
+    // Naturally more logic will be added here
+    (
+    Pokemon p1, Move p1q, Move p1w, Move p1e, Move p1r,
+    Pokemon p2, Move p2z, Move p2x, Move p2c, Move p2v
+    )
+            {
+    // The if and else if checks for who'se quicker, modifiers are included
+    if (p1.getSpd() * p1.getSpdMod() > p2.getSpd() * p2.getSpdMod()) {
+    // p1 performs Moveq, the mapping may look weird, but there's a reason. Just 1 move
+    p1q.performMove(p1, p2);
+    // p2 performs Movec, p2 chooses to use his third move.
+    p2c.performMove(p2, p1);
+    }
+    else if (p2.getSpd() * p2.getSpdMod() > p1.getSpd() * p1.getSpdMod()) {
+    p2c.performMove(p2, p1);
+    p1q.performMove(p1, p2);
+        }
+    }
 }
+

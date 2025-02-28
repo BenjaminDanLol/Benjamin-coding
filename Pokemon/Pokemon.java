@@ -114,6 +114,17 @@ public class Pokemon {
     public int getLevel() {
         return this.Level;
     }
+    /*
+     * 	int calculate_exp(int level)
+	{
+		return level * level * level;
+	}
+
+	int calculate_tnl()
+	{
+		(calculate_exp(level + 1) - experience);
+	}
+     */
 
     /*
      * I'm tired rn but I belive that the stat changes are wrong since they start at 1, based off the logic.

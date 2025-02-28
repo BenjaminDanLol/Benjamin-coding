@@ -46,7 +46,7 @@ public class Move{
             return 0;
         }
         double DamageNoRand = 0.0;
-        typechart = new Typechart(victim.getTypings());
+        typechart = new Typechart(victim);
         randomMultiplier = (217.0 + randomNum(38) / 255.0);
         // Critboosten er indbygget i logikken efter isCrit som er bare baseret på CritChance.
         if (this.power > 0) {

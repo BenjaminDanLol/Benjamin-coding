@@ -4,12 +4,10 @@ public class Typechart {
     private double attackerTypeMultiplier = 1;
     private String[] VictimTypings;
 
-    public Typechart(String OppTypings[]){
-        this.VictimTypings = new String[] {
-        OppTypings[0], 
-        OppTypings[1]
-    };
-}
+    public Typechart(Pokemon victim){
+        this.VictimTypings = victim.getTypings();
+        // This should make everything to do with Typings dynamic, i.e. can have infinite Types.
+    }
 
     public boolean DetectTypingLocal(String whichType){
         // Loop så mange typings modstanderen har, og check om et af deres typings == typen af whichType

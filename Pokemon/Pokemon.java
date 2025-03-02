@@ -11,7 +11,7 @@ public class Pokemon {
     private int SpDef;
     private int Spd;
     private int Level;
-    private String[] Typings;
+    ArrayList<String> Typings = new ArrayList<>();
     private int evasion;
     private boolean statusCondition = false;
     private String currentCondition = "None";
@@ -37,7 +37,9 @@ public class Pokemon {
         this.SpA = SpecialAttack;
         this.SpDef = SpecialDefence;
         this.Spd = Speed;
-        this.Typings = type;
+        for (int i = 0, n = type.length; i < n; i++) {
+            Typings.add(type[0]);
+        }
         this.Level = Level;
     }
 
@@ -51,21 +53,20 @@ public class Pokemon {
         return SecondaryConditions;
     }
 
-    public String[] getTypings(){
+    public ArrayList<String> getTypings(){
         return Typings;
-    }
+        }
 
     public String getASpecificTyping(int i) {
-        return Typings[i];
+        return Typings.get(i);
     }
 
     public void displayTypes() {
         System.out.println(PokeName + " has the following types");
-        for (String i : Typings) {
-            int n = 0;
-            System.out.println(", " + getASpecificTyping(n));
-            n++;
-        }
+            for (int i = 0, n = Typings.size(); i < n; i++){
+            System.out.println(getASpecificTyping(i));
+            }
+        
     }
 
 

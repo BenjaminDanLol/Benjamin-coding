@@ -17,12 +17,13 @@ public class Pokemon {
     private String currentCondition = "None";
     // Tilføjer modifiers
     private int HPMod = HP;
-    private int AttMod = 0;
-    private double SpAMod = 1;
-    private double DefMod = 1;
-    private double SpDefMod = 1;
-    private double SpdMod = 1;
-    private double accuracyMod = 1;
+    private byte AttMod = 0;
+    private byte SpAMod = 0;
+    private byte DefMod = 0;
+    private byte SpDefMod = 0;
+    private byte SpdMod = 0;
+    // Need stuff for the accuracyMod
+    private byte accuracyMod = 1;
     ArrayList<String> SecondaryConditions = new ArrayList<>();
     public Pokemon(String name, int HealthPoints, int Attack, int Defence, 
     int SpecialAttack, int SpecialDefence, int Speed, int Level, String... type) {
@@ -73,11 +74,10 @@ public class Pokemon {
         {
             return 3/(3+evasion);
             } 
-        else if (evasion < 0)
-            {
-            return ((3-evasion)/3);
-        }
-        // Not writing else {}, cuz I'm lazy tihi
+            else if (evasion < 0)
+                {
+                return ((3-evasion)/3);
+            }
         return evasion;
     }
 
@@ -125,11 +125,6 @@ public class Pokemon {
 	}
      */
 
-    /*
-     * I'm tired rn but I belive that the stat changes are wrong since they start at 1, based off the logic.
-     * I.e. Speed, Attack, SpA can be 0, this calls for further adjustments.
-     * I'll probably need to change them into int's where there are division calculations inside.
-     */
     public int getHPMod() {
         return HPMod;
     }
@@ -147,115 +142,134 @@ public class Pokemon {
         }
     }
 
-    public void setAttMod(int modifierChange) {
+    public void setAttMod(byte modifierChange) {
         if (AttMod + modifierChange > 6) {
             AttMod = 6;
             System.out.println("Attack is at Stage: " + SpAMod + ", attack won't go higher!");
             return;
         }
         
-        else if (AttMod + modifierChange < -6) {
-            AttMod = -6;
-            System.out.println("Attack is at Stage: -6, attack won't go lower!");
-            return;
-        }
-        AttMod *= modifierChange;
+            else if (AttMod + modifierChange < -6) {
+                AttMod = -6;
+                System.out.println("Attack is at Stage: -6, attack won't go lower!");
+                return;
+            }
+        AttMod += modifierChange;
     }
 
     public double getSpAMod() {
-        return SpAMod;
+        if (SpAMod >= 0){
+            return SpAMod + 1;
+        }
+            else {
+                return 2/(-SpAMod+2);
+            }
     }
 
-    public void setSpAMod(double modifierChange) {
-        if (SpAMod * modifierChange > 6) {
+    public void setSpAMod(byte modifierChange) {
+        if (SpAMod + modifierChange > 6) {
             SpAMod = 6;
             System.out.println("Special Attack is at Stage: " + SpAMod + ", special attack won't go higher!");
             return;
         }
         
-        else if (SpAMod * modifierChange < 1/6) {
-            SpAMod = 1/6;
-            System.out.println("Special Attack is at Stage: -6, special attack won't go lower!");
-            return;
-        }
-        SpAMod *= modifierChange;
+            else if (SpAMod + modifierChange < -6) {
+                SpAMod = -6;
+                System.out.println("Special Attack is at Stage: -6, special attack won't go lower!");
+                return;
+            }
+        SpAMod += modifierChange;
     }
 
     public double getDefMod() {
-        return DefMod;
+        if (DefMod >= 0){
+            return DefMod + 1;
+        }
+            else {
+                return 2/(-DefMod+2);
+            }
     }
 
-    public void setDefMod(double modifierChange) {
-        if (DefMod * modifierChange > 6) {
+    public void setDefMod(byte modifierChange) {
+        if (DefMod + modifierChange > 6) {
             DefMod = 6;
             System.out.println("Defense is at Stage: " + SpAMod + ", defense won't go higher!");
             return;
         }
         
-        else if (DefMod * modifierChange < 1/6) {
-            DefMod = 1/6;
-            System.out.println("Defense is at Stage: -6, defense won't go lower!");
-            return;
-        }
-        DefMod *= modifierChange;
+            else if (DefMod + modifierChange < -6) {
+                DefMod = -6;
+                System.out.println("Defense is at Stage: -6, defense won't go lower!");
+                return;
+            }
+        DefMod += modifierChange;
     }
 
     public double getSpDefMod() {
-        return SpDefMod;
+        if (SpDefMod >= 0){
+            return AttMod + 1;
+        }
+            else {
+                return 2/(-SpDefMod+2);
+            }
     }
 
-    public void setSpDefMod(double modifierChange) {
-        if (SpDefMod * modifierChange > 6) {
+    public void setSpDefMod(byte modifierChange) {
+        if (SpDefMod + modifierChange > 6) {
             SpDefMod = 6;
             System.out.println("Special Defense is at Stage: " + SpAMod + ", special defense won't go higher!");
             return;
         }
         
-        else if (SpDefMod * modifierChange < 1/6) {
-            SpDefMod = 1/6;
-            System.out.println("Special Defense is at Stage: -6, special defense won't go lower!");
-            return;
-        }
-        SpDefMod *= modifierChange;
+            else if (SpDefMod + modifierChange < -6) {
+                SpDefMod = -6;
+                System.out.println("Special Defense is at Stage: -6, special defense won't go lower!");
+                return;
+            }
+        SpDefMod += modifierChange;
     }
 
     public double getSpdMod() {
-        return SpdMod;
+        if (SpdMod >= 0){
+            return SpdMod + 1;
+        }
+            else {
+                return 2/(-SpdMod+2);
+            }
     }
 
-    public void setSpdMod(double modifierChange) {
-        if (SpdMod * modifierChange > 6) {
+    public void setSpdMod(byte modifierChange) {
+        if (SpdMod + modifierChange > 6) {
             SpdMod = 6;
             System.out.println("Speed is at Stage: " + SpAMod + ", speed won't go higher!");
             return;
         }
-        
-        else if (SpdMod * modifierChange < 1/6) {
-            SpdMod = 1/6;
-            System.out.println("Speed is at Stage: " + SpAMod + ", speed won't go lower!");
 
-            return;
-        }
-        SpdMod *= modifierChange;
+            else if (SpdMod + modifierChange < -6) {
+                SpdMod = -6;
+                System.out.println("Speed is at Stage: " + SpAMod + ", speed won't go lower!");
+                return;
+            }
+        SpdMod += modifierChange;
     }
 
     public double getCritDef() {
-        if (DefMod < 1) {
+        // For negative stages
+        if (DefMod < 0) {
         return DefMod * Def;
-        } else {
-            return Def;
-        }
+        } 
+            else {
+        // Pierce and ignore positive modifiers for Def
+                return Def;
+            }
     }
-    /* Since we want to check for if the SpDef or Def modifiers are not in the negative, since
-    in the case of the mods being in the negative we would want the modified SpDef value.
-    But on the flip side we want piercing for positive Def/Spdef modifiers.
-    */
     public double getCritSpDef() {
-        if (SpDefMod < 1) {
+        if (SpDefMod < 0) {
         return SpDefMod * SpDef;
-        } else {
-           return SpDef;
-        }
+        } 
+            else {
+                return SpDef;
+            }
     }
 
     // check the if HP Mod is 0 or less
@@ -264,9 +278,9 @@ public class Pokemon {
             System.out.println(PokeName + "fainted");
             return true;
         }
-        else {
-            return false;
-        }
+            else {
+                return false;
+            }
     }
 
     public boolean getStatusCondition() {

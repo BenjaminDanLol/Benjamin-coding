@@ -1,7 +1,5 @@
 
 public class Typechart {
-
-    private double attackerTypeMultiplier = 1;
     private String[] VictimTypings;
 
     public Typechart(Pokemon victim){
@@ -57,7 +55,7 @@ public class Typechart {
     // Ekstremt vigtigt her er at forstå at effectiveness calculateren iterere over alle elementer af en array
     public double calcX(String moveTyping)
     {
-
+        double attackerTypeMultiplier = 1;
         switch (moveTyping)
         {
             case "Normal":
@@ -117,8 +115,9 @@ public class Typechart {
             default: 
             attackerTypeMultiplier = 1;
            
-        return attackerTypeMultiplier;
         } 
+        System.out.printf("type effectivess of move: %.3f\n", attackerTypeMultiplier);
+        return attackerTypeMultiplier;
     }
         
 

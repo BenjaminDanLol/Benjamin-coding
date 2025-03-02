@@ -27,7 +27,7 @@ public class Typechart {
                 return true;
         }
     }
-    
+
     return false;
     }
 
@@ -55,7 +55,6 @@ public class Typechart {
         return true;
     }
 
-    // Ekstremt vigtigt her er at forstå at effectiveness calculateren iterere over alle elementer af en ArrayList
     public double calcX(String moveTyping)
     {
         switch (moveTyping)
@@ -130,7 +129,8 @@ public class Typechart {
                 case ("Fire"), ("Water"), ("Rock"), ("Dragon") -> storedModifier *= 0.5;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f", storedModifier);
+        System.out.println();
         return storedModifier;         
     }
 
@@ -142,7 +142,7 @@ public class Typechart {
             case ("Ghost") -> storedModifier *= 0;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
         return storedModifier;
     }
 
@@ -154,7 +154,7 @@ public class Typechart {
             case ("Water"), ("Grass"), ("Dragon") -> storedModifier *= 0.5;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
         return storedModifier;
     }
 
@@ -166,7 +166,7 @@ public class Typechart {
             case ("Water"), ("Ground"), ("Rock") -> storedModifier *= 2;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
         return storedModifier;
     }
 
@@ -179,7 +179,7 @@ public class Typechart {
                 case ("Ground") -> storedModifier *= 0;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
         return storedModifier;
     }
 
@@ -191,7 +191,7 @@ public class Typechart {
                 case("Grass"), ("Ground"), ("Flying"), ("Dragon") -> storedModifier *= 2;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
         return storedModifier;
     }
 
@@ -204,7 +204,7 @@ public class Typechart {
                 case("Ghost") -> storedModifier *= 0;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
         return storedModifier;
     }
 
@@ -217,7 +217,7 @@ public class Typechart {
                 case("Steel") -> storedModifier *= 0;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
         return storedModifier;
     }
 
@@ -230,7 +230,7 @@ public class Typechart {
                 case("Flying") -> storedModifier *= 0;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
         return storedModifier;
     }
 
@@ -242,7 +242,7 @@ public class Typechart {
                 case("Electric"), ("Rock"), ("Steel") -> storedModifier *= 0.5;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
         return storedModifier;
     }
 
@@ -255,7 +255,7 @@ public class Typechart {
                 case("Dark") -> storedModifier *= 0;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
         return storedModifier;
     }
 
@@ -267,7 +267,7 @@ public class Typechart {
                 case("Grass"), ("Psychic"), ("Dark") -> storedModifier *= 2;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
         return storedModifier;
     }
 
@@ -279,7 +279,7 @@ public class Typechart {
                 case("Fighting"), ("Ground"), ("Steel") -> storedModifier *= 0.5;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
         return storedModifier;
     }
 
@@ -292,7 +292,7 @@ public class Typechart {
                 case("Dark") -> storedModifier *= 0.5;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
         return storedModifier;
     }
 
@@ -305,7 +305,7 @@ public class Typechart {
                 case("Fairy") -> storedModifier *= 0;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
         return storedModifier;
     }
 
@@ -317,7 +317,7 @@ public class Typechart {
                 case("Psychic"), ("Ghost") -> storedModifier *= 2;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
         return storedModifier;
     }
 
@@ -329,7 +329,7 @@ public class Typechart {
                 case("Ice"), ("Rock"), ("Fairy") -> storedModifier *= 2;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
         return storedModifier;
     }
 
@@ -341,7 +341,7 @@ public class Typechart {
                 case("Fighting"), ("Dragon"), ("Dark") -> storedModifier *= 2;
             }
         }
-        System.out.printf("Effectiveness is %.5fdx%n", storedModifier);
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
         return storedModifier;
     }
 }

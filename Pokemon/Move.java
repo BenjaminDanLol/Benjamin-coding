@@ -37,9 +37,8 @@ public class Move{
     }
 
     public double performMove(Pokemon user, Pokemon victim) {
-        // Checker først og fremmest om det er en miss eller ej, return er det samme som at exit.
-        // Her er paralysis og sleep også inkluderet
-        long realHitChance = Math.round(accuracy*user.getEvasionMod());
+        // For a move with 100 accuracy with 0 evasion, realHitChance = 0, seems wrong
+        long realHitChance = Math.round(accuracy*victim.getEvasionMod());
         int fuck = (int) realHitChance;
         if (randomSuccess(fuck)) {
             System.out.println(user.getPokeName() + " misses!");
@@ -62,7 +61,7 @@ public class Move{
             (this.isSpecial == true ? (user.getSpA() * user.getSpAMod()) / (victim.getSpDef() * victim.getSpDefMod()) : 
             // if Crit is not true and isSpecial is not true
             (user.getAtt() * user.getAttMod()) / (victim.getDef() * victim.getDefMod()))+100) / 50.0)
-            // Calculation performed regardless
+            // Calculation performed regardless, detectType returns false
             * (typechart.detectType(user, type) == true ? 1.5 : 1) * (typechart.calcX(type));
         }
             if (DamageNoRand > 1) {
@@ -79,32 +78,7 @@ public class Move{
         // inflictStatus bliver true/false, til scenariet, kan der så bare efter moven bliver
         // udført en p1move1.getInflictStatus.
         inflictsStatus = applyStatus(statusChance);
-
         victim.setHPMod(damage);
-        // doubles er upræcise derfor tager jeg range for at være sikker, men nok ikke nødvendigt
-        if (typechart.calcX(type) > 1 && typechart.calcX(type) <= 2.1) {
-            System.out.println("Super effective! (2x)");
-        }
-        
-        else if (typechart.calcX(type) > 2 && typechart.calcX(type) <= 4) {
-            System.out.println("Super effective!! (4x)");
-        }
-        
-        else if (typechart.calcX(type) < 0.9 && typechart.calcX(type) >= 0.4) {
-            System.out.println("Not very effective (0.5x)"); 
-        }
-        
-        else if (typechart.calcX(type) < 0.5 && typechart.calcX(type) > 0.05) {
-            System.out.println("Pathetic (0.25x)");
-        }
-        
-        else if (typechart.calcX(type) == 0) {
-            System.out.println("Opponent is immune! (0x)");
-        }
-
-        else {
-            System.out.println("Effective (1x)");
-        }
 
         System.out.println(user.getPokeName() + " uses " + moveName + " and " +
         victim.getPokeName() + " loses " + damage + " HP!");

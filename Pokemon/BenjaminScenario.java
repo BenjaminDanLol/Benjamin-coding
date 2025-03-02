@@ -58,11 +58,18 @@ public class BenjaminScenario {
         Venusaur p2 = new Venusaur();
         p1.displayTypes();
         p2.displayTypes();
-        // Doing it 7 times to see what happens
-        for (int i = 1; i < 8; i++) {
-        System.out.println("Turn: " + i);
+        // This will be ugly but desperate times call for desperate measures
+        p1q.performMove(p2, p1);
+        System.out.println("Turn: " + 1);
         performATwoBasedTurn(p1, p1q, p1w, p1e, p1r, p2, p2z, p2x, p2c, p2v);
-        }
+        System.out.println("Turn: " + 2);
+        performATwoBasedTurn(p1, p1q, p1w, p1e, p1r, p2, p2z, p2x, p2c, p2v);
+        System.out.println("Turn: " + 3);
+        performATwoBasedTurn(p1, p1q, p1w, p1e, p1r, p2, p2z, p2x, p2c, p2v);
+        System.out.println("Turn: " + 5);
+        performATwoBasedTurn(p1, p1q, p1w, p1e, p1r, p2, p2z, p2x, p2c, p2v);
+        System.out.println("Turn: " +6);
+        performATwoBasedTurn(p1, p1q, p1w, p1e, p1r, p2, p2z, p2x, p2c, p2v);
     }
     public void performATwoBasedTurn
     // Naturally more logic will be added here

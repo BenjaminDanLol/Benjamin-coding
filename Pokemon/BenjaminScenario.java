@@ -45,6 +45,7 @@ public class BenjaminScenario {
      * Simulate a turn and up from there.
      */
     public void startNewBattle() {
+        
         Flamethrower p1q = new Flamethrower();
         Flamethrower p1w = new Flamethrower();
         Flamethrower p1e = new Flamethrower();
@@ -55,8 +56,11 @@ public class BenjaminScenario {
         VineWhip p2v = new VineWhip();
         Charizard p1 = new Charizard();
         Venusaur p2 = new Venusaur();
+        p1.displayTypes();
+        p2.displayTypes();
         // Doing it 7 times to see what happens
-        for (int i = 0; i < 7; i++) {
+        for (int i = 1; i < 8; i++) {
+        System.out.println("Turn: " + i);
         performATwoBasedTurn(p1, p1q, p1w, p1e, p1r, p2, p2z, p2x, p2c, p2v);
         }
     }

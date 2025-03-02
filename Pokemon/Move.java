@@ -47,23 +47,23 @@ public class Move{
         }
         double DamageNoRand = 0.0;
         typechart = new Typechart(victim);
-        randomMultiplier = (217.0 + randomNum(38) / 255.0);
+        randomMultiplier = (217.0 + randomNum(38)) / 255.0;
         // Critboosten er indbygget i logikken efter isCrit som er bare baseret på CritChance.
         if (this.power > 0) {
             isCrit = isCrit();
             // Gen 1 dmg calc https://imgur.com/a/KxmCrKD
-            DamageNoRand = ((((2 * user.getLevel() * (isCrit == true ? critMultiplier : 1) / 5.0 + 2.0) * this.power 
-            // Jeg tror at jeg har tjekket for crit nu
-            * (isCrit == true ? (this.isSpecial == true ? user.getSpA() * user.getSpAMod() 
-            / (victim.getCritSpDef()) 
-            : user.getAtt() * user.getAttMod() / (victim.getCritDef())) : 
-            // Hvis crit ikke er true
-            this.isSpecial == true ? user.getSpA() * user.getSpAMod() / victim.getSpDef()
-            * victim.getSpDefMod() :
-            // Ændret /50 og +2 i damage, til 100/50 her
-            user.getAtt() * user.getAttMod() / victim.getDef() * victim.getDefMod())+100) / 50.0)
-            * (typechart.detectType(user, type) == true ? 1.5 : 1.0) * (typechart.calcX(type)));
-            // Mere kompakt end før, ændrede getType til bare type fordi det virkede dumt at få et objekt til at kalde på sin egen field
+            // if crit is true * critMultiplier else * 1
+            DamageNoRand = ((2 * user.getLevel() * (isCrit == true ? critMultiplier : 1)) / 5.0 + 2.0) * this.power * 
+            // if crit is true and isSpecial is true 
+            ((isCrit == true ? (this.isSpecial == true ? (user.getSpA() * user.getSpAMod()) / victim.getCritSpDef() : 
+            // if Crit is true and isSpecial is not true
+            (user.getAtt() * user.getAttMod()) / victim.getCritDef()) :  
+            // if Crit is not true, and isSpecial is true
+            (this.isSpecial == true ? (user.getSpA() * user.getSpAMod()) / (victim.getSpDef() * victim.getSpDefMod()) : 
+            // if Crit is not true and isSpecial is not true
+            (user.getAtt() * user.getAttMod()) / (victim.getDef() * victim.getDefMod()))+100) / 50.0)
+            // Calculation performed regardless
+            * (typechart.detectType(user, type) == true ? 1.5 : 1) * (typechart.calcX(type));
         }
             if (DamageNoRand > 1.0) {
             damage = Math.round(DamageNoRand * (randomMultiplier));
@@ -82,7 +82,7 @@ public class Move{
 
         victim.setHPMod(damage);
         // doubles er upræcise derfor tager jeg range for at være sikker, men nok ikke nødvendigt
-        if (typechart.calcX(type) > 1 && typechart.calcX(type) <= 2) {
+        if (typechart.calcX(type) > 1 && typechart.calcX(type) <= 2.1) {
             System.out.println("Super effective! (2x)");
         }
         
@@ -90,7 +90,7 @@ public class Move{
             System.out.println("Super effective!! (4x)");
         }
         
-        else if (typechart.calcX(type) < 1 && typechart.calcX(type) >= 0.5) {
+        else if (typechart.calcX(type) < 0.9 && typechart.calcX(type) >= 0.4) {
             System.out.println("Not very effective (0.5x)"); 
         }
         
@@ -108,8 +108,7 @@ public class Move{
 
         System.out.println(user.getPokeName() + " uses " + moveName + " and " +
         victim.getPokeName() + " loses " + damage + " HP!");
-        System.out.println(victim.getPokeName() + " HP is now: " + victim.getHPMod()
-        * victim.getHP());
+        System.out.println(victim.getPokeName() + " HP is now: " + victim.getHPMod());
 
         
         if (!victim.getStatusCondition() && inflictsStatus){

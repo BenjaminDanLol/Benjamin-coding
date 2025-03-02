@@ -17,7 +17,7 @@ public class Pokemon {
     private String currentCondition = "None";
     // Tilføjer modifiers
     private int HPMod = HP;
-    private double AttMod = 1;
+    private int AttMod = 0;
     private double SpAMod = 1;
     private double DefMod = 1;
     private double SpDefMod = 1;
@@ -139,18 +139,23 @@ public class Pokemon {
     }
 
     public double getAttMod() {
-        return AttMod;
+        if (AttMod >= 0){
+            return AttMod + 1;
+        }
+        else {
+            return 2/(-AttMod+2);
+        }
     }
 
-    public void setAttMod(double modifierChange) {
-        if (AttMod * modifierChange > 6) {
+    public void setAttMod(int modifierChange) {
+        if (AttMod + modifierChange > 6) {
             AttMod = 6;
             System.out.println("Attack is at Stage: " + SpAMod + ", attack won't go higher!");
             return;
         }
         
-        else if (AttMod * modifierChange < 1/6) {
-            AttMod = 1/6;
+        else if (AttMod + modifierChange < -6) {
+            AttMod = -6;
             System.out.println("Attack is at Stage: -6, attack won't go lower!");
             return;
         }

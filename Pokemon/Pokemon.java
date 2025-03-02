@@ -38,7 +38,7 @@ public class Pokemon {
         this.SpDef = SpecialDefence;
         this.Spd = Speed;
         for (int i = 0, n = type.length; i < n; i++) {
-            Typings.add(type[0]);
+            Typings.add(type[i]);
         }
         this.Level = Level;
     }
@@ -55,18 +55,17 @@ public class Pokemon {
 
     public ArrayList<String> getTypings(){
         return Typings;
-        }
+    }
 
-    public String getASpecificTyping(int i) {
+    public String getASpecificTyping(int i){
         return Typings.get(i);
     }
 
     public void displayTypes() {
         System.out.println(PokeName + " has the following types");
             for (int i = 0, n = Typings.size(); i < n; i++){
-            System.out.println(getASpecificTyping(i));
+            System.out.println(Typings.get(i));
             }
-        
     }
 
 

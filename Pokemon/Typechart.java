@@ -27,6 +27,7 @@ public class Typechart {
                 return true;
         }
     }
+    
     return false;
     }
 

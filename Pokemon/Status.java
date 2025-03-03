@@ -1,1 +1,0 @@
-//Vi laver et status object til hver status type og applier det til status moves. 

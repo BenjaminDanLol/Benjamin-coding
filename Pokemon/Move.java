@@ -37,6 +37,7 @@ public class Move{
 
     public double performMove(Pokemon user, Pokemon victim) {
         // For a move with 100 accuracy with 0 evasion, realHitChance = 0, seems wrong
+        // Later Actual Accuracy = Move's Base Accuracy × (Accuracy Modifier / Evasiveness Modifier)
         long realHitChance = Math.round(accuracy*victim.getEvasionMod());
         int fuck = (int) realHitChance;
         if (randomSuccess(fuck)) {
@@ -111,6 +112,30 @@ public class Move{
     }
 
 
+    private double aDividedD(Pokemon user, Pokemon victim, boolean isCrit) {
+        if (isCrit)
+            {
+            System.out.println("CRIT!");
+            if (isSpecial){
+                return (user.getSpA() * user.getSpAMod()) / victim.getCritSpDef();
+                }
+            else if (!isSpecial){
+                return (user.getAtt() * user.getAttMod()) / victim.getCritDef();
+                }
+            }
+        else if (!isCrit)
+            {
+            System.out.println("No Crit");
+            if (isSpecial){
+                return (user.getSpA() * user.getSpAMod()) / (victim.getSpDef() * victim.getSpDefMod());
+                }
+            else if (!isSpecial){
+                return (user.getAtt() * user.getAttMod()) / (victim.getDef() * victim.getDefMod());
+                }
+            } 
+                System.out.println("Something went wrong! isCrit = " + isCrit + " and " + isSpecial);
+                return 1;
+        }
     public boolean paraOrSleepTic(String _StatusName, Pokemon user) {
         return switch (_StatusName) {
             case "paralysis" -> {

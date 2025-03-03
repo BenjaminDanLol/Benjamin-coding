@@ -12,7 +12,7 @@ public class Pokemon {
     private int Spd;
     private int Level;
     ArrayList<String> Typings = new ArrayList<>();
-    private int evasion;
+    private int evasion = 0;
     private boolean statusCondition = false;
     private String currentCondition = "None";
     // Tilføjer modifiers
@@ -68,7 +68,7 @@ public class Pokemon {
             }
     }
 
-
+    // When evasion is in the negatives this should be changed
     public double getEvasionMod(){
         if (evasion >  0)
         {
@@ -78,7 +78,10 @@ public class Pokemon {
                 {
                 return ((3-evasion)/3);
             }
-        return evasion;
+        return evasion + 1;
+    }
+    public void setEvasionMod(int i){
+        evasion += i;
     }
 
     public String getPokeName() {

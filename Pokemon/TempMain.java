@@ -69,9 +69,12 @@ public class TempMain {
             //Her skal vi lave en metode der henter (4) random pokemon fra en liste af pokemon.
             //pokeFetch(4); 
 
-            Pokemon[] rMon = pokeFetch(4);
-            String p1 = scannedShit; 
-            Pokemon randomMon = new Pokemon("Charizard", 360, 293, 280, 348, 295, 328, 100, "Fire", "Flying");
+            Pokemon[] rMon = new Pokemon[4];
+            for (int i = 0; i < 4; i++) {  
+                rMon[i] = new Pokemon(pokeFetch(0), stringToIntConv(pokeFetch(1)), stringToIntConv(pokeFetch(2)), 
+                stringToIntConv(pokeFetch(3)), stringToIntConv(pokeFetch(4)), stringToIntConv(pokeFetch(5)), 
+                stringToIntConv(pokeFetch(6)), stringToIntConv(pokeFetch(7)), pokeFetch(8), pokeFetch(9));
+            }
 
             System.out.println("Player 1, pick your Pokemon.");
             System.out.println("1: " + rMon[0].getPokeName());
@@ -92,22 +95,34 @@ public class TempMain {
 
     }
 
-    
+    public int stringToIntConv(String s) {
+        int foo = 0;
+            try {
+                foo = Integer.parseInt(s);
+                return foo;
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                return foo;
+        }
+    }
 
-    public static int pokeFetchGen() {
+    public String pokeFetch(int info) {
         java.util.Random r = new java.util.Random();
         int low = 1;
         int high = 151;
         int result = r.nextInt(high - low) + low;
+        String line = "";
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader("PokeData.txt"));
-            for (int x = 0; x < (result * 10) ; x++) {
-                String line = reader.readLine();
+            for (int x = 0; x < (result * 10 + info) ; x++) {
+                line = reader.readLine();
             }
+            return line;
 
         } catch (IOException e) {
             e.printStackTrace();
+            return "0";
         }
     }
 }

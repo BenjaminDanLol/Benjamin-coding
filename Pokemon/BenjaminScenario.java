@@ -1,6 +1,7 @@
-
+import java.util.Scanner;
 
 public class BenjaminScenario {
+    private String move1;
     /*
      * Starting the scenario itself, logic for randomize choices p1 or p2 will receive. Pokemon and possibly moves or even more shit.
      * Need scanners here which simply take a bunch of info store them into different variables.
@@ -44,51 +45,245 @@ public class BenjaminScenario {
      * I will program these functionalities inversely, i.e. the core and work my way up from the
      * Simulate a turn and up from there.
      */
-    public void startNewBattle() {
+        public void startNewBattle() {
+            System.out.println("1. Charizard, 2. Venusaur, 3. Charizard, 4. Blastoise");
+            byte[] pokemonChoice = coreMechanic();
+            Pokemon p1 = new Pokemon();
+            Pokemon p2 = new Pokemon();
+            switch (pokemonChoice[0]) {
+                case (1): 
+                p1.setPokeName("Charizard");
+                p1.setHP(360);
+                p1.setAtt(293);
+                p1.setDef(280);
+                p1.setSpA(348);
+                p1.setSpDef(295);
+                p1.setSpd(328);
+                p1.setLevel(100);
+                p1.addATyping("Fire");
+                p1.addATyping("Flying");
+                break;
+                case (2): 
+                p1.setPokeName("Venusaur");
+                p1.setHP(364);
+                p1.setAtt(289);
+                p1.setDef(291);
+                p1.setSpA(328);
+                p1.setSpDef(328);
+                p1.setSpd(284);
+                p1.setLevel(100);
+                p1.addATyping("Grass");
+                p1.addATyping("Poison");
+                break;
+                case (3): 
+                p1.setPokeName("Charizard");
+                p1.setHP(360);
+                p1.setAtt(293);
+                p1.setDef(280);
+                p1.setSpA(348);
+                p1.setSpDef(295);
+                p1.setSpd(328);
+                p1.setLevel(100);
+                p1.addATyping("Fire");
+                p1.addATyping("Flying");
+                break;
+                case (4): 
+                p1.setPokeName("Blastoise");
+                p1.setHP(362);
+                p1.setAtt(291);
+                p1.setDef(328);
+                p1.setSpA(295);
+                p1.setSpDef(339);
+                p1.setSpd(280);
+                p1.setLevel(100);
+                p1.addATyping("Water");
+                break;
+            }
+            switch (pokemonChoice[1]) {
+                case (1): 
+                p1.setPokeName("Charizard");
+                p1.setHP(360);
+                p1.setAtt(293);
+                p1.setDef(280);
+                p1.setSpA(348);
+                p1.setSpDef(295);
+                p1.setSpd(328);
+                p1.setLevel(100);
+                p1.addATyping("Fire");
+                p1.addATyping("Flying");
+                break;
+                case (2): 
+                p1.setPokeName("Venusaur");
+                p1.setHP(364);
+                p1.setAtt(289);
+                p1.setDef(291);
+                p1.setSpA(328);
+                p1.setSpDef(328);
+                p1.setSpd(284);
+                p1.setLevel(100);
+                p1.addATyping("Grass");
+                p1.addATyping("Poison");
+                break;
+                case (3): 
+                p1.setPokeName("Charizard");
+                p1.setHP(360);
+                p1.setAtt(293);
+                p1.setDef(280);
+                p1.setSpA(348);
+                p1.setSpDef(295);
+                p1.setSpd(328);
+                p1.setLevel(100);
+                p1.addATyping("Fire");
+                p1.addATyping("Flying");
+                break;
+                case (4): 
+                p1.setPokeName("Blastoise");
+                p1.setHP(362);
+                p1.setAtt(291);
+                p1.setDef(328);
+                p1.setSpA(295);
+                p1.setSpDef(339);
+                p1.setSpd(280);
+                p1.setLevel(100);
+                p1.addATyping("Water");
+                break;
+            }
         
-        Flamethrower p1q = new Flamethrower();
-        Flamethrower p1w = new Flamethrower();
-        Flamethrower p1e = new Flamethrower();
-        Flamethrower p1r = new Flamethrower();
-        VineWhip p2z = new VineWhip();
-        VineWhip p2x = new VineWhip();
-        VineWhip p2c = new VineWhip();
-        VineWhip p2v = new VineWhip();
-        Charizard p1 = new Charizard();
-        Venusaur p2 = new Venusaur();
-        p1.displayTypes();
-        p2.displayTypes();
-        // This will be ugly but desperate times call for desperate measures
-        p1q.performMove(p2, p1);
-        System.out.println("Turn: " + 1);
-        performATwoBasedTurn(p1, p1q, p1w, p1e, p1r, p2, p2z, p2x, p2c, p2v);
-        System.out.println("Turn: " + 2);
-        performATwoBasedTurn(p1, p1q, p1w, p1e, p1r, p2, p2z, p2x, p2c, p2v);
-        System.out.println("Turn: " + 3);
-        performATwoBasedTurn(p1, p1q, p1w, p1e, p1r, p2, p2z, p2x, p2c, p2v);
-        System.out.println("Turn: " + 5);
-        performATwoBasedTurn(p1, p1q, p1w, p1e, p1r, p2, p2z, p2x, p2c, p2v);
-        System.out.println("Turn: " +6);
-        performATwoBasedTurn(p1, p1q, p1w, p1e, p1r, p2, p2z, p2x, p2c, p2v);
-    }
-    public void performATwoBasedTurn
-    // Naturally more logic will be added here
-    (
-    Pokemon p1, Move p1q, Move p1w, Move p1e, Move p1r,
-    Pokemon p2, Move p2z, Move p2x, Move p2c, Move p2v
-    )
-            {
-    // The if and else if checks for who'se quicker, modifiers are included
-    if (p1.getSpd() * p1.getSpdMod() > p2.getSpd() * p2.getSpdMod()) {
-    // p1 performs Moveq, the mapping may look weird, but there's a reason. Just 1 move
-    p1q.performMove(p1, p2);
-    // p2 performs Movec, p2 chooses to use his third move.
-    p2c.performMove(p2, p1);
-    }
-    else if (p2.getSpd() * p2.getSpdMod() > p1.getSpd() * p1.getSpdMod()) {
-    p2c.performMove(p2, p1);
-    p1q.performMove(p1, p2);
+
         }
-    }
+
+
+        public void performATwoBasedTurn
+        // Naturally more logic will be added here
+        (Pokemon p1, Move p1move1, Move p1move2, Move p1move3, Move p1move4,
+        Pokemon p2, Move p2move1, Move p2move2, Move p2move3, Move p2move4)
+        {
+            byte[] choices = coreMechanic();
+                // p1 has prio
+            if (getp1MovePrio(p1move1, p1move2, p1move3, p1move4, choices) > 
+            getp2MovePrio(p2move1, p2move2, p2move3, p2move4, choices))
+                {
+                System.out.println(p1.getPokeName() + " has priority!");
+                    switch (choices[0]) {
+                        case (1) -> p1move1.performMove(p1, p2);
+                        case (2) -> p1move2.performMove(p1, p2);
+                        case (3) -> p1move3.performMove(p1, p2);
+                        case (4) -> p1move4.performMove(p1, p2);
+                    }
+                    
+                    switch (choices[1]) {
+                        case (1) -> p2move1.performMove(p2, p1);
+                        case (2) -> p2move2.performMove(p2, p1);
+                        case (3) -> p2move3.performMove(p2, p1);
+                        case (4) -> p2move4.performMove(p2, p1);
+
+                    }
+
+                }
+                // p2 has prio
+            else if (getp1MovePrio(p1move1, p1move2, p1move3, p1move4, choices) < 
+            getp2MovePrio(p2move1, p2move2, p2move3, p2move4, choices))
+                {
+                    System.out.println(p2.getPokeName() + " has priority!");
+                    switch (choices[1]) {
+                        case (1) -> p2move1.performMove(p2, p1);
+                        case (2) -> p2move2.performMove(p2, p1);
+                        case (3) -> p2move3.performMove(p2, p1);
+                        case (4) -> p2move4.performMove(p2, p1);
+
+                    }
+
+                    switch (choices[0]) {
+                        case (1) -> p1move1.performMove(p1, p2);
+                        case (2) -> p1move2.performMove(p1, p2);
+                        case (3) -> p1move3.performMove(p1, p2);
+                        case (4) -> p1move4.performMove(p1, p2);
+                    }
+                    
+                }
+            else {
+                // p1 is faster
+                if ((p1.getSpd() * p1.getSpdMod()) > p2.getSpd() * p2.getSpdMod())
+                {
+                    System.out.println(p1.getPokeName() + " is faster!");
+                    switch (choices[0]) {
+                        case (1) -> p1move1.performMove(p1, p2);
+                        case (2) -> p1move2.performMove(p1, p2);
+                        case (3) -> p1move3.performMove(p1, p2);
+                        case (4) -> p1move4.performMove(p1, p2);
+                    }
+
+                    switch (choices[1]) {
+                        case (1) -> p2move1.performMove(p2, p1);
+                        case (2) -> p2move2.performMove(p2, p1);
+                        case (3) -> p2move3.performMove(p2, p1);
+                        case (4) -> p2move4.performMove(p2, p1);
+                    }
+                }
+                // p2 is faster
+                else if ((p1.getSpd() * p1.getSpdMod()) < p2.getSpd() * p2.getSpdMod())
+                {
+                    System.out.println(p2.getPokeName() + " is faster!");
+                    switch (choices[1]) {
+                        case (1) -> p2move1.performMove(p2, p1);
+                        case (2) -> p2move2.performMove(p2, p1);
+                        case (3) -> p2move3.performMove(p2, p1);
+                        case (4) -> p2move4.performMove(p2, p1);
+
+                    }
+
+                    switch (choices[0]) {
+                        case (1) -> p1move1.performMove(p1, p2);
+                        case (2) -> p1move2.performMove(p1, p2);
+                        case (3) -> p1move3.performMove(p1, p2);
+                        case (4) -> p1move4.performMove(p1, p2);
+                    }
+                }
+            }
+        
+        }
+
+        public int getp1MovePrio(Move p1move1, Move p1move2, Move p1move3, Move p1move4, byte[] moveChoices) {
+                switch (moveChoices[0]){
+                    case (1) : return p1move1.getPrio();
+                    case (2) : return p1move2.getPrio();
+                    case (3) : return p1move3.getPrio();
+                    case (4) : return p1move4.getPrio();
+                    default:
+                    System.out.println("Something went wrong check getp1MovePrio");
+                    return 0;
+                }
+        }
+        public int getp2MovePrio(Move p2move1, Move p2move2, Move p2move3, Move p2move4, byte[] moveChoices) {
+                switch (moveChoices[1]){
+                    case (1) : return p2move1.getPrio();
+                    case (2) : return p2move2.getPrio();
+                    case (3) : return p2move3.getPrio();
+                    case (4) : return p2move4.getPrio();
+                    default:
+                    System.out.println("Something went wrong check getp2MovePrio");
+                    return 0;
+                }
+        }
+
+
+        public byte[] coreMechanic(){
+            Scanner scammer = new Scanner(System.in);
+            byte[] userInputs = new byte[2];
+            do {
+                System.out.println("Player 1 input:" );
+                userInputs[0] = scammer.nextByte();
+            }
+                while (userInputs[0] < 1 || userInputs[0] > 4);
+            
+            System.out.printf("Player 1 chose %d%n", userInputs[0]);
+            do { 
+                System.out.println("Player 2 input:");
+                userInputs[1] = scammer.nextByte();
+            } while (userInputs[1] < 1 || userInputs[1] > 4);
+            System.out.printf("Player 2 chose %d%n", userInputs[1]);
+            return userInputs;
+        }
+
 }
 

@@ -41,6 +41,7 @@ public class Pokemon {
         }
         this.level = Level;
     }
+    public Pokemon(){}
 
     public void addSecondaryCondition(String secondaryCondition) {
         SecondaryConditions.add(secondaryCondition);
@@ -61,6 +62,9 @@ public class Pokemon {
             return Typings.get(i);
         }
     
+        public void addATyping(String _Typing){
+            Typings.add(_Typing);
+        }
         public void displayTypes() {
             System.out.println(PokeName + " has the following types");
                 for (int i = 0, n = Typings.size(); i < n; i++){
@@ -87,32 +91,64 @@ public class Pokemon {
         return this.PokeName;
     }
 
+    public void setPokeName(String _Name) {
+        PokeName = _Name;
+    }
+
     public int getHP() {
         return this.HP;
+    }
+
+    public void setHP(int _HP) {
+        HP = _HP;
     }
 
     public int getAtt() {
         return this.Att;
     }
 
+    public void setAtt(int _Att) {
+        Att = _Att;
+    }
+
     public int getDef() {
         return this.Def;
+    }
+
+    public void setDef(int _Def) {
+        Def = _Def;
     }
 
     public int getSpA() {
         return this.SpA;
     }
 
+    public void setSpA(int _SpA) {
+        SpA = _SpA;
+    }
+
     public int getSpDef() {
         return this.SpDef;
+    }
+
+    public void setSpDef(int _SpDef) {
+        SpDef = _SpDef;
     }
 
     public int getSpd() {
         return this.Spd;
     }
 
+    public void setSpd(int _Spd) {
+        Spd = _Spd;
+    }
+
     public int getLevel() {
         return this.level;
+    }
+
+    public void setLevel(int _level) {
+        level = _level;
     }
         /*
      * 	int calculate_exp(int level)

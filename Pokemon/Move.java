@@ -87,7 +87,9 @@ public class Move{
         return damage;
     }
 
-
+    public int getPrio(){
+        return priority;
+    }
     private double aDividedD(Pokemon user, Pokemon victim, boolean isCrit) {
         if (isCrit)
             {

@@ -15,7 +15,6 @@ public class Move{
     private int critChance;
     private final double critMultiplier = 2.0;
     private long damage = 0;
-    private double randomMultiplier;
     private Typechart typechart;
     private String whatStatus;
     private int howManyTics;
@@ -46,23 +45,40 @@ public class Move{
         }
         double DamageNoRand = 0.0;
         typechart = new Typechart(victim);
-        randomMultiplier = (217.0 + randomNum(38)) / 255.0;
+        double randomMultiplier = (217.0 + randomNum(38)) / 255.0;
         // Critboosten er indbygget i logikken efter isCrit som er bare baseret på CritChance.
         if (this.power > 0) {
             isCrit = isCrit();
             // Gen 1 dmg calc https://imgur.com/a/KxmCrKD
             // if crit is true * critMultiplier else * 1
-            DamageNoRand = ((2 * user.getLevel() * (isCrit == true ? critMultiplier : 1)) / 5.0 + 2.0) * this.power * 
+            DamageNoRand = ((2 * user.getLevel() * (isCrit == true ? 2.0
+                 : 1.0)
+                 ) 
+            / 5.0 + 2.0) * this.power * 
             // if crit is true and isSpecial is true 
-            ((isCrit == true ? (this.isSpecial == true ? (user.getSpA() * user.getSpAMod()) / victim.getCritSpDef() : 
+            (
+                (isCrit == true ? 
+                    (this.isSpecial == true ? 
+                        (user.getSpA() * user.getSpAMod()) / victim.getCritSpDef() : 
             // if Crit is true and isSpecial is not true
-            (user.getAtt() * user.getAttMod()) / victim.getCritDef()) :  
+                            (user.getAtt() * user.getAttMod())
+                                 / victim.getCritDef()) :  
             // if Crit is not true, and isSpecial is true
-            (this.isSpecial == true ? (user.getSpA() * user.getSpAMod()) / (victim.getSpDef() * victim.getSpDefMod()) : 
+                    (this.isSpecial == true ? 
+                        (user.getSpA() * user.getSpAMod())
+                             / (victim.getSpDef() * victim.getSpDefMod()) : 
             // if Crit is not true and isSpecial is not true
-            (user.getAtt() * user.getAttMod()) / (victim.getDef() * victim.getDefMod()))+100) / 50.0)
+                                (user.getAtt() * user.getAttMod())
+                                     / (victim.getDef() * victim.getDefMod())
+                                        )
+                                            + 100) / 50.0
+                                                )
             // Calculation performed regardless, detectType returns false
-            * (typechart.detectType(user, type) == true ? 1.5 : 1) * (typechart.calcX(type));
+            * (typechart.detectType(user, type) == true ? 
+                1.5 : 
+                    1
+                    ) 
+                        * (typechart.calcX(type));
         }
             if (DamageNoRand > 1) {
             damage = Math.round(DamageNoRand * (randomMultiplier));

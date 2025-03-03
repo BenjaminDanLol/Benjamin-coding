@@ -1,8 +1,7 @@
 import java.util.ArrayList;
 
 public class Pokemon {
-    // may need to be changed to public, so extenders have access or getters
-    // are enough
+
     private String PokeName;
     private int HP;
     private int Att;
@@ -10,7 +9,7 @@ public class Pokemon {
     private int SpA;
     private int SpDef;
     private int Spd;
-    private int Level;
+    private int level;
     ArrayList<String> Typings = new ArrayList<>();
     private int evasion = 0;
     private boolean statusCondition = false;
@@ -40,49 +39,49 @@ public class Pokemon {
         for (int i = 0, n = type.length; i < n; i++) {
             Typings.add(type[i]);
         }
-        this.Level = Level;
+        this.level = Level;
     }
 
     public void addSecondaryCondition(String secondaryCondition) {
         SecondaryConditions.add(secondaryCondition);
     }
+
     public void removeSecondaryCondition(String secondaryCondition) {
         SecondaryConditions.remove(secondaryCondition);
     }
-    public ArrayList<String> getSecondaryCondtions() {
-        return SecondaryConditions;
-    }
 
-    public ArrayList<String> getTypings(){
-        return Typings;
-    }
+        public ArrayList<String> getSecondaryCondtions() {
+            return SecondaryConditions;
+        }
 
-    public String getASpecificTyping(int i){
-        return Typings.get(i);
-    }
+        public ArrayList<String> getTypings(){
+            return Typings;
+        }
+        public String getASpecificTyping(int i){
+            return Typings.get(i);
+        }
+    
+        public void displayTypes() {
+            System.out.println(PokeName + " has the following types");
+                for (int i = 0, n = Typings.size(); i < n; i++){
+                System.out.println(Typings.get(i));
+                }
+        }
 
-    public void displayTypes() {
-        System.out.println(PokeName + " has the following types");
-            for (int i = 0, n = Typings.size(); i < n; i++){
-            System.out.println(Typings.get(i));
-            }
-    }
-
-    // When evasion is in the negatives this should be changed
-    public double getEvasionMod(){
-        if (evasion >  0)
-        {
-            return 3/(3+evasion);
-            } 
-            else if (evasion < 0)
-                {
-                return ((3-evasion)/3);
-            }
-        return evasion + 1;
-    }
-    public void setEvasionMod(int i){
-        evasion += i;
-    }
+        public double getEvasionMod(){
+            if (evasion >  0)
+            {
+                return 3/(3+evasion);
+                } 
+                else if (evasion < 0)
+                    {
+                    return ((3-evasion)/3);
+                }
+            return evasion + 1;
+        }
+        public void setEvasionMod(int i){
+            evasion += i;
+        }
 
     public String getPokeName() {
         return this.PokeName;
@@ -112,11 +111,10 @@ public class Pokemon {
         return this.Spd;
     }
 
-
     public int getLevel() {
-        return this.Level;
+        return this.level;
     }
-    /*
+        /*
      * 	int calculate_exp(int level)
 	{
 		return level * level * level;
@@ -127,7 +125,6 @@ public class Pokemon {
 		(calculate_exp(level + 1) - experience);
 	}
      */
-
     public int getHPMod() {
         return HPMod;
     }
@@ -144,7 +141,6 @@ public class Pokemon {
             return 2/(-AttMod+2);
         }
     }
-
     public void setAttMod(byte modifierChange) {
         if (AttMod + modifierChange > 6) {
             AttMod = 6;
@@ -183,7 +179,6 @@ public class Pokemon {
             }
         SpAMod += modifierChange;
     }
-
     public double getDefMod() {
         if (DefMod >= 0){
             return DefMod + 1;
@@ -301,5 +296,4 @@ public class Pokemon {
     public void setCurrentCondition(String newCondition) {
         currentCondition = newCondition;
     }
-
 }

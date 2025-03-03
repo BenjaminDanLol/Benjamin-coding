@@ -1,5 +1,11 @@
 import java.util.Scanner;
-
+/*
+ * Hvis jeg har problemer med at trykke på run, burde jeg nok bare løbe programmet
+ * fra terminalen med java Main. Men dog skal jeg huske at løbe javac Main.java, måske
+ * også javac "navn på fil".java for alle andre filer jeg bruger til programet.
+ * Jeg prøvede at køre javac Main.java og så kør programet med afspil knappen. Dette
+ * virkede nogenlunde lige så godt
+ */
 public class Main {
     public static void main(String[] args) {
         /*
@@ -7,6 +13,14 @@ public class Main {
          * Will add logic, but I'm not going to work on this project more this weekend. 
          * Got stuff to do. Good luck coding, if your reading this.
          */
+        Charizard p3 = new Charizard();
+        Blastoise p4 = new Blastoise();
+        BodySlam p11 = new BodySlam();
+        BodySlam p21 = new BodySlam();
+        p11.performMove(p3, p4);
+        p21.performMove(p4, p3);
+        p11.performMove(p3, p4);
+        p21.performMove(p4, p3);
         BenjaminScenario runCustomScenario = new BenjaminScenario();
         runCustomScenario.startNewBattle();
         // we need a movelist to choose from and define p1move1 etc as the picked move using the scanner. 

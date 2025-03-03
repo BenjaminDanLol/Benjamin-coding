@@ -52,34 +52,10 @@ public class Move{
             isCrit = isCrit();
             // Gen 1 dmg calc https://imgur.com/a/KxmCrKD
             // if crit is true * critMultiplier else * 1
-            DamageNoRand = ((2 * user.getLevel() * (isCrit == true ? 2.0
-                 : 1.0)
-                 ) 
-            / 5.0 + 2.0) * this.power * 
-            // if crit is true and isSpecial is true 
-            (
-                (isCrit == true ? 
-                    (this.isSpecial == true ? 
-                        (user.getSpA() * user.getSpAMod()) / victim.getCritSpDef() : 
-            // if Crit is true and isSpecial is not true
-                            (user.getAtt() * user.getAttMod())
-                                 / victim.getCritDef()) :  
-            // if Crit is not true, and isSpecial is true
-                    (this.isSpecial == true ? 
-                        (user.getSpA() * user.getSpAMod())
-                             / (victim.getSpDef() * victim.getSpDefMod()) : 
-            // if Crit is not true and isSpecial is not true
-                                (user.getAtt() * user.getAttMod())
-                                     / (victim.getDef() * victim.getDefMod())
-                                        )
-                                            + 100) / 50.0
-                                                )
-            // Calculation performed regardless, detectType returns false
-            * (typechart.detectType(user, type) == true ? 
-                1.5 : 
-                    1
-                    ) 
-                        * (typechart.calcX(type));
+            DamageNoRand = (((2 * user.getLevel() * (isCrit == true ? 2.0 : 1.0)) 
+            / 5.0 + 2.0) 
+            * this.power * (aDividedD(user, victim, isCrit)) + 100) / 50.0
+            * (typechart.detectType(user, type) == true ? 1.5 :  1 ) * (typechart.calcX(type));
         }
             if (DamageNoRand > 1) {
             damage = Math.round(DamageNoRand * (randomMultiplier));

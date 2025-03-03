@@ -77,7 +77,7 @@ public class Pokemon {
                     {
                     return ((3-evasion)/3);
                 }
-            return evasion + 1;
+            return evasion;
         }
         public void setEvasionMod(int i){
             evasion += i;

@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 public class BenjaminScenario {
-    private String move1;
     /*
      * Starting the scenario itself, logic for randomize choices p1 or p2 will receive. Pokemon and possibly moves or even more shit.
      * Need scanners here which simply take a bunch of info store them into different variables.
@@ -99,57 +98,70 @@ public class BenjaminScenario {
                 p1.addATyping("Water");
                 break;
             }
+            System.out.println("p1 chose " + p1.getPokeName());
             switch (pokemonChoice[1]) {
                 case (1): 
-                p1.setPokeName("Charizard");
-                p1.setHP(360);
-                p1.setAtt(293);
-                p1.setDef(280);
-                p1.setSpA(348);
-                p1.setSpDef(295);
-                p1.setSpd(328);
-                p1.setLevel(100);
-                p1.addATyping("Fire");
-                p1.addATyping("Flying");
+                p2.setPokeName("Charizard");
+                p2.setHP(360);
+                p2.setAtt(293);
+                p2.setDef(280);
+                p2.setSpA(348);
+                p2.setSpDef(295);
+                p2.setSpd(328);
+                p2.setLevel(100);
+                p2.addATyping("Fire");
+                p2.addATyping("Flying");
                 break;
                 case (2): 
-                p1.setPokeName("Venusaur");
-                p1.setHP(364);
-                p1.setAtt(289);
-                p1.setDef(291);
-                p1.setSpA(328);
-                p1.setSpDef(328);
-                p1.setSpd(284);
-                p1.setLevel(100);
-                p1.addATyping("Grass");
-                p1.addATyping("Poison");
+                p2.setPokeName("Venusaur");
+                p2.setHP(364);
+                p2.setAtt(289);
+                p2.setDef(291);
+                p2.setSpA(328);
+                p2.setSpDef(328);
+                p2.setSpd(284);
+                p2.setLevel(100);
+                p2.addATyping("Grass");
+                p2.addATyping("Poison");
                 break;
                 case (3): 
-                p1.setPokeName("Charizard");
-                p1.setHP(360);
-                p1.setAtt(293);
-                p1.setDef(280);
-                p1.setSpA(348);
-                p1.setSpDef(295);
-                p1.setSpd(328);
-                p1.setLevel(100);
-                p1.addATyping("Fire");
-                p1.addATyping("Flying");
+                p2.setPokeName("Charizard");
+                p2.setHP(360);
+                p2.setAtt(293);
+                p2.setDef(280);
+                p2.setSpA(348);
+                p2.setSpDef(295);
+                p2.setSpd(328);
+                p2.setLevel(100);
+                p2.addATyping("Fire");
+                p2.addATyping("Flying");
                 break;
                 case (4): 
-                p1.setPokeName("Blastoise");
-                p1.setHP(362);
-                p1.setAtt(291);
-                p1.setDef(328);
-                p1.setSpA(295);
-                p1.setSpDef(339);
-                p1.setSpd(280);
-                p1.setLevel(100);
-                p1.addATyping("Water");
+                p2.setPokeName("Blastoise");
+                p2.setHP(362);
+                p2.setAtt(291);
+                p2.setDef(328);
+                p2.setSpA(295);
+                p2.setSpDef(339);
+                p2.setSpd(280);
+                p2.setLevel(100);
+                p2.addATyping("Water");
                 break;
             }
-        
-
+        System.out.println("p2 chose " + p2.getPokeName());
+        // Too lazy to do the above rn.
+        BodySlam p1move1 = new BodySlam();
+        Flamethrower p1move2 = new Flamethrower();
+        VineWhip p1move3 = new VineWhip();
+        SleepPowder p1move4 = new SleepPowder();
+        BodySlam p2move1 = new BodySlam();
+        Flamethrower p2move2 = new Flamethrower();
+        VineWhip p2move3 = new VineWhip();
+        SleepPowder p2move4 = new SleepPowder();
+        for (int i = 0; i < 5; i++){
+            System.out.println("1. BodySlam, 2. Flamethrower, 3. VineWhip, 4. SleepPowder");
+            performATwoBasedTurn(p1, p1move1, p1move2, p1move3, p1move4, p2, p2move1, p2move2, p2move3, p2move4);
+            }
         }
 
 

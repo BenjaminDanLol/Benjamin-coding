@@ -66,7 +66,7 @@ public class TempMain {
         do {
             proceed = false;
             
-            //Her skal vi lave en metode der henter (4) random pokemon fra en liste af pokemons.
+            //Her skal vi lave en metode der henter (4) random pokemon fra en liste af pokemon.
             //pokeFetch(4); 
 
             Pokemon[] rMon = pokeFetch(4);
@@ -102,7 +102,9 @@ public class TempMain {
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader("PokeData.txt"));
-            String line = reader.readLine();
+            for (int x = 0; x < (result * 10) ; x++) {
+                String line = reader.readLine();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

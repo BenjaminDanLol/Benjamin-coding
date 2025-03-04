@@ -1,4 +1,8 @@
 import java.util.Scanner;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.IOException;
 
 public class BenjaminScenario {
     /*
@@ -44,6 +48,23 @@ public class BenjaminScenario {
      * I will program these functionalities inversely, i.e. the core and work my way up from the
      * Simulate a turn and up from there.
      */
+    
+        public void extractFennekin(){
+            try {
+                // Load JSON file
+                File file = new File("your-json-file.json"); // Replace with your actual file path
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode root = mapper.readTree(file);
+    
+                // Navigate to extract "Fennekin"
+                JsonNode fireType = root.path("tiers").get(0).path("Typings").get(0).path("Fire").get(0);
+                String fennekin = fireType.path("ID653").path("PokeName").asText();
+    
+                // Print result
+                System.out.println("Extracted Pokémon: " + fennekin);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         public void startNewBattle() {
             System.out.println("1. Charizard, 2. Venusaur, 3. Charizard, 4. Blastoise");
             byte[] pokemonChoice = coreMechanic();

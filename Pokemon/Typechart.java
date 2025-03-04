@@ -129,9 +129,8 @@ public class Typechart {
                 case ("Fire"), ("Water"), ("Rock"), ("Dragon") -> storedModifier *= 0.5;
             }
         }
-        System.out.printf("Effectiveness is %.2f", storedModifier);
-        System.out.println();
-        return storedModifier;         
+        System.out.printf("Effectiveness is %.2f%n", storedModifier);
+        return storedModifier;
     }
 
     public double NormalCalc(){

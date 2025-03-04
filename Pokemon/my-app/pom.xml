@@ -12,6 +12,8 @@
 
   <dependencies>
     <!-- JUnit (Test Dependency) -->
+    <!-- Now try validate mvn clean and mvn validate these are obviously corrupted
+    no suprises there from the "almighty" AI's I should go study this maven first. -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -27,6 +29,5 @@
     </dependency>
 
   </dependencies>
-
 </project>
 

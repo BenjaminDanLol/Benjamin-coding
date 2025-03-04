@@ -1,0 +1,109 @@
+{
+    "tiers": [
+            {
+                "Typings":[
+                        "Fire":[
+                            "ID004"{
+                                "PokeName":"Charmander",
+                            },
+    
+                            "ID037"{
+                                "PokeName":"Vulpix",
+    
+                            },
+                            "ID058"{
+                                "PokeName":"Growlithe",
+                            },
+    
+                            "ID155"{
+                                "PokeName":"Cyndaquil",
+    
+                            },
+    
+                            "ID218"{
+                                "PokeName":"Slugma",
+    
+                            },
+                            "ID255"{
+                                "PokeName":"Torchic",
+    
+                            },
+    
+                            "ID390"{
+                                "PokeName":"Chimchar",
+    
+                            },
+                            
+                            "ID498"{
+                                "PokeName":"Tepig",
+    
+                            },
+    
+                            "ID653"{
+                                "PokeName":"Fennekin",
+    
+                            },
+    
+                            "ID725"{
+                                "PokeName":"Litten",
+    
+                            },
+    
+                            "ID813"{
+                                "PokeName":"Scorbunny"
+    
+                            },
+    
+                            ],
+                        "Normal":[
+                            "ID016"{
+                                "PokeName":"Pidgey"
+                            },
+    
+                            "ID019"{
+                                "PokeName":"Rattata"
+                            },
+    
+                            
+                        ],
+                    
+                        "Water":[
+                            "ID"{
+    
+                            },
+                        ],
+                        
+                    
+                        ],
+            },
+
+            {
+                "Typings":[
+                        "Fire":[
+                            "ID"{
+    
+                            },
+                        ],
+                        "Normal"[
+                            "ID"{
+    
+                            },
+                        ],
+            ],          
+            
+            },
+
+            {
+            "Typings": [
+                        "Fire":[
+                            "ID"{
+    
+                            },
+                        ],
+    
+            ],
+        },
+        
+        
+        ],
+    }

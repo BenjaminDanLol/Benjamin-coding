@@ -48,44 +48,8 @@ public class Pokesorter
             System.out.println("No corresponding mapping to type: " + selectedType);
             return;
         }
-        /*
-        This works perfectly for starts since you essentially want to start at the lowest value
-        and incrementally work your way upwards.
-        And maybe I could just say "it's apart of the game". But I at least see a world where
-        the chosenFilter is incrementally higher, the longer you are into the game. And it just seems
-        shitty to still be getting rattatas 100 rounds in. Or maybe not I mean you still have a chance
-        for porygon-z or the other high value Normal types. But it is all inclusive.
-        Maybe it's apart of the RNG, but for me at least it seems a bit to much.
-        
-        A way I could prevent this is by encompassing everything except the initialization
-        of chosenFilter (that part is simply a param from outside where the round logic is based).
-
-        Then I have two ways of doing this where 1 is computationally heavy scuffed but accurate.
-        And the will work at determined time.
-
-        1.
-        I could add an if statement right after the while (fields.hasNext()) that checks for
-        if size is 4. 
-        Because if it is then I could have a different.forEach loop that checks if it is between
-        a Value say (chosen filter -50) and the chosen filter, and if it is not then check if it
-        is between (chosen filter -100) and the chosen filter.
-        This way I check from the top, but honestly I could also have it at -100 since
-        it's alright if there's RNG.
-
-        Now I thought this would be an idiotic approach, since I thought that when starting from the bottom.
-        That it would have an infinite loop. But in this case since I checked for it's sizing first, then I
-        can filter out those cases for when I wish to start from the top.
-
-        Now I could even just check for if the AtomicInteger is let's say 1000, then I could have a specific
-        range of between 500 and 700, and then it could check for 300 and 700.
-        Maybe to combat this I could have a loop that incrementally for each "check", decreases the decrease
-        of the lower bound. E.g. 700/500, 700/400, 700/350, 700/325, 700/312 "truncation". 
-        I could either have the initial decrease to be based off of the upper bound. And loop 
-        a fixed amount of times. So if say upper bound was 1500 then maybe smthn like 1000 lower bound
-        Then 1500/750, then 1500/625 then 1500/625-0.5*(750-125). 
-        From there if that doesn't work produce 4 distinct strong pokemon. I'll simply take smthn like.
-        800/500 -> 800/400 -> 800/300. As a fail safe.
-         */
+        int filter = 1050;
+        int pokemonPool = 4;
         final AtomicInteger chosenFilter = new AtomicInteger(400);
 
         Map<String, Integer> pokemonMap = new HashMap<>();
@@ -95,15 +59,34 @@ public class Pokesorter
             Map.Entry<String, JsonNode> entry = fields.next();
             pokemonMapAllInclusive.put(entry.getKey(), entry.getValue().asInt());
         }
-
+        if (filter > 1000) {
+            if (filter >= 2000) {
+                pokemonPool = 6;
+            } else {
+            // Do something more unique here it's to lazy
+                pokemonPool = 12;
+            }
+        }
+        else {
         while (pokemonMap.size() < 4) {
+            pokemonMap.clear();
+            pokemonMapAllInclusive.forEach((key, value) -> {
+                if (value < chosenFilter.get()){
+                    pokemonMap.put(key, value);
+                } 
+            });
+            chosenFilter.addAndGet(50);
+                } 
+        }
+        chosenFilter.getAndSet(200);
+        while (pokemonMap.size() < pokemonPool) {
         pokemonMap.clear();
         pokemonMapAllInclusive.forEach((key, value) -> {
-            if (value < chosenFilter.get()){
+            if (value > (1000 - chosenFilter.get())){
                 pokemonMap.put(key, value);
             } 
         });
-        chosenFilter.addAndGet(50);
+        chosenFilter.addAndGet(100);
         }
 
         List<String> keyList = new ArrayList<>(pokemonMap.keySet());
@@ -147,7 +130,7 @@ public class Pokesorter
             currentPokemon.displayPokeInfo();
             }
         }
-        
+
         System.out.println(currentPokemon.getLevel());
         myScanner.close();
 
@@ -208,4 +191,3 @@ public class Pokesorter
         return choiceIndex[thePlayersChoice-1];
     }
 }
-

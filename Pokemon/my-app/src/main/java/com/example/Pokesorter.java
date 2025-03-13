@@ -116,8 +116,8 @@ public class Pokesorter
         if (pokemonStream == null) {
             throw new IllegalArgumentException("Resource not found!");
         }
-        Map<String, Poketest> pokeMap = mapper.readValue(pokemonStream, new TypeReference<Map<String, Poketest>>(){});
-        Poketest currentPokemon = pokeMap.get(randPokeChoice);
+        Map<String, Pokemon> pokeMap = mapper.readValue(pokemonStream, new TypeReference<Map<String, Pokemon>>(){});
+        Pokemon currentPokemon = pokeMap.get(randPokeChoice);
         currentPokemon.displayPokeInfo();
         for (byte level = 0; currentPokemon.evolvesTo != null; level++){
             if (currentPokemon.evolvesAt != level) {
@@ -147,6 +147,7 @@ public class Pokesorter
             currentPokemon.displayPokeInfo();
             }
         }
+        System.out.println(currentPokemon.getLevel());
         myScanner.close();
 
     } catch (IOException e) {

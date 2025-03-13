@@ -87,7 +87,7 @@ of functions under performMove.*/
                 case "SpA" -> victim.setSpAMod(statModifierChange);
                 case "def" -> victim.setDefMod(statModifierChange);
                 case "SpDef" -> victim.setSpDefMod(statModifierChange);
-                case "Spd" -> victim.setSpd(statModifierChange);
+                case "Spd" -> victim.setSpdMod(statModifierChange);
             }
         } else if (!toVictim) {
             switch (whatStatChanges) {
@@ -95,7 +95,7 @@ of functions under performMove.*/
                 case "SpA" -> user.setSpAMod(statModifierChange);
                 case "def" -> user.setDefMod(statModifierChange);
                 case "SpDef" -> user.setSpDefMod(statModifierChange);
-                case "Spd" -> user.setSpd(statModifierChange);
+                case "Spd" -> user.setSpdMod(statModifierChange);
             }
         }
     }
@@ -132,7 +132,7 @@ of functions under performMove.*/
             victim.setHPMod(damage);
             System.out.println(user.getPokeName() + " uses " + moveName + " and " +
             victim.getPokeName() + " loses " + damage + " HP!");
-            System.out.println(victim.getPokeName() + " HP is now: " + (victim.getHP() + victim.getHPMod()));
+            System.out.println(victim.getPokeName() + " HP is now: " + victim.getHPMod());
 
     }
 
@@ -154,23 +154,23 @@ of functions under performMove.*/
             {
             System.out.println("CRIT!");
             if (isSpecial){
-                return (user.getSpA() * user.getSpAMod()) / victim.getCritSpDef();
+                return (user.baseSpA * user.getSpAMod()) / victim.getCritSpDef();
                 }
             else if (!isSpecial){
-                return (user.getAtt() * user.getAttMod()) / victim.getCritDef();
+                return (user.baseAtt * user.getAttMod()) / victim.getCritDef();
                 }
             }
         else if (!isCrit)
             {
             System.out.println("No Crit");
             if (isSpecial){
-                return (user.getSpA() * user.getSpAMod()) / (victim.getSpDef() * victim.getSpDefMod());
+                return (user.baseSpA * user.getSpAMod()) / (victim.baseSpDef * victim.getSpDefMod());
                 }
             else if (!isSpecial){
-                return (user.getAtt() * user.getAttMod()) / (victim.getDef() * victim.getDefMod());
+                return (user.baseAtt * user.getAttMod()) / (victim.baseDef * victim.getDefMod());
                 }
             } 
-                // Idk what this is even is but I'll keep it.
+                // If there's no crit and it's neither special nor physical, (should never happen)
                 System.out.println("Something went wrong! isCrit = " + isCrit + " and " + isSpecial);
                 return 1;
         }

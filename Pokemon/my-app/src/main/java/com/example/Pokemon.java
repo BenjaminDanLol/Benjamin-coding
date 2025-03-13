@@ -4,20 +4,24 @@ import java.util.ArrayList;
 
 public class Pokemon {
 
-    private String PokeName;
-    private int HP;
-    private int Att;
-    private int Def;
-    private int SpA;
-    private int SpDef;
-    private int Spd;
-    private int level;
+    public String PokeName;
+    public int evolvesAt;
+    public String evolvesTo = null;
+    public String[] evolutionArray = null;
+    public int baseHP;
+    public int baseAtt;
+    public int baseDef;
+    public int baseSpA;
+    public int baseSpDef;
+    public int baseSpd;
+    private int level = 5;
+    public String[] types;
     ArrayList<String> Typings = new ArrayList<>();
     private int evasion = 0;
     private boolean statusCondition = false;
     private String currentCondition = "None";
     // Tilføjer modifiers
-    private int HPMod = HP;
+    private int HPMod = baseHP;
     private byte AttMod = 0;
     private byte SpAMod = 0;
     private byte DefMod = 0;
@@ -27,23 +31,7 @@ public class Pokemon {
     // Need stuff for the accuracyMod
     private byte accuracyMod = 1;
     ArrayList<String> SecondaryConditions = new ArrayList<>();
-    public Pokemon(String name, int HealthPoints, int Attack, int Defence, 
-    int SpecialAttack, int SpecialDefence, int Speed, int Level, String... type) {
-        // Something that should refer to the extenders somehow
-        // Maybe this whole code is meaningless, or I need to take args as to pass in stuff.
-        // Yup needed to take args for all the values and assign them
-        this.PokeName = name;
-        this.HP = HealthPoints;
-        this.Att = Attack;
-        this.Def = Defence;
-        this.SpA = SpecialAttack;
-        this.SpDef = SpecialDefence;
-        this.Spd = Speed;
-        for (int i = 0, n = type.length; i < n; i++) {
-            Typings.add(type[i]);
-        }
-        this.level = Level;
-    }
+    
     public Pokemon(){}
 
     public void addSecondaryCondition(String secondaryCondition) {
@@ -57,7 +45,11 @@ public class Pokemon {
         public ArrayList<String> getSecondaryCondtions() {
             return SecondaryConditions;
         }
-
+        public void convertTypesToArrayList() {
+            for (int i = 0, n = types.length; i < n; i++) {
+                Typings.add(types[i]);
+            }
+        }
         public ArrayList<String> getTypings(){
             return Typings;
         }
@@ -68,11 +60,13 @@ public class Pokemon {
         public void addATyping(String _Typing){
             Typings.add(_Typing);
         }
-        public void displayTypes() {
-            System.out.println(PokeName + " has the following types");
-                for (int i = 0, n = Typings.size(); i < n; i++){
-                System.out.println(Typings.get(i));
-                }
+        public void displayPokeInfo(){
+            System.out.printf("Name: %s, evolvesAt: %s, evolvesTo: %s%n", PokeName, evolvesAt, evolvesTo);
+            System.out.printf("Stats: %d, %d, %d, %d, %d, %d%n", 
+            baseHP, baseAtt, baseDef, baseSpA, baseSpDef, baseSpd);
+            for (String e : Typings) {
+                System.out.printf(e + " ");
+            } System.out.println();
         }
 
         public double getEvasionMod(){
@@ -98,54 +92,6 @@ public class Pokemon {
         PokeName = _Name;
     }
 
-    public int getHP() {
-        return this.HP;
-    }
-
-    public void setHP(int _HP) {
-        HP = _HP;
-    }
-
-    public int getAtt() {
-        return this.Att;
-    }
-
-    public void setAtt(int _Att) {
-        Att = _Att;
-    }
-
-    public int getDef() {
-        return this.Def;
-    }
-
-    public void setDef(int _Def) {
-        Def = _Def;
-    }
-
-    public int getSpA() {
-        return this.SpA;
-    }
-
-    public void setSpA(int _SpA) {
-        SpA = _SpA;
-    }
-
-    public int getSpDef() {
-        return this.SpDef;
-    }
-
-    public void setSpDef(int _SpDef) {
-        SpDef = _SpDef;
-    }
-
-    public int getSpd() {
-        return this.Spd;
-    }
-
-    public void setSpd(int _Spd) {
-        Spd = _Spd;
-    }
-
     public int getLevel() {
         return this.level;
     }
@@ -164,9 +110,12 @@ public class Pokemon {
 		(calculate_exp(level + 1) - experience);
 	}
      */
+    public void resetPokemon() {
+        resetMods();
+    }
     public void resetMods() {
         // Everything that should be reset after a battle should be reset here.
-        int HPMod = HP;
+        int HPMod = baseHP;
         byte AttMod = 0;
         byte SpAMod = 0;
         byte DefMod = 0;
@@ -174,6 +123,7 @@ public class Pokemon {
         byte SpdMod = 0;
         byte critChanceMod = 0;
     }
+
     public byte getCritMod() {
         return critChanceMod;
     }
@@ -318,19 +268,19 @@ public class Pokemon {
     public double getCritDef() {
         // For negative stages
         if (DefMod < 0) {
-        return DefMod * Def;
+        return DefMod * baseDef;
         } 
             else {
         // Pierce and ignore positive modifiers for Def
-                return Def;
+                return baseDef;
             }
     }
     public double getCritSpDef() {
         if (SpDefMod < 0) {
-        return SpDefMod * SpDef;
+        return SpDefMod * baseSpDef;
         } 
             else {
-                return SpDef;
+                return baseSpDef;
             }
     }
 

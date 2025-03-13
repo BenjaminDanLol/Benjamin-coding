@@ -3,6 +3,7 @@ package com.example;
 import java.util.ArrayList;
 
 public class Typechart {
+    // Maybe this will actually just be a temporary status condition cuz move like soak etc.
     ArrayList<String> VictimTypings = new ArrayList<>();
 
     public Typechart(Pokemon victim){

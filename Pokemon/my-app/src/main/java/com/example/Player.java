@@ -32,7 +32,9 @@ public class Player {
         " roguelike spinoff you can play with friends. ");
     }
     public void addPokemon(int spotForPokemonInArray, Scanner myScanner) {
-        if (playersPokemon.size() == 6) {
+        if (playersPokemon.size() == 7) {
+            // Looks weird but it's because the scanner minuses by one by default as to not confuse player
+            // with arrays and such.
             System.out.println("Sorry you cannot add more Pokemon to team");
             return;
         }

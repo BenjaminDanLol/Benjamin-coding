@@ -1,0 +1,345 @@
+{
+    "Thunder Wave":{
+        "moveName":"Thunder Wave",
+        "accuracy":90,
+        "moveTyping":"Electric",
+        "inflictsStatus":true,
+        "whatStatusCondition":"Paralysis",
+        "statusChance":100,
+        "PP":20,
+        "moveDescription":"A weak electric shock that paralyzes the target."
+    },
+
+    "Fire Fang":{
+        "moveName":"Fire Fang",
+        "power":65,
+        "accuracy":95,
+        "moveTyping":"Fire",
+        "inflictsStatus":true,
+        "whatStatusCondition":"Burn",
+        "PP":15,
+        "moveDescription":"The user bites with flame-cloaked fangs. It may leave the target with a burn. TODO add 10% flinch as well"
+    },
+
+    "Ice Beam":{
+        "moveName":"Ice Beam",
+        "power":90,
+        "isSpecial":true,
+        "moveTyping":"Ice",
+        "inflictsStatus":true,
+        "whatStatusCondition":"Freeze",
+        "PP":10,
+        "moveDescription":"The target is struck with an icy-cold beam of energy. It may also freeze the target solid."
+    },
+
+    "Slash":{
+        "moveName":"Slash",
+        "power":70,
+        "moveTyping":"Normal",
+        "critChance":13,
+        "PP":20,
+        "moveDescription":"The target is attacked with a slash of claws or blades. Critical hits land more easily."
+    },
+
+    "Quick Attack":{
+        "moveName":"Quick Attack",
+        "power":40,
+        "moveTyping":"Normal",
+        "priority":1,
+        "PP":30,
+        "moveDescription":"The user lunges at the target at a speed that makes it almost invisible. This move always goes first."
+    },
+
+    "Extreme Speed":{
+        "moveName":"Extreme Speed",
+        "power":80,
+        "moveTyping":"Normal",
+        "priority":2,
+        "PP":5,
+        "moveDescription":"The user charges the target at blinding speed. This attack always goes before any other move."
+    },
+
+    "Aerial Ace":{
+        "moveName":"Aerial Ace",
+        "power":60,
+        "alwaysHits":true,
+        "moveTyping":"Flying",
+        "PP":20,
+        "moveDescription":"The user confounds the foe with speed, then slashes. The attack lands without fail."
+    },
+
+    "Swords Dance":{
+        "moveName":"Swords Dance",
+        "whatStatChanges":"att",
+        "statModifierChange":2,
+        "toVictim":false,
+        "moveTyping":"Normal",
+        "PP":20,
+        "moveDescription":"A frenetic dance to uplift the fighting spirit. This sharply raises the user's Attack stat."
+    },
+
+    "Growl":{
+        "moveName":"Growl",
+        "whatStatChanges":"att",
+        "moveTyping":"Normal",
+        "statModifierChange":-1,
+        "PP":40,
+        "moveDescription":"The user growls in an endearing way, making opposing Pokémon less wary. This lowers their Attack stats."
+    },
+
+    "Baby-Doll Eyes":{
+        "moveName":"Baby-Doll Eyes",
+        "whatStatChanges":"att",
+        "moveTyping":"Fairy",
+        "statModifierChange":-1,
+        "priority":1,
+        "PP":30,
+        "moveDescription":"The user stares at the target with its baby-doll eyes, which lowers its Attack stat. This move always goes first."
+    },
+
+    "Nasty Plot":{
+        "moveName":"Nasty Plot",
+        "whatStatChanges":"SpA",
+        "moveTyping":"Dark",
+        "statModifierChange":2,
+        "toVictim":false,
+        "PP":20,
+        "moveDescription":"The user stimulates its brain by thinking bad thoughts *Pause*. It sharply raises the user's Sp. Atk."
+    },
+
+    "Flamethrower":{
+        "moveName":"Flamethrower",
+        "power":90,
+        "isSpecial":true,
+        "moveTyping":"Fire",
+        "whatStatusCondition":"Burn",
+        "inflictsStatus":true,
+        "PP":15,
+        "moveDescription":"The target is scorched with an intense blast of fire. This may also leave the target with a burn"
+    },
+
+    "Ember":{
+        "moveName":"Ember",
+        "power":40,
+        "isSpecial":true,
+        "moveTyping":"Fire",
+        "whatStatusCondition":"Burn",
+        "inflictsStatus":true,
+        "PP":25,
+        "moveDescription":"The target is attacked with small flames. This may also leave the target with a burn."
+    },
+
+    "Pyro Ball":{
+        "moveName":"Pyro Ball",
+        "power":120,
+        "accuracy":90,
+        "moveTyping":"Fire",
+        "whatStatusCondition":"Burn",
+        "inflictsStatus":true,
+        "PP":5,
+        "moveDescription":"The user attacks by igniting a small stone and launching it as a fiery ball at the target. This may also leave the target with a burn."
+    },
+
+    "Hydro Pump":{
+        "moveName":"Hydro Pump",
+        "power":110,
+        "accuracy":80,
+        "moveTyping":"Water",
+        "isSpecial":true,
+        "PP":5,
+        "moveDescription":"The target is blasted by a huge volume of water launched under great pressure."
+    },
+
+    "Water Gun":{
+        "moveName":"Water Gun",
+        "power":40,
+        "isSpecial":true,
+        "moveTyping":"Water",
+        "PP":25,
+        "moveDescription":"The target is blasted with a forceful shot of water."
+    },
+
+    "Razor Leaf":{
+        "moveName":"Razor Leaf",
+        "power":55,
+        "accuracy":95,
+        "moveTyping":"Grass",
+        "critChance":13,
+        "PP":25,
+        "moveDescription":"Sharp-edged leaves are launched to slash at the opposing Pokémon. Critical hits land more easily."
+
+    },
+
+    "Thunderbolt": {
+        "moveName":"Thunderbolt",
+        "power":90,
+        "isSpecial":true,
+        "moveTyping":"Electric",
+        "whatStatusCondition":"Paralysis",
+        "inflictsStatus":true,
+        "PP":15,
+        "moveDescription":"A strong electric blast crashes down on the target, giving it an electric shock. This may also leave the target with paralysis."
+
+    },
+    "Thunder": {
+        "moveName":"Thunder",
+        "power":110,
+        "accuracy":70,
+        "isSpecial":true,
+        "moveTyping":"Electric",
+        "whatStatusCondition":"Paralysis",
+        "statusChance":30,
+        "inflictsStatus":true,
+        "PP":10,
+        "moveDescription":"TO BE IMPLEMENTED: Does not hit pokemon using fly and rain doesn't exist" 
+    },
+
+    "Sleep Powder":{
+        "moveName":"Sleep Powder",
+        "accuracy":75,
+        "moveTyping":"Grass",
+        "inflictsStatus":true,
+        "whatStatusCondition":"Sleep",
+        "statusChance":100,
+        "PP":15,
+        "moveDescription":"The user scatters a big cloud of sleep-inducing dust around the target."
+    },
+    
+    "Swift":{
+        "moveName":"Swift",
+        "power":60,
+        "moveTyping":"Normal",
+        "alwaysHits":true,
+        "isSpecial":true,
+        "PP":20,
+        "moveDescription":"Star-shaped rays are shot at the opposing team. This attack never misses."
+    },
+
+    "Bulldoze":{
+        "moveName":"Bulldoze",
+        "power":60,
+        "moveTyping":"Ground",
+        "whatStatChanges":"Spd",
+        "statModifierChange":-1,
+        "PP":20,
+        "moveDescription":"The user strikes everything around it by stomping down on the ground. This lowers the Speed stats of those hit."
+    },
+
+    "Agility":{
+        "moveName":"Agility",
+        "whatStatChanges":"Spd",
+        "statModifierChange":2,
+        "toVictim":false,
+        "moveTyping":"Psychic",
+        "PP":30,
+        "moveDescription":"The user relaxes and lightens its body to move faster. This sharply boosts its Speed stat."
+    },
+
+    "Shadow Claw":{
+        "moveName":"Shadow Claw",
+        "power":70,
+        "moveTyping":"Ghost",
+        "critChance":13,
+        "PP":15,
+        "moveDescription":"The user attacks by slashing the target with a sharp claw made from shadows. This move has a heightened chance of landing a critical hit."
+    },
+
+    "Shadow Ball":{
+        "moveName":"Shadow Ball",
+        "moveTyping":"Ghost",
+        "power":80,
+        "isSpecial":true,
+        "PP":15,
+        "statChangeChance":20,
+        "statModifierChange":-1,
+        "whatStatChanges":"SpDef",
+        "moveDescription":"KAMEHAME Shadow ball nin-jutsu!"
+    },
+
+    "Poison Jab":{
+        "moveName":"Poison Jab",
+        "power":80,
+        "whatStatusCondition":"Poison",
+        "inflictsStatus":true,
+        "moveTyping":"Poison",
+        "statusChance":30,
+        "PP":20,
+        "moveDescription":"The target is stabbed with a tentacle, an arm, or the like steeped in poison. This may also poison the target."
+    },
+
+    "Body Slam":{
+        "moveName": "Body Slam",
+        "Power": 85,
+        "moveTyping":"Normal",
+        "statusType":"Electric",
+        "whatStatusCondition":"Paralysis",
+        "statusChance":30,
+        "moveDescription":"The user drops onto the target with its full body weight. This may also leave the target with paralysis."
+    },
+
+    "Play Rough":{
+        "moveName":"Play Rough",
+        "moveTyping":"Fairy",
+        "power":90,
+        "accuracy":90,
+        "statChangeChance":10,
+        "whatStatChanges":"att",
+        "statModifierChange":-1,
+        "PP":10,
+        "moveDescription":"The user plays rough with the target and attacks it. This may also lower the target's Attack stat."
+    },
+
+    "Psychic":{
+        "moveName":"Psychic",
+        "moveTyping":"Psychic",
+        "power":90,
+        "isSpecial":true,
+        "statChangeChance":10,
+        "whatStatChanges":"SpDef",
+        "statModifierChange":-1,
+        "PP":10,
+        "moveDescription":"The target is hit by a strong telekinetic force. This may also lower the target's Sp. Def stat."
+    },
+
+    "Dragon Pulse":{
+        "moveName":"Dragon Pulse",
+        "moveTyping":"Dragon",
+        "power":85,
+        "isSpecial":true,
+        "PP":10,
+        "moveDescription":"The target is attacked with a shock wave generated by the user's gaping mouth."
+    },
+
+    "Dark Pulse":{
+        "moveName":"Dark Pulse",
+        "moveTyping":"Dark",
+        "power":80,
+        "isSpecial":true,
+        "statusType":null,
+        "statusChance":20,
+        "whatStatusCondition":"Flinched",
+        "PP":15
+    },
+
+    "Rock Smash":{
+        "moveName":"Rock Smash",
+        "moveTyping":"Fighting",
+        "power":40,
+        "statChangeChance":50,
+        "whatStatChanges":"def",
+        "statModifierChange":-1,
+        "moveDescription":"The user attacks with a punch that can shatter a rock. This may also lower the target's Defense stat."
+    },
+
+    "Earth Power":{
+        "moveName":"Earth Power",
+        "moveTyping":"Ground",
+        "power":90,
+        "isSpecial":true,
+        "statChangeChance":10,
+        "whatStatChanges":"SpDef",
+        "statModifierChange":-1,
+        "moveDescription":"The user makes the ground under the foe erupt with power. It may also lower the target's Sp. Def."
+    }
+
+}

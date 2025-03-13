@@ -8,32 +8,56 @@ Likewise alot of them are null, and that's so the Json file won't be endlessly l
 have simple logic, and I want to by simply specifying what is used have the compiler ignore alot
 of the functions in here. Practically they're null because I want alot of if statments to skip alot
 of functions under performMove.*/ 
-    private String moveName = null;
-    private int power = 0;
-    private int accuracy = 100;
-    private boolean isSpecial = false;
-    private byte priority = 0;
+    public String moveName = null;
+    public int power = 0;
+    public int accuracy = 100;
+    public boolean isSpecial = false;
+    public byte priority = 0;
     private String moveTyping = null;
-    private boolean inflictsStatus = false;
-    private String statusType = null;
-    private byte statusChance = 10;
-    private byte critChance = 6;
-    private long damage = 0;
-    private Typechart typechart;
-    private String whatStatusCondition = null;
-    private byte statModifierChange = 0;
-    private String whatStatChanges = null;
-    private boolean toVictim = true;
-    private boolean alwaysHits = false;
-    private boolean isCrit = false;
+    public boolean inflictsStatus = false;
+    /* Not to be confused with status condition. Think about moves like body slam, they have differing types.
+    And take sleep powder as well. Grass types are not immune to sleep, but they are sleep powder that's
+    the moveTyping. Also moveTyping is used to calc effectiveness of moves
+    */
+    public String statusType = moveTyping;
+    public byte statusChance = 10;
+    public byte critChance = 6;
+    public long damage = 0;
+    public Typechart typechart;
+    public String whatStatusCondition = null;
+    public byte statModifierChange = 0;
+    public String whatStatChanges = null;
+    public byte statChangeChance = 100;
+    public boolean toVictim = true;
+    public boolean alwaysHits = false;
+    public boolean isCrit = false;
+    public byte PP = 0;
+    public String moveDescription = "Move shouldn't exist";
 
+    /*
+     * Using a little trick before I forget. I want to ensure that by default if not specified that
+     * statusType is the same as moveType. So I'll do the setter/getter thing and inside the setter for
+     * moveType which is always specified in moves.json, I'll ensure that statusType = moveType. If
+     * status conditions are weird it's likely this didn't work.
+     * 
+     * Shit I think it makes it even more weird, since moveTyping may overwrite the String value from moves.json.
+     * Which is definitely not desired. Idk what to do tbh.
+     * 
+     * TODO: ENSURE LOGIC IS CORRECT FOR STATUSTYPE. If impossible then simply declare statusType at every json object.
+     */
+    public String getMoveTyping() {
+        return moveTyping;
+    }
+    public void setMoveTyping(String moveTyping){
+        this.moveTyping = moveTyping;
+        statusType = moveTyping;
+    }
     Random random = new Random();
 
     /* I realized that Jackson will under the hood create a constructer which will overwrite all of
     keys which match the names of any of my local variables here.
     So that's cool. An afterthought overwriting seems powerful.
     */
-
     public void revertMoveToBase(){
         // This will look nonsensical but if I overwrite a move with attributes unintended this will help.
         // May be changed later, and also if there are new attributes for move I'll need to update as well.
@@ -44,7 +68,7 @@ of functions under performMove.*/
         priority = 0;
         moveTyping = null;
         inflictsStatus = false;
-        statusType = null;
+        statusType = moveTyping;
         statusChance = 10;
         critChance = 6;
         whatStatusCondition = null;
@@ -54,7 +78,6 @@ of functions under performMove.*/
         alwaysHits = false;
         isCrit = false;
     }
-
     public void performMove(Pokemon user, Pokemon victim) {
             if (moveName == null) {
             // This helps since there will always be 4 move slots, they need to be overriden first.
@@ -72,22 +95,29 @@ of functions under performMove.*/
     }
     public void applySecondaryStatusCondition(Pokemon user, Pokemon victim) {
         //There should be more logic here, it's not perfect that's for sure.
-        if (toVictim) {
-        victim.addSecondaryCondition(whatStatusCondition);
-        System.out.println(victim.getPokeName() + " becomes " + whatStatusCondition);
-        } else if (!toVictim) {
-        user.addSecondaryCondition(whatStatusCondition);
-        System.out.println(user.getPokeName() + " becomes " + whatStatusCondition);
+        if (randomSuccess(statusChance)) {
+            if (toVictim) {
+            victim.addSecondaryCondition(whatStatusCondition);
+            System.out.println(victim.getPokeName() + " becomes " + whatStatusCondition);
+            } else if (!toVictim) {
+            user.addSecondaryCondition(whatStatusCondition);
+            System.out.println(user.getPokeName() + " becomes " + whatStatusCondition);
+            }
         }
     }
     public void statChange(Pokemon user, Pokemon victim) {
+        // I need to account for multiple stat Changes at once. There are alot of moves like that.
+        // I'll prob need to have a boolean array for that tbh.
         if (toVictim) {
+            // Per default this will be true, but in some cases not.
+            if (randomSuccess(statChangeChance)) {
             switch (whatStatChanges) {
                 case "att" -> victim.setAttMod(statModifierChange);
                 case "SpA" -> victim.setSpAMod(statModifierChange);
                 case "def" -> victim.setDefMod(statModifierChange);
                 case "SpDef" -> victim.setSpDefMod(statModifierChange);
                 case "Spd" -> victim.setSpdMod(statModifierChange);
+                }
             }
         } else if (!toVictim) {
             switch (whatStatChanges) {
@@ -135,7 +165,6 @@ of functions under performMove.*/
             System.out.println(victim.getPokeName() + " HP is now: " + victim.getHPMod());
 
     }
-
     public void mayApplyStatusCondition(Pokemon user, Pokemon victim){
         inflictsStatus = applyStatus(statusChance);
         if (!victim.getStatusCondition() && inflictsStatus){
@@ -145,7 +174,6 @@ of functions under performMove.*/
             }
 
     }
-
     public int getPrio(){
         return priority;
     }
@@ -174,12 +202,10 @@ of functions under performMove.*/
                 System.out.println("Something went wrong! isCrit = " + isCrit + " and " + isSpecial);
                 return 1;
         }
-
     public boolean applyStatus(int statusChance){
         int localRange = random.nextInt(100) + 1;
         return (statusChance > localRange && typechart.ShouldApplyStatus(statusType));
     }
-
     public boolean isCrit(Pokemon user){
         return (randomSuccess(critChance + user.getCritMod()));
     }

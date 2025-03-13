@@ -23,6 +23,7 @@ public class Pokemon {
     private byte DefMod = 0;
     private byte SpDefMod = 0;
     private byte SpdMod = 0;
+    private byte critChanceMod = 0;
     // Need stuff for the accuracyMod
     private byte accuracyMod = 1;
     ArrayList<String> SecondaryConditions = new ArrayList<>();
@@ -163,6 +164,31 @@ public class Pokemon {
 		(calculate_exp(level + 1) - experience);
 	}
      */
+    public void resetMods() {
+        // Everything that should be reset after a battle should be reset here.
+        int HPMod = HP;
+        byte AttMod = 0;
+        byte SpAMod = 0;
+        byte DefMod = 0;
+        byte SpDefMod = 0;
+        byte SpdMod = 0;
+        byte critChanceMod = 0;
+    }
+    public byte getCritMod() {
+        return critChanceMod;
+    }
+    public void setCritMod(byte critChange) {
+        // Scared of byte overflow shenanigans
+        if (critChanceMod + critChange > 100) {
+            critChanceMod = 100;
+        } else if (critChanceMod + critChange <= 0) {
+            critChanceMod = 0;
+        }
+        else {
+            critChanceMod += critChange;
+        }
+    }
+     
     public int getHPMod() {
         return HPMod;
     }

@@ -15,7 +15,7 @@ public class Pokemon {
     public int baseSpDef;
     public int baseSpd;
     private int level = 5;
-    public String[] types;
+    private String[] types;
     ArrayList<String> Typings = new ArrayList<>();
     private int evasion = 0;
     private boolean statusCondition = false;
@@ -32,8 +32,6 @@ public class Pokemon {
     private byte accuracyMod = 1;
     ArrayList<String> SecondaryConditions = new ArrayList<>();
     
-    public Pokemon(){}
-
     public void addSecondaryCondition(String secondaryCondition) {
         SecondaryConditions.add(secondaryCondition);
     }
@@ -45,11 +43,19 @@ public class Pokemon {
         public ArrayList<String> getSecondaryCondtions() {
             return SecondaryConditions;
         }
-        public void convertTypesToArrayList() {
+
+        // Very important to use this func before accessing the Typings ArrayList.
+
+        public String[] getOldTypes() {
+            return types;
+        }
+        // Jackson should automatically access this.
+        public void setTypes(String types[]) {
             for (int i = 0, n = types.length; i < n; i++) {
                 Typings.add(types[i]);
             }
         }
+
         public ArrayList<String> getTypings(){
             return Typings;
         }

@@ -147,6 +147,7 @@ public class Pokesorter
             currentPokemon.displayPokeInfo();
             }
         }
+        
         System.out.println(currentPokemon.getLevel());
         myScanner.close();
 

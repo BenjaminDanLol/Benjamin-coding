@@ -13,7 +13,6 @@ public class Main {
          * Got stuff to do. Good luck coding, if your reading this.
          */
         BenjaminScenario runCustomScenario = new BenjaminScenario();
-        runCustomScenario.startNewBattle();
 
         // we need a movelist to choose from and define p1move1 etc as the picked move using the scanner. 
         /*

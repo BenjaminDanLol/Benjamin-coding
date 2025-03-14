@@ -38,13 +38,14 @@ public class Pokemon {
         return movesForThePokemonSlot[element - 1];
     }
 
-    public void setASpecificPokemonsMove(int element, Move theMove) {
+    public void setASpecificPokemonsMove(int element, Move theMove, Player player) {
         if (element > 4) {
         System.out.println("There are only 4 moves");
         return;
         } 
             if (movesForThePokemonSlot[element - 1].moveDescription.equals("Move shouldn't exist"))
             {
+            System.out.println(player.getPokemonFromPlayer(element).PokeName + " learned " + theMove.moveName);
             movesForThePokemonSlot[element - 1] = theMove;
             } else {
                 System.out.println("You have overwritten move: " + movesForThePokemonSlot[element - 1].moveName);
@@ -143,6 +144,8 @@ public class Pokemon {
      */
     public void resetPokemon() {
         PokeName = "Pokemon shouldn't exist";
+        evolvesTo = null;
+        evolutionArray = null;
         resetMods();
     }
     public void resetMods() {

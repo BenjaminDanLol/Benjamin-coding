@@ -23,8 +23,8 @@ public class Player {
         } else {
             System.out.println(playerName + " has slaughtered " + playersPokemon[index - 1].PokeName +
             " and gived its' remains to his new pet: " + thePokemon.PokeName);
+            removeAPokemonFromPlayerByName(thePokemon.PokeName);
             playersPokemon[index - 1] = thePokemon;
-            removeAllPokemonFromPlayerByName(thePokemon.PokeName);
         }
     }
 
@@ -41,7 +41,7 @@ public class Player {
     // This is a quick fix. But will also introduce a bug, that will remove the first pokemon with that name.
     // Instead of doing it by positioning.
     // TODO: Should later do it by array index position. 
-    public void removeAllPokemonFromPlayerByName(String thePokemonsName) {
+    public void removeAPokemonFromPlayerByName(String thePokemonsName) {
         for (int i = 0, n = playersPokemon.length; i < n; i++) {
             if (playersPokemon[i].PokeName.equals(thePokemonsName)) {
                 playersPokemon[i].resetPokemon();

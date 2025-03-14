@@ -70,7 +70,7 @@
 
     "Swords Dance":{
         "moveName":"Swords Dance",
-        "whatStatChanges":"att",
+        "whatStatChanges":["att"],
         "statModifierChange":2,
         "toVictim":false,
         "moveTyping":"Normal",
@@ -78,9 +78,19 @@
         "moveDescription":"A frenetic dance to uplift the fighting spirit. This sharply raises the user's Attack stat."
     },
 
+    "Dragon Dance":{
+        "moveName":"Dragon Dance",
+        "whatStatChanges":["att","Spd"],
+        "statModifierChange":1,
+        "toVictim":false,
+        "moveTyping":"Dragon",
+        "PP":15,
+        "moveDescription":"User raises their attack and speed by 1 stage. In other words. SKRRAAA ME DRAGON."
+    },
+
     "Growl":{
         "moveName":"Growl",
-        "whatStatChanges":"att",
+        "whatStatChanges":["att"],
         "moveTyping":"Normal",
         "statModifierChange":-1,
         "PP":40,
@@ -89,7 +99,7 @@
 
     "Baby-Doll Eyes":{
         "moveName":"Baby-Doll Eyes",
-        "whatStatChanges":"att",
+        "whatStatChanges":["att"],
         "moveTyping":"Fairy",
         "statModifierChange":-1,
         "priority":1,
@@ -99,12 +109,22 @@
 
     "Nasty Plot":{
         "moveName":"Nasty Plot",
-        "whatStatChanges":"SpA",
+        "whatStatChanges":["SpA"],
         "moveTyping":"Dark",
         "statModifierChange":2,
         "toVictim":false,
         "PP":20,
         "moveDescription":"The user stimulates its brain by thinking bad thoughts *Pause*. It sharply raises the user's Sp. Atk."
+    },
+
+    "Calm Mind":{
+        "moveName":"Calm Mind",
+        "whatStatChanges":["SpA","SpDef"],
+        "moveTyping":"Psychic",
+        "statModifierChange":1,
+        "toVictim":false,
+        "PP":15,
+        "moveDescription":"The user calms their mind raising their Special Attack and Special Defense by 1 stage."
     },
 
     "Flamethrower":{
@@ -219,7 +239,7 @@
         "moveName":"Bulldoze",
         "power":60,
         "moveTyping":"Ground",
-        "whatStatChanges":"Spd",
+        "whatStatChanges":["Spd"],
         "statModifierChange":-1,
         "PP":20,
         "moveDescription":"The user strikes everything around it by stomping down on the ground. This lowers the Speed stats of those hit."
@@ -227,7 +247,7 @@
 
     "Agility":{
         "moveName":"Agility",
-        "whatStatChanges":"Spd",
+        "whatStatChanges":["Spd"],
         "statModifierChange":2,
         "toVictim":false,
         "moveTyping":"Psychic",
@@ -252,7 +272,7 @@
         "PP":15,
         "statChangeChance":20,
         "statModifierChange":-1,
-        "whatStatChanges":"SpDef",
+        "whatStatChanges":["SpDef"],
         "moveDescription":"KAMEHAME Shadow ball nin-jutsu!"
     },
 
@@ -269,7 +289,7 @@
 
     "Body Slam":{
         "moveName": "Body Slam",
-        "Power": 85,
+        "power": 85,
         "moveTyping":"Normal",
         "statusType":"Electric",
         "whatStatusCondition":"Paralysis",
@@ -283,7 +303,7 @@
         "power":90,
         "accuracy":90,
         "statChangeChance":10,
-        "whatStatChanges":"att",
+        "whatStatChanges":["att"],
         "statModifierChange":-1,
         "PP":10,
         "moveDescription":"The user plays rough with the target and attacks it. This may also lower the target's Attack stat."
@@ -295,7 +315,7 @@
         "power":90,
         "isSpecial":true,
         "statChangeChance":10,
-        "whatStatChanges":"SpDef",
+        "whatStatChanges":["SpDef"],
         "statModifierChange":-1,
         "PP":10,
         "moveDescription":"The target is hit by a strong telekinetic force. This may also lower the target's Sp. Def stat."
@@ -326,7 +346,7 @@
         "moveTyping":"Fighting",
         "power":40,
         "statChangeChance":50,
-        "whatStatChanges":"def",
+        "whatStatChanges":["def"],
         "statModifierChange":-1,
         "moveDescription":"The user attacks with a punch that can shatter a rock. This may also lower the target's Defense stat."
     },
@@ -337,7 +357,7 @@
         "power":90,
         "isSpecial":true,
         "statChangeChance":10,
-        "whatStatChanges":"SpDef",
+        "whatStatChanges":["SpDef"],
         "statModifierChange":-1,
         "moveDescription":"The user makes the ground under the foe erupt with power. It may also lower the target's Sp. Def."
     }

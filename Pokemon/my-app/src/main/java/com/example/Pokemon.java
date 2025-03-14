@@ -31,6 +31,28 @@ public class Pokemon {
     // Need stuff for the accuracyMod
     private byte accuracyMod = 1;
     ArrayList<String> SecondaryConditions = new ArrayList<>();
+    public Move[] movesForThePokemonSlot = new Move[4];
+
+    public Move getASpecificPokemonsMove(int element) {
+        // I'll adjust like usual
+        return movesForThePokemonSlot[element - 1];
+    }
+
+    public void setASpecificPokemonsMove(int element, Move theMove) {
+        if (element > 4) {
+        System.out.println("There are only 4 moves");
+        } else {
+            if (movesForThePokemonSlot[element - 1].moveDescription.equals("Move shouldn't exist"))
+            {
+            movesForThePokemonSlot[element - 1] = theMove;
+            } else {
+                System.out.println("You have overwritten move: " + movesForThePokemonSlot[element - 1].moveName);
+                System.out.println(PokeName + " learned " + theMove.moveName);
+                System.out.println(theMove.moveDescription);
+            }
+
+        }
+    }
     
     public void addSecondaryCondition(String secondaryCondition) {
         SecondaryConditions.add(secondaryCondition);
@@ -53,6 +75,10 @@ public class Pokemon {
         public void setTypes(String types[]) {
             for (int i = 0, n = types.length; i < n; i++) {
                 Typings.add(types[i]);
+            }
+
+            for (int i = 0, n = movesForThePokemonSlot.length; i < n; i++) {
+                movesForThePokemonSlot[i] = new Move();
             }
         }
 
@@ -121,13 +147,13 @@ public class Pokemon {
     }
     public void resetMods() {
         // Everything that should be reset after a battle should be reset here.
-        int HPMod = baseHP;
-        byte AttMod = 0;
-        byte SpAMod = 0;
-        byte DefMod = 0;
-        byte SpDefMod = 0;
-        byte SpdMod = 0;
-        byte critChanceMod = 0;
+        HPMod = baseHP;
+        AttMod = 0;
+        SpAMod = 0;
+        DefMod = 0;
+        SpDefMod = 0;
+        SpdMod = 0;
+        critChanceMod = 0;
     }
 
     public byte getCritMod() {

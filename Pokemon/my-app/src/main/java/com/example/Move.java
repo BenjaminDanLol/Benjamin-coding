@@ -10,6 +10,7 @@ of the functions in here. Practically they're null because I want alot of if sta
 of functions under performMove.*/ 
     public String moveName = null;
     public int power = 0;
+    // I'll later have an isMultihit boolean and likewise an int array hitsBetween, which is pr standard [2,5]
     public int accuracy = 100;
     public boolean isSpecial = false;
     public byte priority = 0;
@@ -26,7 +27,7 @@ of functions under performMove.*/
     public Typechart typechart;
     public String whatStatusCondition = null;
     public byte statModifierChange = 0;
-    public String whatStatChanges = null;
+    public String[] whatStatChanges = null;
     public byte statChangeChance = 100;
     public boolean toVictim = true;
     public boolean alwaysHits = false;
@@ -58,6 +59,9 @@ of functions under performMove.*/
     keys which match the names of any of my local variables here.
     So that's cool. An afterthought overwriting seems powerful.
     */
+    public void displayMoveInfo() {
+        System.out.printf("Movename: %s, Pwr: %d! %n Description: %s %n", moveName, power, moveDescription);
+    }
     public void revertMoveToBase(){
         // This will look nonsensical but if I overwrite a move with attributes unintended this will help.
         // May be changed later, and also if there are new attributes for move I'll need to update as well.
@@ -111,21 +115,27 @@ of functions under performMove.*/
         if (toVictim) {
             // Per default this will be true, but in some cases not.
             if (randomSuccess(statChangeChance)) {
-            switch (whatStatChanges) {
+                for (int i = 0, n = whatStatChanges.length; i < n; i++) {
+            switch (whatStatChanges[i]) {
                 case "att" -> victim.setAttMod(statModifierChange);
                 case "SpA" -> victim.setSpAMod(statModifierChange);
                 case "def" -> victim.setDefMod(statModifierChange);
                 case "SpDef" -> victim.setSpDefMod(statModifierChange);
                 case "Spd" -> victim.setSpdMod(statModifierChange);
                 }
+                }
             }
         } else if (!toVictim) {
-            switch (whatStatChanges) {
+            if (randomSuccess(statChangeChance)) {
+                for (int i = 0, n = whatStatChanges.length; i < n; i++) {
+            switch (whatStatChanges[i]) {
                 case "att" -> user.setAttMod(statModifierChange);
                 case "SpA" -> user.setSpAMod(statModifierChange);
                 case "def" -> user.setDefMod(statModifierChange);
                 case "SpDef" -> user.setSpDefMod(statModifierChange);
                 case "Spd" -> user.setSpdMod(statModifierChange);
+                }
+                }
             }
         }
     }

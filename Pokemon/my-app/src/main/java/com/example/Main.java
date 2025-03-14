@@ -1,20 +1,19 @@
 package com.example;
 
-import java.io.InputStream;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner myScanner = new Scanner(System.in);
-
-        InputStream inputStream = Pokesorter.class.getClassLoader().getResourceAsStream("resources/PokeTiering.json");
-        Player p1 = new Player(myScanner);
-        for (int i = 0; i < 10; i++) {
-            p1.addPokemon(i, myScanner);
-        }
+        // This is apparently cleaner and out closes the scanner, after usage in method block
+        try (Scanner myScanner = new Scanner(System.in)) {
+        Interface myInterface = new Interface();
+        Player p1 = new Player();
+        p1.addPokemon(myInterface, myScanner);
         p1.displayPokemonTeam();
-        p1.displayASpecificPokemon(6, myScanner);
-        myScanner.close();
+        p1.displayASpecificPokemon(1, myScanner);
+        p1.getPokemonFromPlayer(1).setASpecificPokemonsMove(1, myInterface.getASpecificMove(myScanner, "Flamethrower"));
+        p1.getPokemonFromPlayer(1).getASpecificPokemonsMove(1).displayMoveInfo();
+        }
     }
     
 }

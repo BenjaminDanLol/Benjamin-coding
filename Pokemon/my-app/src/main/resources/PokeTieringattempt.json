@@ -1580,7 +1580,7 @@
         "baseSpA": 125,
         "baseSpDef": 75,
         "baseSpd": 55,
-        "types": ["Grass", "Psychic"]
+        "types": ["Grass"]
         },
         "Exeggutor (Alolan)": {
         "PokeName": "Exeggutor (Alolan)",

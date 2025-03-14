@@ -221,7 +221,6 @@ of functions under performMove.*/
     }
 
     public String getType() {
-        // This is move typing may remove method later
         return moveTyping;
     }
 

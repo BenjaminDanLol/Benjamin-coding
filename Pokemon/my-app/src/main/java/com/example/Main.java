@@ -8,7 +8,9 @@ public class Main {
         try (Scanner myScanner = new Scanner(System.in)) {
         Interface myInterface = new Interface();
         Player p1 = new Player();
-        p1.addPokemon(myInterface, myScanner);
+        p1.addAPokemon(1, myInterface.getAPokemonStandardized(1000, myScanner, 4));
+        p1.addAPokemon(2, myInterface.getAPokemonStandardized(1000, myScanner, 4));
+        p1.addAPokemon(1, myInterface.getAPokemonStandardized(1000, myScanner, 4));
         p1.displayPokemonTeam();
         p1.displayASpecificPokemon(1, myScanner);
         p1.getPokemonFromPlayer(1).setASpecificPokemonsMove(1, myInterface.getASpecificMove(myScanner, "Flamethrower"));

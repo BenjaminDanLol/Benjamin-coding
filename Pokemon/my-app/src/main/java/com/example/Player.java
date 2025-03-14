@@ -1,38 +1,61 @@
 package com.example;
 
-
-import java.util.ArrayList;
 import java.util.Scanner;
-
-
 
 public class Player {
     private String playerName;
-    ArrayList<Pokemon> playersPokemon = new ArrayList<>();
+    Pokemon[] playersPokemon = new Pokemon[6];
     // Maybe make a hashMap, where the entry is based off the Pokemon. That way the pokemon can "own" the moves.
-    public Player(){
+    public Player() {
+        // Ensuring that there are 6 empty Pokemon slots each time Player is invoked, I could even have it as a param.
+        for (int i = 0, n = playersPokemon.length; i < n; i++) {
+            playersPokemon[i] = new Pokemon();
+        }
     }
-    public void addPokemon(Interface myInterface, Scanner myScanner) {
-        if (playersPokemon.size() + 1 == 7) {
-            // Looks weird but it's because the scanner minuses by one by default as to not confuse player
-            // with arrays and such.
-            System.out.println("Sorry you cannot add more Pokemon to team");
+    public void addAPokemon(int index, Pokemon thePokemon) {
+        if (index >= 7) {
+            System.out.println("There are currently only 6 Pokemon available in this version!");
             return;
         }
-        playersPokemon.add(myInterface.getAPokemonStandardized(2000, myScanner, 4));
+        if (playersPokemon[index - 1].PokeName.equals("Pokemon shouldn't exist"))  {
+            // The player has in this case simply added a Pokemon, without overwriting any current mons.
+            playersPokemon[index - 1] = thePokemon;
+        } else {
+            System.out.println(playerName + " has slaughtered " + playersPokemon[index - 1].PokeName +
+            " and gived its' remains to his new pet: " + thePokemon.PokeName);
+            playersPokemon[index - 1] = thePokemon;
+            removeAllPokemonFromPlayerByName(thePokemon.PokeName);
+        }
     }
 
+
     public Pokemon getPokemonFromPlayer(int index) {
-        return playersPokemon.get(index - 1);
+        return playersPokemon[index - 1];
     }
 
     public void displayASpecificPokemon(int spotForPokemonInArray, Scanner myScanner) {
         // So for the first pokemon just type 1, it will be adjusted
-        playersPokemon.get(spotForPokemonInArray - 1).displayPokeInfo();;
+        playersPokemon[spotForPokemonInArray - 1].displayPokeInfo();
     }
+
+    // This is a quick fix. But will also introduce a bug, that will remove the first pokemon with that name.
+    // Instead of doing it by positioning.
+    // TODO: Should later do it by array index position. 
+    public void removeAllPokemonFromPlayerByName(String thePokemonsName) {
+        for (int i = 0, n = playersPokemon.length; i < n; i++) {
+            if (playersPokemon[i].PokeName.equals(thePokemonsName)) {
+                playersPokemon[i].resetPokemon();
+                System.out.println(playerName + " lost their: " + thePokemonsName);
+                return;
+            }
+        }
+    }
+
     public void displayPokemonTeam() {
-        for (int i = 0; i < playersPokemon.size(); i++) {
-            playersPokemon.get(i).displayPokeInfo();
+        int i = 0;
+        while (!playersPokemon[i].PokeName.equals("Pokemon shouldn't exist")) {
+            playersPokemon[i].displayPokeInfo();
+            i++;
         }
     }
 

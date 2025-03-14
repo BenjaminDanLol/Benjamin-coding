@@ -53,15 +53,11 @@ public class Interface {
                 System.out.println("\"Typings\" array is missing or empty.");
             }
         
-
             allPokemonTypes = new String[typesArray.size()];
             for (int i = 0; i < allPokemonTypes.length; i++){
                 allPokemonTypes[i] = typesArray.get(i).asText();
             }
-            // May delete later
-            for (String pokeTyping : allPokemonTypes) {
-            System.out.printf(pokeTyping + ", ");
-            }
+
             pokemonStream = Interface.class.getClassLoader().getResourceAsStream("resources/PokeTieringattempt.json");
             if (pokemonStream == null) {
                 // I may want to remove this shit, and just print it out and trust the catcher to catch.
@@ -129,12 +125,14 @@ public class Interface {
             });
             chosenFilter.addAndGet(100);
             }
-        
         // This looks ugly but it's to convert the PokemonMap all the way down to just the key.
         keyList = new ArrayList<>(pokemonMap.keySet());
         keySetConverted = keyList.toArray(new String[0]);
         randPokeChoice = keySetConverted[(limitChoicesNoDupes(keySetConverted.length, 4, 
         myScanner, keySetConverted, playerName) - 1)];
+            // Since this method will be reused
+            pokemonMap.clear();
+            pokemonMapAllInclusive.clear();
         System.out.println("You chose: " + randPokeChoice);
         
         currentPokemon = pokeMap.get(randPokeChoice);

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Pokemon {
 
-    public String PokeName;
+    public String PokeName = "Pokemon shouldn't exist";
     public int evolvesAt;
     public String evolvesTo = null;
     public String[] evolutionArray = null;
@@ -41,7 +41,8 @@ public class Pokemon {
     public void setASpecificPokemonsMove(int element, Move theMove) {
         if (element > 4) {
         System.out.println("There are only 4 moves");
-        } else {
+        return;
+        } 
             if (movesForThePokemonSlot[element - 1].moveDescription.equals("Move shouldn't exist"))
             {
             movesForThePokemonSlot[element - 1] = theMove;
@@ -50,8 +51,6 @@ public class Pokemon {
                 System.out.println(PokeName + " learned " + theMove.moveName);
                 System.out.println(theMove.moveDescription);
             }
-
-        }
     }
     
     public void addSecondaryCondition(String secondaryCondition) {
@@ -143,6 +142,7 @@ public class Pokemon {
 	}
      */
     public void resetPokemon() {
+        PokeName = "Pokemon shouldn't exist";
         resetMods();
     }
     public void resetMods() {

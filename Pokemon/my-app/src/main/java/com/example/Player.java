@@ -6,11 +6,21 @@ public class Player {
     private String playerName;
     Pokemon[] playersPokemon = new Pokemon[6];
     // Maybe make a hashMap, where the entry is based off the Pokemon. That way the pokemon can "own" the moves.
-    public Player() {
+    public Player(String pName) {
         // Ensuring that there are 6 empty Pokemon slots each time Player is invoked, I could even have it as a param.
         for (int i = 0, n = playersPokemon.length; i < n; i++) {
             playersPokemon[i] = new Pokemon();
         }
+        playerName = pName;
+    }
+
+    public int howManyPokemonDoesPlayerActuallyHave() {
+
+        int i = 0;
+        while (!playersPokemon[i].PokeName.equals("Pokemon shouldn't exist")) {
+            i++;
+        }
+        return i + 1;
     }
     public void addAPokemon(int index, Pokemon thePokemon) {
         if (index >= 7) {
@@ -28,6 +38,13 @@ public class Player {
         }
     }
 
+    public Pokemon[] getPlayersPokemon(){
+        return playersPokemon;
+    }
+
+    public String getPlayerName(){
+        return playerName;
+    }
 
     public Pokemon getPokemonFromPlayer(int index) {
         return playersPokemon[index - 1];

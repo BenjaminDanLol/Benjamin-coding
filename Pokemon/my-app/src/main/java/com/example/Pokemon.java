@@ -48,12 +48,23 @@ public class Pokemon {
             System.out.println(player.getPokemonFromPlayer(element).PokeName + " learned " + theMove.moveName);
             movesForThePokemonSlot[element - 1] = theMove;
             } else {
+                // I should actually overwrite the move here lol.
+                // Intuitively it makes sense to just set reassign the Old Move, but since there are 
+                // tons of attributes in the move object, that needs overwriting or to be return to a "blank"
+                // state. then I should before reassigning. Apply this pseudo code formula:
+                // Old Move = Blank Move; Old Move = New Move; 
                 System.out.println("You have overwritten move: " + movesForThePokemonSlot[element - 1].moveName);
                 System.out.println(PokeName + " learned " + theMove.moveName);
                 System.out.println(theMove.moveDescription);
             }
     }
-    
+    public int howManyMovesDoesPokemonHave() {
+        int i = 0;
+        while (!movesForThePokemonSlot[i].moveDescription.equals("Move shouldn't exist")) {
+            i++;
+        }
+        return i;
+    }
     public void addSecondaryCondition(String secondaryCondition) {
         SecondaryConditions.add(secondaryCondition);
     }

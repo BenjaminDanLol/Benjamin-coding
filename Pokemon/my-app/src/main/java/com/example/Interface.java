@@ -23,7 +23,6 @@ public class Interface {
     JsonNode typeMappingNode;
     private final ObjectMapper mapper = new ObjectMapper();
     String[] allPokemonTypes;
-    String playerName = "playerName";
 
     Map<String, Integer> pokemonMap = new HashMap<>();
     Map<String, Integer> pokemonMapAllInclusive = new HashMap<>();
@@ -78,7 +77,32 @@ public class Interface {
             }
 
     }
-    public Pokemon getAPokemonStandardized(int filter, Scanner myScanner, int howManyMonsInPokemonPool){
+    
+    public void startBattleTwoPlayers(Player p1, Player p2, Scanner myScanner) {
+
+        int p1choice = chooseAPokemon(myScanner, p1);
+        int p2choice = chooseAPokemon(myScanner, p2);
+        System.out.println(p1.getPlayerName() + " chooses " + p1.getPokemonFromPlayer(p1choice + 1).PokeName);
+        System.out.println(p2.getPlayerName() + " chooses " + p2.getPokemonFromPlayer(p2choice + 1).PokeName);
+
+        p2.getPokemonFromPlayer(p2choice + 1).getASpecificPokemonsMove(1).
+        performMove(p2.getPokemonFromPlayer(p2choice + 1), p1.getPokemonFromPlayer(p1choice + 1));
+    }
+
+    public int chooseAPokemon(Scanner myScanner, Player player) {
+       // What String array should be shown?
+       // This solution will be disgusting and dirty but it's gonna work
+       String[] nameOfAllPlayersPokemon = new String[player.howManyPokemonDoesPlayerActuallyHave()];
+        for (int i = 0; i < player.getPlayersPokemon().length; i++) {
+            if (!player.getPokemonFromPlayer(i + 1).PokeName.equals("Pokemon shouldn't exist"))
+            {
+                nameOfAllPlayersPokemon[i] = player.getPokemonFromPlayer(i + 1).PokeName;
+            }
+        }
+       return choose1Deterministic(myScanner, player.getPlayerName(), player.howManyPokemonDoesPlayerActuallyHave(), nameOfAllPlayersPokemon);
+    }
+    
+    public Pokemon getAPokemonStandardized(int filter, Scanner myScanner, int howManyMonsInPokemonPool, String playerName){
         int currentChoice = limitChoicesNoDupes(allPokemonTypes.length, 4, myScanner, allPokemonTypes, playerName);
         String selectedType = allPokemonTypes[currentChoice-1];      
         typeMappingNode = pokemonRoot.path("TypeMapping").path(selectedType);
@@ -133,13 +157,12 @@ public class Interface {
             // Since this method will be reused
             pokemonMap.clear();
             pokemonMapAllInclusive.clear();
-        System.out.println("You chose: " + randPokeChoice);
+        System.out.println(playerName + " chose: " + randPokeChoice);
         
         currentPokemon = pokeMap.get(randPokeChoice);
         currentPokemon.displayPokeInfo();
         return currentPokemon;
     }
-    // Simply inserting String should work here.
     public Move getASpecificMove(Scanner myScanner, String theMove) {
         currentMove = moveMap.get(theMove);
         return currentMove;
@@ -197,5 +220,19 @@ public class Interface {
                     thePlayersChoice = myScanner.nextInt();
                 } while (thePlayersChoice < 1 || thePlayersChoice > numOfChoices);
                 return choiceIndex[thePlayersChoice-1];
+            }
+            public static int choose1Deterministic(Scanner myScanner, String pName, 
+            int numOfChoices, String[] choices){
+                int thePlayersChoice;
+                System.out.println("Choose one of the following " + pName +  ": ");
+                for (int elementsOfChoices = 0; elementsOfChoices < numOfChoices; elementsOfChoices++)
+                {
+                    System.out.printf(" %d. %s", elementsOfChoices + 1, choices[elementsOfChoices]);
+                }
+                System.out.printf(": ");
+                do {
+                    thePlayersChoice = myScanner.nextInt();
+                } while (thePlayersChoice < 1 || thePlayersChoice > numOfChoices);
+                return thePlayersChoice-1;
             }
 }

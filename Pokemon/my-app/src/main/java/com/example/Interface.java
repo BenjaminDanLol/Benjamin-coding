@@ -4,12 +4,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -103,16 +108,23 @@ public class Interface {
     }
     
     public Pokemon getAPokemonStandardized(int filter, Scanner myScanner, int howManyMonsInPokemonPool, String playerName){
-        int currentChoice = limitChoicesNoDupes(allPokemonTypes.length, 4, myScanner, allPokemonTypes, playerName);
-        String selectedType = allPokemonTypes[currentChoice-1];      
+        String selectedType = presentOptions(allPokemonTypes, 4, myScanner, playerName);
         typeMappingNode = pokemonRoot.path("TypeMapping").path(selectedType);
         if (!typeMappingNode.isObject()){
         System.out.println("No corresponding mapping to type: " + selectedType);
         }
         // I'll sadly have to recreate a new AtomicInteger each time the method is called.
+        return filterThroughThePokemon(filter, typeMappingNode, howManyMonsInPokemonPool, myScanner, playerName);
+    }
+    public Move getASpecificMove(Scanner myScanner, String theMove) {
+        currentMove = moveMap.get(theMove);
+        return currentMove;
+        } 
+    public Pokemon filterThroughThePokemon(int filter, JsonNode typeMappingNode, 
+    int amountOfPokemon, Scanner myScanner, String playerName) {
         AtomicInteger chosenFilter = new AtomicInteger(filter);
         fields = typeMappingNode.fields();
-        int pokemonPool = howManyMonsInPokemonPool;
+        int pokemonPool = amountOfPokemon;
 
         while (fields.hasNext()) {
             entry = fields.next();
@@ -152,76 +164,83 @@ public class Interface {
         // This looks ugly but it's to convert the PokemonMap all the way down to just the key.
         keyList = new ArrayList<>(pokemonMap.keySet());
         keySetConverted = keyList.toArray(new String[0]);
-        randPokeChoice = keySetConverted[(limitChoicesNoDupes(keySetConverted.length, 4, 
-        myScanner, keySetConverted, playerName) - 1)];
+        randPokeChoice = presentOptions(keySetConverted, 4, myScanner, playerName);
             // Since this method will be reused
             pokemonMap.clear();
             pokemonMapAllInclusive.clear();
         System.out.println(playerName + " chose: " + randPokeChoice);
-        
         currentPokemon = pokeMap.get(randPokeChoice);
         currentPokemon.displayPokeInfo();
         return currentPokemon;
     }
-    public Move getASpecificMove(Scanner myScanner, String theMove) {
-        currentMove = moveMap.get(theMove);
-        return currentMove;
-        } 
-
-    // The method choose1 has weird error messages for it's scanner
-            public static int limitChoicesNoDupes(int range, int numOfChoices, 
-            Scanner myScanner, String[] choices, String pName) {
-            if (numOfChoices > range) {
-                System.out.println("numOfChoices is greater than range");
-                int[] simpleNumOfChoices = new int[range];
-                for (int i = 0; i < simpleNumOfChoices.length; i++) {
-                    simpleNumOfChoices[i] = i + 1;
-                }
-                return choose1(myScanner, pName, simpleNumOfChoices.length, choices, simpleNumOfChoices);
-            }
-            boolean hasDupes = true;
-            Random random = new Random();
-            int[] choiceIndex = new int[numOfChoices];
-
-                for (int currentElement = 0; currentElement < numOfChoices; currentElement++) {
-                choiceIndex[currentElement] = random.nextInt(range)+1;
-                }
-            outer:
-                while (hasDupes) {
-            hasDupes = false;
-            for (int n = 0, r = choiceIndex.length; n < r; n++) {
-                for (int i = 0; i < r; i++) {
-                    if (i != n && choiceIndex[i] == choiceIndex[n]) {
-                            System.out.println("Duplicate spotted! Arrayposition: " + i + 
-                            " is currently == Arrayposition: " + n);
-                            choiceIndex[i] = random.nextInt(range)+1;
-                            for (int priorElements = 0; priorElements < i; priorElements++) {
-                                if (choiceIndex[priorElements] == choiceIndex[i]) {
-                                    hasDupes = true;
-                                    continue outer;
-                                    }
-                                }   
-                        }
-                    }
-                }
-            }
-            return choose1(myScanner, pName, numOfChoices, choices, choiceIndex);
+    public static List<Integer> generateUniqueList(int size, int range) {
+        if (size <= 0 || range <= 0) {
+            throw new IllegalArgumentException("Size or range is 0 or less");
         }
-            public static int choose1(Scanner myScanner, String pName, 
-            int numOfChoices, String[] choices, int[] choiceIndex){
-                int thePlayersChoice;
-                System.out.println("Choose one of the following " + pName +  ": ");
-                for (int elementsOfChoices = 0; elementsOfChoices < numOfChoices; elementsOfChoices++)
-                {
-                    System.out.printf(" %d. %s", elementsOfChoices + 1, choices[choiceIndex[elementsOfChoices]-1]);
-                }
-                System.out.printf(": ");
-                do {
-                    thePlayersChoice = myScanner.nextInt();
-                } while (thePlayersChoice < 1 || thePlayersChoice > numOfChoices);
-                return choiceIndex[thePlayersChoice-1];
+        /* There may be no opportunity to randomize, since the sizing or choices
+        the player can choose from is larger or equal to said Random elements.
+        This is simply a complex but concise way of making an ordered list.
+        Essentially it starts and 0, and ends size (exclusive).
+        .range ensures the ints are ordered
+        .boxed() converts to Int objects, or more accurate wrapper object Integer.
+        We need .boxed since Lists don't store primitive values like ints.
+        .collect, simply stores whatever was processed in the "Iteration" as
+        a -sequential- list (because of range remember).
+        Collectors.toList() initializes a List, (usually an ArrayList).
+        The way it detects the type of List it should create is 1. Java type inference.
+        2. .boxed() already has the typing it should store. So the invisible <T> for the
+        method fills out the typing of the list initialized.
+        And the Collectors.toList() is typically 
+        */
+
+        if (size >= range) {
+            return IntStream.range(0, size)
+                .boxed()
+                .collect(Collectors.toList());
+        }
+
+        Random random = new Random();
+        Set<Integer> uniqueNumbers = new HashSet<>();
+
+        while (uniqueNumbers.size() < size) {
+            int randomNumber = random.nextInt(range);
+            uniqueNumbers.add(randomNumber);
+        }
+
+        // You can't access elements from a set directly, therefor we need a list instead
+        List<Integer> choicesForPlayer = new ArrayList<>(uniqueNumbers);
+
+        return choicesForPlayer;
+    }
+    public static String presentOptions(String[] choices, int numOfChoices, Scanner myScanner, String playerName) {
+        List<Integer> randChoices = generateUniqueList(numOfChoices, choices.length);
+        System.out.println("Choose one of " + numOfChoices + " " + playerName + ": ");
+        for (int i = 0; i < numOfChoices; i++)
+        {
+            System.out.printf(" %d. %s", i + 1, choices[randChoices.get(i)]);
+            System.out.printf(" or rather randChoice: " + randChoices.get(i));
+            System.out.println();
+        }
+        int thePlayersChoice;
+        while (true) {
+        System.out.print("Your' choice(s) (1-" + numOfChoices + "): ");
+        try {
+        
+            thePlayersChoice = myScanner.nextInt();
+            if (thePlayersChoice >= 1 && thePlayersChoice <= numOfChoices) {
+                break; // Exits the while loop. 
             }
-            public static int choose1Deterministic(Scanner myScanner, String pName, 
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input! Please enter a number.");
+            myScanner.nextLine(); // Read the next line, instead of the line where user misinputted.
+            }
+        }
+        // Map user's choice (1-based) to the index in randChoices (0-based)
+        int selectedIndex = randChoices.get(thePlayersChoice - 1);
+        return choices[selectedIndex];
+
+    }
+    public static int choose1Deterministic(Scanner myScanner, String pName, 
             int numOfChoices, String[] choices){
                 int thePlayersChoice;
                 System.out.println("Choose one of the following " + pName +  ": ");

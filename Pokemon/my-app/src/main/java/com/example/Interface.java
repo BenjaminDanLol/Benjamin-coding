@@ -226,6 +226,34 @@ public class Interface {
         // Map user's choice (1-based) to the index in randChoices (0-based)
         int selectedIndex = randChoices.get(thePlayersChoice - 1);
         return choices[selectedIndex];
+    }
+    public static int presentOptionsIndex(String[] choices, int numOfChoices, Scanner myScanner, String playerName) {
+
+        List<Integer> randChoices = generateUniqueList(numOfChoices, choices.length);
+        System.out.println("Choose one of " + numOfChoices + " " + playerName + ": ");
+        for (int i = 0; i < numOfChoices; i++)
+        {
+            System.out.printf(" %d. %s", i + 1, choices[randChoices.get(i)]);
+            System.out.printf(" or rather randChoice: " + randChoices.get(i));
+            System.out.println();
+        }
+        int thePlayersChoice;
+        while (true) {
+        System.out.print("Your' choice(s) (1-" + numOfChoices + "): ");
+        try {
+        
+            thePlayersChoice = myScanner.nextInt();
+            if (thePlayersChoice >= 1 && thePlayersChoice <= numOfChoices) {
+                break; // Exits the while loop. 
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input! Please enter a number.");
+            myScanner.nextLine(); // Read the next line, instead of the line where user misinputted.
+            }
+        }
+        // Map user's choice (1-based) to the index in randChoices (0-based)
+        int selectedIndex = randChoices.get(thePlayersChoice - 1);
+        return thePlayersChoice - 1;
 
     }
 }

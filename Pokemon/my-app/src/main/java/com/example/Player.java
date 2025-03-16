@@ -1,40 +1,63 @@
 package com.example;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Player {
     private String playerName;
     Pokemon[] playersPokemon = new Pokemon[6];
     Pokemon emptyPokemon = new Pokemon();
+    private int howManyPokemonDoesPlayerActuallyHave = 0;
     public Player(String pName) {
         for (int i = 0, n = playersPokemon.length; i < n; i++) {
-            playersPokemon[i] = new Pokemon();
+            playersPokemon[i] = emptyPokemon;
         }
         playerName = pName;
     }
 
     public int howManyPokemonDoesPlayerActuallyHave() {
 
-        int i = 0;
-        while (!playersPokemon[i].PokeName.equals("Pokemon shouldn't exist") && playersPokemon[i].PokeName != null) {
-            i++;
+        int amount = 0;
+        for (int i = 0; i < 6; i++) {
+            if (!playersPokemon[i].PokeName.equals("Pokemon shouldn't exist") && playersPokemon[i].PokeName != null) {
+                amount++;
+            }
         }
-        return i;
+        return amount + 1;
     }
-    public void addAPokemon(int index, Pokemon thePokemon) {
-        if (index > 5) {
-            System.out.println("There are currently only 6 Pokemon available in this version!");
-            return;
+    // The ordering is a bit weird, where the you choose the pokemon before it being added.
+    // Should be the opposite especially when players team is 6, then you've chosen a replacement unknowingly
+    public void addAPokemonSpecificIndex(int index, Pokemon thePokemon, Scanner myScanner) {
+        // Plus one cause we're one step behind kind of.
+        howManyPokemonDoesPlayerActuallyHave = howManyPokemonDoesPlayerActuallyHave() + 1;
+
+        if (howManyPokemonDoesPlayerActuallyHave > 6) {
+            System.out.println("Party of pokemon can only be 6. You are currently replacing a pokemon.");
+            System.out.println("Type anything to continue. Type no to cancel! ");
+            myScanner.nextLine();
+            String yesno = myScanner.nextLine().trim().toLowerCase();
+            if (yesno.equals("no")) {
+                System.out.println("No new pokemon was chosen.");
+                return;
+            }
+
+            int pChoice = Interface.presentOptionsIndex(allOfPokemonNames(), 6, myScanner, playerName);
+            playersPokemon[pChoice] = emptyPokemon;
+            // thePokemon is chosen before the player has chosen which pokemon to replace, so the ordering is akward.
+            playersPokemon[pChoice] = thePokemon;
         }
-        if (playersPokemon[index].PokeName.equals("Pokemon shouldn't exist"))  {
+        else if (playersPokemon[index].PokeName.equals("Pokemon shouldn't exist"))  {
             playersPokemon[index] = thePokemon;
+            System.out.println(playerName + " hAs pOkEmOn: " + howManyPokemonDoesPlayerActuallyHave);
+            System.out.println(Arrays.toString(allOfPokemonNames()));
+        }
+    }
+    public void addAPokemon(Pokemon thePokemon, Scanner myScanner) {
+        if (howManyPokemonDoesPlayerActuallyHave == 0) {
+            addAPokemonSpecificIndex(0, thePokemon, myScanner);
         } else {
-            System.out.println(playerName + " has slaughtered " + playersPokemon[index].PokeName +
-            " and gived its' remains to his new pet: " + thePokemon.PokeName);
-            removeAPokemonFromPlayerByName(thePokemon.PokeName);
-            // Level should be kept though, the level itself should be an attribute of Player object
-            playersPokemon[index] = emptyPokemon;
-            playersPokemon[index] = thePokemon;
+            addAPokemonSpecificIndex(howManyPokemonDoesPlayerActuallyHave, thePokemon, myScanner);
         }
     }
     public Pokemon selectAPokemonViaName(String nameOfPokemon) {
@@ -48,25 +71,13 @@ public class Player {
         return null;
     }
     public String[] allOfPokemonNames() {
-        int i = 0;
-        int amountOfPokemonDisplayed = 0;
-        /*
-        Ugly function but the first thing I could think about as to ensure I have an array of
-        the proper sizing. And likewise only displaying the correct pokemon
-         */
-        for (Pokemon e : playersPokemon) {
-            if (!e.PokeName.equals("Pokemon shouldn't exist") && e.PokeName != null) {
-                amountOfPokemonDisplayed++;
+        ArrayList<String> pokemonNames = new ArrayList<>();
+        for (Pokemon validPokemon : playersPokemon) {
+            if (validPokemon != null && !validPokemon.PokeName.equals("Pokemon shouldn't exist")){
+                pokemonNames.add(validPokemon.PokeName);
             }
         }
-        String[] playersPokemonAsStringArray = new String[amountOfPokemonDisplayed];
-        for (Pokemon e : playersPokemon) {
-            if (!e.PokeName.equals("Pokemon shouldn't exist") && e.PokeName != null) {
-                playersPokemonAsStringArray[i] = e.PokeName; 
-            }
-            i++;
-        }
-        return playersPokemonAsStringArray;
+        return pokemonNames.toArray(new String[0]);
     }
     public Pokemon[] getPlayersPokemon(){
         return playersPokemon;
@@ -80,7 +91,7 @@ public class Player {
         return playersPokemon[index];
     }
 
-    public void displayASpecificPokemon(int spotForPokemonInArray, Scanner myScanner) {
+    public void displayASpecificPokemon(int spotForPokemonInArray) {
         playersPokemon[spotForPokemonInArray].displayPokeInfo();
     }
 
@@ -92,6 +103,7 @@ public class Player {
             if (playersPokemon[i].PokeName.equals(thePokemonsName)) {
                 playersPokemon[i] = emptyPokemon;
                 System.out.println(playerName + " lost their: " + thePokemonsName);
+                howManyPokemonDoesPlayerActuallyHave--;
                 return;
             }
         }

@@ -13,16 +13,18 @@ public class Main {
         System.out.println("What will Player 2's name be?");
         String p2name = myScanner.nextLine();
         Player p2 = new Player(p2name);
-
-        p1.addAPokemon(0, myInterface.getAPokemonStandardized(1000, myScanner, 4, p1name));
-        p1.displayASpecificPokemon(0, myScanner);
+        for (int i = 0; i < 10; i++) {
+            p1.addAPokemon(myInterface.getAPokemonStandardized(1000, myScanner, 4, p1name), myScanner);
+        }
+        p1.displayASpecificPokemon(0);
         p1.getPokemonFromPlayer(0).setASpecificPokemonsMove(0, myInterface.getASpecificMove(myScanner, "Flamethrower"), p1);
         p1.getPokemonFromPlayer(0).getASpecificPokemonsMove(0).displayMoveInfo();
 
         System.out.println(p1name + " has " + p1.howManyPokemonDoesPlayerActuallyHave() + " pokemon!");
 
-        p2.addAPokemon(0, myInterface.getAPokemonStandardized(1000, myScanner, 4, p2name));
-        p2.displayASpecificPokemon(0, myScanner);
+        p2.addAPokemon(myInterface.getAPokemonStandardized(1000, myScanner, 4, p2name), myScanner);
+
+        p2.displayASpecificPokemon(0);
         p2.getPokemonFromPlayer(0).setASpecificPokemonsMove(0, myInterface.getASpecificMove(myScanner, "Poison Jab"), p2);
         p2.getPokemonFromPlayer(0).getASpecificPokemonsMove(0).displayMoveInfo();
         

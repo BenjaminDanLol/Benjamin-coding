@@ -1,6 +1,7 @@
 package com.example;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Pokemon {
 
@@ -97,12 +98,17 @@ public class Pokemon {
         public String getASpecificTyping(int i){
             return Typings.get(i);
         }
-    
         public void addATyping(String _Typing){
             Typings.add(_Typing);
         }
         public void displayPokeInfo(){
+            if (evolvesTo != null) {
             System.out.printf("Name: %s, evolvesAt: %s, evolvesTo: %s%n", PokeName, evolvesAt, evolvesTo);
+            } else if (evolutionArray != null) {
+            System.out.printf("Name: %s, evolvesAt: %s%nCan evolve to the following: %s%n", PokeName, evolvesAt, Arrays.toString(evolutionArray));
+            } else {
+            System.out.println("Name: " + PokeName);    
+            }
             System.out.printf("Stats: %d, %d, %d, %d, %d, %d%n", 
             baseHP, baseAtt, baseDef, baseSpA, baseSpDef, baseSpd);
             for (String e : Typings) {

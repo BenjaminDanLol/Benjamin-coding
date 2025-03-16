@@ -81,8 +81,7 @@ public class Player {
     }
 
     public void displayASpecificPokemon(int spotForPokemonInArray, Scanner myScanner) {
-        // So for the first pokemon just type 1, it will be adjusted
-        playersPokemon[spotForPokemonInArray - 1].displayPokeInfo();
+        playersPokemon[spotForPokemonInArray].displayPokeInfo();
     }
 
     // This is a quick fix. But will also introduce a bug, that will remove the first pokemon with that name.

@@ -1630,7 +1630,7 @@
         "Tyrogue": {
         "PokeName": "Tyrogue",
         "evolvesAt": 20,
-        "evolvesTo": "",
+        "evolvesTo": null,
         "evolutionArray": ["Hitmonlee", "Hitmonchan", "Hitmontop"],
         "baseHP": 35,
         "baseAtt": 35,
@@ -2172,7 +2172,7 @@
         "Eevee": {
         "PokeName": "Eevee",
         "evolvesAt": 25,
-        "evolvesTo": "",
+        "evolvesTo": null,
         "evolutionArray": [
         "Vaporeon",
         "Jolteon",

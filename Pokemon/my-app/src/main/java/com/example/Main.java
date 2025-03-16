@@ -15,30 +15,18 @@ public class Main {
         Player p2 = new Player(p2name);
 
         p1.addAPokemon(0, myInterface.getAPokemonStandardized(1000, myScanner, 4, p1name));
+        p1.displayASpecificPokemon(0, myScanner);
         p1.getPokemonFromPlayer(0).setASpecificPokemonsMove(0, myInterface.getASpecificMove(myScanner, "Flamethrower"), p1);
         p1.getPokemonFromPlayer(0).getASpecificPokemonsMove(0).displayMoveInfo();
 
         System.out.println(p1name + " has " + p1.howManyPokemonDoesPlayerActuallyHave() + " pokemon!");
 
-        for (int i = 0, n = p1.getPlayersPokemon().length; i < n; i++) {
-                if (p1.getPokemonFromPlayer(i).PokeName.equals("Pokemon shouldn't exist")) {
-                    break;
-                }
-            System.out.println(p1name + "'s " + p1.getPokemonFromPlayer(i).PokeName + " has " + p1.getPokemonFromPlayer(i).howManyMovesDoesPokemonHave() + " moves");
-            }
-
         p2.addAPokemon(0, myInterface.getAPokemonStandardized(1000, myScanner, 4, p2name));
+        p2.displayASpecificPokemon(0, myScanner);
         p2.getPokemonFromPlayer(0).setASpecificPokemonsMove(0, myInterface.getASpecificMove(myScanner, "Poison Jab"), p2);
         p2.getPokemonFromPlayer(0).getASpecificPokemonsMove(0).displayMoveInfo();
         
         System.out.println(p2name + " has " + p1.howManyPokemonDoesPlayerActuallyHave() + " pokemon!");
-        for (int i = 0, n = p2.getPlayersPokemon().length; i < n; i++) {
-                if (p2.getPokemonFromPlayer(i + 1).PokeName.equals("Pokemon shouldn't exist")) {
-                    break;
-                }
-            System.out.println(p2name + "'s " + p2.getPokemonFromPlayer(i + 1).PokeName + " has " + p2.getPokemonFromPlayer(i + 1).howManyMovesDoesPokemonHave() + " moves");
-            }
-        
         myInterface.startBattleTwoPlayers(p1, p2, myScanner);
         }
     }

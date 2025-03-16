@@ -85,28 +85,15 @@ public class Interface {
     
     public void startBattleTwoPlayers(Player p1, Player p2, Scanner myScanner) {
 
-        String p1choice = presentOptions(p1.allOfPokemonNames(), p1.getPlayersPokemon().length, myScanner, p1.getPlayerName());
-        String p2choice = presentOptions(p2.allOfPokemonNames(), p2.getPlayersPokemon().length, myScanner, p2.getPlayerName());
+        String p1choice = presentOptions(p1.allOfPokemonNames(), p1.allOfPokemonNames().length, myScanner, p1.getPlayerName());
+
+        String p2choice = presentOptions(p2.allOfPokemonNames(), p2.allOfPokemonNames().length, myScanner, p2.getPlayerName());
         System.out.println(p1.getPlayerName() + " chooses " + p1choice);
         System.out.println(p2.getPlayerName() + " chooses " + p2choice);
 
-        p2.selectAPokemonViaName(p2choice).getASpecificPokemonsMove(1)
+        p2.selectAPokemonViaName(p2choice).getASpecificPokemonsMove(0)
         .performMove(p2.selectAPokemonViaName(p2choice), p1.selectAPokemonViaName(p1choice));
     }
-
-    public int chooseAPokemon(Scanner myScanner, Player player) {
-       // What String array should be shown?
-       // This solution will be disgusting and dirty but it's gonna work
-       String[] nameOfAllPlayersPokemon = new String[player.howManyPokemonDoesPlayerActuallyHave()];
-        for (int i = 0; i < player.getPlayersPokemon().length; i++) {
-            if (!player.getPokemonFromPlayer(i + 1).PokeName.equals("Pokemon shouldn't exist"))
-            {
-                nameOfAllPlayersPokemon[i] = player.getPokemonFromPlayer(i + 1).PokeName;
-            }
-        }
-       return choose1Deterministic(myScanner, player.getPlayerName(), player.howManyPokemonDoesPlayerActuallyHave(), nameOfAllPlayersPokemon);
-    }
-    
     public Pokemon getAPokemonStandardized(int filter, Scanner myScanner, int howManyMonsInPokemonPool, String playerName){
         String selectedType = presentOptions(allPokemonTypes, 4, myScanner, playerName);
         typeMappingNode = pokemonRoot.path("TypeMapping").path(selectedType);
@@ -213,6 +200,7 @@ public class Interface {
         return choicesForPlayer;
     }
     public static String presentOptions(String[] choices, int numOfChoices, Scanner myScanner, String playerName) {
+
         List<Integer> randChoices = generateUniqueList(numOfChoices, choices.length);
         System.out.println("Choose one of " + numOfChoices + " " + playerName + ": ");
         for (int i = 0; i < numOfChoices; i++)
@@ -240,18 +228,4 @@ public class Interface {
         return choices[selectedIndex];
 
     }
-    public static int choose1Deterministic(Scanner myScanner, String pName, 
-            int numOfChoices, String[] choices){
-                int thePlayersChoice;
-                System.out.println("Choose one of the following " + pName +  ": ");
-                for (int elementsOfChoices = 0; elementsOfChoices < numOfChoices; elementsOfChoices++)
-                {
-                    System.out.printf(" %d. %s", elementsOfChoices + 1, choices[elementsOfChoices]);
-                }
-                System.out.printf(": ");
-                do {
-                    thePlayersChoice = myScanner.nextInt();
-                } while (thePlayersChoice < 1 || thePlayersChoice > numOfChoices);
-                return thePlayersChoice-1;
-            }
 }

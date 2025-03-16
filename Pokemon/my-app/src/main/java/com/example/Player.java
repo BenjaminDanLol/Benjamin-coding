@@ -5,9 +5,8 @@ import java.util.Scanner;
 public class Player {
     private String playerName;
     Pokemon[] playersPokemon = new Pokemon[6];
-    // Maybe make a hashMap, where the entry is based off the Pokemon. That way the pokemon can "own" the moves.
+    Pokemon emptyPokemon = new Pokemon();
     public Player(String pName) {
-        // Ensuring that there are 6 empty Pokemon slots each time Player is invoked, I could even have it as a param.
         for (int i = 0, n = playersPokemon.length; i < n; i++) {
             playersPokemon[i] = new Pokemon();
         }
@@ -17,27 +16,27 @@ public class Player {
     public int howManyPokemonDoesPlayerActuallyHave() {
 
         int i = 0;
-        while (!playersPokemon[i].PokeName.equals("Pokemon shouldn't exist")) {
+        while (!playersPokemon[i].PokeName.equals("Pokemon shouldn't exist") && playersPokemon[i].PokeName != null) {
             i++;
         }
-        return i + 1;
+        return i;
     }
     public void addAPokemon(int index, Pokemon thePokemon) {
-        if (index >= 7) {
+        if (index > 5) {
             System.out.println("There are currently only 6 Pokemon available in this version!");
             return;
         }
-        if (playersPokemon[index - 1].PokeName.equals("Pokemon shouldn't exist"))  {
-            // The player has in this case simply added a Pokemon, without overwriting any current mons.
-            playersPokemon[index - 1] = thePokemon;
+        if (playersPokemon[index].PokeName.equals("Pokemon shouldn't exist"))  {
+            playersPokemon[index] = thePokemon;
         } else {
-            System.out.println(playerName + " has slaughtered " + playersPokemon[index - 1].PokeName +
+            System.out.println(playerName + " has slaughtered " + playersPokemon[index].PokeName +
             " and gived its' remains to his new pet: " + thePokemon.PokeName);
             removeAPokemonFromPlayerByName(thePokemon.PokeName);
-            playersPokemon[index - 1] = thePokemon;
+            // Level should be kept though, the level itself should be an attribute of Player object
+            playersPokemon[index] = emptyPokemon;
+            playersPokemon[index] = thePokemon;
         }
     }
-
     public Pokemon selectAPokemonViaName(String nameOfPokemon) {
         for (Pokemon thePokemon : playersPokemon) {
             if (thePokemon.PokeName.equals(nameOfPokemon)) {
@@ -48,17 +47,26 @@ public class Player {
         System.out.println("No such Pokemon exists");
         return null;
     }
-
     public String[] allOfPokemonNames() {
-        String[] playerPokemonAsStringArray = new String[playersPokemon.length];
         int i = 0;
+        int amountOfPokemonDisplayed = 0;
+        /*
+        Ugly function but the first thing I could think about as to ensure I have an array of
+        the proper sizing. And likewise only displaying the correct pokemon
+         */
         for (Pokemon e : playersPokemon) {
-            if (!e.PokeName.equals("Pokemon shouldn't exist")) {
-                playerPokemonAsStringArray[i] = e.PokeName;
+            if (!e.PokeName.equals("Pokemon shouldn't exist") && e.PokeName != null) {
+                amountOfPokemonDisplayed++;
+            }
+        }
+        String[] playersPokemonAsStringArray = new String[amountOfPokemonDisplayed];
+        for (Pokemon e : playersPokemon) {
+            if (!e.PokeName.equals("Pokemon shouldn't exist") && e.PokeName != null) {
+                playersPokemonAsStringArray[i] = e.PokeName; 
             }
             i++;
         }
-        return playerPokemonAsStringArray;
+        return playersPokemonAsStringArray;
     }
     public Pokemon[] getPlayersPokemon(){
         return playersPokemon;
@@ -69,7 +77,7 @@ public class Player {
     }
 
     public Pokemon getPokemonFromPlayer(int index) {
-        return playersPokemon[index - 1];
+        return playersPokemon[index];
     }
 
     public void displayASpecificPokemon(int spotForPokemonInArray, Scanner myScanner) {
@@ -83,21 +91,12 @@ public class Player {
     public void removeAPokemonFromPlayerByName(String thePokemonsName) {
         for (int i = 0, n = playersPokemon.length; i < n; i++) {
             if (playersPokemon[i].PokeName.equals(thePokemonsName)) {
-                playersPokemon[i].resetPokemon();
+                playersPokemon[i] = emptyPokemon;
                 System.out.println(playerName + " lost their: " + thePokemonsName);
                 return;
             }
         }
     }
-
-    public void displayPokemonTeam() {
-        int i = 0;
-        while (!playersPokemon[i].PokeName.equals("Pokemon shouldn't exist")) {
-            playersPokemon[i].displayPokeInfo();
-            i++;
-        }
-    }
-
 }
 
         

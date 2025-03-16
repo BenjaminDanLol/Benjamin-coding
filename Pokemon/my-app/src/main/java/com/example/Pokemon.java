@@ -32,39 +32,40 @@ public class Pokemon {
     private byte accuracyMod = 1;
     ArrayList<String> SecondaryConditions = new ArrayList<>();
     public Move[] movesForThePokemonSlot = new Move[4];
-
+    Move blankMove = new Move();
+    public Pokemon(){
+    }
     public Move getASpecificPokemonsMove(int element) {
-        // I'll adjust like usual
-        return movesForThePokemonSlot[element - 1];
+        return movesForThePokemonSlot[element];
     }
 
-    public void setASpecificPokemonsMove(int element, Move theMove, Player player) {
-        if (element > 4) {
+    public void setASpecificPokemonsMove(int index, Move theMove, Player player) {
+        // Since array indexes are 0 start (inclusive)
+        if (index >= 4) {
         System.out.println("There are only 4 moves");
         return;
         } 
-            if (movesForThePokemonSlot[element - 1].moveDescription.equals("Move shouldn't exist"))
+            if (movesForThePokemonSlot[index].moveDescription.equals("Move shouldn't exist"))
             {
-            System.out.println(player.getPokemonFromPlayer(element).PokeName + " learned " + theMove.moveName);
-            movesForThePokemonSlot[element - 1] = theMove;
+            System.out.println(player.getPokemonFromPlayer(index).PokeName + " learned " + theMove.moveName);
+            movesForThePokemonSlot[index] = theMove;
             } else {
-                // I should actually overwrite the move here lol.
-                // Intuitively it makes sense to just set reassign the Old Move, but since there are 
-                // tons of attributes in the move object, that needs overwriting or to be return to a "blank"
-                // state. then I should before reassigning. Apply this pseudo code formula:
-                // Old Move = Blank Move; Old Move = New Move; 
-                System.out.println("You have overwritten move: " + movesForThePokemonSlot[element - 1].moveName);
+                System.out.println("You have overwritten move: " + movesForThePokemonSlot[index].moveName);
                 System.out.println(PokeName + " learned " + theMove.moveName);
                 System.out.println(theMove.moveDescription);
+                movesForThePokemonSlot[index] = blankMove;
+                movesForThePokemonSlot[index] = theMove;
             }
     }
+
     public int howManyMovesDoesPokemonHave() {
         int i = 0;
-        while (!movesForThePokemonSlot[i].moveDescription.equals("Move shouldn't exist")) {
+        while (!movesForThePokemonSlot[i].moveDescription.equals("Move shouldn't exist") && movesForThePokemonSlot[i] != null) {
             i++;
         }
         return i;
     }
+
     public void addSecondaryCondition(String secondaryCondition) {
         SecondaryConditions.add(secondaryCondition);
     }
@@ -77,12 +78,9 @@ public class Pokemon {
             return SecondaryConditions;
         }
 
-        // Very important to use this func before accessing the Typings ArrayList.
-
         public String[] getOldTypes() {
             return types;
         }
-        // Jackson should automatically access this.
         public void setTypes(String types[]) {
             for (int i = 0, n = types.length; i < n; i++) {
                 Typings.add(types[i]);

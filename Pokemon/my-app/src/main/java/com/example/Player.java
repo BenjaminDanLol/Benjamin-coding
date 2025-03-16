@@ -38,6 +38,28 @@ public class Player {
         }
     }
 
+    public Pokemon selectAPokemonViaName(String nameOfPokemon) {
+        for (Pokemon thePokemon : playersPokemon) {
+            if (thePokemon.PokeName.equals(nameOfPokemon)) {
+                System.out.println(playerName + " chooses " + thePokemon.PokeName);
+                return thePokemon;
+            }
+        }
+        System.out.println("No such Pokemon exists");
+        return null;
+    }
+
+    public String[] allOfPokemonNames() {
+        String[] playerPokemonAsStringArray = new String[playersPokemon.length];
+        int i = 0;
+        for (Pokemon e : playersPokemon) {
+            if (!e.PokeName.equals("Pokemon shouldn't exist")) {
+                playerPokemonAsStringArray[i] = e.PokeName;
+            }
+            i++;
+        }
+        return playerPokemonAsStringArray;
+    }
     public Pokemon[] getPlayersPokemon(){
         return playersPokemon;
     }

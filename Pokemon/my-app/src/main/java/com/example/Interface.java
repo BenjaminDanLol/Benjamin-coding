@@ -85,13 +85,13 @@ public class Interface {
     
     public void startBattleTwoPlayers(Player p1, Player p2, Scanner myScanner) {
 
-        int p1choice = chooseAPokemon(myScanner, p1);
-        int p2choice = chooseAPokemon(myScanner, p2);
-        System.out.println(p1.getPlayerName() + " chooses " + p1.getPokemonFromPlayer(p1choice + 1).PokeName);
-        System.out.println(p2.getPlayerName() + " chooses " + p2.getPokemonFromPlayer(p2choice + 1).PokeName);
+        String p1choice = presentOptions(p1.allOfPokemonNames(), p1.getPlayersPokemon().length, myScanner, p1.getPlayerName());
+        String p2choice = presentOptions(p2.allOfPokemonNames(), p2.getPlayersPokemon().length, myScanner, p2.getPlayerName());
+        System.out.println(p1.getPlayerName() + " chooses " + p1choice);
+        System.out.println(p2.getPlayerName() + " chooses " + p2choice);
 
-        p2.getPokemonFromPlayer(p2choice + 1).getASpecificPokemonsMove(1).
-        performMove(p2.getPokemonFromPlayer(p2choice + 1), p1.getPokemonFromPlayer(p1choice + 1));
+        p2.selectAPokemonViaName(p2choice).getASpecificPokemonsMove(1)
+        .performMove(p2.selectAPokemonViaName(p2choice), p1.selectAPokemonViaName(p1choice));
     }
 
     public int chooseAPokemon(Scanner myScanner, Player player) {

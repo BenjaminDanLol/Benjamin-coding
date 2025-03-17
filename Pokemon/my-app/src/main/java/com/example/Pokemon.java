@@ -2,6 +2,7 @@ package com.example;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Pokemon {
 
@@ -35,40 +36,32 @@ public class Pokemon {
     public Move[] movesForThePokemonSlot = new Move[4];
     private int movesTotal = 0;
     Move blankMove = new Move();
-    public Pokemon(){
-    }
-    public Move getASpecificPokemonsMove(int element) {
+    public Move getAPokemonsMove(int element) {
         return movesForThePokemonSlot[element];
     }
-
-    public void addMoveToPokemon(Move theMove, Player player, Interface myInterface) {
+    public void addMoveToPokemon(Move theMove, Player player, Scanner myScanner) {
+        // Since array indexes are 0 start (inclusive) I can insert the amount of moves directly.
         movesTotal = howManyMovesDoesPokemonHave();
         if (movesTotal == 4) {
-            System.out.println(PokeName + " has 4 moves, " + player.getPlayerName() + " must choose a move to replace!");
-            // Should add some more logic, here scanner and such.
-            return;
-        }
-        movesForThePokemonSlot[movesTotal] = theMove;
-    }
-    public void setASpecificPokemonsMove(int index, Move theMove, Player player) {
-        // Since array indexes are 0 start (inclusive)
-        if (index >= 4) {
-        System.out.println("There are only 4 moves");
-        return;
-        } 
-            if (movesForThePokemonSlot[index].moveDescription.equals("Move shouldn't exist"))
-            {
-            System.out.println(player.getPokemonFromPlayer(index).PokeName + " learned " + theMove.moveName);
-            movesForThePokemonSlot[index] = theMove;
-            } else {
-                System.out.println("You have overwritten move: " + movesForThePokemonSlot[index].moveName);
-                System.out.println(PokeName + " learned " + theMove.moveName);
-                System.out.println(theMove.moveDescription);
-                movesForThePokemonSlot[index] = blankMove;
-                movesForThePokemonSlot[index] = theMove;
+        System.out.println(PokeName + " has four moves. ");
+        System.out.println(player.getPlayerName() + " do you wish to replace a move.");
+        System.out.println("yes to confirm");
+        if (myScanner.nextLine().equals("yes")) {
+        System.out.println(player.getPlayerName() + " choose which you move will replace for your' " + PokeName +":");
+        int pChoice = Interface.presentOptionsIndex(pokemonMoves(), 4, myScanner, player.getPlayerName());
+        // This doesn't actually do anything yet. But later I'll have the rng move choices.
+        System.out.println(PokeName + " forgot " + movesForThePokemonSlot[pChoice].moveName + " and learned " + " not yet implemented");
+        movesForThePokemonSlot[movesTotal] = blankMove;
+        // And then the move the new should be assigned to movesForThe..[movesTotal].
+        System.out.println(theMove.moveDescription);
+            }
+            // If player didn't enter yes they will skip everything and not override any Move for pokemon.
+        }  else {
+            System.out.println(PokeName + " learned " + theMove.moveName);
+            movesForThePokemonSlot[movesTotal] = theMove;
+            System.out.println(theMove.moveDescription);
             }
     }
-
     public int howManyMovesDoesPokemonHave() {
         int i = 0;
         while (!movesForThePokemonSlot[i].moveDescription.equals("Move shouldn't exist") && movesForThePokemonSlot[i] != null) {
@@ -76,7 +69,6 @@ public class Pokemon {
         }
         return i;
     }
-
     public String[] pokemonMoves(){
         ArrayList<String> listOfMoves = new ArrayList<>();
         for (Move e : movesForThePokemonSlot) {

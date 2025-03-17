@@ -1,5 +1,6 @@
 package com.example;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Move{
@@ -20,7 +21,8 @@ of functions under performMove.*/
     And take sleep powder as well. Grass types are not immune to sleep, but they are sleep powder that's
     the moveTyping. Also moveTyping is used to calc effectiveness of moves
     */
-    public String statusType = moveTyping;
+    // Changed from null to ""
+    public String statusType = "";
     public byte statusChance = 10;
     public byte critChance = 6;
     public long damage = 0;
@@ -35,52 +37,26 @@ of functions under performMove.*/
     public byte PP = 0;
     public String moveDescription = "Move shouldn't exist";
 
-    /*
-     * Using a little trick before I forget. I want to ensure that by default if not specified that
-     * statusType is the same as moveType. So I'll do the setter/getter thing and inside the setter for
-     * moveType which is always specified in moves.json, I'll ensure that statusType = moveType. If
-     * status conditions are weird it's likely this didn't work.
-     * 
-     * Shit I think it makes it even more weird, since moveTyping may overwrite the String value from moves.json.
-     * Which is definitely not desired. Idk what to do tbh.
-     * 
-     * TODO: ENSURE LOGIC IS CORRECT FOR STATUSTYPE. If impossible then simply declare statusType at every json object.
-     */
     public String getMoveTyping() {
         return moveTyping;
     }
+
     public void setMoveTyping(String moveTyping){
         this.moveTyping = moveTyping;
-        statusType = moveTyping;
+        if (statusType.equals("")) {
+            statusType = moveTyping;
+        }
     }
     Random random = new Random();
 
-    /* I realized that Jackson will under the hood create a constructer which will overwrite all of
-    keys which match the names of any of my local variables here.
-    So that's cool. An afterthought overwriting seems powerful.
-    */
     public void displayMoveInfo() {
         System.out.printf("Movename: %s, Pwr: %d! %n Description: %s %n", moveName, power, moveDescription);
     }
-    public void revertMoveToBase(){
-        // This will look nonsensical but if I overwrite a move with attributes unintended this will help.
-        // May be changed later, and also if there are new attributes for move I'll need to update as well.
-        moveName = null;
-        power = 0;
-        accuracy = 100;
-        isSpecial = false;
-        priority = 0;
-        moveTyping = null;
-        inflictsStatus = false;
-        statusType = moveTyping;
-        statusChance = 10;
-        critChance = 6;
-        whatStatusCondition = null;
-        statModifierChange = 0;
-        whatStatChanges = null;
-        toVictim = false;
-        alwaysHits = false;
-        isCrit = false;
+    public void displayWAYToMuchInfo() {
+        String local = Arrays.toString(whatStatChanges);
+        System.out.printf("%s,%d,%d,%b,%d,%s,%b,%s,%d,%d,%d,%s,%d,%s,%b,%b,%b,%d,%d,%s"
+        , moveName, power, accuracy, isSpecial, priority, moveTyping, inflictsStatus,statusType,statusChance,critChance,damage,
+        whatStatusCondition,statChangeChance,local,toVictim,alwaysHits,isCrit,statModifierChange,PP,moveDescription);
     }
     public void performMove(Pokemon user, Pokemon victim) {
             if (moveName == null) {
@@ -92,7 +68,7 @@ of functions under performMove.*/
         // If statements since, they may all be true or only some.
         if (willHit(user, victim) || alwaysHits) {
             if (power > 0) {moveDoesDirectDamage(user, victim);}
-            if (statusType != null) {mayApplyStatusCondition(user, victim);}
+            if (!statusType.equals("")) {mayApplyStatusCondition(user, victim);}
             if (whatStatChanges != null) {statChange(user, victim);}
             if (statusType == null && whatStatusCondition != null) {applySecondaryStatusCondition(user, victim);}
         }

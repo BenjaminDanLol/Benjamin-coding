@@ -8,13 +8,20 @@ public class Player {
     Pokemon[] playersPokemon = new Pokemon[6];
     Pokemon emptyPokemon = new Pokemon();
     private int howManyPokemonDoesPlayerActuallyHave = 0;
-    public Player(String pName) {
-        for (int i = 0, n = playersPokemon.length; i < n; i++) {
-            playersPokemon[i] = emptyPokemon;
+    public Player(Scanner myScanner) {
+        while (true) { 
+            System.out.println("What will your name be player? ");
+            playerName = myScanner.nextLine().trim();
+            System.out.println("Playername will be " + playerName + " are you sure?");
+            System.out.println("yes to confirm:");
+            if (myScanner.nextLine().trim().toLowerCase().equals("yes")) {
+                break;
+            }
         }
-        playerName = pName;
+            for (int i = 0, n = playersPokemon.length; i < n; i++) {
+                playersPokemon[i] = emptyPokemon;
+            }
     }
-
     public int howManyPokemonDoesPlayerActuallyHave() {
 
         int amount = 0;
@@ -25,7 +32,6 @@ public class Player {
         }
         return amount;
     }
-
     public void addAPokemon(Scanner myScanner, Interface myInterface, int filter) {
         /*
          * Things to remember howManyPokemonDoesPlayerActuallyHave is accurate now, therefor no changes
@@ -40,9 +46,8 @@ public class Player {
          * the bottom? These effects will become more pronounced as the game has more Pokemon.
          */
         howManyPokemonDoesPlayerActuallyHave = howManyPokemonDoesPlayerActuallyHave();
-
         if (howManyPokemonDoesPlayerActuallyHave >= 6) {
-            System.out.println("Party of pokemon can only be 6. You are currently replacing a pokemon.");
+            System.out.println("Party of pokemon can only be 6." + playerName +" is currently replacing a pokemon.");
             System.out.println("Type anything to continue. Type no to cancel! ");
             myScanner.nextLine();
             String yesno = myScanner.nextLine().trim().toLowerCase();
@@ -50,7 +55,7 @@ public class Player {
                 System.out.println("No new pokemon was chosen.");
                 return;
             }
-
+            System.out.println(playerName + " choose a pokemon from party to replace.");
             int pChoice = Interface.presentOptionsIndex(allOfPokemonNames(), 6, myScanner, playerName);
             playersPokemon[pChoice] = emptyPokemon;
             // After checking how many pokemon there are and, replacing in this case. The filter is applied and a new rand poke is added.
@@ -82,31 +87,11 @@ public class Player {
     public Pokemon[] getPlayersPokemon(){
         return playersPokemon;
     }
-
     public String getPlayerName(){
         return playerName;
     }
-
     public Pokemon getPokemonFromPlayer(int index) {
         return playersPokemon[index];
-    }
-
-    public void displayASpecificPokemon(int spotForPokemonInArray) {
-        playersPokemon[spotForPokemonInArray].displayPokeInfo();
-    }
-
-    // This is a quick fix. But will also introduce a bug, that will remove the first pokemon with that name.
-    // Instead of doing it by positioning.
-    // TODO: Should later do it by array index position. 
-    public void removeAPokemonFromPlayerByName(String thePokemonsName) {
-        for (int i = 0, n = playersPokemon.length; i < n; i++) {
-            if (playersPokemon[i].PokeName.equals(thePokemonsName)) {
-                playersPokemon[i] = emptyPokemon;
-                System.out.println(playerName + " lost their: " + thePokemonsName);
-                howManyPokemonDoesPlayerActuallyHave--;
-                return;
-            }
-        }
     }
 }
 

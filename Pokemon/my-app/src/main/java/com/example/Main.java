@@ -6,32 +6,25 @@ public class Main {
     public static void main(String[] args) {
         // This is apparently cleaner and out closes the scanner, after usage in method block
         try (Scanner myScanner = new Scanner(System.in)) {
-        Interface myInterface = new Interface();
-        System.out.println("What will Player 1's name be?");
-        String p1name = myScanner.nextLine();
-        Player p1 = new Player(p1name);
-        System.out.println("What will Player 2's name be?");
-        String p2name = myScanner.nextLine();
-        Player p2 = new Player(p2name);
-        for (int i = 0; i < 10; i++) {
-            p1.addAPokemon(myScanner, myInterface, 1200);
+        Interface myInterface = new Interface(myScanner);
+        for (int i = 0; i < myInterface.pTeam1.length; i++) {
+            myInterface.pTeam1[i].addAPokemon(myScanner, myInterface, 1200);
+            myInterface.pTeam1[i].getPokemonFromPlayer(i).addMoveToPokemon(myInterface.getASpecificMove(myScanner, "Body Slam"), myInterface.pTeam1[i], myScanner);
         }
-        p1.displayASpecificPokemon(0);
-        p1.getPokemonFromPlayer(0).setASpecificPokemonsMove(0, myInterface.getASpecificMove(myScanner, "Flamethrower"), p1);
-        p1.getPokemonFromPlayer(0).getASpecificPokemonsMove(0).displayMoveInfo();
-
-        System.out.println(p1name + " has " + p1.howManyPokemonDoesPlayerActuallyHave() + " pokemon!");
-
+        for (int i = 0; i < myInterface.pTeam2.length; i++) {
+            myInterface.pTeam2[i].addAPokemon(myScanner, myInterface, 1200);
+            myInterface.pTeam2[i].getPokemonFromPlayer(i).addMoveToPokemon(myInterface.getASpecificMove(myScanner, "Body Slam"), myInterface.pTeam2[i], myScanner);
+        }
+        myInterface.startBattleT1vT2(myScanner);
+        /*
+        p1.addAPokemon(myScanner, myInterface, 1200);
+        p1.getPokemonFromPlayer(0).setASpecificPokemonsMove(0, myInterface.getASpecificMove(myScanner, "Thunder Wave"));
         p2.addAPokemon(myScanner, myInterface, 1200);
-
-        p2.displayASpecificPokemon(0);
-        p2.getPokemonFromPlayer(0).setASpecificPokemonsMove(0, myInterface.getASpecificMove(myScanner, "Poison Jab"), p2);
-        p2.getPokemonFromPlayer(0).getASpecificPokemonsMove(0).displayMoveInfo();
-        
-        System.out.println(p2name + " has " + p1.howManyPokemonDoesPlayerActuallyHave() + " pokemon!");
-        myInterface.startBattleTwoPlayers(p1, p2, myScanner);
+        p2.getPokemonFromPlayer(0).setASpecificPokemonsMove(0, myInterface.getASpecificMove(myScanner, "Thunder Wave"));
+        myInterface.startBattleTwoPlayers(p1, p1, myScanner);
+        p2.getPokemonFromPlayer(0).getASpecificPokemonsMove(0).displayWAYToMuchInfo();
+        */
         }
     }
-    
 }
 // I'll likely have Players as a list or ArrayList, for when there will be multiple people playing

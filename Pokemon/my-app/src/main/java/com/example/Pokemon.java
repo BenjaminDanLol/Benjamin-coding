@@ -33,6 +33,7 @@ public class Pokemon {
     private byte accuracyMod = 1;
     ArrayList<String> SecondaryConditions = new ArrayList<>();
     public Move[] movesForThePokemonSlot = new Move[4];
+    private int movesTotal = 0;
     Move blankMove = new Move();
     public Pokemon(){
     }
@@ -40,6 +41,15 @@ public class Pokemon {
         return movesForThePokemonSlot[element];
     }
 
+    public void addMoveToPokemon(Move theMove, Player player, Interface myInterface) {
+        movesTotal = howManyMovesDoesPokemonHave();
+        if (movesTotal == 4) {
+            System.out.println(PokeName + " has 4 moves, " + player.getPlayerName() + " must choose a move to replace!");
+            // Should add some more logic, here scanner and such.
+            return;
+        }
+        movesForThePokemonSlot[movesTotal] = theMove;
+    }
     public void setASpecificPokemonsMove(int index, Move theMove, Player player) {
         // Since array indexes are 0 start (inclusive)
         if (index >= 4) {

@@ -22,7 +22,7 @@ public class Pokemon {
     private boolean statusCondition = false;
     private String currentCondition = "None";
     // Tilføjer modifiers
-    private int HPMod = baseHP;
+    private int HPMod;
     private byte AttMod = 0;
     private byte SpAMod = 0;
     private byte DefMod = 0;
@@ -77,6 +77,16 @@ public class Pokemon {
         return i;
     }
 
+    public String[] pokemonMoves(){
+        ArrayList<String> listOfMoves = new ArrayList<>();
+        for (Move e : movesForThePokemonSlot) {
+            if (!e.moveDescription.equals("Move shouldn't exist")) {
+                listOfMoves.add(e.moveName);
+            }
+        }
+        return listOfMoves.toArray(new String[0]);
+    }
+
     public void addSecondaryCondition(String secondaryCondition) {
         SecondaryConditions.add(secondaryCondition);
     }
@@ -100,6 +110,7 @@ public class Pokemon {
             for (int i = 0, n = movesForThePokemonSlot.length; i < n; i++) {
                 movesForThePokemonSlot[i] = new Move();
             }
+            resetMods();
         }
 
         public ArrayList<String> getTypings(){
@@ -167,12 +178,7 @@ public class Pokemon {
 		(calculate_exp(level + 1) - experience);
 	}
      */
-    public void resetPokemon() {
-        PokeName = "Pokemon shouldn't exist";
-        evolvesTo = null;
-        evolutionArray = null;
-        resetMods();
-    }
+
     public void resetMods() {
         // Everything that should be reset after a battle should be reset here.
         HPMod = baseHP;

@@ -85,14 +85,22 @@ public class Interface {
     
     public void startBattleTwoPlayers(Player p1, Player p2, Scanner myScanner) {
 
-        String p1choice = presentOptions(p1.allOfPokemonNames(), p1.allOfPokemonNames().length, myScanner, p1.getPlayerName());
+        int p1choice = presentOptionsIndex(p1.allOfPokemonNames(), p1.allOfPokemonNames().length, myScanner, p1.getPlayerName());
 
-        String p2choice = presentOptions(p2.allOfPokemonNames(), p2.allOfPokemonNames().length, myScanner, p2.getPlayerName());
-        System.out.println(p1.getPlayerName() + " chooses " + p1choice);
-        System.out.println(p2.getPlayerName() + " chooses " + p2choice);
+        int p2choice = presentOptionsIndex(p2.allOfPokemonNames(), p2.allOfPokemonNames().length, myScanner, p2.getPlayerName());
+        System.out.println(p1.getPlayerName() + " chooses " + p1.getPokemonFromPlayer(p1choice).getPokeName());
+        System.out.println(p2.getPlayerName() + " chooses " + p2.getPokemonFromPlayer(p2choice).getPokeName());
 
-        p2.selectAPokemonViaName(p2choice).getASpecificPokemonsMove(0)
-        .performMove(p2.selectAPokemonViaName(p2choice), p1.selectAPokemonViaName(p1choice));
+        int p1moveChoice = presentOptionsIndex(p1.getPokemonFromPlayer(p1choice).pokemonMoves(), p1.getPokemonFromPlayer(p1choice)
+        .pokemonMoves().length, myScanner, p1.getPlayerName());
+        p1.getPokemonFromPlayer(p1choice).getASpecificPokemonsMove(p1moveChoice)
+        .performMove(p1.getPokemonFromPlayer(p1choice), p2.getPokemonFromPlayer(p2choice));
+
+        int p2moveChoice = presentOptionsIndex(p2.getPokemonFromPlayer(p2choice).pokemonMoves(), p2.getPokemonFromPlayer(p2choice)
+        .pokemonMoves().length, myScanner, p2.getPlayerName());
+        p2.getPokemonFromPlayer(p2choice).getASpecificPokemonsMove(p2moveChoice)
+        .performMove(p2.getPokemonFromPlayer(p2choice), p1.getPokemonFromPlayer(p1choice));
+
     }
     public Pokemon getAPokemonStandardized(int filter, Scanner myScanner, int howManyMonsInPokemonPool, String playerName){
         String selectedType = presentOptions(allPokemonTypes, 4, myScanner, playerName);

@@ -14,7 +14,7 @@ public class Main {
         String p2name = myScanner.nextLine();
         Player p2 = new Player(p2name);
         for (int i = 0; i < 10; i++) {
-            p1.addAPokemon(myInterface.getAPokemonStandardized(1000, myScanner, 4, p1name), myScanner);
+            p1.addAPokemon(myScanner, myInterface, 1200);
         }
         p1.displayASpecificPokemon(0);
         p1.getPokemonFromPlayer(0).setASpecificPokemonsMove(0, myInterface.getASpecificMove(myScanner, "Flamethrower"), p1);
@@ -22,7 +22,7 @@ public class Main {
 
         System.out.println(p1name + " has " + p1.howManyPokemonDoesPlayerActuallyHave() + " pokemon!");
 
-        p2.addAPokemon(myInterface.getAPokemonStandardized(1000, myScanner, 4, p2name), myScanner);
+        p2.addAPokemon(myScanner, myInterface, 1200);
 
         p2.displayASpecificPokemon(0);
         p2.getPokemonFromPlayer(0).setASpecificPokemonsMove(0, myInterface.getASpecificMove(myScanner, "Poison Jab"), p2);

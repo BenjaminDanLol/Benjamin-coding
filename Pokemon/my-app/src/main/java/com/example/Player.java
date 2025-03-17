@@ -1,7 +1,6 @@
 package com.example;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Player {
@@ -24,15 +23,25 @@ public class Player {
                 amount++;
             }
         }
-        return amount + 1;
+        return amount;
     }
-    // The ordering is a bit weird, where the you choose the pokemon before it being added.
-    // Should be the opposite especially when players team is 6, then you've chosen a replacement unknowingly
-    public void addAPokemonSpecificIndex(int index, Pokemon thePokemon, Scanner myScanner) {
-        // Plus one cause we're one step behind kind of.
-        howManyPokemonDoesPlayerActuallyHave = howManyPokemonDoesPlayerActuallyHave() + 1;
 
-        if (howManyPokemonDoesPlayerActuallyHave > 6) {
+    public void addAPokemon(Scanner myScanner, Interface myInterface, int filter) {
+        /*
+         * Things to remember howManyPokemonDoesPlayerActuallyHave is accurate now, therefor no changes
+         * are applied, and it must be checked before adding a pokemon. So the code is less error prone.
+         * This method is used to add a randomized pokemon, therefor if it should be a specific pokemon
+         * then I would have to add a seperate function for that.
+         * The function getAPokemonStandardized has 2 things that are sort of weird, but will be used in game.
+         * 1. they have a pool to expect, where from the rng presentations of pokemon come, since Ghost/Dragon
+         * only have 4 pokemon total, it needs to be 4. So in practice it isn't really that randomized.
+         * 2. The filter is used to determine how the sorting of the pokemon list should go i.e. should
+         * it look for the highest value pokemon, and determine the pool from there, or should it start from
+         * the bottom? These effects will become more pronounced as the game has more Pokemon.
+         */
+        howManyPokemonDoesPlayerActuallyHave = howManyPokemonDoesPlayerActuallyHave();
+
+        if (howManyPokemonDoesPlayerActuallyHave >= 6) {
             System.out.println("Party of pokemon can only be 6. You are currently replacing a pokemon.");
             System.out.println("Type anything to continue. Type no to cancel! ");
             myScanner.nextLine();
@@ -44,20 +53,11 @@ public class Player {
 
             int pChoice = Interface.presentOptionsIndex(allOfPokemonNames(), 6, myScanner, playerName);
             playersPokemon[pChoice] = emptyPokemon;
-            // thePokemon is chosen before the player has chosen which pokemon to replace, so the ordering is akward.
-            playersPokemon[pChoice] = thePokemon;
+            // After checking how many pokemon there are and, replacing in this case. The filter is applied and a new rand poke is added.
+            playersPokemon[pChoice] = myInterface.getAPokemonStandardized(filter, myScanner, 4, playerName);
         }
-        else if (playersPokemon[index].PokeName.equals("Pokemon shouldn't exist"))  {
-            playersPokemon[index] = thePokemon;
-            System.out.println(playerName + " hAs pOkEmOn: " + howManyPokemonDoesPlayerActuallyHave);
-            System.out.println(Arrays.toString(allOfPokemonNames()));
-        }
-    }
-    public void addAPokemon(Pokemon thePokemon, Scanner myScanner) {
-        if (howManyPokemonDoesPlayerActuallyHave == 0) {
-            addAPokemonSpecificIndex(0, thePokemon, myScanner);
-        } else {
-            addAPokemonSpecificIndex(howManyPokemonDoesPlayerActuallyHave, thePokemon, myScanner);
+        else {
+            playersPokemon[howManyPokemonDoesPlayerActuallyHave] = myInterface.getAPokemonStandardized(filter, myScanner, 4, playerName);
         }
     }
     public Pokemon selectAPokemonViaName(String nameOfPokemon) {

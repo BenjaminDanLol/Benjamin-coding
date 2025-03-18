@@ -82,7 +82,10 @@ public class Player {
                 pokemonNames.add(validPokemon.PokeName);
             }
         }
+        // VS Code recommends this: return pokemonNames.toArray(String[]::new);
         return pokemonNames.toArray(new String[0]);
+
+        
     }
     public Pokemon[] getPlayersPokemon(){
         return playersPokemon;

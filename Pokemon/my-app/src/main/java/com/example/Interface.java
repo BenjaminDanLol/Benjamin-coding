@@ -142,7 +142,7 @@ public class Interface {
 
 
         } catch (IOException e) {
-            e.printStackTrace(); 
+            // IDE doesn't like this throw stack trace, maybe it's cuz it's impossible or smthn.
             }
     } 
     public void startBattleT1vT2(Scanner myScanner) {
@@ -153,6 +153,8 @@ public class Interface {
         int[] team2Choices = new int[pTeam2.length];
         String[] pokeNamesT1Chose = new String[pTeam1.length];
         String[] pokeNamesT2Chose = new String[pTeam2.length];
+        // When this will be looped until all pokemon are dead from a team, then I'll to add some checks
+        // For if they are fainted. I imagine I'll need an arraylist instead sadly.
         for (int i = 0; i < team1Choices.length; i++) {
             System.out.println("Choose one of your pokemon " + pTeam1[i].getPlayerName() + "!");
 
@@ -160,9 +162,9 @@ public class Interface {
             team1Choices[i] = presentOptionsIndex(pTeam1[i].allOfPokemonNames(), 
             pTeam1[i].allOfPokemonNames().length, myScanner, pTeam1[i].getPlayerName());
             
-            System.out.println(pTeam1[i].getPlayerName() + " chose " + pTeam1[i].getPokemonFromPlayer(team1Choices[i]).getPokeName()+"!");
+            System.out.println(pTeam1[i].getPlayerName() + " chose " + pTeam1[i].getPokemonFromPlayer(team1Choices[i]).PokeName + "!");
             // Used for targeting options for opposing team later.
-            pokeNamesT1Chose[i] = pTeam1[i].getPokemonFromPlayer(team1Choices[i]).getPokeName();
+            pokeNamesT1Chose[i] = pTeam1[i].getPokemonFromPlayer(team1Choices[i]).PokeName;
         }
         // Clear the scanner here so the opposing team can't see what the first team chose.
         for (int i = 0; i < team2Choices.length; i++) {
@@ -172,8 +174,8 @@ public class Interface {
             // Sometimes this has an error ignore it's VS code bugging.
             team2Choices[i] = presentOptionsIndex(pTeam2[i].allOfPokemonNames(), 
             pTeam2[i].allOfPokemonNames().length, myScanner, pTeam2[i].getPlayerName());
-            System.out.println(pTeam2[i].getPlayerName() + " chose " + pTeam2[i].getPokemonFromPlayer(team2Choices[i]).getPokeName()+"!");
-            pokeNamesT2Chose[i] = pTeam2[i].getPokemonFromPlayer(team2Choices[i]).getPokeName();
+            System.out.println(pTeam2[i].getPlayerName() + " chose " + pTeam2[i].getPokemonFromPlayer(team2Choices[i]).PokeName+"!");
+            pokeNamesT2Chose[i] = pTeam2[i].getPokemonFromPlayer(team2Choices[i]).PokeName;
         }
 
         // Just clear the scanner for symmetry.
@@ -222,16 +224,142 @@ public class Interface {
             }
         }
 
+        // TODO: SORT THE EXECUTION OF EVERYTHING IN A CHRONOLOGICAL WINDOW FROM FASTEST TO SLOWEST.
         // Check the prios, speed, differences and what have you and have an ordered execution of player combat.
         // At this step I'll have all the pokemon in play, also what move each of them use and against whom.
+
+
+            Set<Byte> listOfPriosForTheTurn = new HashSet<>();
+            // Would have been nice to be able to do this 
+            // for (Move team1Move : pTeam1[i].getPokemonFromPlayer(team1Choices[i]).getAPokemonsMove(team1MoveChoices[i]))
+            // I should definitely use maps here.
+            for (int i = 0, n = team1MoveChoices.length; i < n; i++) {    
+            listOfPriosForTheTurn.add(pTeam1[i].getPokemonFromPlayer(team1Choices[i]).getAPokemonsMove(team1MoveChoices[i]).priority);
+            }
+            for (int i = 0, n = team2MoveChoices.length; i < n; i++) {
+            listOfPriosForTheTurn.add(pTeam2[i].getPokemonFromPlayer(team2Choices[i]).getAPokemonsMove(team2MoveChoices[i]).priority);
+            }
+            List<Byte> orderedListOfPrios = new ArrayList<>(listOfPriosForTheTurn);
+            
+            List<Byte> howManyMovesHaveThisPrio = new ArrayList<>();
+            for (int i = 0, oLP = orderedListOfPrios.size(); i < oLP; i++) {
+                byte localsizingOfThisPrio = 0;
+                    /* 
+                     * The general idea is that the while loop will
+                     * "catch" what priorities there are dupes of. This is so we know what
+                     * should shouldn't be compared i.e. if there's a pokemon who used a priority
+                     * it doesn't share with any other the turn, then we can simply put that the
+                     * players action all the way in from of what else isn't listed yet.
+                    */
+                if (!orderedListOfPrios.get(i + 1).equals(orderedListOfPrios.get(i))) {
+                    // For stand alone priorities.
+                    byte replaceableLikeMe = 1;
+                    howManyMovesHaveThisPrio.add(replaceableLikeMe);
+                } else if (orderedListOfPrios.get(i + 1).equals(orderedListOfPrios.get(i))) {
+                    while (orderedListOfPrios.get(i + 1).equals(orderedListOfPrios.get(i))) {
+                        localsizingOfThisPrio++;
+                        // The i++ is to ensure that the loop doesn't reiterate over the same stuff 
+                        // as done in the while loop.
+                        i++;
+                } 
+                howManyMovesHaveThisPrio.add(localsizingOfThisPrio);
+            }
+               
+            }
+            boolean hasThereBeenASort = false;
+            for (int n = 0; n < howManyMovesHaveThisPrio.size(); n++) {
+                while (true) {
+                for (byte i = 0; i < howManyMovesHaveThisPrio.get(n); i++) {
+                    /*
+                     * Pseudo code, since I haven't marked what pokemon is what
+                     * since I've seperated prio completely from the pokemon.
+                     * Tmrw I should revamp some of the stuff to a hashMap,
+                     * or have an associated id. Just something that make it so
+                     * I can from in here actually access the pokemons speed.
+                     * If I know the pokemon I could prob just have a loop that
+                     * loops as many pokemon there are in play, that where the
+                     * associated move is performed, just take the move list
+                     * and then take targets list as the enemy the pokemon performs
+                     * move on.
+                     * 
+                     * So I just realized most of this was unneccasary but whatevs.
+                     * I'm going to attempt to make this as a bubble sort.
+                     * 
+                     * So what I'll do inside of here is swap element i with it's next element.
+                     * If and only if it's speedstat is less than the next element.
+                     * This will be repeated seeming infinitely. The only time this should stop is
+                     * when all of the speed stats have been sorted under this "umbrella" of priority.
+                    My idea of checking this and also keeping the sorting infinite only to this point.
+                    Is having all of this in a while loop. where the while loop will be broken if there
+                    has been no instances of sorting. That's where the if statement below comes in.
+                    It's assumed that there have been no sortings, but if there have, then inside the
+                    code that executes that assumptions I'll set hasTherBeenASort to true.
+
+                    Something worth pointing out is that I can simply take a set of all the prios like
+                    before. Convert the set to an array. Execute the same idea but with one difference.
+                    In the if statement where you check for if something should be swapped, you should add
+                    an && checking for if they share priority.
+                    We still run into the same problem there.
+                    Maybe we should just load the pokemons performMoves in, unchronologically.
+                    But then through this sort move both the actual values we're checking for, but in parallel
+                    also swapping the pokemon themselves.
+                    Yeah we should do that. Also the problem comes from using a set, wait it wouldn't
+                    even work since it's not chronological it only removes dupes. Lol.
+                    
+                    I should seperate this into a method to not be confused.
+                    So what I need is 1 the pokemon, and the move they used, also array of targets.
+                    I should take this as an array param for all three.
+                    Very important here is that their ordering is uniform in the array.
+                    I could have an if state wherein which there's a boolean expression that simply has
+                    a number starting at 0. Where I use the bubble sorting to instead express the pokemon
+                    their move and target with a number.
+                    The reasoning behind this is that, I believe it would be possible to have a for loop
+                    iterating through every single pokemon, and their associated number. And if the iteration
+                    finds number 0 then it will execute for the variable pokemon and their associated target
+                    position. After that if block is executed then the number 0 is plused by 1 (it's naturally
+                    an int or byte). Yup and then there will be a while loop, and I'll break through it when
+                    the number which is the actual iterater is the same as length of the for loop e.g
+                    int i = 0 ;i < n; i++
+                    the actual iterater == n;
+                    So we'll have a bubble sort that sorts the priority first, and then when that's don
+                    we'll bubble sort the speed naturally with an if statement that checks for if their priority 
+                    is the same if not then it shouldn't sort.
+                    This sorts the number associated to the pokemon. 
+                    Now the execution is litterally sorted with the target value and everything.
+                    What I can't really imagine is how to tell the compiler to execute performMove based 
+                    off of the already described mapping. I could prob just add an attribute under pokemon
+                    that has that number, with a setter, where bubble sorting changes that number.
+                    I make an ArrayList with the first pokemon to move as a number. And then I have
+                    the method inside while loop that's set to some boolean that can be reverted from inside
+                    the loop. Then I'll have an if statement, that is associated to the number listing.
+                    Then inside there's perform move that performs Move from pokemon 0 and the move 0 and the
+                    target 0. (Remember they were or should be proportional this is why). If they can't be uniform
+                    I can simply store the indexes as an attribute for both with setter as well. That's maybe easier
+                    to work with as well.
+                    After performMove is done. I will increse the variable that accessed the pokemon, move, target
+                    by 1. And I'll reset the while loop that compares with element 0 from the arraylist.
+                    Inside the while loop before the performMove is even executed there's also an if statement
+                    that checks for if the number that accesses the pokemon the same as the length of amount of
+                    pokemon in this battle (if so set the while loops condition to false). This can naturally
+                    and should probably be done from inside the performMove if statement instead.
+
+                    TODO: Read the above.
+                     */
+                    }
+                    if (!hasThereBeenASort) {
+                    // Hopefully doesn't exit forloop (n).
+                        break;
+                    }
+                }
+            }
     }
     public void startBattleTwoPlayers(Player p1, Player p2, Scanner myScanner) {
 
         // Let player 1 and 2 choose their pokemon
         int p1choice = presentOptionsIndex(p1.allOfPokemonNames(), p1.allOfPokemonNames().length, myScanner, p1.getPlayerName());
         int p2choice = presentOptionsIndex(p2.allOfPokemonNames(), p2.allOfPokemonNames().length, myScanner, p2.getPlayerName());
-        System.out.println(p1.getPlayerName() + " chooses " + p1.getPokemonFromPlayer(p1choice).getPokeName());
-        System.out.println(p2.getPlayerName() + " chooses " + p2.getPokemonFromPlayer(p2choice).getPokeName());
+        System.out.println(p1.getPlayerName() + " chooses " + p1.getPokemonFromPlayer(p1choice).PokeName);
+        System.out.println(p2.getPlayerName() + " chooses " + p2.getPokemonFromPlayer(p2choice).PokeName);
 
         // Let player 1 and 2 furthermore choose a move for that pokemon to perform
         int p1moveChoice = presentOptionsIndex(p1.getPokemonFromPlayer(p1choice).pokemonMoves(), p1.getPokemonFromPlayer(p1choice)
@@ -301,7 +429,7 @@ public class Interface {
             }
         // This looks ugly but it's to convert the PokemonMap all the way down to just the key.
         keyList = new ArrayList<>(pokemonMap.keySet());
-        keySetConverted = keyList.toArray(new String[0]);
+        keySetConverted = keyList.toArray(String[]::new);
         randPokeChoice = presentOptions(keySetConverted, 4, myScanner, playerName);
             // Since this method will be reused
             pokemonMap.clear();

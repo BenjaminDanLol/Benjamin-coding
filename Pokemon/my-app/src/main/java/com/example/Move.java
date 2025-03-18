@@ -11,7 +11,7 @@ of the functions in here. Practically they're null because I want alot of if sta
 of functions under performMove.*/ 
     public String moveName = null;
     public int power = 0;
-    // I'll later have an isMultihit boolean and likewise an int array hitsBetween, which is pr standard [2,5]
+    // I'll later have an isMultihit boolean and likewise an byte array hitsBetween, which is pr standard [2,5]
     public int accuracy = 100;
     public boolean isSpecial = false;
     public byte priority = 0;
@@ -21,7 +21,6 @@ of functions under performMove.*/
     And take sleep powder as well. Grass types are not immune to sleep, but they are sleep powder that's
     the moveTyping. Also moveTyping is used to calc effectiveness of moves
     */
-    // Changed from null to ""
     public String statusType = "";
     public byte statusChance = 10;
     public byte critChance = 6;
@@ -43,12 +42,12 @@ of functions under performMove.*/
 
     public void setMoveTyping(String moveTyping){
         this.moveTyping = moveTyping;
+        // If the statusType is not specified then set it's value equal moveTyping.
         if (statusType.equals("")) {
             statusType = moveTyping;
         }
     }
     Random random = new Random();
-
     public void displayMoveInfo() {
         System.out.printf("Movename: %s, Pwr: %d! %n Description: %s %n", moveName, power, moveDescription);
     }
@@ -59,29 +58,29 @@ of functions under performMove.*/
         whatStatusCondition,statChangeChance,local,toVictim,alwaysHits,isCrit,statModifierChange,PP,moveDescription);
     }
     public void performMove(Pokemon user, Pokemon victim) {
-            if (moveName == null) {
-            // This helps since there will always be 4 move slots, they need to be overriden first.
-                System.out.println("Move doesn't exist yet!");
-                return;
-            }
+        // Load in all enemy typings in, and apply the various logic for them. Maybe later I'll need to load
+        // in a typechart for the user, e.g. the user could be paralyzed after a move or smthn.
         typechart = new Typechart(victim);
         // If statements since, they may all be true or only some.
         if (willHit(user, victim) || alwaysHits) {
             if (power > 0) {moveDoesDirectDamage(user, victim);}
             if (!statusType.equals("")) {mayApplyStatusCondition(user, victim);}
             if (whatStatChanges != null) {statChange(user, victim);}
-            if (statusType == null && whatStatusCondition != null) {applySecondaryStatusCondition(user, victim);}
+            if (statusType.equals("") && whatStatusCondition != null) {applySecondaryStatusCondition(user, victim);}
+        }
+        if (victim.getHPMod() <= 0) {
+            System.out.println(victim.PokeName + " has fainted, something should be done at L73 at Move.java");
         }
     }
     public void applySecondaryStatusCondition(Pokemon user, Pokemon victim) {
-        //There should be more logic here, it's not perfect that's for sure.
+        // These are for secondardary status conditions like seeded, cursed, charging, intargetable etc.
         if (randomSuccess(statusChance)) {
             if (toVictim) {
             victim.addSecondaryCondition(whatStatusCondition);
-            System.out.println(victim.getPokeName() + " becomes " + whatStatusCondition);
+            System.out.println(victim.PokeName + " becomes " + whatStatusCondition);
             } else if (!toVictim) {
             user.addSecondaryCondition(whatStatusCondition);
-            System.out.println(user.getPokeName() + " becomes " + whatStatusCondition);
+            System.out.println(user.PokeName + " becomes " + whatStatusCondition);
             }
         }
     }
@@ -98,6 +97,8 @@ of functions under performMove.*/
                 case "def" -> victim.setDefMod(statModifierChange);
                 case "SpDef" -> victim.setSpDefMod(statModifierChange);
                 case "Spd" -> victim.setSpdMod(statModifierChange);
+                case "acc" -> victim.setAccMod(statModifierChange);
+                case "eva" -> victim.setEvasionMod(statModifierChange);
                 }
                 }
             }
@@ -110,16 +111,18 @@ of functions under performMove.*/
                 case "def" -> user.setDefMod(statModifierChange);
                 case "SpDef" -> user.setSpDefMod(statModifierChange);
                 case "Spd" -> user.setSpdMod(statModifierChange);
+                case "acc" -> user.setAccMod(statModifierChange);
+                case "eva" -> user.setEvasionMod(statModifierChange);
                 }
                 }
             }
         }
     }
     public boolean willHit(Pokemon user, Pokemon victim) {
-        long realHitChance = Math.round(accuracy*victim.getEvasionMod());
-        int fuck = (int) realHitChance;
-        if (randomSuccess(fuck)) {
-            System.out.println(user.getPokeName() + " missed!");
+        long realHitChance = Math.round(accuracy*(user.getAccMod()/victim.getEvasionMod()));
+        int hitChance = (int) realHitChance;
+        if (randomSuccess(hitChance)) {
+            System.out.println(user.PokeName + " missed!");
             return false;
         }
         return true;
@@ -146,22 +149,22 @@ of functions under performMove.*/
                 System.out.println("Damage is < 0, revert to just 0 dmg");
             }
             victim.setHPMod(damage);
-            System.out.println(user.getPokeName() + " uses " + moveName + " and " +
-            victim.getPokeName() + " loses " + damage + " HP!");
-            System.out.println(victim.getPokeName() + " HP is now: " + victim.getHPMod());
-
+            System.out.println(user.PokeName + " uses " + moveName + " and " +
+            victim.PokeName + " loses " + damage + " HP!");
+            System.out.println(victim.PokeName + " HP is now: " + victim.getHPMod());
+            victim.checkFainted();
     }
     public void mayApplyStatusCondition(Pokemon user, Pokemon victim){
         inflictsStatus = applyStatus(statusChance);
         if (!victim.getStatusCondition() && inflictsStatus){
-            System.out.println(victim.getPokeName() + " receives " + whatStatusCondition);
+            System.out.println(victim.PokeName + " receives " + whatStatusCondition);
                 victim.setCurrentCondition(whatStatusCondition);
+                // The method below is a boolean that is used to revert if the enemy can have
+                // a status condition at all. Where the if statement checks for if it's false i.e.
+                // enemy doesn't have a statusCondition. But below that would mean they do now.
                 victim.revertStatusCondition();
             }
 
-    }
-    public int getPrio(){
-        return priority;
     }
     private double aDividedD(Pokemon user, Pokemon victim, boolean isCrit) {
         if (isCrit)
@@ -195,22 +198,12 @@ of functions under performMove.*/
     public boolean isCrit(Pokemon user){
         return (randomSuccess(critChance + user.getCritMod()));
     }
-
-    public String getType() {
-        return moveTyping;
-    }
-
-    public String getName() {
-        return moveName;
-    }
-
-    public double randomNum(int range){
+    public int randomNum(int range){
+        // This is per standard 0 inclusive
         return random.nextInt(range) + 1;
     }
-
     public boolean randomSuccess(int range) {
-        double localRange = randomNum(100);
-        return (range > localRange);
+        return (range > randomNum(100));
     }
 }
     /*

@@ -10,6 +10,7 @@ public class Pokemon {
     public int evolvesAt;
     public String evolvesTo = null;
     public String[] evolutionArray = null;
+    public boolean isFainted = false;
     public int baseHP;
     public int baseAtt;
     public int baseDef;
@@ -19,7 +20,7 @@ public class Pokemon {
     private int level = 5;
     private String[] types;
     ArrayList<String> Typings = new ArrayList<>();
-    private int evasion = 0;
+    private byte evasion = 0;
     private boolean statusCondition = false;
     private String currentCondition = "None";
     // Tilføjer modifiers
@@ -31,7 +32,7 @@ public class Pokemon {
     private byte SpdMod = 0;
     private byte critChanceMod = 0;
     // Need stuff for the accuracyMod
-    private byte accuracyMod = 1;
+    private byte accuracyMod = 0;
     ArrayList<String> SecondaryConditions = new ArrayList<>();
     public Move[] movesForThePokemonSlot = new Move[4];
     private int movesTotal = 0;
@@ -76,21 +77,26 @@ public class Pokemon {
                 listOfMoves.add(e.moveName);
             }
         }
+        // VS Code recommends this: return listOfMoves.toArray(String[]::new);
+        // TODO: FIND OUT WHAT THIS DOES AND WHY IT'S BETTER
+
         return listOfMoves.toArray(new String[0]);
     }
-
     public void addSecondaryCondition(String secondaryCondition) {
+        for (String e : SecondaryConditions) {
+            if (e.equals(secondaryCondition)) {
+                System.out.println(PokeName + " already has " + e);
+                return;
+            }
+        }
         SecondaryConditions.add(secondaryCondition);
     }
-
     public void removeSecondaryCondition(String secondaryCondition) {
         SecondaryConditions.remove(secondaryCondition);
     }
-
         public ArrayList<String> getSecondaryCondtions() {
             return SecondaryConditions;
         }
-
         public String[] getOldTypes() {
             return types;
         }
@@ -104,7 +110,6 @@ public class Pokemon {
             }
             resetMods();
         }
-
         public ArrayList<String> getTypings(){
             return Typings;
         }
@@ -128,49 +133,62 @@ public class Pokemon {
                 System.out.printf(e + " ");
             } System.out.println();
         }
-
-        public double getEvasionMod(){
-            if (evasion >  0)
+        public double getEvasionMod() {
+            if (evasion >= 0)
             {
-                return 3/(3+evasion);
+                return (3+1*(evasion))/3;
                 } 
                 else if (evasion < 0)
                     {
-                    return ((3-evasion)/3);
+                    return 3/(3-(1*(evasion)));
                 }
-            return evasion;
+            return 1;
         }
-        public void setEvasionMod(int i){
-            evasion += i;
+        public void setEvasionMod(byte modifierChange) {
+            if (evasion + modifierChange > 6) {
+                evasion = 6;
+                System.out.println("Evasion is at Stage: " + evasion + ", evasion won't go higher!");
+                return;
+            }
+                else if (evasion + modifierChange < -6) {
+                    evasion = -6;
+                    System.out.println("Evasion is at Stage: " + evasion + ", evasion won't go lower!");
+                    return;
+                }
+            evasion += modifierChange;
         }
-
-    public String getPokeName() {
-        return this.PokeName;
-    }
-
+        public double getAccMod() {
+            if (accuracyMod >= 0) {
+                return (3+accuracyMod)/3;
+            } else if (accuracyMod < 0) {
+                return 3/(3-(1*(accuracyMod)));
+            }
+            return 1;
+        }
+        public void setAccMod(byte modifierChange) {
+            if (accuracyMod + modifierChange > 6) {
+                accuracyMod = 6;
+                System.out.println("Accuracy is at Stage: " + accuracyMod + ", accuracy won't go higher!");
+                return;
+            }
+            
+                else if (accuracyMod + modifierChange < -6) {
+                    accuracyMod = -6;
+                    System.out.println("Accuracy is at Stage: " + accuracyMod + ", accuracy won't go lower!");
+                    return;
+                }
+            accuracyMod += modifierChange;
+        }
+        // Can use this later.
     public void setPokeName(String _Name) {
         PokeName = _Name;
     }
-
     public int getLevel() {
         return this.level;
     }
-
     public void setLevel(int _level) {
         level = _level;
     }
-        /*
-     * 	int calculate_exp(int level)
-	{
-		return level * level * level;
-	}
-
-	int calculate_tnl()
-	{
-		(calculate_exp(level + 1) - experience);
-	}
-     */
-
     public void resetMods() {
         // Everything that should be reset after a battle should be reset here.
         HPMod = baseHP;
@@ -180,8 +198,9 @@ public class Pokemon {
         SpDefMod = 0;
         SpdMod = 0;
         critChanceMod = 0;
+        accuracyMod = 0;
+        evasion = 0;
     }
-
     public byte getCritMod() {
         return critChanceMod;
     }
@@ -196,47 +215,42 @@ public class Pokemon {
             critChanceMod += critChange;
         }
     }
-     
     public int getHPMod() {
         return HPMod;
     }
-
     public void setHPMod(long changeModHP) {
         HPMod -= changeModHP;
     }
-
     public double getAttMod() {
         if (AttMod >= 0){
-            return AttMod + 1;
+            return (2 + AttMod) / 2;
         }
         else {
-            return 2/(-AttMod+2);
+            return (2/(2-AttMod));
         }
     }
     public void setAttMod(byte modifierChange) {
         if (AttMod + modifierChange > 6) {
             AttMod = 6;
-            System.out.println("Attack is at Stage: " + SpAMod + ", attack won't go higher!");
+            System.out.println("Attack is at Stage: " + AttMod + ", attack won't go higher!");
             return;
         }
         
             else if (AttMod + modifierChange < -6) {
                 AttMod = -6;
-                System.out.println("Attack is at Stage: -6, attack won't go lower!");
+                System.out.println("Attack is at Stage: " + AttMod + ", attack won't go lower!");
                 return;
             }
         AttMod += modifierChange;
     }
-
     public double getSpAMod() {
         if (SpAMod >= 0){
-            return SpAMod + 1;
+            return (2 + SpAMod) / 2;
         }
             else {
-                return 2/(-SpAMod+2);
+                return (2/(2-SpAMod));
             }
     }
-
     public void setSpAMod(byte modifierChange) {
         if (SpAMod + modifierChange > 6) {
             SpAMod = 6;
@@ -253,76 +267,70 @@ public class Pokemon {
     }
     public double getDefMod() {
         if (DefMod >= 0){
-            return DefMod + 1;
+            return (2 + DefMod) / 2;
         }
             else {
-                return 2/(-DefMod+2);
+                return (2/(2-DefMod));
             }
     }
-
     public void setDefMod(byte modifierChange) {
         if (DefMod + modifierChange > 6) {
             DefMod = 6;
-            System.out.println("Defense is at Stage: " + SpAMod + ", defense won't go higher!");
+            System.out.println("Defense is at Stage: " + DefMod + ", defense won't go higher!");
             return;
         }
         
             else if (DefMod + modifierChange < -6) {
                 DefMod = -6;
-                System.out.println("Defense is at Stage: -6, defense won't go lower!");
+                System.out.println("Defense is at Stage: " + DefMod + ", defense won't go lower!");
                 return;
             }
         DefMod += modifierChange;
     }
-
     public double getSpDefMod() {
         if (SpDefMod >= 0){
-            return AttMod + 1;
+            return (2 + SpDefMod) / 2;
         }
             else {
-                return 2/(-SpDefMod+2);
+                return (2/(2-SpDefMod));
             }
     }
-
     public void setSpDefMod(byte modifierChange) {
         if (SpDefMod + modifierChange > 6) {
             SpDefMod = 6;
-            System.out.println("Special Defense is at Stage: " + SpAMod + ", special defense won't go higher!");
+            System.out.println("Special Defense is at Stage: " + SpDefMod + ", special defense won't go higher!");
             return;
         }
         
             else if (SpDefMod + modifierChange < -6) {
                 SpDefMod = -6;
-                System.out.println("Special Defense is at Stage: -6, special defense won't go lower!");
+                System.out.println("Special Defense is at Stage: " + SpDefMod + ", special defense won't go lower!");
                 return;
             }
         SpDefMod += modifierChange;
     }
-
     public double getSpdMod() {
         if (SpdMod >= 0){
-            return SpdMod + 1;
+            return (2 + SpdMod) / 2;
         }
             else {
-                return 2/(-SpdMod+2);
+                return (2/(2-SpdMod));
             }
     }
-
     public void setSpdMod(byte modifierChange) {
         if (SpdMod + modifierChange > 6) {
             SpdMod = 6;
-            System.out.println("Speed is at Stage: " + SpAMod + ", speed won't go higher!");
+            System.out.println("Speed is at Stage: " + SpdMod + ", speed won't go higher!");
             return;
         }
 
             else if (SpdMod + modifierChange < -6) {
                 SpdMod = -6;
-                System.out.println("Speed is at Stage: " + SpAMod + ", speed won't go lower!");
+                System.out.println("Speed is at Stage: " + SpdMod + ", speed won't go lower!");
                 return;
             }
         SpdMod += modifierChange;
     }
-
     public double getCritDef() {
         // For negative stages
         if (DefMod < 0) {
@@ -341,32 +349,23 @@ public class Pokemon {
                 return baseSpDef;
             }
     }
-
-    // check the if HP Mod is 0 or less
-    public boolean checkFainted() {
-        if (getHPMod() <= 0) {
-            System.out.println(PokeName + "fainted");
-            return true;
+    public void checkFainted() {
+        if (HPMod <= 0) {
+            System.out.println(PokeName + "faints!");
+            isFainted = true;
         }
-            else {
-                return false;
-            }
     }
-
     public boolean getStatusCondition() {
         return statusCondition;
     }
-
     public void revertStatusCondition() {
         statusCondition = !statusCondition;
     }
-
     public String getCurrentCondition() {
         return currentCondition;
     }
-
-    public void setCurrentCondition(String newCondition) {
-        currentCondition = newCondition;
+    public void setCurrentCondition(String _Condition) {
+        currentCondition = _Condition;
     }
 }
 

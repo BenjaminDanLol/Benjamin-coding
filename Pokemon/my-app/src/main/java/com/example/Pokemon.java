@@ -35,6 +35,8 @@ public class Pokemon {
     private byte accuracyMod = 0;
     ArrayList<String> SecondaryConditions = new ArrayList<>();
     public Move[] movesForThePokemonSlot = new Move[4];
+    public Move moveInUsage;
+    public Pokemon target = this;
     private int movesTotal = 0;
     Move blankMove = new Move();
     public Move getAPokemonsMove(int element) {

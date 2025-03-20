@@ -42,6 +42,7 @@ public class Interface {
 
     InputStream moveStream;
     Map<String, Move> moveMap;
+    
     Move currentMove;
     Player[] pTeam1;
     Player[] pTeam2;
@@ -152,71 +153,61 @@ public class Interface {
         Pokemon[] team1Choices = new Pokemon[pTeam1.length];
         Pokemon[] team2Choices = new Pokemon[pTeam2.length];
         Pokemon[] executionOrder = new Pokemon[pTeam1.length + pTeam2.length];
+        // I could consider parsing or something here. To make it obvious which team it is.
         String[] pokeNamesT1Chose = new String[pTeam1.length];
         String[] pokeNamesT2Chose = new String[pTeam2.length];
         // When this will be looped until all pokemon are dead from a team, then I'll to add some checks
         // For if they are fainted. I imagine I'll need an arraylist instead sadly.
-        for (int i = 0; i < team1Choices.length; i++) {
-            System.out.println("Choose one of your pokemon " + pTeam1[i].getPlayerName() + "!");
-            
+        for (int i = 0; i < team1Choices.length; i++) {            
                 // The current iteration of team1 player chooses their pokemon
 
-            team1Choices[i] = pTeam1[i].getPokemonFromPlayer(presentOptionsIndex(pTeam1[i].allOfPokemonNames(), 
-            pTeam1[i].allOfPokemonNames().length, myScanner, pTeam1[i].getPlayerName()));
+            team1Choices[i] = pTeam1[i].playerControllerBStart(myScanner);
             executionOrder[i] = team1Choices[i];
-            System.out.println(pTeam1[i].getPlayerName() + " chose " + team1Choices[i].PokeName + "!");
-            // Used for targeting options for opposing team later.
+            // Used for targeting options for the opposing team later.
             pokeNamesT1Chose[i] = team1Choices[i].PokeName;
         }
-        // Clear the scanner here so the opposing team can't see what the first team chose.
-        for (int i = 0; i < team2Choices.length; i++) {
-            System.out.println("Choose one of your pokemon " + pTeam2[i].getPlayerName() + "!");
 
-            // The current iteration of team2 player chooses their pokemon.
-            // Sometimes this has an error ignore it's VS code bugging.
-            team2Choices[i] = pTeam2[i].getPokemonFromPlayer(presentOptionsIndex(pTeam2[i].allOfPokemonNames(), 
-            pTeam2[i].allOfPokemonNames().length, myScanner, pTeam2[i].getPlayerName()));
+        for (int i = 0; i < team1Choices.length; i++) {
+            // I've added the + 1 since presentOptionsIndex is adjusted for 0 based indexes, but I don't want to show move index 0.
+
+            System.out.println(pTeam1[i].getPlayerName() + " from Team 1, choose what move " + team1Choices[i].PokeName + " should use!");
+            team1Choices[i].setMoveInUsage(team1Choices[i].getAPokemonsMove(presentOptionsIndex(team1Choices[i].pokemonMoves(),
+            team1Choices[i].pokemonMoves().length, myScanner, pTeam1[i].getPlayerName()) + 1));
+        }
+
+        for (int i = 0; i < team1Choices.length; i++) {
+            if (team1Choices[i].getMoveInUsage().toVictim != false) {
+                System.out.println("Who should " + team1Choices[i].PokeName + "target?");
+
+                team1Choices[i].target = pTeam2[presentOptionsIndex(pokeNamesT2Chose, 
+                pokeNamesT2Chose.length, myScanner, pTeam1[i].getPlayerName())].getTarget(team1Choices[i]);
+            } 
+            
+        }
+
+        // Clear the scanner here so the opposing team can't see what the first team chose.
+        
+        for (int i = 0; i < team2Choices.length; i++) {
+            team2Choices[i] = pTeam2[i].playerControllerBStart(myScanner);
             executionOrder[i] = team2Choices[i];
-            System.out.println(pTeam2[i].getPlayerName() + " chose " + team2Choices[i].PokeName + "!");
             pokeNamesT2Chose[i] = team2Choices[i].PokeName;
         }
 
-        // Just clear the scanner for symmetry.
-
-        for (int i = 0; i < team1Choices.length; i++) {
-            // The current iteration of team1 player chooses the move they wish the pokemon they chose prior to use.
-            team1Choices[i].moveInUsage = team1Choices[i].getAPokemonsMove(presentOptionsIndex(team1Choices[i].pokemonMoves(),
-            team1Choices[i].pokemonMoves().length, myScanner, pTeam1[i].getPlayerName()));
+        for (int i = 0; i < team2Choices.length; i++) {
+            System.out.println(pTeam2[i].getPlayerName() + " from Team 2, choose what move " + team2Choices[i].PokeName + " should use!");
+            team2Choices[i].setMoveInUsage(team2Choices[i].getAPokemonsMove(presentOptionsIndex(team2Choices[i].pokemonMoves(),
+            team2Choices[i].pokemonMoves().length, myScanner, pTeam2[i].getPlayerName())));
         }
-
-        // Clear the terminal again
 
         for (int i = 0; i < team2Choices.length; i++) {
-            team2Choices[i].moveInUsage = team2Choices[i].getAPokemonsMove(presentOptionsIndex(team2Choices[i].pokemonMoves(),
-            team2Choices[i].pokemonMoves().length, myScanner, pTeam2[i].getPlayerName()));
-        }
-
-        // Clear the terminal.
-
-        // these arrays are to map what pokemon each teams pokemon targets.
-        for (int i = 0; i < team1Choices.length; i++) {
-            if (team1Choices[i].moveInUsage.toVictim != false) {
-                System.out.println("Who should " + team1Choices[i].PokeName + "target?");
-                // this will present a list against who the player can target.
-                team1Choices[i].target = team2Choices[presentOptionsIndex(pokeNamesT2Chose, pokeNamesT2Chose.length, myScanner, pTeam1[i].getPlayerName())];
-            } 
-            // Per standard target is the pokemon themselves, therefor in cases where it's to enemy, it's instead
-            // to them else it's to the pokemon themselves
-        }
-            // Clear the terminal.
-
-        for (int i = 0; i < team2Choices.length; i++) {
-            if (team2Choices[i].moveInUsage.toVictim != false) {
+            if (team2Choices[i].getMoveInUsage().toVictim != false) {
                 System.out.println("Who should " + team2Choices[i].PokeName + "target?");
-                team2Choices[i].target = team1Choices[presentOptionsIndex(pokeNamesT1Chose, pokeNamesT1Chose.length, myScanner, pTeam2[i].getPlayerName())];
+                team2Choices[i].target = pTeam1[presentOptionsIndex(pokeNamesT1Chose, 
+                pokeNamesT1Chose.length, myScanner, pTeam2[i].getPlayerName())].getTarget(team2Choices[i]);
             }
         }
 
+        // Bubble sort the prio/speed of all pokemon, essentially order the pokemon by execution of moves.
         boolean swapped;
         do {
             swapped = false;
@@ -225,11 +216,13 @@ public class Interface {
                      * It goes like so. If the next pokemon in array has a higher prio then the current
                      * swap, or if their prio is tied, then check for if the next pokemon is faster than
                      * the current if so swap and declare a swap has been done. In other words make it
-                     * so that the this for loop is checked foragain.
+                     * so that the this for loop is checked for again.
                      * Else nothing will happen.
+                     * For cases where the pokemon is being swapped then their moveInUsage prio is 10.
+                     * Later I can have moves like pursuit or other custom moves that interfere with pokeswapping.
                      */
-                    if  (executionOrder[j].moveInUsage.priority < executionOrder[j + 1].moveInUsage.priority ||
-                        (executionOrder[j].moveInUsage.priority == executionOrder[j + 1].moveInUsage.priority &&
+                    if  (executionOrder[j].getMoveInUsage().priority < executionOrder[j + 1].getMoveInUsage().priority ||
+                        (executionOrder[j].getMoveInUsage().priority == executionOrder[j + 1].getMoveInUsage().priority &&
                         (executionOrder[j].getSpdMod() * executionOrder[j].baseSpd) < 
                         (executionOrder[j + 1].getSpdMod() * executionOrder[j + 1].baseSpd))) {
                         swap(executionOrder, j, (j + 1));
@@ -239,7 +232,12 @@ public class Interface {
         } while (swapped);
 
         for (Pokemon pokemon : executionOrder) {
-            pokemon.moveInUsage.performMove(pokemon, pokemon.target);
+            if (pokemon.isTeam1) {
+            pokemon.getMoveInUsage().performMove(pokemon, pokemon.target);
+            }
+            else {
+            pokemon.getMoveInUsage().performMove(pokemon, pokemon.target);
+            }
         }
     }
     public void startBattleTwoPlayers(Player p1, Player p2, Scanner myScanner) {

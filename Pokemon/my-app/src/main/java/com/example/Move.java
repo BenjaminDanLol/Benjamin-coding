@@ -33,6 +33,7 @@ of functions under performMove.*/
     public boolean toVictim = true;
     public boolean alwaysHits = false;
     public boolean isCrit = false;
+    public boolean targetPokemonSwapping = false;
     public byte PP = 0;
     public String moveDescription = "Move shouldn't exist";
 

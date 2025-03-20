@@ -1,6 +1,7 @@
 package com.example;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Player {
@@ -8,6 +9,10 @@ public class Player {
     Pokemon[] playersPokemon = new Pokemon[6];
     Pokemon emptyPokemon = new Pokemon();
     private int howManyPokemonDoesPlayerActuallyHave = 0;
+    Pokemon pokemonUsedBefore;
+    Pokemon pokemonInPlay;
+    String playerInput;
+    int playerIndexAccess;
     public Player(Scanner myScanner) {
         while (true) { 
             System.out.println("What will your name be player? ");
@@ -84,12 +89,124 @@ public class Player {
         }
         // VS Code recommends this: return pokemonNames.toArray(String[]::new);
         return pokemonNames.toArray(new String[0]);
-
-        
     }
+    public void playerController(Scanner myScanner) {
+        
+        while (!playerInput.equals("yes") || !playerInput.equals("no")) {
+            System.out.println("\t" + playerName + ", do you want to keep: " + pokemonInPlay.PokeName + " in? (yes/no)");
+            playerInput = myScanner.nextLine().trim().toLowerCase();
+            }
+                if (playerInput.equals("yes")) {
+                    return;
+                }
+            System.out.println("Here's your pokemon " + playerName + ": ");
+                    for (int i = 0, n = playersPokemon.length; i < n; i++) {
+                        System.out.println((i + 1) + ")\t" + playersPokemon[i].PokeName);
+                    }
+        int i;
+            System.out.println("Enter anything to continue! ");
+            myScanner.nextLine();
+        try {
+            // Honestly the try catch doesn't matter here.
+            while (playerIndexAccess != 1 || playerIndexAccess != 4) {
+                System.out.println("\t" + playerName + " you can now use the following commands:  %n" + 
+                "\t(1) to swap out " + pokemonInPlay.PokeName + " with another pokemon on team." +
+                "\t(2) to see " + pokemonInPlay.PokeName + "'s current status.%n" +
+                "\t(3) to access the description of one your other pokemon.%n" +
+                "\t(4) to keep " + pokemonInPlay.PokeName + " in.%n");
+            playerIndexAccess = myScanner.nextInt();
+            switch (playerIndexAccess) {
+                case 1 -> {
+                    // It's possible to swap out the pokemon with itself
+                    i = Interface.presentOptionsIndex(allOfPokemonNames(), allOfPokemonNames().length, myScanner, playerName);
+                    while (!playerInput.equals("yes") || !playerInput.equals("no")) {
+                        System.out.println("\t" + playerName + ", are you sure you want to swap: " + pokemonInPlay.PokeName + " out? (yes/no)");
+                        playerInput = myScanner.nextLine().trim().toLowerCase();
+                    }   
+                    if (playerInput.equals("yes")) {
+                        playersPokemon[i].isSwapping = true;
+                        pokemonUsedBefore = pokemonInPlay;
+                        pokemonInPlay = playersPokemon[i];
+                        return;
+                        }
+                        // Pretty sure that it will exit this while loop and enter the outer while loop in the case of "no"
+                }
+                case 2 -> pokemonInPlay.displayPokeInfo(); // Can have different display methods for pokemon. Would make sense as well.
+                case 3 -> playersPokemon[Interface.presentOptionsIndex(allOfPokemonNames(), allOfPokemonNames().length, myScanner, playerName)].displayPokeInfo();
+                case 4 -> System.out.println(playerName + " kept " + pokemonInPlay.PokeName + " in!");
+                    }
+                                } 
+        }  catch (InputMismatchException e) {
+            System.out.println("Invalid Input! Input needs to be either command 1, 2, 3 or 4!");
+            }
+            System.out.println("No swap has occurred");
+        }
+
+        public Pokemon playerControllerBStart(Scanner myScanner) {
+        
+            
+            int i;
+                System.out.println(playerName + "'s turn!");
+                System.out.println("Enter anything to continue! ");
+                myScanner.nextLine();
+                System.out.println(playerName + " you must choose one of your pokemon to join the battle!");
+                for (String e : allOfPokemonNames()) {
+                    System.out.println("\t" + e);
+                }
+            try {
+                while (playerIndexAccess != 4) {
+                    System.out.println("\t" + playerName + " you can now use the following commands:  %n" + 
+                    "\t(1) to see all of your pokemon in detail.%n" +
+                    "\t(2) to see one of your pokemon's current status.%n" +
+                    "\t(3) to access the description of one your pokemon.%n" +
+                    "\t(4) to finalize your pokemon choice for this fight!");
+                playerIndexAccess = myScanner.nextInt();
+                switch (playerIndexAccess) {
+                    case 1 -> { 
+                    for (Pokemon e : playersPokemon) {
+                        e.displayPokeInfo();
+                        } 
+                    }
+                    case 2 -> {
+                    i = Interface.presentOptionsIndex(allOfPokemonNames(), allOfPokemonNames().length, myScanner, playerName);
+                    System.out.println("\t" + playersPokemon[i].PokeName + " currently has " + playersPokemon[i].getHPMod() + " and is level: " + playersPokemon[i].getLevel());
+                    }
+                    case 3 -> playersPokemon[Interface.presentOptionsIndex(allOfPokemonNames(), allOfPokemonNames().length, myScanner, playerName)].displayPokeInfo();
+                    case 4 -> {
+                    i = Interface.presentOptionsIndex(allOfPokemonNames(), allOfPokemonNames().length, myScanner, playerName);
+
+                        while (!playerInput.equals("yes") || !playerInput.equals("no")) {
+                            System.out.println("\t" + playerName + ", are you sure you want to put: " + playersPokemon[i].PokeName + " in? (yes/no)");
+                            playerInput = myScanner.nextLine().trim().toLowerCase();
+                            }
+                                if (playerInput.equals("yes")) {
+                                    pokemonInPlay = playersPokemon[i];
+                                }
+                                else {
+                                    // Just to repeat the loop
+                                    playerIndexAccess = 5;
+                                }
+                            }
+                    }
+                                    } 
+            }  catch (InputMismatchException e) {
+                System.out.println("Invalid Input! Input needs to be either command 1, 2, 3 or 4!");
+                }
+                // Hopefully I never get here to this part of the code at least it would be an awful bug.
+                return pokemonInPlay;
+            }
+
     public Pokemon[] getPlayersPokemon(){
         return playersPokemon;
     }
+
+    public Pokemon getTarget(Pokemon enemy) {
+        if (pokemonInPlay.isSwapping && enemy.getMoveInUsage().targetPokemonSwapping) {
+            return pokemonUsedBefore;
+        }
+        return pokemonInPlay;
+    }
+
     public String getPlayerName(){
         return playerName;
     }

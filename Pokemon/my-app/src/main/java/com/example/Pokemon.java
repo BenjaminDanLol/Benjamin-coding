@@ -34,28 +34,55 @@ public class Pokemon {
     // Need stuff for the accuracyMod
     private byte accuracyMod = 0;
     ArrayList<String> SecondaryConditions = new ArrayList<>();
-    public Move[] movesForThePokemonSlot = new Move[4];
-    public Move moveInUsage;
+    public Move[] movesForThePokemonSlot = new Move[5];
+    private Move moveInUsage;
+    // Yup it's targeting itself pr standard shouldn't matter though.
     public Pokemon target = this;
+    public boolean isSwapping = false;
+    public boolean isTeam1 = true;
     private int movesTotal = 0;
     Move blankMove = new Move();
+    public void moveController() {
+    if (isSwapping) {
+        System.out.println(PokeName + " is being swapped out for unknown.");
+        moveInUsage = movesForThePokemonSlot[0];
+        isSwapping = false;
+    }
+        for (Move move : movesForThePokemonSlot) {
+        System.out.println("");
+        }
+    }
     public Move getAPokemonsMove(int element) {
         return movesForThePokemonSlot[element];
     }
+    public Move getMoveInUsage() {
+        return moveInUsage;
+    }
+    public void setMoveInUsage(Move move) {
+        // Essentially if the pokemon is being swapped out it
+        if (!isSwapping) {
+            moveInUsage = move;
+        } else {
+            // So this is a weird way of overwriting the setter essentially.
+            moveInUsage = movesForThePokemonSlot[0];
+            isSwapping = false;
+        }
+    }
     public void addMoveToPokemon(Move theMove, Player player, Scanner myScanner) {
-        // Since array indexes are 0 start (inclusive) I can insert the amount of moves directly.
-        movesTotal = howManyMovesDoesPokemonHave();
-        if (movesTotal == 4) {
+        // Since there's a move nobody should see that has a prio 10 first it's 0 exclusive.
+        movesTotal = howManyMovesDoesPokemonHave() + 1;
+        if (movesTotal == 5) {
         System.out.println(PokeName + " has four moves. ");
         System.out.println(player.getPlayerName() + " do you wish to replace a move.");
         System.out.println("yes to confirm");
         if (myScanner.nextLine().equals("yes")) {
         System.out.println(player.getPlayerName() + " choose which you move will replace for your' " + PokeName +":");
-        int pChoice = Interface.presentOptionsIndex(pokemonMoves(), 4, myScanner, player.getPlayerName());
+        Move pChoice = movesForThePokemonSlot[Interface.presentOptionsIndex(pokemonMoves(), 4, myScanner, player.getPlayerName())];
         // This doesn't actually do anything yet. But later I'll have the rng move choices.
-        System.out.println(PokeName + " forgot " + movesForThePokemonSlot[pChoice].moveName + " and learned " + " not yet implemented");
+        System.out.println(PokeName + " forgot " + pChoice.moveName + " and learned " + " not yet implemented");
         movesForThePokemonSlot[movesTotal] = blankMove;
         // And then the move the new should be assigned to movesForThe..[movesTotal].
+        movesForThePokemonSlot[movesTotal] = theMove;
         System.out.println(theMove.moveDescription);
             }
             // If player didn't enter yes they will skip everything and not override any Move for pokemon.
@@ -70,19 +97,20 @@ public class Pokemon {
         while (!movesForThePokemonSlot[i].moveDescription.equals("Move shouldn't exist") && movesForThePokemonSlot[i] != null) {
             i++;
         }
-        return i;
+        // Since movesForThePokemonSlot[0] is "empty".
+        return i - 1;
     }
     public String[] pokemonMoves(){
         ArrayList<String> listOfMoves = new ArrayList<>();
-        for (Move e : movesForThePokemonSlot) {
-            if (!e.moveDescription.equals("Move shouldn't exist")) {
-                listOfMoves.add(e.moveName);
+        // I want to skip the first move which is an empty move used only for swapping.
+        // VERY IMPORTANT TO REMEMBER. That the moves element are pushed 1 up.
+        for (int i = 1, n = movesForThePokemonSlot.length; i < n; i++) {
+            if (!movesForThePokemonSlot[i].moveDescription.equals("Move shouldn't exist")) {
+                listOfMoves.add(movesForThePokemonSlot[i].moveDescription);
             }
         }
-        // VS Code recommends this: return listOfMoves.toArray(String[]::new);
-        // TODO: FIND OUT WHAT THIS DOES AND WHY IT'S BETTER
-
-        return listOfMoves.toArray(new String[0]);
+        // This is apparently the most efficient way of converting an arrayList to an array.
+        return listOfMoves.toArray(String[]::new);
     }
     public void addSecondaryCondition(String secondaryCondition) {
         for (String e : SecondaryConditions) {
@@ -110,6 +138,8 @@ public class Pokemon {
             for (int i = 0, n = movesForThePokemonSlot.length; i < n; i++) {
                 movesForThePokemonSlot[i] = new Move();
             }
+            // (Swap Pokemon move type, scuffed solution but what evs)
+            movesForThePokemonSlot[0].priority = 10;
             resetMods();
         }
         public ArrayList<String> getTypings(){

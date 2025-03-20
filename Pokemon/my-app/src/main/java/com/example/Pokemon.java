@@ -35,6 +35,7 @@ public class Pokemon {
     private byte accuracyMod = 0;
     ArrayList<String> SecondaryConditions = new ArrayList<>();
     public Move[] movesForThePokemonSlot = new Move[5];
+    public ArrayList<Byte> moveIndexesThatCanBeUsed = new ArrayList<>();
     private Move moveInUsage;
     // Yup it's targeting itself pr standard shouldn't matter though.
     public Pokemon target = this;
@@ -44,12 +45,40 @@ public class Pokemon {
     Move blankMove = new Move();
     public void moveController() {
     if (isSwapping) {
+        // Should prob have the pokemon name from before and also the current pokemon being swapped
+        // in as an attribute, since it's from move that the actual battle sequence at least that's
+        // the current setup.
         System.out.println(PokeName + " is being swapped out for unknown.");
         moveInUsage = movesForThePokemonSlot[0];
         isSwapping = false;
+        return;
     }
-        for (Move move : movesForThePokemonSlot) {
-        System.out.println("");
+    System.out.println(PokeName + " has the following moves:");
+    int m = 1;
+        for (String s : pokemonMoves()) {
+            System.out.println(m + ")\t" + s);
+            m++;
+        }
+    System.out.println("You can do the following: %n" +
+    "\t(1) choose a move that " + PokeName + " should use this turn.%n" +
+    "\t(2) see the movelist once more with greater detail.%n" +
+    "\t(3) exit back to the player menu.%n");
+    // If there's null pointers in moveController this is why:
+    byte t = 0;
+    byte i = 1;
+    // Ima empty the arrayList of move that can be used to ensure they don't have 1 million dupes
+    // For moves like encore, Outrage, Thrash this is for sure where I'll need to add logic.
+    moveIndexesThatCanBeUsed.clear();
+    while (t != 5) {
+        // Pretty sure this is synched correctly
+        if (movesForThePokemonSlot[t].PP != 0 && 
+        !movesForThePokemonSlot[t].moveDescription.equals("Move shouldn't exist")){
+        System.out.println("\t(" + i + ") " + movesForThePokemonSlot[t].moveName);
+        // i is index, and t is value.
+        moveIndexesThatCanBeUsed.add(i, t);
+        i++;
+            }
+        t++;
         }
     }
     public Move getAPokemonsMove(int element) {

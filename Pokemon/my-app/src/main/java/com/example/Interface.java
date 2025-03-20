@@ -147,9 +147,6 @@ public class Interface {
             }
     } 
     public void startBattleT1vT2(Scanner myScanner) {
-        // This should naturally be adjusted off of which pokemon are alive/dead.
-        // Also the loops are kind of non sensical, since I should simply take the moves and pokemon in one swoop.
-        // So the next four loops should be sandwiched into two loops for team 1 and 2 respectively.
         Pokemon[] team1Choices = new Pokemon[pTeam1.length];
         Pokemon[] team2Choices = new Pokemon[pTeam2.length];
         Pokemon[] executionOrder = new Pokemon[pTeam1.length + pTeam2.length];
@@ -158,48 +155,45 @@ public class Interface {
         String[] pokeNamesT2Chose = new String[pTeam2.length];
         // When this will be looped until all pokemon are dead from a team, then I'll to add some checks
         // For if they are fainted. I imagine I'll need an arraylist instead sadly.
-        for (int i = 0; i < team1Choices.length; i++) {            
-                // The current iteration of team1 player chooses their pokemon
+
+        for (int i = 0; i < team1Choices.length; i++) {
+            // The current iteration of team1 player chooses their pokemon
 
             team1Choices[i] = pTeam1[i].playerControllerBStart(myScanner);
             executionOrder[i] = team1Choices[i];
             // Used for targeting options for the opposing team later.
             pokeNamesT1Chose[i] = team1Choices[i].PokeName;
-        }
-
-        for (int i = 0; i < team1Choices.length; i++) {
             // I've added the + 1 since presentOptionsIndex is adjusted for 0 based indexes, but I don't want to show move index 0.
 
             System.out.println(pTeam1[i].getPlayerName() + " from Team 1, choose what move " + team1Choices[i].PokeName + " should use!");
             team1Choices[i].setMoveInUsage(team1Choices[i].getAPokemonsMove(presentOptionsIndex(team1Choices[i].pokemonMoves(),
             team1Choices[i].pokemonMoves().length, myScanner, pTeam1[i].getPlayerName()) + 1));
-        }
 
-        for (int i = 0; i < team1Choices.length; i++) {
             if (team1Choices[i].getMoveInUsage().toVictim != false) {
                 System.out.println("Who should " + team1Choices[i].PokeName + "target?");
 
                 team1Choices[i].target = pTeam2[presentOptionsIndex(pokeNamesT2Chose, 
                 pokeNamesT2Chose.length, myScanner, pTeam1[i].getPlayerName())].getTarget(team1Choices[i]);
             } 
-            
         }
 
+
         // Clear the scanner here so the opposing team can't see what the first team chose.
-        
+
         for (int i = 0; i < team2Choices.length; i++) {
+
+            // Choose a pokemon 
+
             team2Choices[i] = pTeam2[i].playerControllerBStart(myScanner);
             executionOrder[i] = team2Choices[i];
             pokeNamesT2Chose[i] = team2Choices[i].PokeName;
-        }
+            // Choosing a move
 
-        for (int i = 0; i < team2Choices.length; i++) {
             System.out.println(pTeam2[i].getPlayerName() + " from Team 2, choose what move " + team2Choices[i].PokeName + " should use!");
             team2Choices[i].setMoveInUsage(team2Choices[i].getAPokemonsMove(presentOptionsIndex(team2Choices[i].pokemonMoves(),
             team2Choices[i].pokemonMoves().length, myScanner, pTeam2[i].getPlayerName())));
-        }
 
-        for (int i = 0; i < team2Choices.length; i++) {
+            // Targetting
             if (team2Choices[i].getMoveInUsage().toVictim != false) {
                 System.out.println("Who should " + team2Choices[i].PokeName + "target?");
                 team2Choices[i].target = pTeam1[presentOptionsIndex(pokeNamesT1Chose, 
@@ -393,7 +387,7 @@ public class Interface {
         int selectedIndex = randChoices.get(thePlayersChoice - 1);
         return choices[selectedIndex];
     }
-    public static int presentOptionsIndex(String[] choices, int numOfChoices, Scanner myScanner, String playerName) {
+    public static <T> int presentOptionsIndex(T[] choices, int numOfChoices, Scanner myScanner, String playerName) {
 
         List<Integer> randChoices = generateUniqueList(numOfChoices, choices.length);
         System.out.println("Choose one of " + numOfChoices + " " + playerName + ": ");

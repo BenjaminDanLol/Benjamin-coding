@@ -40,7 +40,29 @@ of functions under performMove.*/
     public String getMoveTyping() {
         return moveTyping;
     }
-
+    public void performMove(Pokemon user, Pokemon victim) {
+        // Load in all enemy typings in, and apply the various logic for them. Maybe later I'll need to load
+        // in a typechart for the user, e.g. the user could be paralyzed after a move or smthn.
+        typechart = new Typechart(victim);
+        // If statements since, they may all be true or only some.
+        if (willHit(user, victim) || alwaysHits) {
+            if (power > 0) {moveDoesDirectDamage(user, victim);}
+            if (!statusType.equals("")) {mayApplyStatusCondition(user, victim);}
+            if (whatStatChanges != null) {statChange(user, victim);}
+            if (statusType.equals("") && whatStatusCondition != null) {applySecondaryStatusCondition(user, victim);}
+        }
+        if (victim.getHPMod() <= 0) {
+            victim.isFainted = true;
+            // I could even have custom messages based off of alot different things, since I have
+            // access to everything regarding the move, the user and the victim/enemy.
+            System.out.println(victim.PokeName + " fainted!");
+        }
+        // May be weird checking for it here, but flare blitz and other self inflicting moves will be added later.
+        if (user.getHPMod() <= 0) {
+            user.isFainted = true;
+            System.out.println(user.PokeName + " fainted!");
+        }
+    }
     public void setMoveTyping(String moveTyping){
         this.moveTyping = moveTyping;
         // If the statusType is not specified then set it's value equal moveTyping.
@@ -57,21 +79,6 @@ of functions under performMove.*/
         System.out.printf("%s,%d,%d,%b,%d,%s,%b,%s,%d,%d,%d,%s,%d,%s,%b,%b,%b,%d,%d,%s"
         , moveName, power, accuracy, isSpecial, priority, moveTyping, inflictsStatus,statusType,statusChance,critChance,damage,
         whatStatusCondition,statChangeChance,local,toVictim,alwaysHits,isCrit,statModifierChange,PP,moveDescription);
-    }
-    public void performMove(Pokemon user, Pokemon victim) {
-        // Load in all enemy typings in, and apply the various logic for them. Maybe later I'll need to load
-        // in a typechart for the user, e.g. the user could be paralyzed after a move or smthn.
-        typechart = new Typechart(victim);
-        // If statements since, they may all be true or only some.
-        if (willHit(user, victim) || alwaysHits) {
-            if (power > 0) {moveDoesDirectDamage(user, victim);}
-            if (!statusType.equals("")) {mayApplyStatusCondition(user, victim);}
-            if (whatStatChanges != null) {statChange(user, victim);}
-            if (statusType.equals("") && whatStatusCondition != null) {applySecondaryStatusCondition(user, victim);}
-        }
-        if (victim.getHPMod() <= 0) {
-            System.out.println(victim.PokeName + " has fainted, something should be done at L73 at Move.java");
-        }
     }
     public void applySecondaryStatusCondition(Pokemon user, Pokemon victim) {
         // These are for secondardary status conditions like seeded, cursed, charging, intargetable etc.
@@ -150,10 +157,12 @@ of functions under performMove.*/
                 System.out.println("Damage is < 0, revert to just 0 dmg");
             }
             victim.setHPMod(damage);
+            if (victim.getHPMod() >= 0) {
+                victim.setHPMod(0);
+            }
             System.out.println(user.PokeName + " uses " + moveName + " and " +
             victim.PokeName + " loses " + damage + " HP!");
             System.out.println(victim.PokeName + " HP is now: " + victim.getHPMod());
-            victim.checkFainted();
     }
     public void mayApplyStatusCondition(Pokemon user, Pokemon victim){
         inflictsStatus = applyStatus(statusChance);

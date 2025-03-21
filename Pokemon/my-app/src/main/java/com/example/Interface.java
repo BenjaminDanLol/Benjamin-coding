@@ -147,60 +147,52 @@ public class Interface {
             }
     } 
     public void startBattleT1vT2(Scanner myScanner) {
+        // teams will later be an object array where index 1 and 2, are inserted.
         Pokemon[] team1Choices = new Pokemon[pTeam1.length];
         Pokemon[] team2Choices = new Pokemon[pTeam2.length];
         Pokemon[] executionOrder = new Pokemon[pTeam1.length + pTeam2.length];
-        // I could consider parsing or something here. To make it obvious which team it is.
         String[] pokeNamesT1Chose = new String[pTeam1.length];
         String[] pokeNamesT2Chose = new String[pTeam2.length];
-        // When this will be looped until all pokemon are dead from a team, then I'll to add some checks
-        // For if they are fainted. I imagine I'll need an arraylist instead sadly.
 
+        // Assuming this is the start the I'll need to set pTeam1 all to playerHasToSwap
         for (int i = 0; i < team1Choices.length; i++) {
             // The current iteration of team1 player chooses their pokemon
-
-            team1Choices[i] = pTeam1[i].playerControllerBStart(myScanner);
+            pTeam1[i].playerHasToSwap = true;
+            pTeam1[i].playerController(myScanner);
             executionOrder[i] = team1Choices[i];
             // Used for targeting options for the opposing team later.
-            pokeNamesT1Chose[i] = team1Choices[i].PokeName;
-            // I've added the + 1 since presentOptionsIndex is adjusted for 0 based indexes, but I don't want to show move index 0.
+            pokeNamesT1Chose[i] = pTeam1[i].pokemonInPlay.PokeName;
 
-            System.out.println(pTeam1[i].getPlayerName() + " from Team 1, choose what move " + team1Choices[i].PokeName + " should use!");
-            team1Choices[i].setMoveInUsage(team1Choices[i].getAPokemonsMove(presentOptionsIndex(team1Choices[i].pokemonMoves(),
-            team1Choices[i].pokemonMoves().length, myScanner, pTeam1[i].getPlayerName()) + 1));
-
-            if (team1Choices[i].getMoveInUsage().toVictim != false) {
-                System.out.println("Who should " + team1Choices[i].PokeName + "target?");
-
-                team1Choices[i].target = pTeam2[presentOptionsIndex(pokeNamesT2Chose, 
-                pokeNamesT2Chose.length, myScanner, pTeam1[i].getPlayerName())].getTarget(team1Choices[i]);
-            } 
         }
-
 
         // Clear the scanner here so the opposing team can't see what the first team chose.
 
         for (int i = 0; i < team2Choices.length; i++) {
-
-            // Choose a pokemon 
-
-            team2Choices[i] = pTeam2[i].playerControllerBStart(myScanner);
+            pTeam2[i].playerHasToSwap = true;
+            pTeam2[i].playerController(myScanner);
             executionOrder[i] = team2Choices[i];
             pokeNamesT2Chose[i] = team2Choices[i].PokeName;
-            // Choosing a move
+        }
 
-            System.out.println(pTeam2[i].getPlayerName() + " from Team 2, choose what move " + team2Choices[i].PokeName + " should use!");
-            team2Choices[i].setMoveInUsage(team2Choices[i].getAPokemonsMove(presentOptionsIndex(team2Choices[i].pokemonMoves(),
-            team2Choices[i].pokemonMoves().length, myScanner, pTeam2[i].getPlayerName())));
+        // Targetting
+        for (int i = 0; i < pTeam1.length; i++){
+            if (pTeam1[i].pokemonInPlay.getMoveInUsage().toVictim != false) {
+                System.out.println("Who should " + team1Choices[i].PokeName + "target?");
 
-            // Targetting
+                team1Choices[i].target = pTeam2[presentOptionsIndex(pokeNamesT2Chose, 
+                pokeNamesT2Chose.length, myScanner, pTeam1[i].getPlayerName())].getTarget(team1Choices[i]);
+            }
+        } 
+        
+        // Clear Terminal and let team2 target as well.
+
+        for (int i = 0; i < pTeam1.length; i++){
             if (team2Choices[i].getMoveInUsage().toVictim != false) {
                 System.out.println("Who should " + team2Choices[i].PokeName + "target?");
                 team2Choices[i].target = pTeam1[presentOptionsIndex(pokeNamesT1Chose, 
                 pokeNamesT1Chose.length, myScanner, pTeam2[i].getPlayerName())].getTarget(team2Choices[i]);
             }
         }
-
         // Bubble sort the prio/speed of all pokemon, essentially order the pokemon by execution of moves.
         boolean swapped;
         do {
@@ -227,33 +219,18 @@ public class Interface {
 
         for (Pokemon pokemon : executionOrder) {
             if (pokemon.isTeam1) {
+                if (pokemon.target.isFainted) {
+                    // TODO targeting logic should have an algorithm that finds another opposing pokemon.
+                }
             pokemon.getMoveInUsage().performMove(pokemon, pokemon.target);
             }
             else {
             pokemon.getMoveInUsage().performMove(pokemon, pokemon.target);
             }
+            // Under team class when that's created I can have 
         }
     }
-    public void startBattleTwoPlayers(Player p1, Player p2, Scanner myScanner) {
 
-        // Let player 1 and 2 choose their pokemon
-        int p1choice = presentOptionsIndex(p1.allOfPokemonNames(), p1.allOfPokemonNames().length, myScanner, p1.getPlayerName());
-        int p2choice = presentOptionsIndex(p2.allOfPokemonNames(), p2.allOfPokemonNames().length, myScanner, p2.getPlayerName());
-        System.out.println(p1.getPlayerName() + " chooses " + p1.getPokemonFromPlayer(p1choice).PokeName);
-        System.out.println(p2.getPlayerName() + " chooses " + p2.getPokemonFromPlayer(p2choice).PokeName);
-
-        // Let player 1 and 2 furthermore choose a move for that pokemon to perform
-        int p1moveChoice = presentOptionsIndex(p1.getPokemonFromPlayer(p1choice).pokemonMoves(), p1.getPokemonFromPlayer(p1choice)
-        .pokemonMoves().length, myScanner, p1.getPlayerName());
-        p1.getPokemonFromPlayer(p1choice).getAPokemonsMove(p1moveChoice)
-        .performMove(p1.getPokemonFromPlayer(p1choice), p2.getPokemonFromPlayer(p2choice));
-
-        int p2moveChoice = presentOptionsIndex(p2.getPokemonFromPlayer(p2choice).pokemonMoves(), p2.getPokemonFromPlayer(p2choice)
-        .pokemonMoves().length, myScanner, p2.getPlayerName());
-        p2.getPokemonFromPlayer(p2choice).getAPokemonsMove(p2moveChoice)
-        .performMove(p2.getPokemonFromPlayer(p2choice), p1.getPokemonFromPlayer(p1choice));
-
-    }
     public Pokemon getAPokemonStandardized(int filter, Scanner myScanner, int howManyMonsInPokemonPool, String playerName){
         String selectedType = presentOptions(allPokemonTypes, 4, myScanner, playerName);
         typeMappingNode = pokemonRoot.path("TypeMapping").path(selectedType);
@@ -387,8 +364,16 @@ public class Interface {
         int selectedIndex = randChoices.get(thePlayersChoice - 1);
         return choices[selectedIndex];
     }
-    public static <T> int presentOptionsIndex(T[] choices, int numOfChoices, Scanner myScanner, String playerName) {
 
+    // TODO THIS METHOD SHOULD HAVE A VERSION WHERE IT'S NOT RANDOMIZED.
+    // Reason 1: I imagine it creates huge amounts of overhead when I constantly make sets and lists without reason.
+    public static <T> int presentOptionsIndex(T[] choices, int numOfChoices, Scanner myScanner, String playerName) {
+        if (choices.length == 0 || numOfChoices == 0) {
+            // prevention of misuse. I.e. I'm calling on a pokemon to choose a move with 0 moves or
+            // a player with 0 pokemon, or even a team with no players.
+            System.out.println(playerName + " has no available choices.");
+            return 0;
+        }
         List<Integer> randChoices = generateUniqueList(numOfChoices, choices.length);
         System.out.println("Choose one of " + numOfChoices + " " + playerName + ": ");
         for (int i = 0; i < numOfChoices; i++)

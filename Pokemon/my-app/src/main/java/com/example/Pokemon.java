@@ -53,22 +53,21 @@ public class Pokemon {
     Move blankMove = new Move();
 
     public void moveController(Scanner myScanner, Player player) {
-    refreshMovesThatCanBeUsed();
-
     if (isSwapping) {
         // movesForThePokemonSlot is a fake move, that has no name, it only has a prio of 10.
         moveInUsage = movesForThePokemonSlot[0];
         isSwapping = false;
         return;
     }
-
+    System.out.println("Length of pokemon moves total is: " + movesForThePokemonSlot.length);
     System.out.println("\t" + PokeName + " has the following moves:");
-        byte numDisplay = 1;
-        for (String s : moveNamesThatCanBeUsed){
-            System.out.println("\t(" + (numDisplay) + ") " + s);
-            numDisplay++;
-        }
+    refreshMovesThatCanBeUsed();
 
+    byte numDisplay = 1;
+    for (String s : pokemonMovesStrings){
+        System.out.println("\t(" + (numDisplay) + ") " + s);
+        numDisplay++;
+    }
     System.out.println("\t " + player.getPlayerName() + " type anything to continue!");
     moveCommandSection(myScanner, player);
     }
@@ -77,7 +76,7 @@ public class Pokemon {
     try {
         myScanner.nextLine();
         while (thePokemonsChoice != 1){
-        System.out.print(player.getPlayerName() + " you can do the following: %n" +
+        System.out.printf("%n" + player.getPlayerName() + " you can do the following: %n" +
         "\t(1) choose a move that " + PokeName + " should use this turn.%n" +
         "\t(2) see move's details.%n" +
         "\t(3) exit back to the player menu.%n");
@@ -85,8 +84,9 @@ public class Pokemon {
         switch (thePokemonsChoice) {
             case 1 -> {
                 // Could have a yes/no prompt here
-                moveInUsage = movesThatCanBeUsed.get(Interface.presentOptionsIndexList(moveNamesThatCanBeUsed,
-                myScanner, PokeName));
+                // Something goes wrong here
+                moveInUsage = movesThatCanBeUsed.get(Interface.presentOptionsIndexList(pokemonMovesStrings,
+                myScanner, player.getPlayerName()));
                     }
             case 2 -> {
                 // ANOTHER RECURSION
@@ -107,7 +107,7 @@ public class Pokemon {
         while (thePokemonsChoice != 1 && thePokemonsChoice != 2) {
             System.out.printf("%n" + player.getPlayerName() + " do you wish to. %n1) see all of " + this.PokeName 
             + "'s moves or %n" + "2) only the ones you can choose? (1/2)" );
-            playerInput = myScanner.nextLine().trim();
+            thePokemonsChoice = myScanner.nextByte();
             }
         
         if (thePokemonsChoice == 1) {
@@ -145,20 +145,19 @@ public class Pokemon {
         moveNamesThatCanBeUsed.clear();
         // I may have pokemonMovesStrings refresh as a seperate method.
         pokemonMovesStrings.clear();
-        for (byte i = 0; i < movesForThePokemonSlot.length; i++) {
+        for (int i = 0; i < movesForThePokemonSlot.length; i++) {
             // move index 1 or [0] is filtered away because it's description is Move shouldn't exist.
             if (movesForThePokemonSlot[i].PP != 0 && 
             !movesForThePokemonSlot[i].moveDescription.equals("Move shouldn't exist")){
-                // This will add indexes of moves from movesForPokemonSlot
-                // that can be used as available for player.
+                // This block of code isn't executed properly
                 movesThatCanBeUsed.add(movesForThePokemonSlot[i]);
-                moveNamesThatCanBeUsed.add(movesThatCanBeUsed.get(i).moveName);
+                moveNamesThatCanBeUsed.add(movesForThePokemonSlot[i].moveName);
             }
-
             if (!movesForThePokemonSlot[i].moveDescription.equals("Move shouldn't exist")) {
                 pokemonMovesStrings.add(movesForThePokemonSlot[i].moveName);
             }
         }
+        System.out.println(moveNamesThatCanBeUsed.size() + movesThatCanBeUsed.size());
     }
     public void addMoveToPokemon(Move theMove, Player player, Scanner myScanner) {
         // Since there's a move nobody should see that has a prio 10 first it's 0 exclusive.

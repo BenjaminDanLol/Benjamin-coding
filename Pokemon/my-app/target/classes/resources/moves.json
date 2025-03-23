@@ -293,6 +293,7 @@
         "moveTyping":"Normal",
         "whatStatusCondition":"Paralysis",
         "statusChance":30,
+        "PP":15,
         "moveDescription":"The user drops onto the target with its full body weight. This may also leave the target with paralysis.",
         "statusType":"Electric"
     },

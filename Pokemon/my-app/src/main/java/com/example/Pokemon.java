@@ -36,52 +36,48 @@ public class Pokemon {
     private byte accuracyMod = 0;
     ArrayList<String> SecondaryConditions = new ArrayList<>();
     public Move[] movesForThePokemonSlot = new Move[5];
+    public ArrayList<String> pokemonMovesStrings = new ArrayList<>();
     public ArrayList<Move> movesThatCanBeUsed = new ArrayList<>();
-    public String[] movesNamesThatCanBeUsed;
+    public ArrayList<String> moveNamesThatCanBeUsed = new ArrayList<>();
     private String playerInput = "";
     byte thePokemonsChoice = 0;
+    public Player target;
     private Move moveInUsage;
+    // just to display the move's info for player
     private Move selectedMove;
     // Yup it's targeting itself pr standard shouldn't matter though.
-    public Pokemon target = this;
+    // TODO: public Pokemon target = this; old version of target
     public boolean isSwapping = false;
     public boolean isTeam1 = true;
     private int movesTotal = 0;
     Move blankMove = new Move();
+
     public void moveController(Scanner myScanner, Player player) {
+    refreshMovesThatCanBeUsed();
+
     if (isSwapping) {
         // movesForThePokemonSlot is a fake move, that has no name, it only has a prio of 10.
         moveInUsage = movesForThePokemonSlot[0];
         isSwapping = false;
         return;
     }
-    // This updates the ArrayList movesThatCanBeUsed to reflect only the moves the pokemon has actually
-    // learned. In conjuction with that it updates movesThatCanBeUsed as well, to reflect that.
-    updatePokemonMovesStringAll();
+
     System.out.println("\t" + PokeName + " has the following moves:");
-    byte m = 1;
-        for (String s : movesNamesThatCanBeUsed) {
-            System.out.println("\t(" + m + ") " + s);
-            m++;
+        byte numDisplay = 1;
+        for (String s : moveNamesThatCanBeUsed){
+            System.out.println("\t(" + (numDisplay) + ") " + s);
+            numDisplay++;
         }
-    // This updates the ArrayList movesThatCanBeUsed to be concurrent with the state of the pokemon.
-    // Like updatePokemonMovesStringAll(); it updates movesThatCanBeUsed as well.
-    // It's inefficient sure, but it works as of now.
-    refreshMovesThatCanBeUsed();
-    System.out.println("\t But of those " + PokeName + " can only use the following: ");
-    m = 1;
-    for (Move e : movesThatCanBeUsed) {
-        System.out.println("\t(" + m + ") " + e.moveName);
-        m++;
-        }
+
     System.out.println("\t " + player.getPlayerName() + " type anything to continue!");
-    myScanner.nextLine();
     moveCommandSection(myScanner, player);
     }
+
     private void moveCommandSection(Scanner myScanner, Player player) {
     try {
-        while (thePokemonsChoice != 1 && thePokemonsChoice != 4){
-        System.out.println(player.getPlayerName() + " can do the following: %n" +
+        myScanner.nextLine();
+        while (thePokemonsChoice != 1){
+        System.out.print(player.getPlayerName() + " you can do the following: %n" +
         "\t(1) choose a move that " + PokeName + " should use this turn.%n" +
         "\t(2) see move's details.%n" +
         "\t(3) exit back to the player menu.%n");
@@ -89,8 +85,8 @@ public class Pokemon {
         switch (thePokemonsChoice) {
             case 1 -> {
                 // Could have a yes/no prompt here
-                moveInUsage = movesForThePokemonSlot[Interface.presentOptionsIndex(movesNamesThatCanBeUsed, 
-                movesNamesThatCanBeUsed.length, myScanner, PokeName)];
+                moveInUsage = movesThatCanBeUsed.get(Interface.presentOptionsIndexList(moveNamesThatCanBeUsed,
+                myScanner, PokeName));
                     }
             case 2 -> {
                 // ANOTHER RECURSION
@@ -103,29 +99,29 @@ public class Pokemon {
                 }
             }   
     } catch (InputMismatchException e) {
-    System.out.println("Invalid Input! Input needs to be either command 1, 2, 3 or 4!");
+    System.out.println("Invalid Input! Input needs to be either command 1, 2 or 3!");
         }
     }
     private void displayMoveMenu(Scanner myScanner, Player player) {
-        playerInput = "";
-        while (!playerInput.equals("1") && !playerInput.equals("2")) {
-            System.out.println(player.getPlayerName() + " do you wish to. %n1) see all of " + this.PokeName + 
-            "'s moves or %n" + "2) only the ones you can choose? (1/2)" );
+        thePokemonsChoice = 0;
+        while (thePokemonsChoice != 1 && thePokemonsChoice != 2) {
+            System.out.printf("%n" + player.getPlayerName() + " do you wish to. %n1) see all of " + this.PokeName 
+            + "'s moves or %n" + "2) only the ones you can choose? (1/2)" );
             playerInput = myScanner.nextLine().trim();
             }
         
-        if (playerInput.equals("1")) {
+        if (thePokemonsChoice == 1) {
             // Only update here since when this method is used the pokemonNames are of the ones that can be used.
-            updatePokemonMovesStringAll();
-            selectedMove = movesThatCanBeUsed.get(Interface.presentOptionsIndex(movesNamesThatCanBeUsed, 
-            movesNamesThatCanBeUsed.length, myScanner, PokeName));
+            selectedMove = movesThatCanBeUsed.get(Interface.presentOptionsIndexList(pokemonMovesStrings, 
+            myScanner, PokeName));
         }
-        else if (playerInput.equals("2")) {
-            selectedMove = movesThatCanBeUsed.get(Interface.presentOptionsIndex(movesNamesThatCanBeUsed,
-            movesNamesThatCanBeUsed.length, myScanner, PokeName));
+        else if (thePokemonsChoice == 2) {
+            selectedMove = movesThatCanBeUsed.get(Interface.presentOptionsIndexList(moveNamesThatCanBeUsed, 
+            myScanner, PokeName));
         }
         playerInput = "";
         selectedMove.displayMoveInfo();
+        myScanner.nextLine();
         System.out.println(player.getPlayerName() + " press.. to continue");
         myScanner.nextLine();
         while (!playerInput.equals("yes") && !playerInput.equals("no")) {
@@ -134,6 +130,9 @@ public class Pokemon {
             playerInput = myScanner.nextLine().trim().toLowerCase();
         }
         if (playerInput.equals("yes")) {
+            displayMoveMenu(myScanner, player);
+        }
+        else {
             moveCommandSection(myScanner, player);
         }
     }
@@ -141,38 +140,38 @@ public class Pokemon {
         return moveInUsage;
     }
     public void refreshMovesThatCanBeUsed() {
+        // There are problems here at least moveNames doesn't update.
         movesThatCanBeUsed.clear();
-        byte i = 0;
-        for (; i < movesForThePokemonSlot.length; i++) {
+        moveNamesThatCanBeUsed.clear();
+        // I may have pokemonMovesStrings refresh as a seperate method.
+        pokemonMovesStrings.clear();
+        for (byte i = 0; i < movesForThePokemonSlot.length; i++) {
             // move index 1 or [0] is filtered away because it's description is Move shouldn't exist.
             if (movesForThePokemonSlot[i].PP != 0 && 
             !movesForThePokemonSlot[i].moveDescription.equals("Move shouldn't exist")){
                 // This will add indexes of moves from movesForPokemonSlot
                 // that can be used as available for player.
                 movesThatCanBeUsed.add(movesForThePokemonSlot[i]);
+                moveNamesThatCanBeUsed.add(movesThatCanBeUsed.get(i).moveName);
+            }
+
+            if (!movesForThePokemonSlot[i].moveDescription.equals("Move shouldn't exist")) {
+                pokemonMovesStrings.add(movesForThePokemonSlot[i].moveName);
             }
         }
-        movesNamesThatCanBeUsed = new String[movesThatCanBeUsed.size()];
-        i = 0;
-        for (Move move : movesThatCanBeUsed) {
-            movesNamesThatCanBeUsed[i] = move.moveName;
-            i++;
-        }
-
     }
     public void addMoveToPokemon(Move theMove, Player player, Scanner myScanner) {
         // Since there's a move nobody should see that has a prio 10 first it's 0 exclusive.
         // TODO THIS IS UGLY
         movesTotal = howManyMovesDoesPokemonHave() + 1;
+        refreshMovesThatCanBeUsed();
         if (movesTotal == 5) {
         System.out.println(PokeName + " has four moves. ");
         System.out.println(player.getPlayerName() + " do you wish to replace a move.");
         System.out.println("yes to confirm");
         if (myScanner.nextLine().equals("yes")) {
         System.out.println(player.getPlayerName() + " choose which move you will replace for your' " + this.PokeName +":");
-        updatePokemonMovesStringAll();
-        Move pChoice = movesForThePokemonSlot[Interface.presentOptionsIndex(movesNamesThatCanBeUsed, 
-        movesNamesThatCanBeUsed.length, myScanner, player.getPlayerName())];
+        Move pChoice = movesForThePokemonSlot[Interface.presentOptionsIndexList(moveNamesThatCanBeUsed, myScanner, player.getPlayerName())];
         // TODO have a random selection of moves in addMove.
         System.out.println(PokeName + " forgot " + pChoice.moveName + " and learned " + " not yet implemented");
         movesForThePokemonSlot[movesTotal] = blankMove;
@@ -195,20 +194,6 @@ public class Pokemon {
         // Since movesForThePokemonSlot[0] is "empty".
         return i - 1;
     }
-    public void updatePokemonMovesStringAll(){
-    movesThatCanBeUsed.clear();        
-        for (Move m : movesForThePokemonSlot) {
-            if (!m.moveDescription.equals("Move shouldn't exist")) {
-                movesThatCanBeUsed.add(m);
-            }
-        }
-        movesNamesThatCanBeUsed = new String[movesThatCanBeUsed.size()];
-        byte i = 0;
-        for (Move m : movesThatCanBeUsed) {
-            movesNamesThatCanBeUsed[i] = m.moveName;
-            i++;
-        }
-    }
     public void addSecondaryCondition(String secondaryCondition) {
         for (String e : SecondaryConditions) {
             if (e.equals(secondaryCondition)) {
@@ -227,6 +212,7 @@ public class Pokemon {
         public String[] getOldTypes() {
             return types;
         }
+        // If I want an attribute to be set other than primitives I'll need to assign it here.
         public void setTypes(String types[]) {
             for (int i = 0, n = types.length; i < n; i++) {
                 Typings.add(types[i]);

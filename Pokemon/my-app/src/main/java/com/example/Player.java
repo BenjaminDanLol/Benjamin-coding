@@ -15,24 +15,25 @@ public class Player {
     public String[] namesOfPokemonPlayerCanUse; 
     public String[] nameOfPlayersPokemon;
     public boolean playerHasToSwap;
-    Pokemon pokemonUsedBefore;
-    Pokemon pokemonInPlay;
-    Pokemon pokemonToDisplay;
-    Pokemon emptyPokemon = new Pokemon();
+    private boolean flag;
+    public Pokemon pokemonUsedBefore;
+    public Pokemon pokemonInPlay;
+    public Pokemon pokemonToDisplay;
+    public Pokemon emptyPokemon = new Pokemon();
     String playerInput = "";
     int playerIndexAccess = 0;
     public Player(Scanner myScanner) {
-        while (!playerInput.equals("yes") && !playerInput.equals("no")) { 
-            System.out.println("What will your name be player? ");
+        while (!playerInput.equals("x")) { 
+            System.out.println("What will your name be player?");
             playerName = myScanner.nextLine().trim();
-            System.out.println("Your' playername will be " + playerName + " are you sure?");
+            System.out.println("Your' playername will be " + playerName + ", type X to confirm");
             playerInput = myScanner.nextLine().trim().toLowerCase();
         }
-        // If they type no then nothing really happens
             for (int i = 0, n = playersPokemon.length; i < n; i++) {
                 playersPokemon[i] = emptyPokemon;
             }
     }
+
     public int howManyPokemonDoesPlayerActuallyHave() {
         int amount = 0;
         for (int i = 0; i < 6; i++) {
@@ -136,16 +137,17 @@ public class Player {
     // This method should only be called when player already has a pokemon in battle
     public void playerController(Scanner myScanner) {
         updateNamesOfPokemonPlayerCanUse();
+        System.out.printf("%n" + playerName + "'s turn!%n");
         if (allPokemonAreFainted) {
             System.out.println(playerName + " has no pokemon left to swap in.");
             pokemonInPlay = emptyPokemon;
             return;
         }
         playerInput = "";
-        if (playerHasToSwap) {
+        if (!playerHasToSwap) {
             swapOrKeepPokemonIn(myScanner);
         }
-        else if (!playerHasToSwap) {
+        else if (playerHasToSwap) {
             playerControllerBStart(myScanner);
         }
     }
@@ -156,6 +158,7 @@ public class Player {
             }
 
                 if (playerInput.equals("yes")) {
+                    pokemonInPlay.moveController(myScanner, this);
                     return;
                 }
             playerInput = "";
@@ -172,11 +175,12 @@ public class Player {
         int i;
         try {
             while (playerIndexAccess != 1 && playerIndexAccess != 4) {
-                System.out.println("\t" + playerName + " you can now use the following commands:  %n" + 
-                "\t(1) to swap out " + pokemonInPlay.PokeName + " with another pokemon on team." +
+                System.out.printf("%n" + playerName + " you can now use the following commands:  %n" + 
+                "\t(1) to swap out " + pokemonInPlay.PokeName + " with another pokemon on team.%n" +
                 "\t(2) to see " + pokemonInPlay.PokeName + "'s current status.%n" +
                 "\t(3) to access the description of one your pokemon.%n" +
                 "\t(4) to keep " + pokemonInPlay.PokeName + " in.%n");
+            
             playerIndexAccess = myScanner.nextInt();
             switch (playerIndexAccess) {
             case 1 -> {
@@ -214,41 +218,31 @@ public class Player {
                     playerIndexAccess = 3;
                 }
 
-            case 4 -> System.out.println(playerName + " kept " + pokemonInPlay.PokeName + " in!");
+            case 4 -> {System.out.println(playerName + " kept " + pokemonInPlay.PokeName + " in!");
+            pokemonInPlay.moveController(myScanner, this);
+            return;}
                 }
                             } 
         }  catch (InputMismatchException e) {
             System.out.println("Invalid Input! Input needs to be either command 1, 2, 3 or 4!");
             }
-            // Should only reach this point of code if player entered command 4.     
-            
-            // CALLING ON MOVECONTROLLER ONLY HAPPENS WHEN NO SWAP OF POKEMON HAS TAKEN PLACE.
-            pokemonInPlay.moveController(myScanner, this);
-        }
+                    }
     // This should only be called when player doesn't already have a pokemon in battle
     private void playerControllerBStart(Scanner myScanner) {
-        updateNamesOfPokemonPlayerCanUseExPokeInPlay();
-    if (allPokemonAreFainted) {
-        System.out.println(playerName + " has no pokemon left to swap in.");
-        pokemonInPlay = emptyPokemon;
-    }
-            System.out.println(playerName + "'s turn!");
             System.out.println("Enter anything to continue! ");
             myScanner.nextLine();
-            System.out.println(playerName + " you must choose one of your pokemon to join the battle!");
-            for (String e : namesOfPokemonPlayerCanUse) {
-                System.out.println("\t" + e);
-            }
+            System.out.println(playerName + ", you must choose a pokemon to join this battle!");
             pokemonCommandSectionBStart(myScanner);
         }
         public void pokemonCommandSectionBStart(Scanner myScanner) {
             int i;
         try {
-            while (playerIndexAccess != 4) {
-                System.out.println("\t" + playerName + " you can now use the following commands:  %n" + 
+            flag = true;
+            while (flag) {
+                System.out.printf("%n" + playerName + " you can now use the following commands:  %n" + 
                 "\t(1) to see all of your pokemon in detail.%n" +
                 "\t(2) to access the description of just one of your pokemon.%n" +
-                "\t(3) to choose the pokemon who will join this battle!");
+                "\t(3) to choose the pokemon who will join this battle!%n");
             playerIndexAccess = myScanner.nextInt();
             switch (playerIndexAccess) {
                 case 1 -> { 
@@ -260,19 +254,21 @@ public class Player {
                             }
                     } 
                 }
-                case 2 -> displayPlayerPokemonMenu(myScanner);
+                case 2 -> {
+                    displayPlayerPokemonMenu(myScanner);
+                    flag = false;
+                }
                 case 3 -> {
                 i = Interface.presentOptionsIndex(namesOfPokemonPlayerCanUse, namesOfPokemonPlayerCanUse.length, myScanner, playerName);
+                myScanner.nextLine();
+                playerInput = "";
                     while (!playerInput.equals("yes") && !playerInput.equals("no")) {
-                        System.out.println("\t" + playerName + ", are you sure you want to put: " + pokemonPlayerCanActuallyUse.get(i).PokeName + " in? (yes/no)");
+                        System.out.println(playerName + ", are you sure you want to put: " + pokemonPlayerCanActuallyUse.get(i).PokeName + " in? (yes/no)");
                         playerInput = myScanner.nextLine().trim().toLowerCase();
                         }
                             if (playerInput.equals("yes")) {
                                 pokemonInPlay = pokemonPlayerCanActuallyUse.get(i);
-                            }
-                            else {
-                                // Just to repeat the loop
-                                playerIndexAccess = 5;
+                                flag = false;
                             }
                         }
                 }
@@ -280,14 +276,20 @@ public class Player {
         }  catch (InputMismatchException e) {
             System.out.println("Invalid Input! Input needs to be either command 1, 2, 3 or 4!");
             }
-            // DON'T CALL ON MOVECONTROLLER POKEMON IS BEING SWAPPED IN NO MATTER WHAT!
+            flag = true;            
         }
         public void displayPlayerPokemonMenu(Scanner myScanner) {
             playerInput = "";
-            while (!playerInput.equals("1") && !playerInput.equals("2")) {
-            System.out.println(playerName + " do you wish to. %n1) see all your pokemon, or %n" +
-            "2) only the ones you can choose? (1/2)" );
+            myScanner.nextLine();
+            // If the user types anything else than 1 or two they will enter this while loop.
+            flag = true;
+            while (flag) {
+            System.out.printf("%n" + playerName + " do you wish to. %n1) see all your pokemon, or %n" +
+            "2) only the ones you can choose? %n(1/2)%n" );
             playerInput = myScanner.nextLine().trim();
+            if (playerInput.equals("1") || playerInput.equals("2")) {
+                flag = false;
+                }
             }
 
             if (playerInput.equals("1")) {
@@ -302,17 +304,16 @@ public class Player {
             }
             playerInput = "";
             pokemonToDisplay.displayPokeInfo();
-            System.out.println("\t" + pokemonToDisplay.PokeName + " currently has " + 
+            System.out.println( pokemonToDisplay.PokeName + " currently has " + 
             pokemonToDisplay.getHPMod() + ", HP left, and is level: " + pokemonToDisplay.getLevel());
                 // If they currently have a status condition it will displayed as well
                 if (pokemonToDisplay.getStatusCondition()) {
                     System.out.println("\t" + pokemonToDisplay.PokeName + " also currently has the " 
                     + pokemonToDisplay.getCurrentCondition() + " status affliction!");
                     }
-            System.out.println("\t"+ playerName  +" Type anything to continue.");
             myScanner.nextLine();
             while (!playerInput.equals("yes") && !playerInput.equals("no")) {
-                System.out.println("\t " + playerName + ", do you want to see the description of one of " +
+                System.out.println(playerName + ", do you want to see the description of one of " +
                 "your other pokemon, " + playerName + "? (yes/no)");
                 playerInput = myScanner.nextLine().trim().toLowerCase();
             }

@@ -10,6 +10,7 @@ have simple logic, and I want to by simply specifying what is used have the comp
 of the functions in here. Practically they're null because I want alot of if statments to skip alot
 of functions under performMove.*/ 
     public String moveName = null;
+    public int PP;
     public int power = 0;
     // I'll later have an isMultihit boolean and likewise an byte array hitsBetween, which is pr standard [2,5]
     public int accuracy = 100;
@@ -24,7 +25,6 @@ of functions under performMove.*/
     public String statusType = "";
     public byte statusChance = 10;
     public byte critChance = 6;
-    public long damage = 0;
     public Typechart typechart;
     public String whatStatusCondition = null;
     public byte statModifierChange = 0;
@@ -34,8 +34,9 @@ of functions under performMove.*/
     public boolean alwaysHits = false;
     public boolean isCrit = false;
     public boolean targetPokemonSwapping = false;
-    public byte PP = 0;
     public String moveDescription = "Move shouldn't exist";
+    public long damage;
+
 
     public String getMoveTyping() {
         return moveTyping;

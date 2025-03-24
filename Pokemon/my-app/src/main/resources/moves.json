@@ -349,7 +349,8 @@
         "statChangeChance":50,
         "whatStatChanges":["def"],
         "statModifierChange":-1,
-        "moveDescription":"The user attacks with a punch that can shatter a rock. This may also lower the target's Defense stat."
+        "PP":25,
+        "moveDescription":"(Note: I'm guessing rock smash has 25 PP).The user attacks with a punch that can shatter a rock. This may also lower the target's Defense stat."
     },
 
     "Earth Power":{
@@ -360,7 +361,8 @@
         "statChangeChance":10,
         "whatStatChanges":["SpDef"],
         "statModifierChange":-1,
-        "moveDescription":"The user makes the ground under the foe erupt with power. It may also lower the target's Sp. Def."
+        "PP":10,
+        "moveDescription":"(Note: I'm guessing earth power has 10 PP). The user makes the ground under the foe erupt with power. It may also lower the target's Sp. Def."
     }
 
 }

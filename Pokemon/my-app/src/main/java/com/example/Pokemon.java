@@ -32,10 +32,9 @@ public class Pokemon {
     private byte SpDefMod = 0;
     private byte SpdMod = 0;
     private byte critChanceMod = 0;
-    // Need stuff for the accuracyMod
     private byte accuracyMod = 0;
     ArrayList<String> SecondaryConditions = new ArrayList<>();
-    public Move[] movesForThePokemonSlot = new Move[5];
+
     public ArrayList<Move> pokemonMoves = new ArrayList<>();
     public ArrayList<String> allPokemonMoveNames = new ArrayList<>();
     public ArrayList<Move> movesThatCanBeUsed = new ArrayList<>();
@@ -62,13 +61,11 @@ public class Pokemon {
     }
     System.out.println("\t" + PokeName + " has the following moves:");
     refreshMovesThatCanBeUsed();
-    pokemonMoves.get(0).displayWAYToMuchInfo();
     byte numDisplay = 1;
     for (String s : allPokemonMoveNames){
         System.out.println("\t(" + (numDisplay) + ") " + s);
         numDisplay++;
     }
-    movesThatCanBeUsed.get(0).displayMoveInfo();
     System.out.println("\t " + player.getPlayerName() + " type anything to continue!");
     moveCommandSection(myScanner, player);
     }
@@ -126,6 +123,7 @@ public class Pokemon {
             "'s other moves " + player.getPlayerName() + "? (yes/no)");
             playerInput = myScanner.nextLine().trim().toLowerCase();
         }
+        thePokemonsChoice = 0;
         if (playerInput.equals("yes")) {
             displayMoveMenu(myScanner, player);
         }
@@ -139,9 +137,8 @@ public class Pokemon {
         moveNamesThatCanBeUsed.clear();
         // I may have pokemonMovesStrings refresh as a seperate method.
         for (Move e : pokemonMoves) {
-            // move index 1 or [0] is filtered away because it's description is Move shouldn't exist.
-            if (e.PP != 0 && e.moveDescription.equals("Move shouldn't exist")){
-                // This block of code isn't executed properly
+            if (e.PP != 0 && !e.moveDescription.equals("Move shouldn't exist")){
+                System.out.println();
                 movesThatCanBeUsed.add(e);
                 moveNamesThatCanBeUsed.add(e.moveName);
             }
@@ -162,10 +159,9 @@ public class Pokemon {
                 
                 int pChoice = Interface.presentOptionsIndexList(allPokemonMoveNames, myScanner, player.getPlayerName());
                 System.out.println(PokeName + " forgot " + allPokemonMoveNames.get(pChoice) + " and learned " + theMove.moveName);
-                movesForThePokemonSlot[pChoice] = blankMove;
-
-                movesForThePokemonSlot[pChoice] = theMove;
+                pokemonMoves.remove(pChoice);
                 pokemonMoves.add(pChoice, theMove);
+                allPokemonMoveNames.remove(pChoice);
                 allPokemonMoveNames.add(pChoice, theMove.moveName);
 
                 System.out.println(theMove.moveDescription);
@@ -174,10 +170,8 @@ public class Pokemon {
             // If player didn't enter yes they will skip everything and not override any Move for pokemon.
         }  else {
             System.out.println(PokeName + " learned " + theMove.moveName);
-            movesForThePokemonSlot[pokemonMoves.size()] = theMove;
             pokemonMoves.add(theMove);
             allPokemonMoveNames.add(theMove.moveName);
-
             System.out.println(theMove.moveDescription);
             }
     }
@@ -206,10 +200,6 @@ public class Pokemon {
         public void setTypes(String types[]) {
             for (int i = 0, n = types.length; i < n; i++) {
                 Typings.add(types[i]);
-            }
-
-            for (int i = 0, n = movesForThePokemonSlot.length; i < n; i++) {
-                movesForThePokemonSlot[i] = new Move();
             }
             // (Swap Pokemon move type, scuffed solution but what evs)
             swapMove = new Move();

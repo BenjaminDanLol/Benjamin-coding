@@ -117,11 +117,12 @@ public class Player {
     private void swapOrKeepPokemonIn(Scanner myScanner) {
         updatePokemonPlayerCanUseExPokeInPlay();
         while (!playerInput.equals("yes") && !playerInput.equals("no")) {
-            System.out.println("\t" + playerName + ", do you want to keep: " + pokemonInPlay.PokeName + " in? (yes/no)");
+            System.out.println(playerName + ", do you want to keep: " + pokemonInPlay.PokeName + " in? (yes/no)");
             playerInput = myScanner.nextLine().trim().toLowerCase();
             }
 
                 if (playerInput.equals("yes")) {
+                    System.out.println();
                     pokemonInPlay.moveController(myScanner, this);
                     return;
                 }

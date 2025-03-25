@@ -621,7 +621,7 @@
         "Gloom": {
         "PokeName": "Gloom",
         "evolvesAt": 32,
-        "evolvesTo": ["Vileplume","Bellossom"],
+        "evolutionArray": ["Vileplume","Bellossom"],
         "baseHP": 60,
         "baseAtt": 65,
         "baseDef": 70,

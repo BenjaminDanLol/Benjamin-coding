@@ -16,13 +16,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Interface {
     InputStream pokemonTieringStream;
-    InputStream pokemonStream;
+    // InputStream pokemonStream;
     JsonNode pokemonRoot;
     JsonNode typesArray;
     JsonNode typeMappingNode;
@@ -37,7 +40,8 @@ public class Interface {
     String[] keySetConverted;
     String randPokeChoice;
 
-    Map<String, Pokemon> pokeMap;
+    Map<String, Pokemon> allPokemonMapped;
+
     Pokemon currentPokemon;
 
     InputStream moveStream;
@@ -132,13 +136,16 @@ public class Interface {
                 allPokemonTypes[i] = typesArray.get(i).asText();
             }
 
-            pokemonStream = Interface.class.getClassLoader().getResourceAsStream("resources/PokeTieringattempt.json");
+            /* pokemonStream = Interface.class.getClassLoader().getResourceAsStream("resources/PokeTieringattempt.json");
             if (pokemonStream == null) {
                 // I may want to remove this shit, and just print it out and trust the catcher to catch.
                 throw new IllegalArgumentException("Resource not found!");
             }
-            pokeMap = mapper.readValue(pokemonStream, new TypeReference<Map<String, Pokemon>>(){});
-
+            I would rather define it inside the method findPokemon since it will close the Stream after every
+            single pokemon is loaded into the hashMap pokeMap. 
+            */
+            // pokeMap = mapper.readValue(pokemonStream, new TypeReference<Map<String, Pokemon>>(){});
+            loadPokemonData();
 
             moveStream = Move.class.getClassLoader().getResourceAsStream("resources/moves.json");
             if (moveStream == null) {
@@ -149,6 +156,8 @@ public class Interface {
 
         } catch (IOException e) {
             // IDE doesn't like this throw stack trace, maybe it's cuz it's impossible or smthn.
+            e.printStackTrace();
+            throw new RuntimeException("failed to initialize object instance of class Interface", e);
             }
     } 
     public void startBattleT1vT2(Scanner myScanner) {
@@ -300,6 +309,22 @@ public class Interface {
         // I'll sadly have to recreate a new AtomicInteger each time the method is called.
         return filterThroughThePokemon(filter, typeMappingNode, howManyMonsInPokemonPool, myScanner, playerName);
     }
+    private void loadPokemonData() throws IOException {
+        try (InputStream pokemonStream = Interface.class.getClassLoader().getResourceAsStream("resources/PokeTieringattempt.json");
+             JsonParser parser = new JsonFactory().createParser(pokemonStream)) {
+                    
+            if (parser.nextToken() != JsonToken.START_OBJECT) {
+                throw new IOException("Invalid JSON format");
+            }
+            allPokemonMapped = new HashMap<>();
+            while (parser.nextToken() != JsonToken.END_OBJECT) {
+                String pokemonName = parser.currentName();
+                parser.nextToken();
+                Pokemon pokemon = mapper.readValue(parser, Pokemon.class);
+                allPokemonMapped.put(pokemonName, pokemon); // Add to map in chunks
+            }
+        }    
+    }
     public Move getASpecificMove(Scanner myScanner, String theMove) {
         currentMove = moveMap.get(theMove);
         return currentMove;
@@ -353,7 +378,7 @@ public class Interface {
             pokemonMap.clear();
             pokemonMapAllInclusive.clear();
         System.out.println(playerName + " chose: " + randPokeChoice);
-        currentPokemon = pokeMap.get(randPokeChoice);
+        currentPokemon = allPokemonMapped.get(randPokeChoice);
         currentPokemon.displayPokeInfo();
         return currentPokemon;
     }
@@ -424,8 +449,6 @@ public class Interface {
         int selectedIndex = randChoices.get(thePlayersChoice - 1);
         return choices[selectedIndex];
     }
-
-    // TODO THIS METHOD SHOULD HAVE A VERSION WHERE IT'S NOT RANDOMIZED.
     // Reason 1: I imagine it creates huge amounts of overhead when I constantly make sets and lists without reason.
     public static <T> int presentOptionsIndex(T[] choices, int numOfChoices, Scanner myScanner, String playerName) {
         if (choices.length == 0 || numOfChoices == 0) {

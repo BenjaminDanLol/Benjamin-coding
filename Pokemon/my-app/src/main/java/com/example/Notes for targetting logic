@@ -89,4 +89,14 @@ then I'll prob have a method called private int reTargetingAlgorithm(index) {
     }
 }
 
-There are obviously edge cases. So maybe the methods need to return a boolean first, and then under the performMove sequence I actually check beforehand if there is an actual target 
+There are obviously edge cases. So maybe the methods 
+need to return a boolean first, and then under the performMove 
+    sequence I actually check beforehand if there is an actual target 
+
+Before I forget, like move and pokemon choice, there is i a player that the pokemon targets. That is what
+needs to be taken as an index out of all the players. Since if say there have been a couple of battles between.
+And 2 pokemon have died from a team. The I can't just take an index of the presumably arrayList of players. Since
+that wasn't what laid as a foundation for the algorithm above. So instead the getTarget should actually, take a 
+team as param and player as param? I at least need the player, and then I need to crossReference the player in 
+their team. And take the index of that and apply the algorithm. 
+So most important is to understand is that INDEXES ARE NOT APPROPRIATE.

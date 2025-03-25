@@ -1,7 +1,6 @@
 package com.example;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Player {
@@ -12,13 +11,11 @@ public class Player {
     ArrayList<String> namesOfPokemonPlayerCanUse = new ArrayList<>();
     public boolean allPokemonAreFainted = false;
     public boolean playerHasToSwap;
-    private boolean flag;
     public Pokemon pokemonUsedBefore;
     public Pokemon pokemonInPlay;
     public Pokemon pokemonToDisplay;
     public Pokemon emptyPokemon = new Pokemon();
     String playerInput = "";
-    int playerIndexAccess = 0;
     public Player(Scanner myScanner) {
         while (!playerInput.equals("x")) { 
             System.out.println("What will your name be player?");
@@ -137,64 +134,79 @@ public class Player {
             myScanner.nextLine();
         playerKeepSwapCommandPalette(myScanner);
     }
-    private void playerKeepSwapCommandPalette(Scanner myScanner) {
-    // Later for performance I'll convert these to bytes, prob all choices will be bytes instead.
-        int i;
-        try {
-            while (playerIndexAccess != 1 && playerIndexAccess != 4) {
-                System.out.printf("%n" + playerName + " you can now use the following commands:  %n" + 
-                "\t(1) to swap out " + pokemonInPlay.PokeName + " with another pokemon on team.%n" +
-                "\t(2) to see " + pokemonInPlay.PokeName + "'s current status.%n" +
-                "\t(3) to access the description of one your pokemon.%n" +
-                "\t(4) to keep " + pokemonInPlay.PokeName + " in.%n");
-            
-            playerIndexAccess = myScanner.nextInt();
-            switch (playerIndexAccess) {
-            case 1 -> {
-                i = Interface.presentOptionsIndexList(namesOfPokemonPlayerCanUse, 
-                myScanner, playerName);
-                while (!playerInput.equals("yes") && !playerInput.equals("no")) {
-                    System.out.println("\t" + playerName + ", are you sure you want to swap: " + 
-                    pokemonInPlay.PokeName + 
-                    " out for " + pokemonPlayerCanActuallyUse.get(i).PokeName + "? (yes/no)");
-                    playerInput = myScanner.nextLine().trim().toLowerCase();
-                }   
-                if (playerInput.equals("yes")) {
-                    pokemonPlayerCanActuallyUse.get(i).isSwapping = true;
-                    // Targeting options later
-                    pokemonUsedBefore = pokemonInPlay;
-                    pokemonInPlay = pokemonPlayerCanActuallyUse.get(i);
-                    playerInput = "";
-                    // I think this is unnessecary return;, since the while loop will be exited, since playerIndexAccess = 1.
+    public void playerKeepSwapCommandPalette(Scanner myScanner) {
+        int choice;
+        boolean validChoice = false;
+        
+        while (!validChoice) {
+            try {
+                System.out.printf("%n%s's options:%n", playerName);
+                System.out.println("1) Swap " + pokemonInPlay.PokeName);
+                System.out.println("2) Check status");
+                System.out.println("3) View Pokémon details");
+                System.out.println("4) Keep " + pokemonInPlay.PokeName);
+                System.out.print("Choose (1-4): ");
+                
+                choice = Integer.parseInt(myScanner.nextLine().trim());
+                
+                switch (choice) {
+                    case 1 -> handleSwapDecision(myScanner);
+                    case 2 -> displayCurrentStatus();
+                    case 3 -> {
+                        displayPlayerPokemonMenu(myScanner);
+                        validChoice = true;
                     }
-                    playerIndexAccess = 0;
-                    playerInput = "";
+                    case 4 -> confirmKeepDecision(myScanner);
+                    default -> System.out.println("Invalid choice! Enter 1-4.");
+                }
+                
+                if (choice == 1 || choice == 4) {
+                    validChoice = true;
+                }
+                
+            } catch (NumberFormatException e) {
+                System.out.println("Numbers only! Enter 1-4.");
             }
-            case 2 -> {
-            pokemonInPlay.displayPokeInfo(); 
-            System.out.println("\t" + pokemonInPlay.PokeName + " currently has " + pokemonInPlay.getHPMod() +
-            " HP, and is level: " + pokemonInPlay.getLevel());
-                // If they currently have a status condition it will be displayed as well
-                if (pokemonInPlay.getStatusCondition()) {
-                    System.out.println("\t" + pokemonInPlay.PokeName + " also currently has the " + 
-                    pokemonInPlay.getCurrentCondition() + " status affliction!");
-                    }
-                }
-
-            case 3 -> {
-                    displayPlayerPokemonMenu(myScanner);
-                    playerIndexAccess = 5;
-                }
-
-            case 4 -> {System.out.println(playerName + " kept " + pokemonInPlay.PokeName + " in!");
-            pokemonInPlay.moveController(myScanner, this);
-            return;}
-                }
-                            } 
-        }  catch (InputMismatchException e) {
-            System.out.println("Invalid Input! Input needs to be either command 1, 2, 3 or 4!");
-            }
-                    }
+        }
+    }
+    private void handleSwapDecision(Scanner scanner) {
+        int index = Interface.presentOptionsIndexList(namesOfPokemonPlayerCanUse, scanner, playerName);
+        Pokemon newPokemon = pokemonPlayerCanActuallyUse.get(index);
+        
+        String confirmation;
+        do {
+            System.out.printf("Swap %s for %s? (yes/no): ", pokemonInPlay.PokeName, newPokemon.PokeName);
+            confirmation = scanner.nextLine().trim().toLowerCase();
+        } while (!confirmation.matches("yes|no"));
+    
+        if (confirmation.equals("yes")) {
+            executeSwap(newPokemon);
+        }
+    } 
+    private void executeSwap(Pokemon newPokemon) {
+        newPokemon.isSwapping = true;
+        pokemonUsedBefore = pokemonInPlay;
+        pokemonInPlay = newPokemon;
+        System.out.println("Swapped to " + newPokemon.PokeName);
+    }
+    private void displayCurrentStatus() {
+        pokemonInPlay.displayPokeInfo();
+        System.out.printf("%s has %d HP (Level %d)%n",
+            pokemonInPlay.PokeName,
+            pokemonInPlay.getHPMod(),
+            pokemonInPlay.getLevel());
+        
+        if (pokemonInPlay.getStatusCondition()) {
+            System.out.printf("%s has %s status!%n",
+                pokemonInPlay.PokeName,
+                pokemonInPlay.getCurrentCondition());
+        }
+    }
+    private void confirmKeepDecision(Scanner myScanner) {
+        System.out.printf("%s kept %s in!%n",
+            playerName, pokemonInPlay.PokeName);
+        pokemonInPlay.moveController(myScanner, this);
+    }
     // This should only be called when player doesn't already have a pokemon in battle
     private void playerControllerBStart(Scanner myScanner) {
             System.out.println("Enter anything to continue! ");
@@ -202,110 +214,117 @@ public class Player {
             System.out.println(playerName + ", you must choose a pokemon to join this battle!");
             pokemonCommandSectionBStart(myScanner);
         }
-    private void pokemonCommandSectionBStart(Scanner myScanner) {
-        int i;
-        updatePokemonPlayerCanUse();
-    try {
-        flag = true;
-        while (flag) {
-            System.out.printf("%n" + playerName + " you can now use the following commands:  %n" + 
-            "\t(1) to see all of your pokemon' in detail.%n" +
-            "\t(2) to access the description of just one of your pokemon.%n" +
-            "\t(3) to choose the pokemon who will join this battle!%n");
-        playerIndexAccess = myScanner.nextInt();
-        switch (playerIndexAccess) {
-            case 1 -> { 
-            for (Pokemon e : pokemonPlayerCanActuallyUse) {
-                e.displayPokeInfo();
-                    if (e.getStatusCondition()) {
-                    System.out.println("\t" + e.PokeName + 
-                    " also currently has the " + e.getCurrentCondition() + " status affliction!");
-                
+        private void pokemonCommandSectionBStart(Scanner myScanner) {
+            updatePokemonPlayerCanUse();
+            boolean validChoice = false;
+            
+            while (!validChoice) {
+                try {
+                    System.out.printf("%n%s you can now:%n", playerName);
+                    System.out.println("1) View all Pokémon details");
+                    System.out.println("2) Access specific Pokémon info");
+                    System.out.println("3) Select battle Pokémon");
+                    System.out.print("Enter choice (1-3): ");
+                    
+                    int choice = Integer.parseInt(myScanner.nextLine().trim());
+                    
+                    switch (choice) {
+                        case 1 -> displayAllPokemon();
+                        case 2 -> {
+                            displayPlayerPokemonMenu(myScanner);
+                            validChoice = true;
                         }
-                } 
-            }
-            case 2 -> {
-                displayPlayerPokemonMenu(myScanner);
-                flag = false;
-            }
-            case 3 -> {
-            i = Interface.presentOptionsIndexList(namesOfPokemonPlayerCanUse, myScanner, playerName);
-            myScanner.nextLine();
-            playerInput = "";
-                while (!playerInput.equals("yes") && !playerInput.equals("no")) {
-                    System.out.println(playerName + ", are you sure you want to put: " + pokemonPlayerCanActuallyUse.get(i).PokeName + " in? (yes/no)");
-                    playerInput = myScanner.nextLine().trim().toLowerCase();
-                    }
-                        if (playerInput.equals("yes")) {
-                            pokemonInPlay = pokemonPlayerCanActuallyUse.get(i);
-                            flag = false;
+                        case 3 -> {
+                            validChoice = handlePokemonSelection(myScanner);
                         }
+                        default -> System.out.println("Invalid choice! Please enter 1-3.");
                     }
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input! Numbers 1-3 only.");
+                }
             }
-                            } 
-    }  catch (InputMismatchException e) {
-        System.out.println("Invalid Input! Input needs to be either command 1, 2, 3 or 4!");
         }
-        flag = true;            
-    }
+        private void displayPokemonPlayerCanUse() {
+            for (Pokemon pokemon : pokemonPlayerCanActuallyUse) {
+                pokemon.displayPokeInfo();
+                if (pokemon.getStatusCondition()) {
+                    System.out.printf("\t%s has %s status!%n", 
+                        pokemon.PokeName, pokemon.getCurrentCondition());
+                }
+            }
+        }
+        private void displayAllPokemon() {
+            for (Pokemon pokemon : playersActualPokemon) {
+                pokemon.displayPokeInfo();
+                if (pokemon.getStatusCondition()) {
+                    System.out.printf("\t%s has %s status!%n", 
+                        pokemon.PokeName, pokemon.getCurrentCondition());
+                }
+            }
+        }
+        private boolean handlePokemonSelection(Scanner myScanner) {
+            int index = Interface.presentOptionsIndexList(namesOfPokemonPlayerCanUse, myScanner, playerName);
+            Pokemon selected = pokemonPlayerCanActuallyUse.get(index);
+            
+            String confirmation;
+            do {
+                if (myScanner.hasNextLine()) {
+                    myScanner.nextLine();
+                }
+
+                System.out.printf("%s, confirm %s for battle? (yes/no): ",
+                    playerName, selected.PokeName);
+                confirmation = myScanner.nextLine().trim().toLowerCase();
+            } while (!confirmation.matches("yes|no"));
+            
+            if (confirmation.equals("yes")) {
+                pokemonInPlay = selected;
+                return true;
+            }
+            return false;
+        }
     public void displayPlayerPokemonMenu(Scanner myScanner) {
-        playerInput = "";
-        myScanner.nextLine();
-        // If the user types anything else than 1 or two they will enter this while loop.
-        flag = true;
-        while (flag) {
-        System.out.printf("%n" + playerName + " do you wish to. %n" +
-        "1) see all your pokemon, or %n" +
-        "2) only the ones you can choose? %n(1/2)%n" );
-        playerInput = myScanner.nextLine().trim();
-            if (playerInput.equals("1") || playerInput.equals("2")) {
-                flag = false;
-                }
-            }
+        String playersInput;
 
-        if (playerInput.equals("1")) {
-            // nameOfPlaysPokemon is empty.
-            pokemonToDisplay = playersActualPokemon.get(Interface.presentOptionsIndexList(namesOfPlayersPokemon, myScanner, playerName));
-
-        }
-        else if (playerInput.equals("2")) {
-        pokemonToDisplay = pokemonPlayerCanActuallyUse.get(Interface.presentOptionsIndexList
-        (namesOfPokemonPlayerCanUse, myScanner, playerName));
-        }
-        playerInput = "";
-        pokemonToDisplay.displayPokeInfo();
-        System.out.println( pokemonToDisplay.PokeName + " currently has " + 
-        pokemonToDisplay.getHPMod() + ", HP left, and is level: " + pokemonToDisplay.getLevel());
-            // If they currently have a status condition it will displayed as well
-            if (pokemonToDisplay.getStatusCondition()) {
-                System.out.println("\t" + pokemonToDisplay.PokeName + " also currently has the " 
-                + pokemonToDisplay.getCurrentCondition() + " status affliction!");
-                }
-        
-        flag = true;
-        myScanner.nextLine();
-        while (flag) {
-            myScanner.nextLine();
-            System.out.println(playerName + ", do you want to see the description of one of " +
-            "your other pokemon? (yes/no)");
-            playerInput = myScanner.nextLine().trim().toLowerCase();
-            if (playerInput.equals("yes") || playerInput.equals("no")) {
-                flag = false;
+        do {
+            // Clear buffer more reliably
+            if (myScanner.hasNextLine()) {
+                myScanner.nextLine(); // Consume any leftover input
             }
+    
+            System.out.printf("%n%s do you wish to:%n1) See all your pokemon%n" +
+            "2) Only see available ones%n(1/2)%n", playerName);
+            
+            playersInput = myScanner.nextLine().trim();
+    
+        } while (!playersInput.matches("[12]")); // Simplified validation
+    
+        if (playersInput.equals("1")) {
+            displayAllPokemon();
         }
-        myScanner.nextLine();
-        if (playerInput.equals("yes")) {
-            // Oh yes I'm a cool kid now, mom get the camera I've made a recersive method!!
-            // Jokes aside it will exit the while loop if you type in either yes or no. So yes 
-            // will repeat everything again, and no will simply avoid repeating everything.
-            displayPlayerPokemonMenu(myScanner);
+        else if (playersInput.equals("2")) {
+            displayPokemonPlayerCanUse();
         }
-        
-        // I believe this is correct. Since there are two different menus depending on these conditions.
-        if (playerHasToSwap) {
-            pokemonCommandSectionBStart(myScanner);
-        }   else if (!playerHasToSwap) {
-            playerKeepSwapCommandPalette(myScanner);
+
+    
+        handlePostMenuDecision(myScanner);
+    }
+    
+    private void handlePostMenuDecision(Scanner myScanner) {
+        String playersInput;
+        do {
+            System.out.printf("%n%s, view another pokemon description? (yes/no)%n", playerName);
+            playersInput = myScanner.nextLine().trim().toLowerCase();
+        } while (!playersInput.matches("yes|no"));
+    
+        if (playersInput.equals("yes")) {
+            displayPlayerPokemonMenu(myScanner); // Consider converting to loop instead of recursion
+        } else {
+            if (playerHasToSwap) {
+                pokemonCommandSectionBStart(myScanner);
+            } else {
+                playerKeepSwapCommandPalette(myScanner);
+            }
         }
     }
     public Pokemon getTarget(Pokemon enemy) {

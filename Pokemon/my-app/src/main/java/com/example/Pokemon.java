@@ -73,7 +73,7 @@ public class Pokemon {
     private void moveCommandSection(Scanner myScanner, Player player) {
     try {
         myScanner.nextLine();
-        while (thePokemonsChoice != 1){
+        while (thePokemonsChoice != 1 && thePokemonsChoice != 3){
         System.out.printf("%n" + player.getPlayerName() + " you can do the following: %n" +
         "\t(1) choose a move that " + PokeName + " should use this turn.%n" +
         "\t(2) see move's details.%n" +
@@ -83,14 +83,16 @@ public class Pokemon {
             case 1 -> {
                 moveInUsage = movesThatCanBeUsed.get(Interface.presentOptionsIndexList(moveNamesThatCanBeUsed, 
                 myScanner, player.getPlayerName()));
+                myScanner.nextLine();
                     }
             case 2 -> {
                 // ANOTHER RECURSION
                 displayMoveMenu(myScanner, player);
+                myScanner.nextLine();
                     }
             case 3 -> {
-                // ANOTHER ONE BOOM!
-                player.playerController(myScanner);
+                // There's a big problem now and that is 
+                player.playerKeepSwapCommandPalette(myScanner);
             }
                 }
             }   

@@ -27,22 +27,9 @@ public class Player {
         }
     }
     public void addAPokemon(Scanner myScanner, Interface myInterface, int filter) {
-        /*
-         * Things to remember howManyPokemonDoesPlayerActuallyHave is accurate now, therefor no changes
-         * are applied, and it must be checked before adding a pokemon. So the code is less error prone.
-         * This method is used to add a randomized pokemon, therefor if it should be a specific pokemon
-         * then I would have to add a seperate function for that.
-         * The function getAPokemonStandardized has 2 things that are sort of weird, but will be used in game.
-         * 1. they have a pool to expect, where from the rng presentations of pokemon come, since Ghost/Dragon
-         * only have 4 pokemon total, it needs to be 4. So in practice it isn't really that randomized.
-         * 2. The filter is used to determine how the sorting of the pokemon list should go i.e. should
-         * it look for the highest value pokemon, and determine the pool from there, or should it start from
-         * the bottom? These effects will become more pronounced as the game has more Pokemon.
-         */
-        // Just use this and the field it updates .length instead.
         if (playersActualPokemon.size() == 6) {
             while (!playerInput.equals("yes") && !playerInput.equals("no")) {
-            System.out.println("Party of pokemon can only be 6." + playerName + " do you wish to replace a Pokemon? (yes/no)");
+            System.out.printf("%nParty of pokemon can only be 6.%n" + playerName + ", do you wish to replace a Pokemon? (yes/no)");
             playerInput = myScanner.nextLine().trim().toLowerCase();
             }
             if (playerInput.equals("no")) {
@@ -56,8 +43,6 @@ public class Player {
             System.out.println(playerName + " choose which pokemon from party will be replaced by: " + pokemonToDisplay.PokeName);
             int pChoice = Interface.presentOptionsIndexList(namesOfPlayersPokemon, myScanner, playerName);
             int pokemonLevel = playersActualPokemon.get(pChoice).getLevel();
-            // I need to remove, so what this code will do is that it will remove the index the player chose, and then
-            // after add in the pokemon the player chose prior.
             playersActualPokemon.remove(pChoice);
             playersActualPokemon.add(pChoice, pokemonToDisplay);
             playersActualPokemon.get(pChoice).setLevel(pokemonLevel);
@@ -293,21 +278,21 @@ public class Player {
                 myScanner.nextLine();
             }
     
-            System.out.printf("%n%s do you wish to:%n1) See all your pokemon%n" +
-            "2) Only see available ones%n(1/2)%n", playerName);
+            System.out.printf("%n%s do you wish to:%n1) View all your pokemon%n" +
+            "2) Only view available ones%n(1/2)%n", playerName);
             
             playersInput = myScanner.nextLine().trim();
     
         } while (!playersInput.matches("[12]"));
     
         if (playersInput.equals("1")) {
-            displayAllPokemon();
+            pokemonToDisplay = playersActualPokemon.get(Interface.
+            presentOptionsIndexList(namesOfPlayersPokemon, myScanner, playerName));
         }
         else if (playersInput.equals("2")) {
-            displayPokemonPlayerCanUse();
+            pokemonToDisplay = pokemonPlayerCanActuallyUse.get(Interface.
+            presentOptionsIndexList(namesOfPokemonPlayerCanUse, myScanner, playerName));
         }
-
-    
         handlePostMenuDecision(myScanner);
     }
     private void handlePostMenuDecision(Scanner myScanner) {
@@ -342,63 +327,60 @@ public class Player {
 
             switch (choice) {
                 case 1 -> {
-                selectBattleMove(scanner);
+                boolean didPlayerChoseAMove = selectBattleMove(scanner);
                 // Player is forced to choose a move, after entering 1, so naturally they will exit after.
-                exitMoveMenu = true;
+                exitMoveMenu = didPlayerChoseAMove;
                 }
                 case 2 -> browseMoveDetails(scanner);
             
                 }
             }
         }
-
-    private void selectBattleMove(Scanner scanner) {
-        boolean moveConfirmed = false;
         
-        while (!moveConfirmed) {
-            // Show available moves
-            int moveIndex = Interface.presentOptionsIndexList(
-                pokemonInPlay.availableMoveNames, scanner, playerName
-            );
-            Move selectedMove = pokemonInPlay.availableMoves.get(moveIndex);
-            
-            // Show move details for confirmation
-            System.out.println("\nSelected Move Details:");
-            selectedMove.displayMoveInfo();
-            
-            // Get confirmation
-            if (getConfirmation("Use this move?", scanner)) {
-                pokemonInPlay.moveInUsage = selectedMove;
-                moveConfirmed = true;
-                System.out.println(pokemonInPlay.PokeName + " will use " + selectedMove.moveName + "!");
-            } else {
-                System.out.println("Move selection cancelled. Choose again:");
-                }
-            }
-        }
-        
-    // Enhanced confirmation helper
+    // Super buggy confirmation but functionally it works
     private boolean getConfirmation(String prompt, Scanner scanner) {
-        // player is at this moment in time forced to choose a move.
-        do {
+       while (true) {
             System.out.printf("%s (yes/no): ", prompt);
+            String input = scanner.nextLine().trim().toLowerCase();
+
+            if (input.matches("y|yes")) {
+                return true;
+            } else if (input.matches("n|no")) {
+                return false;
+                }   
+            System.out.println("Invalid input! Please answer yes or no.");  
+            // This should clean up any weird garbage in the scanner
             if (scanner.hasNext()) {
                 scanner.nextLine();
-            }
-            String input = scanner.nextLine().trim().toLowerCase();
-            
-                if (input.matches("y|yes")) {
-                    return true;
-                }
-                if (input.matches("n|no")) {
-                    return false;
-                }
-            
-            System.out.println("Invalid input! Please answer yes or no.");
-            
-        } while (true);
-    }
+            }          
+            } 
+        }
+    private boolean selectBattleMove (Scanner scanner) {
+        if (pokemonInPlay.availableMoves.isEmpty()) {
+            System.out.println("\n" + pokemonInPlay.PokeName + " has no available moves");
+            return false;
+        }
+        // Show available moves
+        int moveIndex = Interface.presentOptionsIndexList(
+            pokemonInPlay.availableMoveNames, scanner, playerName
+        );
+        Move selectedMove = pokemonInPlay.availableMoves.get(moveIndex);
+        
+        // Show move details for confirmation
+        System.out.println("\nSelected Move Details:");
+        selectedMove.displayMoveInfo();
+        
+        // Get confirmation
+        if (getConfirmation("Use this move?", scanner)) {
+            pokemonInPlay.moveInUsage = selectedMove;
+            System.out.println(pokemonInPlay.PokeName + " will use " + selectedMove.moveName + "!");
+            return true;
+        } 
 
+        System.out.println("Move selection cancelled. Choose again:");
+        return false;
+            
+    }
     private void browseMoveDetails(Scanner scanner) {
         boolean viewingMoves = true;
         
@@ -423,33 +405,14 @@ public class Player {
         int moveIndex = Interface.presentOptionsIndexList(
             pokemonInPlay.allPokemonMoveNames, scanner, playerName
         );
-        displayMoveInfo(scanner, pokemonInPlay.pokemonMoves.get(moveIndex));
+        pokemonInPlay.pokemonMoves.get(moveIndex).displayMoveInfo();
     }
 
     private void displayAvailableMoves(Scanner scanner) {
-        pokemonInPlay.refreshMovesThatCanBeUsed();
         int moveIndex = Interface.presentOptionsIndexList(
-            pokemonInPlay.availableMoveNames, 
-            scanner, 
-            playerName
+            pokemonInPlay.availableMoveNames, scanner, playerName
         );
-        displayMoveInfo(scanner, pokemonInPlay.availableMoves.get(moveIndex));
-    }
-
-    private void displayMoveInfo(Scanner scanner, Move move) {
-        move.displayMoveInfo();
-        System.out.println("Press enter to continue...");
-        scanner.nextLine();
-        
-        if (getConfirmation("View another move?", scanner)) {
-            displayFullMoveList(scanner);  // Or recall appropriate parent method
-        }
-    }
-
-    // Helper methods
-    private boolean confirmMoveSelection(Scanner scanner, Move move) {
-        System.out.printf("Confirm %s? (yes/no): ", move.moveName);
-        return scanner.nextLine().trim().equalsIgnoreCase("yes");
+        pokemonInPlay.availableMoves.get(moveIndex).displayMoveInfo();
     }
     private int getValidatedInput(Scanner scanner, int min, int max) {
         while (true) {
@@ -459,7 +422,6 @@ public class Player {
                 if (input >= min && input <= max) return input;
                 System.out.printf("Invalid choice! Enter %d-%d%n", min, max);
             } catch (NumberFormatException e) {
-                System.out.println("Numbers only please!");
             }
         }
     }

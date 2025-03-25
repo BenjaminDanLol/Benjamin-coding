@@ -54,72 +54,35 @@ public class Interface {
     Player[] pTeam2;
     ArrayList<String> pokemonTargetsForT2 = new ArrayList<>();
 
+    ArrayList<Team> teamsInGame = new ArrayList<>();
+
 
     public Interface(Scanner myScanner) {
-        try {
-            int sizeOfPlayerTeam1;
-            int sizeOfPlayerTeam2;
-            String confirmDecline;
-            while (true) {
-                System.out.println("How many players will be in team 1? ");
-            try {            
-            
-            sizeOfPlayerTeam1 = myScanner.nextInt();
-            if (sizeOfPlayerTeam1 > 0) {
-                System.out.println("Team 1 will have " + sizeOfPlayerTeam1 + " players.");
-                System.out.println("yes to confirm: ");
-                confirmDecline = myScanner.next().trim().toLowerCase();
-                if (confirmDecline.equals("yes")) {
-                    // Not sure where this will lead but whatevs.
-                    break;
-                }
-            }
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input!");
-                myScanner.nextLine(); 
-            }   }
-
-            while (true) {
-            System.out.println("How many players will be in team 2? ");
-
             try {
-                sizeOfPlayerTeam2 = myScanner.nextInt();
-                if (sizeOfPlayerTeam2 > 0) {
-                    System.out.println("Team 2 will have " + sizeOfPlayerTeam2 + " players.");
-                    System.out.println("yes to confirm: ");
+                int amountOfTeams;
+                String confirmDecline;
+                while (true) {
+                    System.out.println("How many teams are playing? min. 2");
+                try {            
+                    amountOfTeams = myScanner.nextInt();
+                if (amountOfTeams >= 2) {
+                    System.out.println("Game session will have " + amountOfTeams + " teams.");
+                    System.out.println("Type X to confirm: ");
                     confirmDecline = myScanner.next().trim().toLowerCase();
-                    myScanner.nextLine();
-                    if (confirmDecline.equals("yes")) {
-                        // Not sure where this will lead but whatevs.
+                    if (confirmDecline.equals("x")) {
                         break;
                     }
                 }
-            
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input! Please enter a number.");
-                myScanner.nextLine();
-            }   }
-            pTeam1 = new Player[sizeOfPlayerTeam1];
-            pTeam2 = new Player[sizeOfPlayerTeam2];
-            for (int i = 0; i < pTeam1.length; i++) {
-                /* It's weird on the first iteration it skips L14 in player constructer.
-                It's an odd bug have no idea how come it happens, since it only happens for team 1 element 1. */
-                System.out.println("Team 1, player " + (i + 1));
-                pTeam1[i] = new Player(myScanner);
-            }
-            for (int i = 0; i < pTeam2.length; i++) {
-                System.out.println("Team 2, player " + (i + 1));
-                pTeam2[i] = new Player(myScanner);
+                    } catch (InputMismatchException e) {
+                        System.out.println("Invalid input!");
+                        myScanner.nextLine(); 
+                }   
             }
 
-            for (Player team1 : pTeam1) {
-                System.out.print(team1.getPlayerName() + " ");
+            for (int i = 0; i < amountOfTeams; i++) {
+                teamsInGame.add(new Team(myScanner, (i+1)));
             }
-            System.out.print("VERSUS ");
-            for (Player team2 : pTeam2) {
-                System.out.print(team2.getPlayerName() + " ");
-            }
-            System.out.println();
+
             pokemonTieringStream = Interface.class.getClassLoader().getResourceAsStream("resources/PokeTiering.json");
                 if (pokemonTieringStream == null) {
                     System.out.println("PokeTiering.json file not found");
@@ -179,7 +142,6 @@ public class Interface {
             executionOrder[i] = pTeam2[i].pokemonInPlay;
         }
 
-        // TODO Targetting, I should honestly just take the array itself, where it's .pokemoninusage.target instead.
         for (int i = 0; i < pTeam1.length; i++){
             if (pTeam1[i].pokemonInPlay.getMoveInUsage().toVictim != false) {
                 System.out.println("Who should " + pTeam1[i].pokemonInPlay.PokeName + "target?");

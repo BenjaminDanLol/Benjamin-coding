@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class Player {
     private String playerName = "Ash Ketchum";
+    private String teamName;
     ArrayList<Pokemon> playersActualPokemon = new ArrayList<>();
     ArrayList<String> namesOfPlayersPokemon = new ArrayList<>();
     ArrayList<Pokemon> pokemonPlayerCanActuallyUse = new ArrayList<>();
@@ -14,19 +15,25 @@ public class Player {
     public Pokemon pokemonUsedBefore;
     public Pokemon pokemonInPlay;
     public Pokemon pokemonToDisplay;
-    // TODO maybe this setup I'm uncertain tbh. It's possible that it's actually from Team level instead.
-    public Player playerTargetted = this;
     public Pokemon emptyPokemon = new Pokemon();
-    String playerInput = "";
-    public Player(Scanner myScanner) {
+
+    public Player(Scanner myScanner, String teamName, int playerNum) {
+        String playerInput = "";
+        this.teamName = teamName;
         while (!playerInput.equals("x")) { 
-            System.out.println("What will your name be player?");
+            // It constantly skip the players input so I needed to clean scanner here as well
+            if (myScanner.hasNextLine()) {
+                myScanner.nextLine();
+            }
+            System.out.println("\nPlayer " + playerNum + " of team " + teamName + "!\n");
+            System.out.println("What will your name be this session?");
             playerName = myScanner.nextLine().trim();
-            System.out.println("Your' playername will be " + playerName + ", type X to confirm");
+            System.out.println("\nYour' playername will be " + playerName + "\nType X to confirm");
             playerInput = myScanner.nextLine().trim().toLowerCase();
         }
     }
     public void addAPokemon(Scanner myScanner, Interface myInterface, int filter) {
+        String playerInput = "";
         if (playersActualPokemon.size() == 6) {
             while (!playerInput.equals("yes") && !playerInput.equals("no")) {
             System.out.printf("%nParty of pokemon can only be 6.%n" + playerName + ", do you wish to replace a Pokemon? (yes/no)");
@@ -34,7 +41,6 @@ public class Player {
             }
             if (playerInput.equals("no")) {
                 System.out.println("No new pokemon was chosen.");
-                playerInput = "";
                 return;
             }
             // From here the player is forced to replace a pokemon from their party.
@@ -90,7 +96,6 @@ public class Player {
             pokemonInPlay = emptyPokemon;
             return;
         }
-        playerInput = "";
         if (!playerHasToSwap) {
             swapOrKeepPokemonIn(myScanner);
         }
@@ -99,6 +104,7 @@ public class Player {
         }
     }
     private void swapOrKeepPokemonIn(Scanner myScanner) {
+        String playerInput = "";
         updatePokemonPlayerCanUseExPokeInPlay();
         while (!playerInput.equals("yes") && !playerInput.equals("no")) {
             System.out.println(playerName + ", do you want to keep: " + pokemonInPlay.PokeName + " in? (yes/no)");

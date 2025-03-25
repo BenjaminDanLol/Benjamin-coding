@@ -1,14 +1,16 @@
 package com.example;
 
-import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Random;
 import java.util.Scanner;
 
     public class Team {
         private Player[] players;
         private String teamName;
-        private ArrayList<Player> playersInBattle = new ArrayList<>();
+        private Player[] playersInBattle;
+        private int adjustableTarget;
         public Team(Scanner myScanner, int teamNumber) {
+
             // May want to use teamNumber later.
             int sizeOfPlayerTeam;
             String confirm;
@@ -55,4 +57,37 @@ import java.util.Scanner;
                 players[i] = new Player(myScanner, teamName, i+1);
             }
         }   
+        public Pokemon getTarget(int index) {
+            // Adjusting to 0 index, and int is currently the highest num index target.
+            if (!playersInBattle[index].pokemonInPlay.isFainted) {
+                return playersInBattle[index].pokemonInPlay;
+            } else {
+                if (reTargetingAlgorithm(index)) {
+                    return playersInBattle[adjustableTarget].pokemonInPlay;
+                }
+                else {
+                    System.out.println("No pokemon to target " + teamName + " won this battle!");
+                    return null;
+
+                }
+            }
+            // Need to check for this before performingMove, so prob Pokemon target = dasd.getTarget(index)];
+            // if target == null or .equals not sure. The team performing it has won and then exit the turn sequence.
+            
+        }
+        private boolean reTargetingAlgorithm(int index) {
+            Random random = new Random();
+            int maxRight = playersInBattle.length - index - 1;
+            int maxLeft = index;
+            int amountOfShifts = 0;
+
+            return false;
+        }
+        public void teamChoosesPokemon() {
+            // Need to have a plan for the flow of how this will go since recursion messes everything up.
+
+        }
+        public void teamPerformsTurn(Team enemyTeam) {
+            // Need to have a plan for the flow of how this will go since recursion messes everything up.
+        }
     }

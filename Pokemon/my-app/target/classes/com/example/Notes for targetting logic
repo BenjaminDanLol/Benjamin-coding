@@ -1,0 +1,92 @@
+Team 1 7 poke b4 turn.
+Team 2 6 poke b4 turn.
+
+There are 2 poke who faint from Team 1. So there are 5 targets for the enemy team.
+There are 3 poke who faint from Team 2. So there are 3 targets for the enemy team.
+
+Say both teams have 1 pokemon that has not used their move yet.
+
+Team 1’s last pokemon this turn had targeted poke 3 from team 2.
+And team 2’s last pokemon this had targeted poke 7 from team 2.
+
+First to find their target we need to establish what is highest possible index they can now target.
+For the pokemon from team 1 it would be the third pokemon, or index 2.
+For the pokemon from team 2 it would be the fifth pokemon, or index 4.
+
+So to avoid null pointer exceptions we need to store the amount of targets both teams had before
+the turn had begun. And that would just be the players left on both sides (excluding the players who
+have had all their pokemon fainted). Then every single time a pokemon faints there needs to be a value that
+is incremented starting from 0, I will call this value numberOfPokemonFaintedThisTurn. And I will call the value
+that refers to the amount of Pokemon the enemy team had as targets before the turn commenced as numberOfPokemonBeforeTurnStarts.
+
+With these two numbers we can determine at least two things 1. highest index player we can target and 2. the lowest index player we can target.
+
+1. (numberOfPokemonBeforeTurnStarts - numberOfPokemonFaintedThisTurn) - 1; the minus 1 is simply to adjust to the index, although it will be unneccesary in code since presentOptionsIndexList is already 0 based.
+
+2. The lowest index is simply 0 always.
+
+Nvm a way to tackle this without complicating everything is just having it as an array of players like before
+mentioned. This array of players doesn't need to be dynamically adjusted for. Then you can simply check for
+if that player[index].pokemonInPlay.isFainted. If it is then trigger an algorithm if not then simply target it.
+
+The algorithm should count how many players that attack needs to shift before hitting a pokemonInPlay that isn't
+fainted. This is for both left and right. If these are tied, then it should do just use a random.nextBoolean.
+Where true is to the right and false is to the left, this obviously doesn't matter but we need to be specific.
+
+But there is also another pitfall to consider we need to have a maximum amount of indexes this algorithm can go right and a maximum it can go left. Since our method getTarget can just take the index then we are max exclusive and 0 inclusive. With that said we should have a local variable called maxRight and maxLeft. These two are as their name suggests how many indexes the target can retarget from their initial target to the left and right, without encountering an out of bounds exception or null for that matter.
+
+So maxRight is just playersInBattle.length - index - 1. Since length is max inclusive. 
+Whilst maxLeft is just index. 
+
+So getTarget is fairly obvious just check for if pokemonInPlay has fainted. if it is
+return the index
+
+then I'll prob have a method called private int reTargetingAlgorithm(index) {
+    Random random = new Random();
+    int maxRight = playersInBattle.length - index - 1;
+    int maxLeft = index;
+    int shifts = 1;
+
+    while (true) {
+    if (index + shifts != maxRight && index - shifts != maxLeft) {
+        If neither of these are 0 then it is possible to shift in both directions (indexwise). But I need
+        to first check for if they are both not fainted.
+
+        if (!playersInBattle[index+shifts].pokemonInPlay.isFainted &&
+        !playersInBattle[index-shifts].pokemonInPlay.isFainted) {
+        Both are not fainted and targetable.
+        doACoinFlip
+        if CoinFlip true: go right so return shifts;
+        else: return go left so -shifts;
+        }
+    } else if (index + shifts != maxRight && index - shifts == maxLeft) {
+        Can't shift to the left so we must loop until we find a target that is not Fainted to the right.
+        BUT!! we must still check for if there actually are targets that are alive, therefor. We should loop
+        whilst keeping that in mind.
+
+        while (index - shifts != maxRight) {
+            if (playersInBattle[index+shifts].pokemonInPlay.isFainted) {
+                return index + shifts;
+            }
+            shifts++;
+        }
+        If we reach here that means that there are absolutely no pokemon to target.
+
+    } else if (index + shifts == maxRight && index - shifts != maxLeft) {
+        Assuming the prior is correct then the opposite is correct as well.
+        while (index - shifts != maxLeft) {
+            if (playersInBattle[index-shifts].pokemonInPlay.isFainted) {
+                return index - shifts;
+            }
+            shifts++;
+        }
+        If we reach here that means that there absolutely no pokemon to target.
+
+    } else if (index + shifts == maxRight && index - shifts == maxLeft) {
+        If we reach here that means that there absolutely no pokemon left to target.
+        }
+    amountOfShifts++;
+    }
+}
+
+There are obviously edge cases. So maybe the methods need to return a boolean first, and then under the performMove sequence I actually check beforehand if there is an actual target 

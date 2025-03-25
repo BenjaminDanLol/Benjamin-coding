@@ -2,7 +2,6 @@ package com.example;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Pokemon {
@@ -34,115 +33,24 @@ public class Pokemon {
     private byte critChanceMod = 0;
     private byte accuracyMod = 0;
     ArrayList<String> SecondaryConditions = new ArrayList<>();
-
     public ArrayList<Move> pokemonMoves = new ArrayList<>();
     public ArrayList<String> allPokemonMoveNames = new ArrayList<>();
-    public ArrayList<Move> movesThatCanBeUsed = new ArrayList<>();
-    public ArrayList<String> moveNamesThatCanBeUsed = new ArrayList<>();
+    public ArrayList<Move> availableMoves = new ArrayList<>();
+    public ArrayList<String> availableMoveNames = new ArrayList<>();
     private String playerInput = "";
-    byte thePokemonsChoice = 0;
-    public Player target;
-    private Move moveInUsage;
+    public Move moveInUsage;
     private Move swapMove;
-    // just to display the move's info for player
-    private Move selectedMove;
-    // Yup it's targeting itself pr standard shouldn't matter though.
-    // TODO: public Pokemon target = this; old version of target
     public boolean isSwapping = false;
     public boolean isTeam1 = true;
-    Move blankMove = new Move();
 
-    public void moveController(Scanner myScanner, Player player) {
-    if (isSwapping) {
-        // movesForThePokemonSlot is a fake move, that has no name, it only has a prio of 10.
-        moveInUsage = swapMove;
-        isSwapping = false;
-        return;
-    }
-    System.out.println("\t" + PokeName + " has the following moves:");
-    refreshMovesThatCanBeUsed();
-    byte numDisplay = 1;
-    for (String s : allPokemonMoveNames){
-        System.out.println("\t(" + (numDisplay) + ") " + s);
-        numDisplay++;
-    }
-    System.out.println("\t " + player.getPlayerName() + " type anything to continue!");
-    moveCommandSection(myScanner, player);
-    }
-
-    private void moveCommandSection(Scanner myScanner, Player player) {
-    try {
-        myScanner.nextLine();
-        while (thePokemonsChoice != 1 && thePokemonsChoice != 3){
-        System.out.printf("%n" + player.getPlayerName() + " you can do the following: %n" +
-        "\t(1) choose a move that " + PokeName + " should use this turn.%n" +
-        "\t(2) see move's details.%n" +
-        "\t(3) exit back to the player menu.%n");
-        thePokemonsChoice = myScanner.nextByte(); 
-        switch (thePokemonsChoice) {
-            case 1 -> {
-                moveInUsage = movesThatCanBeUsed.get(Interface.presentOptionsIndexList(moveNamesThatCanBeUsed, 
-                myScanner, player.getPlayerName()));
-                myScanner.nextLine();
-                    }
-            case 2 -> {
-                // ANOTHER RECURSION
-                displayMoveMenu(myScanner, player);
-                myScanner.nextLine();
-                    }
-            case 3 -> {
-                // There's a big problem now and that is 
-                player.playerKeepSwapCommandPalette(myScanner);
-            }
-                }
-            }   
-    } catch (InputMismatchException e) {
-    System.out.println("Invalid Input! Input needs to be either command 1, 2 or 3!");
-        }
-    }
-    private void displayMoveMenu(Scanner myScanner, Player player) {
-        thePokemonsChoice = 0;
-        while (thePokemonsChoice != 1 && thePokemonsChoice != 2) {
-            System.out.printf("%n" + player.getPlayerName() + " do you wish to. %n1) see all of " + this.PokeName 
-            + "'s moves or %n" + "2) only the ones you can choose? (1/2)" );
-            thePokemonsChoice = myScanner.nextByte();
-            }
-        
-        if (thePokemonsChoice == 1) {
-            selectedMove = pokemonMoves.get(Interface.presentOptionsIndexList(allPokemonMoveNames, 
-            myScanner, PokeName));
-        }
-        else if (thePokemonsChoice == 2) {
-            selectedMove = movesThatCanBeUsed.get(Interface.presentOptionsIndexList(moveNamesThatCanBeUsed, 
-            myScanner, PokeName));
-        }
-        playerInput = "";
-        selectedMove.displayMoveInfo();
-        System.out.println(player.getPlayerName() + " press.. to continue");
-        myScanner.nextLine();
-        while (!playerInput.equals("yes") && !playerInput.equals("no")) {
-            System.out.println("\tDo you want to see the description of one of " + this.PokeName +
-            "'s other moves " + player.getPlayerName() + "? (yes/no)");
-            playerInput = myScanner.nextLine().trim().toLowerCase();
-        }
-        thePokemonsChoice = 0;
-        if (playerInput.equals("yes")) {
-            displayMoveMenu(myScanner, player);
-        }
-        else {
-            moveCommandSection(myScanner, player);
-        }
-    }
     public void refreshMovesThatCanBeUsed() {
-        // There are problems here at least moveNames doesn't update.
-        movesThatCanBeUsed.clear();
-        moveNamesThatCanBeUsed.clear();
-        // I may have pokemonMovesStrings refresh as a seperate method.
+        availableMoves.clear();
+        availableMoveNames.clear();
         for (Move e : pokemonMoves) {
             if (e.PP != 0 && !e.moveDescription.equals("Move shouldn't exist")){
                 System.out.println();
-                movesThatCanBeUsed.add(e);
-                moveNamesThatCanBeUsed.add(e.moveName);
+                availableMoves.add(e);
+                availableMoveNames.add(e.moveName);
             }
         }
     }

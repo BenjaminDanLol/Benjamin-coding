@@ -184,9 +184,10 @@ public class Interface {
             if (pTeam1[i].pokemonInPlay.getMoveInUsage().toVictim != false) {
                 System.out.println("Who should " + pTeam1[i].pokemonInPlay.PokeName + "target?");
                 
+                /*
                 pTeam1[i].pokemonInPlay.target = pTeam2[presentOptionsIndexList(pokemonTargetsForT1, 
                 myScanner, pTeam1[i].getPlayerName())];
-                /*
+                
                 team1Choices[i].target = pTeam2[presentOptionsIndex(pokeNamesT2Chose, 
                 pokeNamesT2Chose.length, myScanner, pTeam1[i].getPlayerName())].getTarget(team1Choices[i]);
                 */
@@ -199,9 +200,10 @@ public class Interface {
             if (pTeam2[i].pokemonInPlay.getMoveInUsage().toVictim != false) {
                 System.out.println("Who should " + pTeam2[i].pokemonInPlay.PokeName + "target?");
 
+                /*
                 pTeam2[i].pokemonInPlay.target = pTeam1[presentOptionsIndexList(pokemonTargetsForT2, 
                 myScanner, pTeam2[i].getPlayerName())];
-                /*
+                
                 team2Choices[i].target = pTeam1[presentOptionsIndex(pokeNamesT1Chose, 
                 pokeNamesT1Chose.length, myScanner, pTeam2[i].getPlayerName())].getTarget(team2Choices[i]);
                 */
@@ -232,17 +234,19 @@ public class Interface {
         } while (swapped);
 
         for (Pokemon pokemon : executionOrder) {
-            if (pokemon.isTeam1) {
+            /*if (pokemon.isTeam1) {
+                 TODO
                 if (pokemon.target.allPokemonAreFainted == true) {
-                    // TODO targeting logic should have an algorithm that finds another opposing pokemon.
                 }
+                 
             pokemon.getMoveInUsage().performMove(pokemon, pokemon.target.pokemonInPlay);
             }
             else {
             pokemon.getMoveInUsage().performMove(pokemon, pokemon.target.pokemonInPlay);
             }
-            // Under team class when that's created I can have 
+            */
         }
+        
     }
     public void initiateBattle(Scanner myScanner) {
     
@@ -267,7 +271,7 @@ public class Interface {
         switch (i) {
             case 1 -> System.out.println("\t\t\tTeam1:");
             case 2 -> {
-                System.out.println("\t(Players)");
+                System.out.println("\tPlayer(s)");
                 for (int p = 0; p < pTeam1.length; p++) {
                     System.out.println((p + 1) + ")\t " + pTeam1[p].getPlayerName());
                     }
@@ -275,7 +279,6 @@ public class Interface {
             case 5 -> System.out.println("\t\t\tVERSUS!");
             case 8 -> System.out.println("\t\t\tTeam2:");
             case 9 -> {
-                System.out.println("\t(Players)");
                 for (int p = 0; p < pTeam2.length; p++) {
                     System.out.println((p + 1) + ")\t " + pTeam2[p].getPlayerName());
                     }
@@ -290,8 +293,8 @@ public class Interface {
             // I can just use the target arraylist.
             System.out.println(pTeam1[i].pokemonInPlay.PokeName);
         }
-        for (int i = 0; i < 8; i++) {
-            System.out.print("_ ");
+        for (int i = 0; i < 10; i++) {
+            System.out.print("-- ");
         }
         System.out.println();
         System.out.println("\tTeam2 lineup:");

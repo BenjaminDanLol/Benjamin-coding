@@ -20,26 +20,25 @@ public class Pokemon {
     private int level = 5;
     private String[] types;
     ArrayList<String> Typings = new ArrayList<>();
-    private byte evasion = 0;
+    public byte evasion = 0;
     private boolean statusCondition = false;
     private String currentCondition = "None";
     // Tilføjer modifiers
     private int HPMod;
-    private byte AttMod = 0;
-    private byte SpAMod = 0;
-    private byte DefMod = 0;
-    private byte SpDefMod = 0;
-    private byte SpdMod = 0;
-    private byte critChanceMod = 0;
-    private byte accuracyMod = 0;
+    public byte AttMod = 0;
+    public byte SpAMod = 0;
+    public byte DefMod = 0;
+    public byte SpDefMod = 0;
+    public byte SpdMod = 0;
+    public byte critChanceMod = 0;
+    public byte accuracyMod = 0;
     ArrayList<String> SecondaryConditions = new ArrayList<>();
     public ArrayList<Move> pokemonMoves = new ArrayList<>();
     public ArrayList<String> allPokemonMoveNames = new ArrayList<>();
     public ArrayList<Move> availableMoves = new ArrayList<>();
     public ArrayList<String> availableMoveNames = new ArrayList<>();
-    private String playerInput = "";
     public Move moveInUsage;
-    private Move swapMove;
+
     public boolean isSwapping = false;
     public boolean isTeam1 = true;
 
@@ -47,19 +46,18 @@ public class Pokemon {
         availableMoves.clear();
         availableMoveNames.clear();
         for (Move e : pokemonMoves) {
-            if (e.PP != 0 && !e.moveDescription.equals("Move shouldn't exist")){
-                System.out.println();
+            if (e.canMoveBeUsed()) {
                 availableMoves.add(e);
                 availableMoveNames.add(e.moveName);
             }
         }
     }
     public void addMoveToPokemon(Move theMove, Player player, Scanner myScanner) {
-        refreshMovesThatCanBeUsed();
+        String playerInput;
             if (pokemonMoves.size() == 4) {
             System.out.println(PokeName + " has four moves. ");
             System.out.println(player.getPlayerName() + " do you wish to replace a move.");
-            myScanner.nextLine();
+            playerInput = myScanner.nextLine();
             System.out.println("X to confirm");
             
             playerInput = myScanner.nextLine().trim().toLowerCase();
@@ -112,8 +110,6 @@ public class Pokemon {
                 Typings.add(types[i]);
             }
             // (Swap Pokemon move type, scuffed solution but what evs)
-            swapMove = new Move();
-            swapMove.priority = 10;
             resetMods();
         }
         public ArrayList<String> getTypings(){

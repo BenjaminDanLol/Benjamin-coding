@@ -10,7 +10,7 @@ have simple logic, and I want to by simply specifying what is used have the comp
 of the functions in here. Practically they're null because I want alot of if statments to skip alot
 of functions under performMove.*/ 
     public String moveName = null;
-    public int PP;
+    public int PP = 0;
     public int power = 0;
     // I'll later have an isMultihit boolean and likewise an byte array hitsBetween, which is pr standard [2,5]
     public int accuracy = 100;
@@ -35,6 +35,8 @@ of functions under performMove.*/
     public boolean isCrit = false;
     public boolean targetPokemonSwapping = false;
     public String moveDescription = "Move shouldn't exist";
+    // This is cooking ngl. Used for moves like taunt and others.
+    public boolean isDisabled = false;
     public long damage;
 
 
@@ -63,6 +65,7 @@ of functions under performMove.*/
             user.isFainted = true;
             System.out.println(user.PokeName + " fainted!");
         }
+        PP--;
     }
     public void setMoveTyping(String moveTyping){
         this.moveTyping = moveTyping;
@@ -72,6 +75,9 @@ of functions under performMove.*/
         }
     }
     Random random = new Random();
+    public boolean canMoveBeUsed() {
+        return (PP != 0 || isDisabled == false);
+    }
     public void displayMoveInfo() {
         System.out.printf("Movename: %s, Pwr: %d! %n Description: %s %n", moveName, power, moveDescription);
     }

@@ -47,6 +47,10 @@ public class Interface {
     InputStream moveStream;
     Map<String, Move> moveMap;
     Move currentMove;
+    public static Move swapMove;
+    public static Move struggle;
+    public static Move fakeMove;
+    public static Pokemon fakeMon;
 
     // TODO Make a team class, so I can just use a getPokemonNames from it. Ofc there's more
     Player[] pTeam1;
@@ -116,6 +120,13 @@ public class Interface {
             }
             moveMap = mapper.readValue(moveStream, new TypeReference<Map<String, Move>>(){});
 
+            fakeMon = new Pokemon();
+            fakeMove = new Move();
+
+            swapMove = new Move();
+            struggle = new Move();
+            struggle.power = 10;
+            swapMove.priority = 10;
 
         } catch (IOException e) {
             // IDE doesn't like this throw stack trace, maybe it's cuz it's impossible or smthn.
@@ -264,6 +275,36 @@ public class Interface {
             System.out.println(pTeam2[i].pokemonInPlay.PokeName);
         }
         myScanner.nextLine();
+
+        /* TODO When the battle sequence commences, moves that force the player to switch out, should immediatly.
+        after being performed call upon playerController. And then that will make the player go through the steps
+        to switch out a pokemon.
+        Second edge case which can be encountered often moveInUsage needs to be set to nothing. Or a blank move
+        or something that can be checked for right before performMove is done. Since I don't want it to when
+        a player switches in immediately using a move.
+
+        When displayingTeam under class Team, it will show what the player will switch into if they chronologically
+        have their move after player. This is not desired, therefor it needs to be split up differently 1.
+        if playerIsSwapping then display pokemonUsedBefore with all of it's logic. else it can work exactly
+        as is. Will be a bit weird being updated real time what your team mates switched into, but honestly that's
+        better interface wise in my opinion.
+
+        Also before performin move check again for if the move.IsDisabled, if this
+        is the case then skip that players action.
+
+        Something cool I could do is asking if there's a player that regrets their action this turn (internally)
+        in team if so. Then I can just call upon their playerController again (BUT!). In doing so I need to check
+        again, are they currently swapping if so then. Swap pokemonUsedBefore with pokemonInPlay, then let them
+        do their turn. I believe that will do the trick.
+
+        Each turn after performMoves has been done for both team I need to.
+        1. Ensure that hasToSwap is set to false.
+        2. Ensure moveInUsage is set to a blank move.
+        3. A turn counter. (Very necessary for status conditions which will be added).
+        4. (Optional) check if pokemonPlayerCanActuallyUse is the same before and after refresh
+        since I would prefer just removing the refreshes, and instead just add/remove from the
+        arrayLists of the various objects. So I'll try and see if they are the same.
+        */ 
     }
     public Pokemon getAPokemonStandardized(int filter, Scanner myScanner, int howManyMonsInPokemonPool, String playerName){
         String selectedType = presentOptions(allPokemonTypes, 4, myScanner, playerName);

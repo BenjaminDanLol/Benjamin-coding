@@ -299,6 +299,46 @@ public class Player {
                 }
             }
         }
+        private void displayOnlyPokemonPlayerCanUse() {
+            for (Pokemon pokemon : pokemonPlayerCanActuallyUse) {
+                System.out.printf("\n%s lvl %d HP (%d/%d) ", pokemon.PokeName, pokemon.getLevel(), 
+                pokemon.getHPMod(), pokemon.baseHP);
+                    System.out.print(": \nKnows move(s)");
+                for (int i = 0; i < pokemon.pokemonMoves.size(); i++) {
+                    System.out.print(pokemon.pokemonMoves.get(i).moveName);
+                    if (pokemon.pokemonMoves.get(i).PP <= 0 || pokemon.pokemonMoves.get(i).isDisabled) {
+                        // Felt that writing out isDisabled or anything else would feel misleading.
+                        System.out.print(" (!)");
+                    }
+                    if (i != pokemon.pokemonMoves.size() - 1) {
+                        System.out.print(", ");
+                    }
+                    else {
+                        System.out.print(".");
+                    }
+                }
+                if (pokemon.getStatusCondition()) {
+                    System.out.printf("\nCurrently has the status condition: %s!", 
+                    pokemon.getCurrentCondition());
+                }
+                if (!pokemon.SecondaryConditions.isEmpty()) {
+                    if (pokemon.SecondaryConditions.size() == 1) {
+                System.out.printf("\nCurrently has the secondary status condition: %s!", pokemon
+                .SecondaryConditions.get(0));
+                    } else {
+                        System.out.print("\nCurrently has the secondary status conditions: ");
+                        for (int i = 0; i < pokemon.SecondaryConditions.size(); i++) {
+                            System.out.print(pokemon.SecondaryConditions.get(i));
+                            if (i != pokemon.SecondaryConditions.size() - 1) {
+                                System.out.print(", ");
+                            } else {
+                                System.out.print(".");
+                            }
+                        }
+                    }
+                }
+            }
+        }
         private boolean handlePokemonSelection(Scanner myScanner) {
             int index = Interface.presentOptionsIndexList(namesOfPokemonPlayerCanUse, myScanner, playerName);
             Pokemon selected = pokemonPlayerCanActuallyUse.get(index);
@@ -491,45 +531,45 @@ public class Player {
     public Pokemon getPokemonFromPlayer(int index) {
         return playersActualPokemon.get(index);
     }
-    public void playerController (Scanner myScanner, Team myTeam, Team enemyTeam){
+    public void playerController (Scanner myScanner, Team myTeam, Team enemyTeam) {
 
     System.out.printf("\n%s's turn", playerName); 
-    updatePokemonStatus();
+    updatePokemonPlayerCanUse();
     if (allPokemonAreFainted) {
             System.out.println(playerName + " has no pokemon left to swap in.");
 	return;
     }
     
     System.out.println("Type anything to continue.");
-    playerAction();
+    playerAction(myScanner, myTeam, enemyTeam);
     return;
 
     }
     private boolean hasPerformedAction;
     private void playerAction(Scanner myScanner, Team myTeam, Team enemyTeam) {
     hasPerformedAction = false;
-    if (playerHasToSwap && enemyTeam.hasAPokemonInPlay) {
+    if (playerHasToSwap && !enemyTeam.playersCurrentlyInBattle.isEmpty()) {
         while (!hasPerformedAction) {
             (1)	To Party
             (2)	View Enemy LineUp
             (3)	Description Menu
         }
     }
-    else if (playerHasToSwap && !enemyTeam.hasAPokemonInPlay) {
+    else if (playerHasToSwap && enemyTeam.playersCurrentlyInBattle.isEmpty()) {
         while (!hasPerformedAction) {
             (1)	To Party
             (2)	Description Menu
         }
     }
-    else if (!playerHasToSwap && enemyTeam.hasAPokemonInPlay) {
+    else if (!playerHasToSwap && !enemyTeam.playersCurrentlyInBattle.isEmpty()) {
         while (!hasPerformedAction) {
             (1)	Move (calls chooseMoveTurn())
-            (2)	To Party (calls toParty();
+            (2)	To Party (calls toParty());
             (3)	View Enemy LineUp (calls enemyTeam.displayLineUp);
             (4)	Description Menu (calls descriptionMenu());
         }
     }
-    else if (!playerHasToSwap && !enemyTeam.hasAPokemonInPlay) {
+    else if (!playerHasToSwap && enemyTeam.playersCurrentlyInBattle.isEmpty()) {
         // Not sure about this one bud.
         myTeam.hasWon = true;
         return;
@@ -561,7 +601,7 @@ public class Player {
     break; // Important that the next while loop isn’t entered. If this if statement is correct.
     }
     int playerChoice;
-    playerChoice = getValidatedInput(myScanner, 1, pokemonInPlay.pokemonMoves.size()) ;
+    playerChoice = getValidatedInput(myScanner, 1, pokemonInPlay.pokemonMoves.size());
     pokemonInPlay.moveInUsage = pokemonInPlay.pokemonMoves.get(indexEntry.get(playerChoice - 1)); 
     // adjust to 0 based. And also ensure that the indexes match
     break;
@@ -586,20 +626,224 @@ public class Player {
     hasPerformedAction = true; // And just like that the player can exit in and out of this method. 
     return;
     }
+    // Not inside since the toPartyController needs access from helper methods, and also pub
+    // Since we are going to use methods from outside this object.
+    public boolean toPartyWillRepeat;
+    private void toParty(Scanner myScanner, Team enemyTeam) {
+        String playerInput;
+        toPartyWillRepeat = true;
+        while (toPartyWillRepeat) {
+        playerInput = "0";
+        if (myScanner.hasNext()) {
+            myScanner.nextLine();
+        }
+        while (!playerInput.equals("1") || !playerInput.equals("2")) {
+            System.out.printf("\n(1) Switch In Pokemon\n(2) Enter ViewingMode\n%s: ", playerName);
 
-    public void toParty(Scanner myScanner) {
-        displayAllPokemon();
-        if (playerHasToSwap) {
-        playerHasToChooseAPokemon();
-        } else {
-            chooseAPokemon(myScanner);
+            playerInput = myScanner.next();
+
+            if (!playerInput.equals("1") || !playerInput.equals("2")) {
+                System.out.println("Invalid Input! " + playerName + ", can only enter command 1 or 2!");
+                }
+            }
+            switch (playerInput) {
+                case "1" -> {
+                    displayAllPokemon();
+                    if (playerHasToSwap) {
+                        if (enemyTeam.hasPokemonInPlay()) {
+                            fieldAPokemon(myScanner);
+                            return;
+                        } else {
+                            fieldAPokemon(myScanner);
+                        }
+                    } else {
+                        optionalChooseAPokemon(myScanner);
+                    }
+                }
+                case "2" -> 
+                {
+                // After exiting viewing mode, they need to return to the main menu.
+                enterViewingMode(myScanner);
+                }
+            }
         }
     }
-    private void chooseAPokemon(Scanner myScanner) {
+    // Extremely unsure if this boolean willRepeat is necessary. I think it can just be local in enterViewingMode
+    private boolean viewRepeat;
+    private void enterViewingMode(Scanner myScanner) {
+        viewRepeat = true;
+        // If this is a global variabel 
+        do { 
+        String playerInput = "0";
+
+        if (myScanner.hasNext()) {
+            myScanner.nextLine();
+        }
         
+        while (!playerInput.equals("1") || 
+        !playerInput.equals("2") || !playerInput.equals("3")) {
+            System.out.printf("\n(1) View battle ready Pokémon" + 
+            "\n(2) View All Pokémon (including fainted Pokémon)\n(3) Return\n%s: ", playerName);
+            playerInput = myScanner.next();
+
+            if (!playerInput.equals("1") || 
+            !playerInput.equals("2") || !playerInput.equals("3")) {
+                System.out.println("Invalid Input! " + playerName + ", can only enter command 1, 2 or 3!");
+                }
+            }
+        updatePokemonPlayerCanUse();
+        switch (playerInput) {
+            case "1" -> viewPlayersPokemon(myScanner, true);
+            case "2" -> viewPlayersPokemon(myScanner, false);
+            case "3" -> viewRepeat = false;
+            }
+        } while (viewRepeat);
+    }
+
+    // Essentially a replacement of a global flag. I believe it's called.
+    boolean shouldNotExitViewPlayersPokemon;
+
+    private void viewPlayersPokemon(Scanner myScanner, boolean onlyNonFainted) {
+        byte counter;
+        ArrayList<Integer> mapOfCounterToPokemonSlot = new ArrayList<>();
+        String input;
+        shouldNotExitViewPlayersPokemon = true;
+
+        while (shouldNotExitViewPlayersPokemon) {
+        counter = 1;
+        mapOfCounterToPokemonSlot.clear();
+        System.out.println();
+        for (int i = 0; i < playersActualPokemon.size(); i++) {
+            if (!playersActualPokemon.get(i).isFainted && onlyNonFainted) {
+                System.out.printf("\n(%d) View %s", counter, 
+                playersActualPokemon.get(i).PokeName);
+                mapOfCounterToPokemonSlot.add(i);
+                counter++;
+            }
+            if (!onlyNonFainted) {
+                System.out.printf("\n(%d) View %s", counter, 
+                playersActualPokemon.get(i).PokeName);
+                mapOfCounterToPokemonSlot.add(i);
+                counter++;
+            }
+        }
+        System.out.printf("\n(%d) Return", counter);
+
+        System.out.println(".. to continue");
+        myScanner.next();
+        if (myScanner.hasNext()) {
+            myScanner.nextLine();
+        }
+        boolean dontRepeatCommand = false;
         int indexChoice = -1;
 
-    // Ensure valid input and range check
+        while (!dontRepeatCommand) {
+            System.out.printf("\n%s (1-" + mapOfCounterToPokemonSlot.size() + "): ", playerName);
+            input = myScanner.next();
+            try {
+                indexChoice = Integer.parseInt(input);
+                if (indexChoice >= 1 && indexChoice <= mapOfCounterToPokemonSlot.size()) {
+                    dontRepeatCommand = true;
+                }
+            } catch (NumberFormatException e) {
+                System.out.printf("\nInvalid input!", playerName);
+            }
+            System.out.println("Invalid input! Please enter a number between 1 and " + 
+            mapOfCounterToPokemonSlot.size() + ".");
+        }
+        if (indexChoice == mapOfCounterToPokemonSlot.size()) {return;}
+
+        dontRepeatCommand = false;
+        System.out.println(".. to continue");
+        myScanner.next();
+        if (myScanner.hasNext()) {
+            myScanner.nextLine();
+        }
+
+        System.out.printf("\n(1) View %s's moves\n(2) View %s's usable moves" + 
+        "\n(3) View another Pokémon\n(4) Exit Viewing-Mode\n", 
+        playersActualPokemon.get(mapOfCounterToPokemonSlot.get(indexChoice - 1)).PokeName, 
+        playersActualPokemon.get(mapOfCounterToPokemonSlot.get(indexChoice - 1)).PokeName);
+        int playerChoice;
+
+        while (!dontRepeatCommand) {
+            System.out.printf("\n%s (1-4): ", playerName);
+            input = myScanner.next();
+            try {
+                playerChoice = Integer.parseInt(input);
+                if (playerChoice >= 1 && playerChoice <= 4) {
+                    dontRepeatCommand = true;
+                }
+            } catch (NumberFormatException e) {
+                System.out.printf("\nInvalid input!", playerName);
+            }
+            System.out.println("Invalid input! Please use command 1, 2, 3 or 4.");
+        }
+        switch (indexChoice) {
+            case 1 -> {
+            playersActualPokemon.get(mapOfCounterToPokemonSlot.get(indexChoice - 1)).
+            viewMoves(myScanner, false);
+            }
+            case 2 -> {
+            playersActualPokemon.get(mapOfCounterToPokemonSlot.get(indexChoice - 1)).
+            viewMoves(myScanner, true);
+            }
+            // case 3 -> switch case is in an infinite loop, so per default we will view another pokemon.
+            case 4 -> {
+                shouldNotExitViewPlayersPokemon = false;
+                }
+            }
+        }
+        viewRepeat = false;
+    }
+    private void optionalChooseAPokemon(Scanner myScanner) {
+        int indexChoice = -1;
+
+        while (true) {
+        System.out.print("\nWhich Pokémon will you choose to swap in? (1-" + playersActualPokemon.size() + "): ");
+        String input = myScanner.nextLine();
+        try {
+            indexChoice = Integer.parseInt(input);
+            if (indexChoice >= 1 && indexChoice <= playersActualPokemon.size()) {
+                break;
+            }
+        } catch (NumberFormatException e) {
+            System.out.printf("\nInvalid input. %s must choose a pokemon!", playerName);
+        }
+        System.out.println("Invalid input! Please enter a number between 1 and " + 
+        playersActualPokemon.size() + ".");
+        }
+
+            if (playersActualPokemon.get(indexChoice-1).isFainted) {
+            System.out.printf("\nYou cannot switch in a pokemon which is fainted! \nReturning to menu!");
+            hasPerformedAction = false;
+            return;
+            }
+
+            if (playersActualPokemon.get(indexChoice-1).equals(pokemonInPlay) && !playerHasToSwap) {
+            System.out.printf("\nDoes %s wish to keep in %s?\nType X to confirm: ", playerName, 
+            pokemonInPlay.PokeName);
+                if (!myScanner.nextLine().trim().equalsIgnoreCase("x")) {
+                hasPerformedAction = false;
+                return;	
+                    } 
+                }
+
+            System.out.printf("\n%s is currently swapping out %s for %s? \nType X to confirm", playerName,
+            pokemonInPlay.PokeName, playersActualPokemon.get(indexChoice-1).PokeName);
+            if (!myScanner.next().trim().equalsIgnoreCase("x")) {
+                    hasPerformedAction = false;
+                    return;	
+                } 
+
+            pokemonUsedBefore = pokemonInPlay;
+            pokemonInPlay = playersActualPokemon.get(indexChoice - 1);
+            toPartyWillRepeat = false;
+            hasPerformedAction = true;
+        }
+    private void fieldAPokemon(Scanner myScanner) {
+        int indexChoice = -1;
+        // Ensure valid input and range check
     while (true) {
         System.out.print("\nWhich Pokémon will you choose to swap in? (1-" + playersActualPokemon.size() + "): ");
         String input = myScanner.nextLine();
@@ -609,40 +853,29 @@ public class Player {
                 break; // Valid input, exit loop
             }
         } catch (NumberFormatException e) {
-            // Catch non-numeric inputs
+            System.out.printf("\nInvalid input. \nReturning to menu!");
+            return;
         }
-        System.out.println("Invalid input! Please enter a number between 1 and " + playersActualPokemon.size() + ".");
+        System.out.println("To switch in a pokemon! Please enter a number between 1 and " + 
+        playersActualPokemon.size() + ".\n");
         }
             if (playersActualPokemon.get(indexChoice-1).isFainted) {
             System.out.printf("\nYou cannot switch in a pokemon which is fainted! \nReturning to menu!");
             hasPerformedAction = false;
             return;
             }
-            if (playersActualPokemon.get(indexChoice-1).equals(pokemonInPlay) && !playerHasToSwap) {
-            System.out.printf("\nDoes %s wish to keep in %s?\nType X to confirm: ", playerName, 
-            pokemonInPlay.PokeName);
-                if (!myScanner.nextLine().trim().equalsIgnoreCase("x")) {
-                hasPerformedAction = false;
-                return;	
-                    } 
-                }
-            System.out.printf("\nIs %s currently swapping %s for %s? \nType X to confirm", playerName,
-            pokemonInPlay.PokeName, playersActualPokemon.get(indexChoice-1).PokeName);
-            if (!myScanner.nextLine().trim().equalsIgnoreCase("x")) {
-                
-                hasPerformedAction = false;
-                return;	
-                    } 
+
+            System.out.printf("\nIs %s currently switching in in %s? \nType X to confirm: ", playerName,
+            playersActualPokemon.get(indexChoice-1).PokeName);
+
+            if (!myScanner.next().trim().equalsIgnoreCase("x")) {
+                    hasPerformedAction = false;
+                    return;	
+                } 
+
             pokemonUsedBefore = pokemonInPlay;
             pokemonInPlay = playersActualPokemon.get(indexChoice - 1);
+            toPartyWillRepeat = false;
             hasPerformedAction = true;
         }
-
-    /*
-    if (playersActualPokemon.get(indexChoice-1).equals(pokemonInPlay && playerHasToSwap) {
-        System.out.print(“\n%s is forced to switch out %s. Cannot switch in %s for %s”, playName, pokemonInPlay, );
-        hasPerformedAction = false;
-        Return;
-        }
-    */
-}        
+    } 

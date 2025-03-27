@@ -2,6 +2,7 @@ package com.example;
 
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Move{
 /* Alot of yellow but these values will def be overwrited or even modified depending on shop system.
@@ -11,7 +12,10 @@ of the functions in here. Practically they're null because I want alot of if sta
 of functions under performMove.*/ 
     public String moveName = null;
     public int PP = 0;
+    public int basePP;
     public int power = 0;
+    public boolean isMultiHit = false;
+    public int[] hits = {0, 0}; // then ex pin missile hasMultiHit = true, hits[0] = 2, hits[1] = 5;
     // I'll later have an isMultihit boolean and likewise an byte array hitsBetween, which is pr standard [2,5]
     public int accuracy = 100;
     public boolean isSpecial = false;
@@ -32,7 +36,6 @@ of functions under performMove.*/
     public byte statChangeChance = 100;
     public boolean toVictim = true;
     public boolean alwaysHits = false;
-    public boolean isCrit = false;
     public boolean targetPokemonSwapping = false;
     public String moveDescription = "Move shouldn't exist";
     // This is cooking ngl. Used for moves like taunt and others.
@@ -43,7 +46,7 @@ of functions under performMove.*/
     public String getMoveTyping() {
         return moveTyping;
     }
-    public void performMove(Pokemon user, Pokemon victim) {
+    public void performMove(Pokemon user, Pokemon victim, Scanner myScanner) {
         // Load in all enemy typings in, and apply the various logic for them. Maybe later I'll need to load
         // in a typechart for the user, e.g. the user could be paralyzed after a move or smthn.
         typechart = new Typechart(victim);
@@ -58,12 +61,25 @@ of functions under performMove.*/
             victim.isFainted = true;
             // I could even have custom messages based off of alot different things, since I have
             // access to everything regarding the move, the user and the victim/enemy.
-            System.out.println(victim.PokeName + " fainted!");
+            System.out.println(victim.PokeName + " fainted!\n" + victim.trainer.getPlayerName() + 
+            " has to choose a new pokemon to replace their " + victim.PokeName);
+            victim.trainer.playerHasToSwap = true;
+            victim.trainer.pokemonPlayerCanActuallyUse.remove(victim);
+            // Just didn't want any pokemon to performMoves/get attacked from/in the grave xd.
+            victim.moveInUsage = Interface.fakeMove;
+            victim.trainer.pokemonInPlay = Interface.fakeMon;
+            victim.trainer.mustSwitchOut(myScanner);
         }
         // May be weird checking for it here, but flare blitz and other self inflicting moves will be added later.
         if (user.getHPMod() <= 0) {
             user.isFainted = true;
-            System.out.println(user.PokeName + " fainted!");
+            System.out.println(user.PokeName + " fainted!\n" + user.trainer.getPlayerName() + 
+            " has to choose a new pokemon to replace their " + user.PokeName);
+            user.trainer.playerHasToSwap = true;
+            user.trainer.pokemonPlayerCanActuallyUse.remove(user);
+            user.trainer.pokemonInPlay = Interface.fakeMon;
+            user.moveInUsage = Interface.fakeMove;
+            user.trainer.mustSwitchOut(myScanner);
         }
         PP--;
     }
@@ -73,19 +89,91 @@ of functions under performMove.*/
         if (statusType.equals("")) {
             statusType = moveTyping;
         }
+        basePP = PP;
     }
     Random random = new Random();
     public boolean canMoveBeUsed() {
         return (PP != 0 || isDisabled == false);
+    }
+    public void viewMove() {
+
+    System.out.printf("\nMove Name: %s.\n", moveName);
+    if (power > 0) {
+        
+        if (isMultiHit) {
+        System.out.printf("Has multihit and hits between %d and %d times!\n", hits[0], hits[1]);
+        }
+
+    System.out.printf("Power %d, isSpecial %b, Crit Chance %d", power, isSpecial, critChance);
+    System.out.print("%, "); // The reason for this is that the compiler gets confused with % and placeholders.
+    } else {
+        System.out.print("Doesn't do direct damage, ");
+    }
+
+    if (alwaysHits) {
+    System.out.printf("AlwaysHits, %b", alwaysHits);
+    } else {
+        System.out.print("Accuracy " + accuracy + "%");
+    }
+
+    if (priority == 0 && statModifierChange == 0 || whatStatusCondition == null) {
+        System.out.print(", "); // beauty is in the eye of the beholder.
+    }
+
+    if (priority != 0) {
+        if (statModifierChange == 0) {
+        System.out.printf("Priority, %d, ", priority);
+        } else {
+            System.out.printf("Priority, %d", priority);
+        }
+    }
+
+    if (statModifierChange != 0) {
+        System.out.print("\nUpon success move has a " + statChangeChance + "% chance to ");
+        if (toVictim) {
+        System.out.printf("raise targets: ");
+        System.out.printf("decrease targets: ");
+
+        for (int i = 0; i < whatStatChanges.length; i++) {
+            if (i != whatStatChanges.length - 1) {
+            System.out.print(whatStatChanges[i] + ", ");
+            } else {
+                System.out.print(whatStatChanges[i]);
+            }
+        }
+        } else {
+
+        System.out.printf("raise pokemons: ");
+        System.out.printf("decrease pokemons: ");
+
+        }
+        if (statModifierChange < 0) {
+        System.out.print(" by " + (statModifierChange * -1) + " stage(s), ");
+        } else {
+        System.out.print(" by " + statModifierChange + " stage(s), ");
+        }
+    }
+
+    if (inflictsStatus == true) {
+        System.out.print("\nHas a " + statusChance + "% chance to inflict status effect " + whatStatusCondition);
+        System.out.print("%, ");
+    }
+
+    if (targetPokemonSwapping) {
+        System.out.print("intercepts pokemon swap, ");
+    }
+
+    System.out.printf("Move's Typing %s, PP (%d/%d), isDisabled %b", moveTyping, PP, basePP, isDisabled);
+    System.out.printf("\nDescription: %s", moveDescription);
     }
     public void displayMoveInfo() {
         System.out.printf("Movename: %s, Pwr: %d! %n Description: %s %n", moveName, power, moveDescription);
     }
     public void displayWAYToMuchInfo() {
         String local = Arrays.toString(whatStatChanges);
-        System.out.printf("%s,%d,%d,%b,%d,%s,%b,%s,%d,%d,%d,%s,%d,%s,%b,%b,%b,%d,%d,%s"
+        System.out.printf("%s,%d,%d,%b,%d,%s,%b,%s,%d,%d,%d,%s,%d,%s,%b,%b,%d,%d,%s"
         , moveName, power, accuracy, isSpecial, priority, moveTyping, inflictsStatus,statusType,statusChance,critChance,damage,
-        whatStatusCondition,statChangeChance,local,toVictim,alwaysHits,isCrit,statModifierChange,PP,moveDescription);
+        whatStatusCondition,statChangeChance,local,toVictim,alwaysHits,statModifierChange,PP,moveDescription);
     }
     public void applySecondaryStatusCondition(Pokemon user, Pokemon victim) {
         // These are for secondardary status conditions like seeded, cursed, charging, intargetable etc.
@@ -143,7 +231,7 @@ of functions under performMove.*/
         return true;
     }
     public void moveDoesDirectDamage(Pokemon user, Pokemon victim) {
-        isCrit = isCrit(user);
+        boolean isCrit = isCrit(user);
         double DamageNoRand = 0.0;
         double randomMultiplier = (217.0 + randomNum(38)) / 255.0;
         if (this.power > 0) {

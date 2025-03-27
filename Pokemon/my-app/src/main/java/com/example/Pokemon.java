@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Pokemon {
 
+    public Player trainer;
     public String PokeName = "Pokemon shouldn't exist";
     public int evolvesAt;
     public String evolvesTo = null;
@@ -49,6 +50,191 @@ public class Pokemon {
             if (e.canMoveBeUsed()) {
                 availableMoves.add(e);
                 availableMoveNames.add(e.moveName);
+            }
+        }
+    }
+    public void enterViewingMode() {
+
+    }
+    public void displayPokemon() {
+        System.out.printf("\nPokemon Name: %s" +
+        "\nTyping(s) ", PokeName);
+        for (String e : Typings) {
+            System.out.printf(e + " ");
+        }
+        System.out.printf("\n%d HP", baseHP);
+        for (int i = 0; i < 5; i++) {
+            switch (i) {
+                case 0 -> {
+                    System.out.printf(", %.2f Att", (baseAtt * getAttMod()));
+                    if (AttMod != 0) {
+                        System.out.printf(" (%d)", AttMod);
+                    }
+                }
+                case 1 -> {
+                    System.out.printf(", %.2f SpA", (baseSpA * getSpAMod()));
+                    if (SpAMod != 0) {
+                        System.out.printf(" (%d)", SpAMod);
+                    }
+                }
+                case 2 -> {
+                    System.out.printf(", %.2f Def", (baseDef * getDefMod()));
+                    if (DefMod != 0) {
+                        System.out.printf(" (%d)", DefMod);
+                    }
+                }
+                case 3 -> {
+                    System.out.printf(", %.2f SpDef", (baseSpDef * getSpDefMod()));
+                    if (SpDefMod != 0) {
+                        System.out.printf(" (%d)", SpDefMod);
+                    }
+                }
+                case 4 -> {
+                    System.out.printf(", %.2f Spd", (baseSpd * getSpdMod()));
+                    if (SpdMod != 0) {
+                        System.out.printf(" (%d)", SpdMod);
+                    }
+                }
+            }
+        }
+        System.out.printf("\nLevel %d, 0/100\n", level); // When levelelling system is added, then insert here
+        for (int i = 0; i < 5; i++) {
+            switch (i) {
+                case 0 -> {
+                    if (AttMod != 0) {
+                        System.out.printf("\nStat changes: Physical Attack %d -> %.2f (%d)", 
+                        baseAtt, (baseAtt*getAttMod()), AttMod);
+                    }
+                }
+                case 1 -> {
+                    if (SpAMod != 0) {
+                        System.out.printf("\nStat changes: Special Attack %d -> %.2f (%d)", 
+                        baseSpA, (baseSpA*getSpAMod()), SpAMod);
+                    }
+                }
+                case 2 -> {
+                    if (DefMod != 0) {
+                        System.out.printf("\nStat changes: Defense %d -> %.2f (%d)", 
+                        baseDef, (baseDef*getDefMod()), DefMod);
+                    }
+                }
+                case 3 -> {
+                    if (SpDefMod != 0) {
+                        System.out.printf("\nStat changes: Special Defense %d -> %.2f (%d)", 
+                        baseSpDef, (baseSpDef*getSpDefMod()), SpDefMod);
+                    }
+                }
+                case 4 -> {
+                    if (SpdMod != 0) {
+                        System.out.printf("\nStat changes: Speed %d -> %.2f (%d)", 
+                        baseSpd, (baseSpd*getSpdMod()), SpdMod);
+                    }
+                }
+            }
+        }
+        displayPokemonsMoves();
+    }
+
+    public void displayPokemonsMoves() {
+        if (!pokemonMoves.isEmpty()) {
+            System.out.print("\nMoves:");
+            for (int i = 0; i < pokemonMoves.size(); i++) {
+                System.out.printf(" %s (%d/%d)", pokemonMoves.get(i).moveName, 
+                pokemonMoves.get(i).PP, pokemonMoves.get(i).basePP);
+
+                if (pokemonMoves.get(i).isDisabled) {
+                    System.out.printf(" Disabled");
+                }
+
+                if (i != pokemonMoves.size() - 1) {
+                    System.out.print(",");
+                }
+            }
+        } else {
+            System.out.printf("\n%s hasn't learnt any moves yet!", PokeName);
+        }
+    }
+    public void viewMoves (Scanner myScanner, boolean onlyMovesThatCanBeUsed) {
+        int counter = 1;
+        ArrayList<Integer> mapOfCounterToMoveSlot = new ArrayList<>();
+        while (true) {
+        System.out.println();
+        if (!onlyMovesThatCanBeUsed) {
+            for (int i = 0; i < pokemonMoves.size(); i++) {
+                System.out.printf("(%d) View %s", counter, pokemonMoves.get(i).moveName);
+                mapOfCounterToMoveSlot.add(i);
+                counter++;
+            }
+        } else {
+            for (int i = 0; i < pokemonMoves.size(); i++) {
+                if (pokemonMoves.get(i).canMoveBeUsed()) {
+                System.out.printf("(%d) View %s", counter, pokemonMoves.get(i).moveName);
+                mapOfCounterToMoveSlot.add(i);
+                counter++;
+                }
+            }
+        }
+
+        System.out.println(".. to continue");
+        myScanner.next();
+        if (myScanner.hasNext()) {
+            myScanner.nextLine();
+        }
+        int indexChoice = -1;
+        boolean dontRepeatCommand = false;
+        
+        if (mapOfCounterToMoveSlot.isEmpty()) {
+                System.out.println(PokeName + " doesn't know any moves. GitGood bud");
+                return; // GitGood bud is necessary because of reasons.
+            }
+            String input;
+        while (!dontRepeatCommand) {
+            System.out.printf("\n%s (1-" + mapOfCounterToMoveSlot.size() + "): ", trainer.getPlayerName());
+            input = myScanner.next();
+            try {
+                indexChoice = Integer.parseInt(input);
+                if (indexChoice >= 1 && indexChoice <= mapOfCounterToMoveSlot.size()) {
+                    dontRepeatCommand = true;
+                }
+            } catch (NumberFormatException e) {
+                System.out.printf("\nInvalid input!", trainer.getPlayerName());
+            }
+            System.out.println("Invalid input! Please enter a number between 1 and " + 
+            mapOfCounterToMoveSlot.size() + ".");
+        }
+        pokemonMoves.get(mapOfCounterToMoveSlot.get(indexChoice - 1)).viewMove();
+
+        System.out.println(".. to continue");
+        myScanner.next();
+        if (myScanner.hasNext()) {
+            myScanner.nextLine();
+        }
+        dontRepeatCommand = false;
+
+        System.out.printf("\n(1) View more of %s's moves\n(2) View another Pokémon" + 
+        "\n(3) Exit Viewing-Mode", PokeName);
+
+        while (!dontRepeatCommand) {
+            System.out.printf("\n%s (1-3): ", trainer.getPlayerName());
+            input = myScanner.next();
+            try {
+                indexChoice = Integer.parseInt(input);
+                if (indexChoice >= 1 && indexChoice <= 3) {
+                    dontRepeatCommand = true;
+                }
+            } catch (NumberFormatException e) {
+                System.out.printf("\nInvalid input!", trainer.getPlayerName());
+            }
+            System.out.println("Invalid input! Please use command 1, 2 or 3.");
+        }
+
+        switch (indexChoice) {
+            // case 1 -> this loop by default repeats itself.
+            case 2 -> {return;}
+            case 3 -> {
+                trainer.shouldNotExitViewPlayersPokemon = false;
+                break;
+                }
             }
         }
     }
@@ -109,7 +295,6 @@ public class Pokemon {
             for (int i = 0, n = types.length; i < n; i++) {
                 Typings.add(types[i]);
             }
-            // (Swap Pokemon move type, scuffed solution but what evs)
             resetMods();
         }
         public ArrayList<String> getTypings(){

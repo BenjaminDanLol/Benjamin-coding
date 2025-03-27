@@ -8,7 +8,8 @@ import java.util.Scanner;
     public class Team {
         public Player[] players;
         private String teamName;
-        private Player[] playersInBattle;
+        private ArrayList<Player> playersFieldedIntoBattle = new ArrayList<>();
+        public ArrayList<Player> playersCurrentlyInBattle = new ArrayList<>();
         public boolean hasWon;
         public int amountOfPlayersStillInBattle;
         private int adjustableTarget;
@@ -61,7 +62,6 @@ import java.util.Scanner;
             }
         }   
         public Pokemon getTarget(int index, Player initialTarget) {
-            // Adjusting to 0 index, and int is currently the highest num index target.
             if (!players[index].pokemonInPlay.isFainted) {
                 return players[index].pokemonInPlay;
             } else {
@@ -71,20 +71,66 @@ import java.util.Scanner;
                 else {
                     System.out.println("No pokemon to target " + teamName + " won this battle!");
                     return null;
-
                 }
             }
             // Need to check for this before performingMove, so prob Pokemon target = dasd.getTarget(index)];
             // if target == null or .equals not sure. The team performing it has won and then exit the turn sequence.
             
         }
+        public void refreshPlayers() {
+            playersCurrentlyInBattle.clear();
+            for (Player p : playersFieldedIntoBattle) {
+                if (!p.allPokemonAreFainted) {
+                    playersCurrentlyInBattle.add(p);
+                }
+            }
+        }
         private boolean reTargetingAlgorithm(int index) {
             Random random = new Random();
-            int maxRight = playersInBattle.length - index - 1;
-            int maxLeft = index;
-            int amountOfShifts = 0;
+    int maxRight = playersInBattle.length - index - 1;
+    int maxLeft = index;
+    int shifts = 1;
 
-            return false;
+    while (true) {
+    if (index + shifts != maxRight && index - shifts != maxLeft) {
+        If neither of these are 0 then it is possible to shift in both directions (indexwise). But I need
+        to first check for if they are both not fainted.
+
+        if (!playersInBattle[index+shifts].pokemonInPlay.isFainted &&
+        !playersInBattle[index-shifts].pokemonInPlay.isFainted) {
+        Both are not fainted and targetable.
+        doACoinFlip
+        if CoinFlip true: go right so return shifts;
+        else: return go left so -shifts;
+        }
+    } else if (index + shifts != maxRight && index - shifts == maxLeft) {
+        Can't shift to the left so we must loop until we find a target that is not Fainted to the right.
+        BUT!! we must still check for if there actually are targets that are alive, therefor. We should loop
+        whilst keeping that in mind.
+
+        while (index - shifts != maxRight) {
+            if (playersInBattle[index+shifts].pokemonInPlay.isFainted) {
+                return index + shifts;
+            }
+            shifts++;
+        }
+        If we reach here that means that there are absolutely no pokemon to target.
+
+    } else if (index + shifts == maxRight && index - shifts != maxLeft) {
+        Assuming the prior is correct then the opposite is correct as well.
+        while (index - shifts != maxLeft) {
+            if (playersInBattle[index-shifts].pokemonInPlay.isFainted) {
+                return index - shifts;
+            }
+            shifts++;
+        }
+        If we reach here that means that there absolutely no pokemon to target.
+
+    } else if (index + shifts == maxRight && index - shifts == maxLeft) {
+        If we reach here that means that there absolutely no pokemon left to target.
+        }
+    amountOfShifts++;
+    }
         }
         public void teamChoosesPokemon() {
             // Need to have a plan for the flow of how this will go since recursion messes everything up.
@@ -99,7 +145,7 @@ import java.util.Scanner;
             int currentIndex = 0;
             for (Player p : players) {
                 if (p.allPokemonAreFainted != true && 
-                !p.pokemonInPlay.PokeName.equals("Pokemon shouldn't exist")) {
+                !p.pokemonInPlay.equals(Interface.fakeMon)) {
                 System.out.printf("\n(%d) %s: HP %d/%d", 
                 amountOfPlayersStillInBattle + 1, p.pokemonInPlay.PokeName, p.pokemonInPlay, p.
                 pokemonInPlay.getHPMod(), p.pokemonInPlay.baseHP); // Now these will be adjusted later.
@@ -154,7 +200,6 @@ import java.util.Scanner;
             }
             return false;
         }
-
         public void displayLineUp() {
             for (Player p : players) {
                 if (p.allPokemonAreFainted != true && 

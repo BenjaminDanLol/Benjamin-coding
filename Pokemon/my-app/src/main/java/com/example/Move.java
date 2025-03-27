@@ -17,6 +17,8 @@ of functions under performMove.*/
     public boolean isMultiHit = false;
     public int[] hits = {0, 0}; // then ex pin missile hasMultiHit = true, hits[0] = 2, hits[1] = 5;
     // I'll later have an isMultihit boolean and likewise an byte array hitsBetween, which is pr standard [2,5]
+    public boolean inflictsSelfHarm = false;
+    public byte percentageSelfHarm = 0; //
     public int accuracy = 100;
     public boolean isSpecial = false;
     public byte priority = 0;
@@ -68,7 +70,7 @@ of functions under performMove.*/
             // Just didn't want any pokemon to performMoves/get attacked from/in the grave xd.
             victim.moveInUsage = Interface.fakeMove;
             victim.trainer.pokemonInPlay = Interface.fakeMon;
-            victim.trainer.mustSwitchOut(myScanner);
+            victim.trainer.playerController(myScanner, user.trainer.getMyTeam());
         }
         // May be weird checking for it here, but flare blitz and other self inflicting moves will be added later.
         if (user.getHPMod() <= 0) {
@@ -79,7 +81,7 @@ of functions under performMove.*/
             user.trainer.pokemonPlayerCanActuallyUse.remove(user);
             user.trainer.pokemonInPlay = Interface.fakeMon;
             user.moveInUsage = Interface.fakeMove;
-            user.trainer.mustSwitchOut(myScanner);
+            user.trainer.playerController(myScanner, victim.trainer.getMyTeam());
         }
         PP--;
     }
@@ -95,6 +97,7 @@ of functions under performMove.*/
     public boolean canMoveBeUsed() {
         return (PP != 0 || isDisabled == false);
     }
+    // The best viewMove to ever exist
     public void viewMove() {
 
     System.out.printf("\nMove Name: %s.\n", moveName);
@@ -102,6 +105,9 @@ of functions under performMove.*/
         
         if (isMultiHit) {
         System.out.printf("Has multihit and hits between %d and %d times!\n", hits[0], hits[1]);
+        }
+        if (inflictsSelfHarm) {
+        System.out.print(percentageSelfHarm + "% is done to the users themselves after move is performed.\n");
         }
 
     System.out.printf("Power %d, isSpecial %b, Crit Chance %d", power, isSpecial, critChance);
@@ -166,6 +172,7 @@ of functions under performMove.*/
     System.out.printf("Move's Typing %s, PP (%d/%d), isDisabled %b", moveTyping, PP, basePP, isDisabled);
     System.out.printf("\nDescription: %s", moveDescription);
     }
+    
     public void displayMoveInfo() {
         System.out.printf("Movename: %s, Pwr: %d! %n Description: %s %n", moveName, power, moveDescription);
     }

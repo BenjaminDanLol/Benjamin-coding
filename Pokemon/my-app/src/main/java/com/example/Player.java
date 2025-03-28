@@ -522,18 +522,21 @@ public class Player {
             }
         }
     }
+
     public Pokemon getTarget(Pokemon enemy) {
         if (pokemonInPlay.isSwapping && enemy.getMoveInUsage().targetPokemonSwapping) {
             return pokemonUsedBefore;
         }
         return pokemonInPlay;
     }
+    
     public String getPlayerName(){
         return playerName;
     }
     public Pokemon getPokemonFromPlayer(int index) {
         return playersActualPokemon.get(index);
     }
+    
     // Used for battles specifically.
     public void playerController (Scanner myScanner, Team enemyTeam) {
 
@@ -669,7 +672,7 @@ public class Player {
     public boolean toPartyWillRepeat;
 
 
-    private void toParty(Scanner myScanner) {
+    public void toParty(Scanner myScanner) {
         String playerInput;
         toPartyWillRepeat = true;
         while (toPartyWillRepeat) {
@@ -835,7 +838,7 @@ public class Player {
         }
         viewRepeat = false; //
     }
-    // TODO delay this so it executes first after the opposing team has made their "move".
+    // TODO delay this so it executes first after the opposing team has made their "move". FUTURE ME unsure if that really is necessary.
     private void optionalChooseAPokemon(Scanner myScanner) {
         int indexChoice = -1;
 

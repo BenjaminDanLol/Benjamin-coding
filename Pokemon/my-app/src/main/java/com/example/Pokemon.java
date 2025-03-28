@@ -154,6 +154,7 @@ public class Pokemon {
             System.out.printf("\n%s hasn't learnt any moves yet!", PokeName);
         }
     }
+    
     public void viewMoves (Scanner myScanner, boolean onlyMovesThatCanBeUsed) {
         int counter = 1;
         ArrayList<Integer> mapOfCounterToMoveSlot = new ArrayList<>();
@@ -177,9 +178,9 @@ public class Pokemon {
 
         System.out.println(".. to continue");
         myScanner.next();
-        if (myScanner.hasNext()) {
-            myScanner.nextLine();
-        }
+
+        if (myScanner.hasNext()) {myScanner.nextLine();}
+
         int indexChoice = -1;
         boolean dontRepeatCommand = false;
         
@@ -188,6 +189,7 @@ public class Pokemon {
                 return; // GitGood bud is necessary because of reasons.
             }
             String input;
+
         while (!dontRepeatCommand) {
             System.out.printf("\n%s (1-" + mapOfCounterToMoveSlot.size() + "): ", trainer.getPlayerName());
             input = myScanner.next();
@@ -197,22 +199,21 @@ public class Pokemon {
                     dontRepeatCommand = true;
                 }
             } catch (NumberFormatException e) {
-                System.out.printf("\nInvalid input!", trainer.getPlayerName());
+                System.out.print("\nInvalid input! Please enter a number");
             }
-            System.out.println("Invalid input! Please enter a number between 1 and " + 
+            System.out.print("\nInvalid input! Please enter a number between 1 and " + 
             mapOfCounterToMoveSlot.size() + ".");
         }
         pokemonMoves.get(mapOfCounterToMoveSlot.get(indexChoice - 1)).viewMove();
 
         System.out.println(".. to continue");
         myScanner.next();
-        if (myScanner.hasNext()) {
-            myScanner.nextLine();
-        }
-        dontRepeatCommand = false;
 
-        System.out.printf("\n(1) View more of %s's moves\n(2) View another Pokémon" + 
-        "\n(3) Exit Viewing-Mode", PokeName);
+        if (myScanner.hasNext()) {myScanner.nextLine();}
+
+        dontRepeatCommand = false;
+        System.out.printf("\n(1) View more of %s's moves\n(2) View another Pokémon\n(3) Exit Viewing-Mode"
+        , PokeName);
 
         while (!dontRepeatCommand) {
             System.out.printf("\n%s (1-3): ", trainer.getPlayerName());
@@ -230,14 +231,15 @@ public class Pokemon {
 
         switch (indexChoice) {
             // case 1 -> this loop by default repeats itself.
-            case 2 -> {return;}
+            case 2 -> {return;} // Will stay inside players pokemon cuz that will loop is not exited 
             case 3 -> {
-                trainer.shouldNotExitViewPlayersPokemon = false;
+                trainer.shouldNotExitViewPlayersPokemon = false; // while loop is exited in players pokemon.
                 break;
                 }
             }
         }
     }
+
     public void addMoveToPokemon(Move theMove, Player player, Scanner myScanner) {
         String playerInput;
             if (pokemonMoves.size() == 4) {

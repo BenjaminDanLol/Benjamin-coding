@@ -6,18 +6,19 @@ import java.util.Random;
 import java.util.Scanner;
 
     public class Team {
+        public int sizeOfPlayerTeam;
         public Player[] players;
         public String teamName;
         private ArrayList<Player> playersFieldedIntoBattle = new ArrayList<>(); // This is an absolute!
         // Used for retargeting algorithm size must only be changed once per battle max.
 
         public ArrayList<Player> playersCurrentlyInBattle = new ArrayList<>();
+        public int winCount = 0;
         public boolean wonOrLost;
         public int amountOfPlayersStillInBattle;
         public Team(Scanner myScanner, int teamNumber) {
 
             // May want to use teamNumber later.
-            int sizeOfPlayerTeam;
             String confirm;
             if (myScanner.hasNextLine()) {
                 myScanner.nextLine();
@@ -35,6 +36,7 @@ import java.util.Scanner;
                     System.out.println("Team " + teamNumber + "'s name is now: " + teamName + "!\n");
                     break;
                 }
+                System.out.println("Team name not selected. \nReprompting user!");
             }
 
             if (myScanner.hasNextLine()) {myScanner.nextLine();} // I HATE THESE BUT SCANNER NEEDS TO BE CLEANED.
@@ -57,20 +59,42 @@ import java.util.Scanner;
                     myScanner.nextLine(); 
                 }   
             }
+
+        }   
+        
+        public void addPlayersInternal(Scanner myScanner) {
             players = new Player[sizeOfPlayerTeam];
             for (int i = 0; i < sizeOfPlayerTeam; i++) {
                 players[i] = new Player(myScanner, i+1);
-                players[i].setTeam(this); // VS Code and java disagree upon the safety of this. But I personally
-                // believe it to be safe since objects are references in the end. Not primitives :)
+                players[i].setTeam(this); // creation of players is easier outside of Team's constructer.
             }
-        }   
-        
-        public Pokemon getTarget(Player initialTarget) {
-            if (!initialTarget.pokemonInPlay.isFainted) {
-                return initialTarget.pokemonInPlay;
+        }
+
+        public void giveAllPlayersPokemon(Scanner myScanner, Interface myInterface) {
+            for (Player p : players) {
+                p.addAPokemon(myScanner, myInterface, 300);
+            }
+        }
+
+        public void fieldPlayersIntoBattle() {
+            playersCurrentlyInBattle.clear();
+            playersFieldedIntoBattle.clear();
+
+            // Higher degree of control which player join and which don't, since say there are 5 players on a team, but they can only
+            // choose 2 players under certain formats. I think this simple mechanic would be pretty cool.
+            for (Player p : players) {
+                playersCurrentlyInBattle.add(p);
+                playersFieldedIntoBattle.add(p);
+            }
+        }
+
+        public Pokemon getTarget(int targetIndex) {
+            if (playersFieldedIntoBattle.get(targetIndex).pokemonInPlay.isFainted) {
+                return playersFieldedIntoBattle.get(targetIndex).pokemonInPlay;
             } else {
-                if (reTargetingAlgorithm(initialTarget) != -1) {
-                    return playersFieldedIntoBattle.get(reTargetingAlgorithm(initialTarget)).pokemonInPlay;
+                int reRoutedTarget = reTargetingAlgorithm(playersFieldedIntoBattle.get(targetIndex));
+                if (reRoutedTarget != -1) {
+                    return playersFieldedIntoBattle.get(reRoutedTarget).pokemonInPlay;
                 }
                 else {
                     System.out.print("\nNo pokemon to target from team " + teamName + 
@@ -92,12 +116,13 @@ import java.util.Scanner;
         }
 
         private int reTargetingAlgorithm(Player initialTarget) {
+            // no idea why I return an int here when I could literally just return the player or even the pokemon. But fine.
             int index = -1;
             int counter = 0;
             for (Player p : playersFieldedIntoBattle) {
                 if (p.equals(initialTarget)) {
                     index = counter;
-                    // vedy gud we have ze 
+                    // By crossreference we have found the index of player inside of the arrayList playersFieldedIntoBattle.
                 }
                 counter++;
             }
@@ -157,19 +182,26 @@ import java.util.Scanner;
             shifts++;
                 }
         }
-        public void teamChoosesPokemon() {
-            // Need to have a plan for the flow of how this will go since recursion messes everything up.
+
+        public void teamChoosesPokemon(Scanner myScanner) {
+            for (Player p : playersCurrentlyInBattle) {
+                p.playerHasToSwap = true;
+                p.toParty(myScanner);
+            }
 
         }
-        public void teamPerformsTurn(Team enemyTeam) {
-            // Need to have a plan for the flow of how this will go since recursion messes everything up.
+        public void teamPerformsTurn(Scanner myScanner, Team enemyTeam) {
+            for (Player p : playersCurrentlyInBattle) {
+                p.playerHasToSwap = false;
+                p.playerController(myScanner, enemyTeam);
+            }
         }
         public int pickATarget(Scanner myScanner) {
             amountOfPlayersStillInBattle = 0;
             ArrayList<Integer> indexEntry = new ArrayList<>();
             int currentIndex = 0;
             for (Player p : players) {
-                if (p.allPokemonAreFainted != true && 
+                if (p.allPokemonAreFainted != true || 
                 !p.pokemonInPlay.equals(Interface.fakeMon)) {
                 System.out.printf("\n(%d) %s: HP %d/%d", 
                 amountOfPlayersStillInBattle + 1, p.pokemonInPlay.PokeName, p.pokemonInPlay, p.
@@ -185,6 +217,7 @@ import java.util.Scanner;
                         }
                     }
                 }
+                
                 System.out.printf("\nStat Changes: Att (%d), SpA (%d), Def (%d), SpDef (%d), " +
                 "Spd (%d), Acc (%d), Eva (%d), Crit (%d)", p.pokemonInPlay.AttMod, p.pokemonInPlay.SpAMod, 
                 p.pokemonInPlay.DefMod, p.pokemonInPlay.SpDefMod, p.pokemonInPlay.SpdMod, 
@@ -230,7 +263,7 @@ import java.util.Scanner;
                 if (p.allPokemonAreFainted != true && 
                 !p.pokemonInPlay.PokeName.equals("Pokemon shouldn't exist")) {
                 System.out.printf("\n(%d) %s: HP %d/%d", 
-                amountOfPlayersStillInBattle + 1, p.pokemonInPlay.PokeName, p.pokemonInPlay, p.
+                amountOfPlayersStillInBattle + 1, p.pokemonInPlay.PokeName, p.
                 pokemonInPlay.getHPMod(), p.pokemonInPlay.baseHP); // Now these will be adjusted later.
                 if (p.pokemonInPlay.getStatusCondition()) {
                     System.out.print("\nStatus Condition: " + p.pokemonInPlay.getCurrentCondition());
@@ -249,5 +282,10 @@ import java.util.Scanner;
                 p.pokemonInPlay.evasion ,p.pokemonInPlay.critChanceMod);
                 }
             }
+
         }
     }
+    /*
+    
+    ()
+     */

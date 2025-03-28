@@ -52,12 +52,6 @@ public class Interface {
     public static Move fakeMove;
     public static Pokemon fakeMon;
 
-    // TODO Make a team class, so I can just use a getPokemonNames from it. Ofc there's more
-    Player[] pTeam1;
-    ArrayList<String> pokemonTargetsForT1 = new ArrayList<>();
-    Player[] pTeam2;
-    ArrayList<String> pokemonTargetsForT2 = new ArrayList<>();
-
     ArrayList<Team> teamsInGame = new ArrayList<>();
 
 
@@ -87,6 +81,10 @@ public class Interface {
                 teamsInGame.add(new Team(myScanner, (i+1)));
             }
 
+            for (Team t : teamsInGame) {
+                t.addPlayersInternal(myScanner);
+            }
+
             pokemonTieringStream = Interface.class.getClassLoader().getResourceAsStream("resources/PokeTiering.json");
                 if (pokemonTieringStream == null) {
                     System.out.println("PokeTiering.json file not found");
@@ -103,15 +101,12 @@ public class Interface {
                 allPokemonTypes[i] = typesArray.get(i).asText();
             }
 
-            /* pokemonStream = Interface.class.getClassLoader().getResourceAsStream("resources/PokeTieringattempt.json");
-            if (pokemonStream == null) {
-                // I may want to remove this shit, and just print it out and trust the catcher to catch.
-                throw new IllegalArgumentException("Resource not found!");
-            }
+            /* 
             I would rather define it inside the method findPokemon since it will close the Stream after every
             single pokemon is loaded into the hashMap pokeMap. 
             */
             // pokeMap = mapper.readValue(pokemonStream, new TypeReference<Map<String, Pokemon>>(){});
+            
             loadPokemonData();
 
             moveStream = Move.class.getClassLoader().getResourceAsStream("resources/moves.json");
@@ -126,6 +121,8 @@ public class Interface {
             swapMove = new Move();
             struggle = new Move();
             struggle.power = 10;
+            struggle.moveName = "Struggle";
+            struggle.moveDescription = "You poor soul";
             swapMove.priority = 10;
 
         } catch (IOException e) {
@@ -134,59 +131,48 @@ public class Interface {
             throw new RuntimeException("failed to initialize object instance of class Interface", e);
             }
     } 
-    public void startBattleT1vT2(Scanner myScanner) {
-        // teams will later be an object array where index 1 and 2, are inserted.
-        Pokemon[] executionOrder = new Pokemon[pTeam1.length + pTeam2.length];
+    
+    public void startBattle2Teams(Scanner myScanner, int[] teamIndexes) {
 
-        // Assuming this is the start the I'll need to set pTeam1 all to playerHasToSwap
-        for (int i = 0; i < pTeam1.length; i++) {
-            // The current iteration of team1 player chooses their pokemon
-            pTeam1[i].playerController(myScanner);
-            executionOrder[i] = pTeam1[i].pokemonInPlay;
-            // Used for targeting options for the opposing team later.
+        for (int i = 0; i < 2; i++) {
+            teamsInGame.get(teamIndexes[i]).fieldPlayersIntoBattle();
+            teamsInGame.get(teamIndexes[i]).giveAllPlayersPokemon(myScanner, this);
+            teamsInGame.get(teamIndexes[i]).teamChoosesPokemon(myScanner);
         }
 
-        // Clear the scanner here so the opposing team can't see what the first team chose.
+        ArrayList<Pokemon> executionOrder = new ArrayList<>();
+        letBattleCommence(myScanner, teamsInGame.get(teamIndexes[0]), teamsInGame.get(teamIndexes[1]));
 
-        for (int i = 0; i < pTeam2.length; i++) {
-            pTeam2[i].playerController(myScanner);
-            executionOrder[i] = pTeam2[i].pokemonInPlay;
-        }
+        // Some cool view of the pokemon that are playing vs each other
+        for (int i = 0; i < 2; i++) {
+            for (Player p : teamsInGame.get(teamIndexes[i]).playersCurrentlyInBattle) {
 
-        for (int i = 0; i < pTeam1.length; i++){
-            if (pTeam1[i].pokemonInPlay.getMoveInUsage().toVictim != false) {
-                System.out.println("Who should " + pTeam1[i].pokemonInPlay.PokeName + "target?");
+                if (i == 0) {
+                p.playerHasToSwap = false; // Abilities like trapped will not work with this approach
+                p.playerController(myScanner, teamsInGame.get(teamIndexes[i + 1]));
+                executionOrder.add(p.pokemonInPlay);
+                } 
                 
-                /*
-                pTeam1[i].pokemonInPlay.target = pTeam2[presentOptionsIndexList(pokemonTargetsForT1, 
-                myScanner, pTeam1[i].getPlayerName())];
-                
-                team1Choices[i].target = pTeam2[presentOptionsIndex(pokeNamesT2Chose, 
-                pokeNamesT2Chose.length, myScanner, pTeam1[i].getPlayerName())].getTarget(team1Choices[i]);
-                */
+                else if (i == 1) {
+                p.playerHasToSwap = false;
+                p.playerController(myScanner, teamsInGame.get(teamIndexes[i - 1]));
+                executionOrder.add(p.pokemonInPlay);
+                }
             }
-        } 
+        }
         
-        // Clear Terminal and let team2 target as well.
-
-        for (int i = 0; i < pTeam2.length; i++){
-            if (pTeam2[i].pokemonInPlay.getMoveInUsage().toVictim != false) {
-                System.out.println("Who should " + pTeam2[i].pokemonInPlay.PokeName + "target?");
-
-                /*
-                pTeam2[i].pokemonInPlay.target = pTeam1[presentOptionsIndexList(pokemonTargetsForT2, 
-                myScanner, pTeam2[i].getPlayerName())];
-                
-                team2Choices[i].target = pTeam1[presentOptionsIndex(pokeNamesT1Chose, 
-                pokeNamesT1Chose.length, myScanner, pTeam2[i].getPlayerName())].getTarget(team2Choices[i]);
-                */
-            }
+        Pokemon[] execOrdPokemons = new Pokemon[executionOrder.size()];
+        int i = 0;
+        for (Pokemon p : executionOrder) {
+            execOrdPokemons[i] = p;
+            i++;
         }
+
         // Bubble sort the prio/speed of all pokemon, essentially order the pokemon by execution of moves.
         boolean swapped;
         do {
             swapped = false;
-                for (int j = 0, n = executionOrder.length; j < n - 1; j++) {
+                for (int j = 0, n = executionOrder.size(); j < n - 1; j++) {
                     /*
                      * It goes like so. If the next pokemon in array has a higher prio then the current
                      * swap, or if their prio is tied, then check for if the next pokemon is faster than
@@ -196,17 +182,18 @@ public class Interface {
                      * For cases where the pokemon is being swapped then their moveInUsage prio is 10.
                      * Later I can have moves like pursuit or other custom moves that interfere with pokeswapping.
                      */
-                    if  (executionOrder[j].getMoveInUsage().priority < executionOrder[j + 1].getMoveInUsage().priority ||
-                        (executionOrder[j].getMoveInUsage().priority == executionOrder[j + 1].getMoveInUsage().priority &&
-                        (executionOrder[j].getSpdMod() * executionOrder[j].baseSpd) < 
-                        (executionOrder[j + 1].getSpdMod() * executionOrder[j + 1].baseSpd))) {
-                        swap(executionOrder, j, (j + 1));
+                    if  (execOrdPokemons[j].getMoveInUsage().priority < execOrdPokemons[j + 1].getMoveInUsage().priority ||
+                        (execOrdPokemons[j].getMoveInUsage().priority == execOrdPokemons[j + 1].getMoveInUsage().priority &&
+                        (execOrdPokemons[j].getSpdMod() * execOrdPokemons[j].baseSpd) < 
+                        (execOrdPokemons[j + 1].getSpdMod() * execOrdPokemons[j + 1].baseSpd))) {
+                        swap(execOrdPokemons, j, (j + 1));
                         swapped = true;
                     }
             }
         } while (swapped);
+        Pokemon targetForPokemon = new Pokemon();
+        for (Pokemon pokemon : execOrdPokemons) {
 
-        for (Pokemon pokemon : executionOrder) {
             /*if (pokemon.isTeam1) {
                  TODO
                 if (pokemon.target.allPokemonAreFainted == true) {
@@ -218,42 +205,43 @@ public class Interface {
             pokemon.getMoveInUsage().performMove(pokemon, pokemon.target.pokemonInPlay);
             }
             */
+            if (pokemon.trainer.getMyTeam().equals(teamsInGame.get(teamIndexes[0]))) {
+
+                targetForPokemon = teamsInGame.get(teamIndexes[1]).getTarget(pokemon.trainer.enemyPlayerTargetInitialIndex);
+                if (targetForPokemon == null) {
+                    return;
+                }
+
+                pokemon.getMoveInUsage().performMove(pokemon, targetForPokemon, myScanner);
+            } else if (pokemon.trainer.getMyTeam().equals(teamsInGame.get(teamIndexes[1]))) {
+
+                targetForPokemon = teamsInGame.get(teamIndexes[0]).getTarget(pokemon.trainer.enemyPlayerTargetInitialIndex);
+                if (targetForPokemon == null) {
+                    return;
+                }
+
+                pokemon.getMoveInUsage().performMove(pokemon, targetForPokemon, myScanner);
+            }
+
         }
         
     }
-    public void initiateBattle(Scanner myScanner) {
-    
-        System.out.println("TEAM 2 DON'T LOOK");
-        System.out.println("Team 1 choose your pokemon");
-        
-            for (int i = 0; i < pTeam1.length; i++) {
-                pTeam1[i].playerHasToSwap = true;
-                pTeam1[i].playerController(myScanner);
-                pokemonTargetsForT1.add(pTeam1[i].pokemonInPlay.PokeName);
-                pTeam1[i].playerHasToSwap = false;
+    public void letBattleCommence(Scanner myScanner, Team pTeam1, Team pTeam2) {
 
-            }
-        for (int i = 0; i < pTeam2.length; i++) {
-                pTeam2[i].playerHasToSwap = true;
-                pTeam2[i].playerController(myScanner);
-                pokemonTargetsForT2.add(pTeam2[i].pokemonInPlay.PokeName);
-                pTeam2[i].playerHasToSwap = false;
-            }
-        
         for (int i = 0; i < 11; i++) {
         switch (i) {
-            case 1 -> System.out.println("\t\t\tTeam1:");
+            case 1 -> System.out.printf("\n\t\t\t%s:", pTeam1.teamName);
             case 2 -> {
                 System.out.println("\tPlayer(s)");
-                for (int p = 0; p < pTeam1.length; p++) {
-                    System.out.println((p + 1) + ")\t " + pTeam1[p].getPlayerName());
+                for (int p = 0; p < pTeam1.playersCurrentlyInBattle.size(); p++) {
+                    System.out.println((p + 1) + ")\t " + pTeam1.playersCurrentlyInBattle.get(p).getPlayerName());
                     }
                 }
             case 5 -> System.out.println("\t\t\tVERSUS!");
-            case 8 -> System.out.println("\t\t\tTeam2:");
+            case 8 -> System.out.printf("\n\t\t\t%s:", pTeam2.teamName);
             case 9 -> {
-                for (int p = 0; p < pTeam2.length; p++) {
-                    System.out.println((p + 1) + ")\t " + pTeam2[p].getPlayerName());
+                for (int p = 0; p < pTeam2.playersCurrentlyInBattle.size(); p++) {
+                    System.out.println((p + 1) + ")\t " + pTeam2.playersCurrentlyInBattle.get(p).getPlayerName());
                     }
                 }
             default -> System.out.println();
@@ -261,20 +249,25 @@ public class Interface {
         }
         System.out.println("Type... when both teams are ready!");
         myScanner.nextLine();
-        System.out.println("\tTeam1 lineup:");
-        for (int i = 0; i < pTeam1.length; i++) {
+        System.out.printf("\n\t%s lineup:", pTeam1.teamName);
+        for (int i = 0; i < pTeam1.playersCurrentlyInBattle.size(); i++) {
             // I can just use the target arraylist.
-            System.out.println(pTeam1[i].pokemonInPlay.PokeName);
+            System.out.printf("\n%s: %s", pTeam1.playersCurrentlyInBattle.get(i).getPlayerName(), 
+            pTeam1.playersCurrentlyInBattle.get(i).pokemonInPlay.PokeName);
         }
         for (int i = 0; i < 10; i++) {
             System.out.print("-- ");
         }
         System.out.println();
-        System.out.println("\tTeam2 lineup:");
-        for (int i = 0; i < pTeam2.length; i++) {
-            System.out.println(pTeam2[i].pokemonInPlay.PokeName);
+        System.out.printf("\n\t%s lineup:", pTeam2.teamName);
+        for (int i = 0; i < pTeam2.playersCurrentlyInBattle.size(); i++) {
+            System.out.printf("\n%s: %s", pTeam2.playersCurrentlyInBattle.get(i).getPlayerName(), 
+            pTeam2.playersCurrentlyInBattle.get(i).pokemonInPlay.PokeName);
         }
+
+        System.out.println(".. to continue");
         myScanner.nextLine();
+        if (myScanner.hasNext()) {myScanner.nextLine();}
 
         /* TODO When the battle sequence commences, moves that force the player to switch out, should immediatly.
         after being performed call upon playerController. And then that will make the player go through the steps

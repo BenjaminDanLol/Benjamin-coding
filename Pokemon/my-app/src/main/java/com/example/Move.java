@@ -128,9 +128,9 @@ of functions under performMove.*/
 
     if (priority != 0) {
         if (statModifierChange == 0) {
-        System.out.printf("Priority, %d, ", priority);
+        System.out.printf("Priority %d, ", priority);
         } else {
-            System.out.printf("Priority, %d", priority);
+            System.out.printf("Priority %d", priority);
         }
     }
 
@@ -146,9 +146,10 @@ of functions under performMove.*/
             } else {
                 System.out.print(whatStatChanges[i]);
             }
-        }
-        } else {
-
+            }
+        } 
+        
+        else {
         System.out.printf("raise pokemons: ");
         System.out.printf("decrease pokemons: ");
 

@@ -415,7 +415,7 @@ public class Pokemon {
             return (2 + AttMod) / 2;
         }
         else {
-            return (2/(2+AttMod));
+            return (2/(2-AttMod)); // It is minus because -*- = +
         }
     }
     public void setAttMod(int modifierChange) {
@@ -437,7 +437,7 @@ public class Pokemon {
             return (2 + SpAMod) / 2;
         }
             else {
-                return (2/(2+SpAMod));
+                return (2/(2-SpAMod));
             }
     }
     public void setSpAMod(int modifierChange) {
@@ -459,7 +459,7 @@ public class Pokemon {
             return (2 + DefMod) / 2;
         }
             else {
-                return (2/(2+DefMod));
+                return (2/(2-DefMod));
             }
     }
     public void setDefMod(int modifierChange) {
@@ -481,7 +481,7 @@ public class Pokemon {
             return (2 + SpDefMod) / 2;
         }
             else {
-                return (2/(2+SpDefMod));
+                return (2/(2-SpDefMod));
             }
     }
     public void setSpDefMod(int modifierChange) {
@@ -503,7 +503,7 @@ public class Pokemon {
             return (2 + SpdMod) / 2;
         }
             else {
-                return (2/(2+SpdMod));
+                return (2/(2-SpdMod));
             }
     }
     public void setSpdMod(int modifierChange) {

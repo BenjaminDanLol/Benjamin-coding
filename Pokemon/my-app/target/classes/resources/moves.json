@@ -70,9 +70,9 @@
 
     "Swords Dance":{
         "moveName":"Swords Dance",
-        "whatStatChanges":["att"],
+        "whatStatChanges":["+att"],
         "statModifierChange":2,
-        "toVictim":false,
+        "statToVictim":false,
         "moveTyping":"Normal",
         "PP":20,
         "moveDescription":"A frenetic dance to uplift the fighting spirit. This sharply raises the user's Attack stat."
@@ -80,9 +80,9 @@
 
     "Dragon Dance":{
         "moveName":"Dragon Dance",
-        "whatStatChanges":["att","Spd"],
+        "whatStatChanges":["+att","+Spd"],
         "statModifierChange":1,
-        "toVictim":false,
+        "statToVictim":false,
         "moveTyping":"Dragon",
         "PP":15,
         "moveDescription":"User raises their attack and speed by 1 stage. In other words. SKRRAAA ME DRAGON."
@@ -90,18 +90,19 @@
 
     "Growl":{
         "moveName":"Growl",
-        "whatStatChanges":["att"],
+        "whatStatChanges":["-att"],
         "moveTyping":"Normal",
-        "statModifierChange":-1,
+        "statModifierChange":1,
         "PP":40,
         "moveDescription":"The user growls in an endearing way, making opposing Pokémon less wary. This lowers their Attack stats."
     },
 
     "Baby-Doll Eyes":{
         "moveName":"Baby-Doll Eyes",
-        "whatStatChanges":["att"],
+        "whatStatChanges":["-att"],
         "moveTyping":"Fairy",
-        "statModifierChange":-1,
+        "statModifierChange":1,
+        "statToVictim":true,
         "priority":1,
         "PP":30,
         "moveDescription":"The user stares at the target with its baby-doll eyes, which lowers its Attack stat. This move always goes first."
@@ -109,20 +110,20 @@
 
     "Nasty Plot":{
         "moveName":"Nasty Plot",
-        "whatStatChanges":["SpA"],
+        "whatStatChanges":["+SpA"],
         "moveTyping":"Dark",
         "statModifierChange":2,
-        "toVictim":false,
+        "statToVictim":false,
         "PP":20,
         "moveDescription":"The user stimulates its brain by thinking bad thoughts *Pause*. It sharply raises the user's Sp. Atk."
     },
 
     "Calm Mind":{
         "moveName":"Calm Mind",
-        "whatStatChanges":["SpA","SpDef"],
+        "whatStatChanges":["+SpA","+SpDef"],
         "moveTyping":"Psychic",
         "statModifierChange":1,
-        "toVictim":false,
+        "statToVictim":false,
         "PP":15,
         "moveDescription":"The user calms their mind raising their Special Attack and Special Defense by 1 stage."
     },
@@ -187,7 +188,6 @@
         "critChance":13,
         "PP":25,
         "moveDescription":"Sharp-edged leaves are launched to slash at the opposing Pokémon. Critical hits land more easily."
-
     },
 
     "Thunderbolt": {
@@ -199,7 +199,6 @@
         "inflictsStatus":true,
         "PP":15,
         "moveDescription":"A strong electric blast crashes down on the target, giving it an electric shock. This may also leave the target with paralysis."
-
     },
     "Thunder": {
         "moveName":"Thunder",
@@ -239,15 +238,15 @@
         "moveName":"Bulldoze",
         "power":60,
         "moveTyping":"Ground",
-        "whatStatChanges":["Spd"],
-        "statModifierChange":-1,
+        "whatStatChanges":["-Spd"],
+        "statModifierChange":1,
         "PP":20,
         "moveDescription":"The user strikes everything around it by stomping down on the ground. This lowers the Speed stats of those hit."
     },
 
     "Agility":{
         "moveName":"Agility",
-        "whatStatChanges":["Spd"],
+        "whatStatChanges":["+Spd"],
         "statModifierChange":2,
         "toVictim":false,
         "moveTyping":"Psychic",
@@ -271,8 +270,8 @@
         "isSpecial":true,
         "PP":15,
         "statChangeChance":20,
-        "statModifierChange":-1,
-        "whatStatChanges":["SpDef"],
+        "statModifierChange":1,
+        "whatStatChanges":["-SpDef"],
         "moveDescription":"KAMEHAME Shadow ball nin-jutsu!"
     },
 
@@ -287,15 +286,332 @@
         "moveDescription":"The target is stabbed with a tentacle, an arm, or the like steeped in poison. This may also poison the target."
     },
 
+    "Pin Missile":{
+        "moveName":"Pin Missile",
+        "power":25,
+        "accuracy":95,
+        "isMultiHit":true,
+        "hits":[2,5],
+        "moveTyping":"Bug",
+        "PP":20,
+        "critChance":4,
+        "moveDescription":"Sharp spikes are shot at the target in rapid succession. They hit two to five times in a row."
+    },
+
+    "Flare Blitz":{
+        "moveName":"Flare Blitz",
+        "power":120,
+        "moveTyping":"Fire",
+        "inflictsSelfHarm":true,
+        "percentageSelfHarm":33,
+        "inflictsStatus":true,
+        "statusChance":10,
+        "PP":5,
+        "moveDescription":"The user cloaks itself in fire and charges the target. This also damages the user quite a lot. This attack may leave the target with a burn."
+    },
+
+    "Double-Edge":{
+        "moveName":"Double-Edge",
+        "power":120,
+        "moveTyping":"Normal",
+        "inflictsSelfHarm":true,
+        "percentageSelfHarm":33,
+        "PP":15,
+        "moveDescription":"A reckless, life-risking tackle. This also damages the user quite a lot."
+    },
+
+    "Water Shuriken":{
+        "moveName":"Water Shuriken",
+        "power":15,
+        "moveTyping":"Water",
+        "isSpecial":true,
+        "isMultiHit":true,
+        "hits":[2,5],
+        "priority":1,
+        "PP":20,
+        "moveDescription":"The user hits the target with throwing stars two to five times in a row. This move always goes first."
+    },
+
+    "Close Combat":{
+        "moveName":"Close Combat",
+        "power":120,
+        "statChangeChance":100,
+        "moveTyping":"Fighting",
+        "whatStatChanges":["-def","-SpDef"],
+        "statModifierChange":1,
+        "toVictim":true,
+        "statToVictim":false,
+        "PP":5,
+        "moveDescription":"The user fights the target up close without guarding itself. This also lowers the user's Defense and Sp. Def stats."
+    },
+
+    "Iron Head":{
+        "moveName":"Iron Head",
+        "power":80,
+        "moveTyping":"Steel",
+        "statusType":null,
+        "statusChance":30,
+        "whatStatusCondition":"Flinched",
+        "PP":15,
+        "moveDescription":"The user slams the target with its steel-hard head. This may also make the target flinch."
+    },
+
+    "Water Pulse":{
+        "moveName":"Water Pulse",
+        "power":"60",
+        "moveTyping":"Water",
+        "statusType":null,
+        "isSpecial":true,
+        "statusChance":20,
+        "whatStatusCondition":"Confusion",
+        "PP":20,
+        "moveDescription":"The user attacks the target with a pulsing blast of water. This may also confuse the target."
+    },
+
+    "Fire Blast":{
+        "moveName":"Fire Blast",
+        "power":110,
+        "isSpecial":true,
+        "accuracy":85,
+        "moveTyping":"Fire",
+        "inflictsStatus":true,
+        "statusChance":10,
+        "whatStatusCondition":"Burn",
+        "PP":5,
+        "moveDescription":"The target is attacked with an intense blast of all- consuming fire. This may also leave the target with a burn."
+    },
+
+    "Giga Drain":{
+        "moveName":"Giga Drain",
+        "power":75,
+        "moveTyping":"Grass",
+        "isSpecial":true,
+        "inflictsSelfHealing":true,
+        "percentageSelfHealing":50,
+        "PP":10,
+        "moveDescription":"A nutrient-draining attack. The user's HP is restored by half the damage taken by the target."
+    },
+
+    "Mega Drain":{
+        "moveName":"Mega Drain",
+        "power":40,
+        "moveTyping":"Grass",
+        "isSpecial":true,
+        "inflictsSelfHealing":true,
+        "percentageSelfHealing":50,
+        "PP":15,
+        "moveDescription":"A nutrient-draining attack. The user's HP is restored by half the damage taken by the target."
+    },
+
+    "Absorb":{
+        "moveName":"Absorb",
+        "power":20,
+        "moveTyping":"Grass",
+        "isSpecial":true,
+        "inflictsSelfHealing":true,
+        "percentageSelfHealing":50,
+        "PP":25,
+        "moveDescription":"A nutrient-draining attack. The user's HP is restored by half the damage taken by the target."
+    },
+
+    "Bite":{
+        "moveName":"Bite",
+        "power":60,
+        "moveTyping":"Dark",
+        "statusType":null,
+        "inflictsStatus":true,
+        "whatStatusCondition":"Flinched",
+        "PP":25,
+        "moveDescription":"The target is bitten with viciously sharp fangs. This may also make the target flinch."
+    },
+
+    "Air Cutter":{
+        "moveName":"Air Cutter",
+        "power":60,
+        "moveTyping":"Flying",
+        "isSpecial":true,
+        "accuracy":95,
+        "critChance":13,
+        "PP":25,
+        "moveDescription":"The user launches razor-like wind to slash opposing Pokémon. Critical hits land more easily."
+    },
+
+    "Air Slash":{
+        "moveName":"Air Slash",
+        "power":75,
+        "accuracy":95,
+        "moveTyping":"Flying",
+        "statusType":null,
+        "isSpecial":true,
+        "inflictsStatus":true,
+        "statusChance":30,
+        "PP":15,
+        "moveDescription":"The user attacks with a blade of air that slices even the sky. This may also make the target flinch."
+    },
+
+    "Leech Life":{
+        "moveName":"Leech Life",
+        "power":80,
+        "accuracy":100,
+        "moveTyping":"Bug",
+        "inflictsSelfHealing":true,
+        "percentageSelfHealing":50,
+        "PP":10,
+        "moveDescription":"The user drains the target's blood. The user's HP is restored by half the damage taken by the target."
+    },
+
+    "Steel Wing":{
+        "moveName":"Steel Wing",
+        "power":70,
+        "accuracy":90,
+        "moveTyping":"Steel",
+        "statChangeChance":10,
+        "whatStatChanges":["+def"],
+        "toVictim":true,
+        "statToVictim":false,
+        "statModifierChange":1,
+        "PP":25,
+        "moveDescription":"The target is hit with wings of steel. This may also raise the user's Defense stat."
+    },
+
+    "Crunch":{
+        "moveName":"Crunch",
+        "power":80,
+        "moveTyping":"Dark",
+        "statChangeChance":20,
+        "whatStatChanges":["-def"],
+        "statModifierChange":1,
+        "PP":15,
+        "moveDescription":"The user crunches up the target with sharp fangs. This may also lower the target's Defense stat."
+    },
+
+    "Heat Wave":{
+        "moveName":"Heat Wave",
+        "power":95,
+        "accuracy":90,
+        "moveTyping":"Fire",
+        "isSpecial":true,
+        "inflictsStatus":true,
+        "statusChance":10,
+        "whatStatusCondition":"Burn",
+        "PP":10,
+        "moveDescription":"The user attacks by exhaling hot breath on opposing Pokémon. This may also leave those Pokémon with a burn."
+    },
+
+    "Brave Bird":{
+        "moveName":"Brave Bird",
+        "power":120,
+        "moveTyping":"Flying",
+        "inflictsSelfHarm":true,
+        "percentageSelfHarm":33,
+        "PP":15,
+        "moveDescription":"The user tucks in its wings and charges from a low altitude. This also damages the user quite a lot."
+    },
+
+    "Zen Headbutt":{
+        "moveName":"Zen Headbutt",
+        "power":80,
+        "accuracy":90,
+        "moveTyping":"Psychic",
+        "statusType":null,
+        "inflictsStatus":true,
+        "statusChance":20,
+        "whatStatusCondition":"Flinched",
+        "PP":15,
+        "moveDescription":"The user focuses its willpower to its head and attacks the target. This may also make the target flinch."
+    },
+
+    "Stun Spore":{
+        "moveName":"Stun Spore",
+        "accuracy":75,
+        "moveTyping":"Grass",
+        "statusType":"Electric",
+        "inflictsStatus":true,
+        "whatStatusCondition":"Paralysis",
+        "statusChance":100,
+        "PP":30,
+        "moveDescription":"The user scatters a cloud of numbing powder that paralyzes the target."
+    },
+
+    "Moon Blast":{
+        "moveName":"Moon Blast",
+        "power":95,
+        "isSpecial":true,
+        "moveTyping":"Fairy",
+        "statChangeChance":30,
+        "whatStatChanges":["-SpA"],
+        "statModifierChange":1,
+        "PP":15,
+        "moveDescription":"Borrowing the power of the moon, the user attacks the target. This may also lower the target's Sp. Atk stat."
+    },
+
+    "Bullet Seed":{
+        "moveName":"Bullet Seed",
+        "power":25,
+        "moveTyping":"Grass",
+        "isMultiHit":true,
+        "hits":[2,5],
+        "PP":30,
+        "moveDescription":"The user forcefully shoots seeds at the target two to five times in a row."
+    },
+
+    "Energy Ball":{
+        "moveName":"Energy Ball",
+        "power":90,
+        "isSpecial":true,
+        "moveTyping":"Grass",
+        "statChangeChance":10,
+        "whatStatChanges":["-SpDef"],
+        "statModifierChange":1,
+        "PP":10,
+        "moveDescription":"The user draws power from nature and fires it at the target. This may also lower the target's Sp. Def stat."
+    },
+
+    "Dazzling Gleam":{
+        "moveName":"Dazzling Gleam",
+        "power":80,
+        "isSpecial":true,
+        "moveTyping":"Fairy",
+        "PP":10,
+        "moveDescription":"Should hit multiple opposing pokemon but doesn't. The user damages opposing Pokémon by emitting a powerful flash."
+    },
+
+    "Facade":{
+        "moveName":"Facade",
+        "power":70,
+        "moveTyping":"Normal",
+        "PP":20,
+        "moveDescription":"This attack move doubles its power if the user is poisoned, burned, or paralyzed. NOT YET IMPLEMENTED"
+    },
+
+    "Venoshock":{
+        "moveName":"Venoshock",
+        "power":65,
+        "moveTyping":"Poison",
+        "isSpecial":true,
+        "PP":10,
+        "moveDescription":"DMG SHOULD BE DOUBLED IF POISONED. The user drenches the target in a special poisonous liquid. This move's power is doubled if the target is poisoned."
+    },
+
+    "Tickle":{
+        "moveName":"Tickle",
+        "power":20,
+        "moveTyping":"Normal",
+        "whatStatChanges":["-att","-def"],
+        "statModifierChange":1,
+        "PP":20,
+        "moveDescription":"The user tickles the target into laughing, reducing its Attack and Defense stats."
+    },
+
     "Body Slam":{
         "moveName": "Body Slam",
         "power": 85,
         "moveTyping":"Normal",
+        "statusType":"Electric",
         "whatStatusCondition":"Paralysis",
         "statusChance":30,
         "PP":15,
-        "moveDescription":"The user drops onto the target with its full body weight. This may also leave the target with paralysis.",
-        "statusType":"Electric"
+        "moveDescription":"The user drops onto the target with its full body weight. This may also leave the target with paralysis."
     },
 
     "Play Rough":{
@@ -304,8 +620,8 @@
         "power":90,
         "accuracy":90,
         "statChangeChance":10,
-        "whatStatChanges":["att"],
-        "statModifierChange":-1,
+        "whatStatChanges":["-att"],
+        "statModifierChange":1,
         "PP":10,
         "moveDescription":"The user plays rough with the target and attacks it. This may also lower the target's Attack stat."
     },
@@ -316,8 +632,8 @@
         "power":90,
         "isSpecial":true,
         "statChangeChance":10,
-        "whatStatChanges":["SpDef"],
-        "statModifierChange":-1,
+        "whatStatChanges":["-SpDef"],
+        "statModifierChange":1,
         "PP":10,
         "moveDescription":"The target is hit by a strong telekinetic force. This may also lower the target's Sp. Def stat."
     },
@@ -347,8 +663,8 @@
         "moveTyping":"Fighting",
         "power":40,
         "statChangeChance":50,
-        "whatStatChanges":["def"],
-        "statModifierChange":-1,
+        "whatStatChanges":["-def"],
+        "statModifierChange":1,
         "PP":25,
         "moveDescription":"(Note: I'm guessing rock smash has 25 PP).The user attacks with a punch that can shatter a rock. This may also lower the target's Defense stat."
     },
@@ -359,8 +675,8 @@
         "power":90,
         "isSpecial":true,
         "statChangeChance":10,
-        "whatStatChanges":["SpDef"],
-        "statModifierChange":-1,
+        "whatStatChanges":["-SpDef"],
+        "statModifierChange":1,
         "PP":10,
         "moveDescription":"(Note: I'm guessing earth power has 10 PP). The user makes the ground under the foe erupt with power. It may also lower the target's Sp. Def."
     }

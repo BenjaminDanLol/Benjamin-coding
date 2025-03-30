@@ -18,7 +18,9 @@ of functions under performMove.*/
     public int[] hits = {0, 0}; // then ex pin missile hasMultiHit = true, hits[0] = 2, hits[1] = 5;
     // I'll later have an isMultihit boolean and likewise an byte array hitsBetween, which is pr standard [2,5]
     public boolean inflictsSelfHarm = false;
-    public byte percentageSelfHarm = 0; //
+    public byte percentageSelfHarm = 0;
+    public boolean inflictsSelfHealing = false;
+    public byte percentageSelfHealing = 0;
     public int accuracy = 100;
     public boolean isSpecial = false;
     public byte priority = 0;
@@ -30,13 +32,14 @@ of functions under performMove.*/
     */
     public String statusType = "";
     public byte statusChance = 10;
-    public byte critChance = 6;
+    public byte critChance = 4;
     public Typechart typechart;
     public String whatStatusCondition = null;
     public byte statModifierChange = 0;
     public String[] whatStatChanges = null;
     public byte statChangeChance = 100;
     public boolean toVictim = true;
+    public boolean statToVictim = true;
     public boolean alwaysHits = false;
     public boolean targetPokemonSwapping = false;
     public String moveDescription = "Move shouldn't exist";
@@ -198,33 +201,49 @@ of functions under performMove.*/
     public void statChange(Pokemon user, Pokemon victim) {
         // I need to account for multiple stat Changes at once. There are alot of moves like that.
         // I'll prob need to have a boolean array for that tbh.
-        if (toVictim) {
+        if (statToVictim) {
             // Per default this will be true, but in some cases not.
             if (randomSuccess(statChangeChance)) {
                 for (int i = 0, n = whatStatChanges.length; i < n; i++) {
             switch (whatStatChanges[i]) {
-                case "att" -> victim.setAttMod(statModifierChange);
-                case "SpA" -> victim.setSpAMod(statModifierChange);
-                case "def" -> victim.setDefMod(statModifierChange);
-                case "SpDef" -> victim.setSpDefMod(statModifierChange);
-                case "Spd" -> victim.setSpdMod(statModifierChange);
-                case "acc" -> victim.setAccMod(statModifierChange);
-                case "eva" -> victim.setEvasionMod(statModifierChange);
-                }
+                case "+att" -> victim.setAttMod(statModifierChange);
+                case "+SpA" -> victim.setSpAMod(statModifierChange);
+                case "+def" -> victim.setDefMod(statModifierChange);
+                case "+SpDef" -> victim.setSpDefMod(statModifierChange);
+                case "+Spd" -> victim.setSpdMod(statModifierChange);
+                case "+acc" -> victim.setAccMod(statModifierChange);
+                case "+eva" -> victim.setEvasionMod(statModifierChange);
+
+                case "-att" -> victim.setAttMod(-statModifierChange);
+                case "-SpA" -> victim.setSpAMod(-statModifierChange);
+                case "-def" -> victim.setDefMod(-statModifierChange);
+                case "-SpDef" -> victim.setSpDefMod(-statModifierChange);
+                case "-Spd" -> victim.setSpdMod(-statModifierChange);
+                case "-acc" -> victim.setAccMod(-statModifierChange);
+                case "-eva" -> victim.setEvasionMod(-statModifierChange);
+                    }
                 }
             }
-        } else if (!toVictim) {
+        } else if (!statToVictim) {
             if (randomSuccess(statChangeChance)) {
                 for (int i = 0, n = whatStatChanges.length; i < n; i++) {
             switch (whatStatChanges[i]) {
-                case "att" -> user.setAttMod(statModifierChange);
-                case "SpA" -> user.setSpAMod(statModifierChange);
-                case "def" -> user.setDefMod(statModifierChange);
-                case "SpDef" -> user.setSpDefMod(statModifierChange);
-                case "Spd" -> user.setSpdMod(statModifierChange);
-                case "acc" -> user.setAccMod(statModifierChange);
-                case "eva" -> user.setEvasionMod(statModifierChange);
-                }
+                case "+att" -> user.setAttMod(statModifierChange);
+                case "+SpA" -> user.setSpAMod(statModifierChange);
+                case "+def" -> user.setDefMod(statModifierChange);
+                case "+SpDef" -> user.setSpDefMod(statModifierChange);
+                case "+Spd" -> user.setSpdMod(statModifierChange);
+                case "+acc" -> user.setAccMod(statModifierChange);
+                case "+eva" -> user.setEvasionMod(statModifierChange);
+
+                case "-att" -> victim.setAttMod(-statModifierChange);
+                case "-SpA" -> victim.setSpAMod(-statModifierChange);
+                case "-def" -> victim.setDefMod(-statModifierChange);
+                case "-SpDef" -> victim.setSpDefMod(-statModifierChange);
+                case "-Spd" -> victim.setSpdMod(-statModifierChange);
+                case "-acc" -> victim.setAccMod(-statModifierChange);
+                case "-eva" -> victim.setEvasionMod(-statModifierChange);
+                    }
                 }
             }
         }

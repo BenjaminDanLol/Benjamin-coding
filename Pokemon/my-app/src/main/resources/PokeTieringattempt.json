@@ -6576,5 +6576,3120 @@
         "baseSpDef": 120,
         "baseSpd": 120,
         "types": ["Normal"]
-          }                                                             
+        },
+        
+              
+              "Victini": {
+              "PokeName": "Victini",
+              "evolvesTo": null,
+              "baseHP": 100,
+              "baseAtt": 100,
+              "baseDef": 100,
+              "baseSpA": 100,
+              "baseSpDef": 100,
+              "baseSpd": 100,
+              "types": ["Psychic", "Fire"]
+              },
+              "Snivy": {
+              "PokeName": "Snivy",
+              "evolvesAt": 17,
+              "evolvesTo": "Servine",
+              "baseHP": 45,
+              "baseAtt": 45,
+              "baseDef": 55,
+              "baseSpA": 45,
+              "baseSpDef": 55,
+              "baseSpd": 63,
+              "types": ["Grass"]
+              },
+              "Servine": {
+              "PokeName": "Servine",
+              "evolvesAt": 36,
+              "evolvesTo": "Serperior",
+              "baseHP": 60,
+              "baseAtt": 60,
+              "baseDef": 75,
+              "baseSpA": 60,
+              "baseSpDef": 75,
+              "baseSpd": 83,
+              "types": ["Grass"]
+              },
+              "Serperior": {
+              "PokeName": "Serperior",
+              "evolvesTo": null,
+              "baseHP": 75,
+              "baseAtt": 75,
+              "baseDef": 95,
+              "baseSpA": 75,
+              "baseSpDef": 95,
+              "baseSpd": 113,
+              "types": ["Grass"]
+              },
+
+              "Tepig": {
+              "PokeName": "Tepig",
+              "evolvesAt": 17,
+              "evolvesTo": "Pignite",
+              "baseHP": 65,
+              "baseAtt": 63,
+              "baseDef": 45,
+              "baseSpA": 45,
+              "baseSpDef": 45,
+              "baseSpd": 45,
+              "types": ["Fire"]
+              },
+              "Pignite": {
+              "PokeName": "Pignite",
+              "evolvesAt": 36,
+              "evolvesTo": "Emboar",
+              "baseHP": 90,
+              "baseAtt": 93,
+              "baseDef": 55,
+              "baseSpA": 70,
+              "baseSpDef": 55,
+              "baseSpd": 55,
+              "types": ["Fire", "Fighting"]
+              },
+              "Emboar": {
+              "PokeName": "Emboar",
+              "evolvesTo": null,
+              "baseHP": 110,
+              "baseAtt": 123,
+              "baseDef": 65,
+              "baseSpA": 100,
+              "baseSpDef": 65,
+              "baseSpd": 65,
+              "types": ["Fire", "Fighting"]
+              },
+
+              "Oshawott": {
+              "PokeName": "Oshawott",
+              "evolvesAt": 17,
+              "evolvesTo": "Dewott",
+              "baseHP": 55,
+              "baseAtt": 55,
+              "baseDef": 45,
+              "baseSpA": 63,
+              "baseSpDef": 45,
+              "baseSpd": 45,
+              "types": ["Water"]
+              },
+              "Dewott": {
+              "PokeName": "Dewott",
+              "evolvesAt": 36,
+              "evolvesTo": "Samurott",
+              "baseHP": 75,
+              "baseAtt": 75,
+              "baseDef": 60,
+              "baseSpA": 83,
+              "baseSpDef": 60,
+              "baseSpd": 60,
+              "types": ["Water"]
+              },
+              "Samurott": {
+              "PokeName": "Samurott",
+              "evolvesTo": null,
+              "baseHP": 95,
+              "baseAtt": 100,
+              "baseDef": 85,
+              "baseSpA": 108,
+              "baseSpDef": 70,
+              "baseSpd": 70,
+              "types": ["Water"]
+              },
+
+              "Samurott (Hisuian)": {
+              "PokeName": "Samurott (Hisuian)",
+              "evolvesTo": null,
+              "baseHP": 90,
+              "baseAtt": 108,
+              "baseDef": 80,
+              "baseSpA": 100,
+              "baseSpDef": 65,
+              "baseSpd": 85,
+              "types": ["Water", "Dark"]
+              },
+
+              "Patrat": {
+              "PokeName": "Patrat",
+              "evolvesAt": 20,
+              "evolvesTo": "Watchog",
+              "baseHP": 45,
+              "baseAtt": 55,
+              "baseDef": 39,
+              "baseSpA": 35,
+              "baseSpDef": 39,
+              "baseSpd": 42,
+              "types": ["Normal"]
+              },
+              "Watchog": {
+              "PokeName": "Watchog",
+              "evolvesTo": null,
+              "baseHP": 60,
+              "baseAtt": 85,
+              "baseDef": 69,
+              "baseSpA": 60,
+              "baseSpDef": 69,
+              "baseSpd": 77,
+              "types": ["Normal"]
+              },
+
+              "Lillipup": {
+              "PokeName": "Lillipup",
+              "evolvesAt": 16,
+              "evolvesTo": "Herdier",
+              "baseHP": 45,
+              "baseAtt": 60,
+              "baseDef": 45,
+              "baseSpA": 25,
+              "baseSpDef": 45,
+              "baseSpd": 55,
+              "types": ["Normal"]
+              },
+              "Herdier": {
+              "PokeName": "Herdier",
+              "evolvesAt": 32,
+              "evolvesTo": "Stoutland",
+              "baseHP": 65,
+              "baseAtt": 80,
+              "baseDef": 65,
+              "baseSpA": 35,
+              "baseSpDef": 65,
+              "baseSpd": 60,
+              "types": ["Normal"]
+              },
+              "Stoutland": {
+              "PokeName": "Stoutland",
+              "evolvesTo": null,
+              "baseHP": 85,
+              "baseAtt": 110,
+              "baseDef": 90,
+              "baseSpA": 45,
+              "baseSpDef": 90,
+              "baseSpd": 80,
+              "types": ["Normal"]
+              },
+
+              "Purrloin": {
+              "PokeName": "Purrloin",
+              "evolvesAt": 20,
+              "evolvesTo": "Liepard",
+              "baseHP": 41,
+              "baseAtt": 50,
+              "baseDef": 37,
+              "baseSpA": 50,
+              "baseSpDef": 37,
+              "baseSpd": 66,
+              "types": ["Dark"]
+              },
+              "Liepard": {
+              "PokeName": "Liepard",
+              "evolvesTo": null,
+              "baseHP": 64,
+              "baseAtt": 88,
+              "baseDef": 50,
+              "baseSpA": 88,
+              "baseSpDef": 50,
+              "baseSpd": 106,
+              "types": ["Dark"]
+              },
+
+              "Pansage": {
+              "PokeName": "Pansage",
+              "evolvesTo": "Simisage",
+              "evolvesAt": 24,
+              "baseHP": 50,
+              "baseAtt": 53,
+              "baseDef": 48,
+              "baseSpA": 53,
+              "baseSpDef": 48,
+              "baseSpd": 64,
+              "types": ["Grass"]
+              },
+              "Simisage": {
+              "PokeName": "Simisage",
+              "evolvesTo": null,
+              "baseHP": 75,
+              "baseAtt": 98,
+              "baseDef": 63,
+              "baseSpA": 98,
+              "baseSpDef": 63,
+              "baseSpd": 101,
+              "types": ["Grass"]
+              },
+
+              "Pansear": {
+              "PokeName": "Pansear",
+              "evolvesTo": "Simisear",
+              "evolvesAt": 24,
+              "baseHP": 50,
+              "baseAtt": 53,
+              "baseDef": 48,
+              "baseSpA": 53,
+              "baseSpDef": 48,
+              "baseSpd": 64,
+              "types": ["Fire"]
+              },
+              "Simisear": {
+              "PokeName": "Simisear",
+              "evolvesTo": null,
+              "baseHP": 75,
+              "baseAtt": 98,
+              "baseDef": 63,
+              "baseSpA": 98,
+              "baseSpDef": 63,
+              "baseSpd": 101,
+              "types": ["Fire"]
+              },
+
+              "Panpour": {
+              "PokeName": "Panpour",
+              "evolvesTo": "Simipour",
+              "evolvesAt": 24,
+              "baseHP": 50,
+              "baseAtt": 53,
+              "baseDef": 48,
+              "baseSpA": 53,
+              "baseSpDef": 48,
+              "baseSpd": 64,
+              "types": ["Water"]
+              },
+              "Simipour": {
+              "PokeName": "Simipour",
+              "evolvesTo": null,
+              "baseHP": 75,
+              "baseAtt": 98,
+              "baseDef": 63,
+              "baseSpA": 98,
+              "baseSpDef": 63,
+              "baseSpd": 101,
+              "types": ["Water"]
+              },
+
+              "Munna": {
+              "PokeName": "Munna",
+              "evolvesTo": "Musharna",
+              "evolvesAt": 31,
+              "baseHP": 76,
+              "baseAtt": 25,
+              "baseDef": 45,
+              "baseSpA": 67,
+              "baseSpDef": 55,
+              "baseSpd": 24,
+              "types": ["Psychic"]
+              },
+              "Musharna": {
+              "PokeName": "Musharna",
+              "evolvesTo": null,
+              "baseHP": 116,
+              "baseAtt": 55,
+              "baseDef": 85,
+              "baseSpA": 107,
+              "baseSpDef": 95,
+              "baseSpd": 29,
+              "types": ["Psychic"]
+              },
+
+              "Pidove": {
+              "PokeName": "Pidove",
+              "evolvesAt": 21,
+              "evolvesTo": "Tranquill",
+              "baseHP": 50,
+              "baseAtt": 55,
+              "baseDef": 50,
+              "baseSpA": 36,
+              "baseSpDef": 30,
+              "baseSpd": 43,
+              "types": ["Normal", "Flying"]
+              },
+              "Tranquill": {
+              "PokeName": "Tranquill",
+              "evolvesAt": 32,
+              "evolvesTo": "Unfezant",
+              "baseHP": 62,
+              "baseAtt": 77,
+              "baseDef": 62,
+              "baseSpA": 50,
+              "baseSpDef": 42,
+              "baseSpd": 65,
+              "types": ["Normal", "Flying"]
+              },
+              "Unfezant": {
+              "PokeName": "Unfezant",
+              "evolvesTo": null,
+              "baseHP": 80,
+              "baseAtt": 115,
+              "baseDef": 80,
+              "baseSpA": 65,
+              "baseSpDef": 55,
+              "baseSpd": 93,
+              "types": ["Normal", "Flying"]
+              },
+
+              "Blitzle": {
+              "PokeName": "Blitzle",
+              "evolvesAt": 27,
+              "evolvesTo": "Zebstrika",
+              "baseHP": 45,
+              "baseAtt": 60,
+              "baseDef": 32,
+              "baseSpA": 50,
+              "baseSpDef": 32,
+              "baseSpd": 76,
+              "types": ["Electric"]
+              },
+              "Zebstrika": {
+              "PokeName": "Zebstrika",
+              "evolvesTo": null,
+              "baseHP": 75,
+              "baseAtt": 100,
+              "baseDef": 63,
+              "baseSpA": 80,
+              "baseSpDef": 63,
+              "baseSpd": 116,
+              "types": ["Electric"]
+              },
+
+              "Roggenrola": {
+              "PokeName": "Roggenrola",
+              "evolvesAt": 25,
+              "evolvesTo": "Boldore",
+              "baseHP": 55,
+              "baseAtt": 75,
+              "baseDef": 85,
+              "baseSpA": 25,
+              "baseSpDef": 25,
+              "baseSpd": 15,
+              "types": ["Rock"]
+              },
+              "Boldore": {
+              "PokeName": "Boldore",
+              "evolvesTo": "Gigalith",
+              "evolvesAt": 38,
+              "baseHP": 70,
+              "baseAtt": 105,
+              "baseDef": 105,
+              "baseSpA": 50,
+              "baseSpDef": 40,
+              "baseSpd": 20,
+              "types": ["Rock"]
+              },
+              "Gigalith": {
+              "PokeName": "Gigalith",
+              "evolvesTo": null,
+              "baseHP": 85,
+              "baseAtt": 135,
+              "baseDef": 130,
+              "baseSpA": 60,
+              "baseSpDef": 80,
+              "baseSpd": 25,
+              "types": ["Rock"]
+              },
+
+              "Woobat": {
+              "PokeName": "Woobat",
+              "evolvesTo": "Swoobat",
+              "evolvesAt": 20,
+              "baseHP": 65,
+              "baseAtt": 45,
+              "baseDef": 43,
+              "baseSpA": 55,
+              "baseSpDef": 43,
+              "baseSpd": 72,
+              "types": ["Psychic", "Flying"]
+              },
+              "Swoobat": {
+              "PokeName": "Swoobat",
+              "evolvesTo": null,
+              "baseHP": 67,
+              "baseAtt": 57,
+              "baseDef": 55,
+              "baseSpA": 77,
+              "baseSpDef": 55,
+              "baseSpd": 114,
+              "types": ["Psychic", "Flying"]
+              },
+
+              "Drilbur": {
+              "PokeName": "Drilbur",
+              "evolvesAt": 31,
+              "evolvesTo": "Excadrill",
+              "baseHP": 60,
+              "baseAtt": 85,
+              "baseDef": 40,
+              "baseSpA": 30,
+              "baseSpDef": 45,
+              "baseSpd": 68,
+              "types": ["Ground"]
+              },
+              "Excadrill": {
+              "PokeName": "Excadrill",
+              "evolvesTo": null,
+              "baseHP": 110,
+              "baseAtt": 135,
+              "baseDef": 60,
+              "baseSpA": 50,
+              "baseSpDef": 65,
+              "baseSpd": 88,
+              "types": ["Ground", "Steel"]
+              },
+
+              "Audino": {
+              "PokeName": "Audino",
+              "evolvesTo": null,
+              "baseHP": 103,
+              "baseAtt": 60,
+              "baseDef": 86,
+              "baseSpA": 60,
+              "baseSpDef": 86,
+              "baseSpd": 50,
+              "types": ["Normal"]
+              },
+
+              "Timburr": {
+              "PokeName": "Timburr",
+              "evolvesAt": 25,
+              "evolvesTo": "Gurdurr",
+              "baseHP": 75,
+              "baseAtt": 80,
+              "baseDef": 55,
+              "baseSpA": 25,
+              "baseSpDef": 35,
+              "baseSpd": 35,
+              "types": ["Fighting"]
+              },
+              "Gurdurr": {
+              "PokeName": "Gurdurr",
+              "evolvesTo": "Conkeldurr",
+              "evolvesAt": 38,
+              "baseHP": 105,
+              "baseAtt": 105,
+              "baseDef": 85,
+              "baseSpA": 40,
+              "baseSpDef": 50,
+              "baseSpd": 40,
+              "types": ["Fighting"]
+              },
+              "Conkeldurr": {
+              "PokeName": "Conkeldurr",
+              "evolvesTo": null,
+              "baseHP": 105,
+              "baseAtt": 140,
+              "baseDef": 95,
+              "baseSpA": 55,
+              "baseSpDef": 65,
+              "baseSpd": 45,
+              "types": ["Fighting"]
+              },
+
+              "Tympole": {
+              "PokeName": "Tympole",
+              "evolvesAt": 25,
+              "evolvesTo": "Palpitoad",
+              "baseHP": 50,
+              "baseAtt": 50,
+              "baseDef": 40,
+              "baseSpA": 50,
+              "baseSpDef": 40,
+              "baseSpd": 64,
+              "types": ["Water"]
+              },
+              "Palpitoad": {
+              "PokeName": "Palpitoad",
+              "evolvesAt": 36,
+              "evolvesTo": "Seismitoad",
+              "baseHP": 75,
+              "baseAtt": 65,
+              "baseDef": 55,
+              "baseSpA": 65,
+              "baseSpDef": 55,
+              "baseSpd": 69,
+              "types": ["Water", "Ground"]
+              },
+              "Seismitoad": {
+              "PokeName": "Seismitoad",
+              "evolvesTo": null,
+              "baseHP": 105,
+              "baseAtt": 95,
+              "baseDef": 75,
+              "baseSpA": 85,
+              "baseSpDef": 75,
+              "baseSpd": 74,
+              "types": ["Water", "Ground"]
+              },
+
+              "Throh": {
+              "PokeName": "Throh",
+              "evolvesTo": null,
+              "baseHP": 120,
+              "baseAtt": 100,
+              "baseDef": 85,
+              "baseSpA": 30,
+              "baseSpDef": 85,
+              "baseSpd": 45,
+              "types": ["Fighting"]
+              },
+              "Sawk": {
+              "PokeName": "Sawk",
+              "evolvesTo": null,
+              "baseHP": 75,
+              "baseAtt": 125,
+              "baseDef": 75,
+              "baseSpA": 30,
+              "baseSpDef": 75,
+              "baseSpd": 110,
+              "types": ["Fighting"]
+              },
+
+              "Sewaddle": {
+              "PokeName": "Sewaddle",
+              "evolvesAt": 20,
+              "evolvesTo": "Swadloon",
+              "baseHP": 45,
+              "baseAtt": 53,
+              "baseDef": 70,
+              "baseSpA": 40,
+              "baseSpDef": 60,
+              "baseSpd": 42,
+              "types": ["Bug", "Grass"]
+              },
+              "Swadloon": {
+              "PokeName": "Swadloon",
+              "evolvesTo": "Leavanny",
+              "evolvesAt": 31,
+              "baseHP": 55,
+              "baseAtt": 63,
+              "baseDef": 90,
+              "baseSpA": 50,
+              "baseSpDef": 80,
+              "baseSpd": 42,
+              "types": ["Bug", "Grass"]
+              },
+              "Leavanny": {
+              "PokeName": "Leavanny",
+              "evolvesTo": null,
+              "baseHP": 75,
+              "baseAtt": 103,
+              "baseDef": 80,
+              "baseSpA": 70,
+              "baseSpDef": 80,
+              "baseSpd": 92,
+              "types": ["Bug", "Grass"]
+              },
+
+              "Venipede": {
+              "PokeName": "Venipede",
+              "evolvesAt": 22,
+              "evolvesTo": "Whirlipede",
+              "baseHP": 30,
+              "baseAtt": 45,
+              "baseDef": 59,
+              "baseSpA": 30,
+              "baseSpDef": 39,
+              "baseSpd": 57,
+              "types": ["Bug", "Poison"]
+              },
+              "Whirlipede": {
+              "PokeName": "Whirlipede",
+              "evolvesAt": 30,
+              "evolvesTo": "Scolipede",
+              "baseHP": 40,
+              "baseAtt": 55,
+              "baseDef": 99,
+              "baseSpA": 40,
+              "baseSpDef": 79,
+              "baseSpd": 47,
+              "types": ["Bug", "Poison"]
+              },
+              "Scolipede": {
+              "PokeName": "Scolipede",
+              "evolvesTo": null,
+              "baseHP": 60,
+              "baseAtt": 100,
+              "baseDef": 89,
+              "baseSpA": 55,
+              "baseSpDef": 69,
+              "baseSpd": 112,
+              "types": ["Bug", "Poison"]
+              },
+
+              "Cottonee": {
+              "PokeName": "Cottonee",
+              "evolvesTo": "Whimsicott",
+              "evolvesAt": 28,
+              "baseHP": 40,
+              "baseAtt": 27,
+              "baseDef": 60,
+              "baseSpA": 37,
+              "baseSpDef": 50,
+              "baseSpd": 66,
+              "types": ["Grass", "Fairy"]
+              },
+              "Whimsicott": {
+              "PokeName": "Whimsicott",
+              "evolvesTo": null,
+              "baseHP": 60,
+              "baseAtt": 67,
+              "baseDef": 85,
+              "baseSpA": 77,
+              "baseSpDef": 75,
+              "baseSpd": 116,
+              "types": ["Grass", "Fairy"]
+              },
+
+              "Petilil": {
+              "PokeName": "Petilil",
+              "evolvesTo": "Lilligant",
+              "evolvesAt": 28,
+              "baseHP": 45,
+              "baseAtt": 35,
+              "baseDef": 50,
+              "baseSpA": 70,
+              "baseSpDef": 50,
+              "baseSpd": 30,
+              "types": ["Grass"]
+              },
+              "Lilligant": {
+              "PokeName": "Lilligant",
+              "evolvesTo": null,
+              "baseHP": 70,
+              "baseAtt": 60,
+              "baseDef": 75,
+              "baseSpA": 110,
+              "baseSpDef": 75,
+              "baseSpd": 90,
+              "types": ["Grass"]
+              },
+
+              "Lilligant (Hisuian)": {
+              "PokeName": "Lilligant (Hisuian)",
+              "evolvesTo": null,
+              "baseHP": 70,
+              "baseAtt": 105,
+              "baseDef": 75,
+              "baseSpA": 50,
+              "baseSpDef": 75,
+              "baseSpd": 105,
+              "types": ["Grass", "Fighting"]
+              },
+
+              "Basculin (Blue-Striped)": {
+              "PokeName": "Basculin (Blue-Striped)",
+              "evolutionArray": ["Basculegion (Male)","Basculegion (Female)"],
+              "evolvesAt": 30,
+              "baseHP": 70,
+              "baseAtt": 92,
+              "baseDef": 65,
+              "baseSpA": 80,
+              "baseSpDef": 55,
+              "baseSpd": 98,
+              "types": ["Water"]
+              },
+              "Basculegion (Male)":{
+              "PokeName": "Basculegion (Male)",
+              "evolvesTo": null,
+              "baseHP": 120,
+              "baseAtt": 112,
+              "baseDef": 65,
+              "baseSpA": 80,
+              "baseSpDef": 75,
+              "baseSpd": 78,
+              "types": ["Water","Ghost"]
+              },
+              "Basculegion (Female)":{
+              "PokeName": "Basculegion (Female)",
+              "evolvesTo": null,
+              "baseHP": 120,
+              "baseAtt": 92,
+              "baseDef": 65,
+              "baseSpA": 100,
+              "baseSpDef": 75,
+              "baseSpd": 78,
+              "types": ["Water","Ghost"]
+              },
+
+              "Sandile": {
+              "PokeName": "Sandile",
+              "evolvesAt": 29,
+              "evolvesTo": "Krokorok",
+              "baseHP": 50,
+              "baseAtt": 72,
+              "baseDef": 35,
+              "baseSpA": 35,
+              "baseSpDef": 35,
+              "baseSpd": 65,
+              "types": ["Ground", "Dark"]
+              },
+              "Krokorok": {
+              "PokeName": "Krokorok",
+              "evolvesAt": 40,
+              "evolvesTo": "Krookodile",
+              "baseHP": 60,
+              "baseAtt": 82,
+              "baseDef": 45,
+              "baseSpA": 45,
+              "baseSpDef": 45,
+              "baseSpd": 74,
+              "types": ["Ground", "Dark"]
+              },
+              "Krookodile": {
+              "PokeName": "Krookodile",
+              "evolvesTo": null,
+              "baseHP": 95,
+              "baseAtt": 117,
+              "baseDef": 80,
+              "baseSpA": 65,
+              "baseSpDef": 70,
+              "baseSpd": 92,
+              "types": ["Ground", "Dark"]
+              },
+
+              "Darumaka": {
+              "PokeName": "Darumaka",
+              "evolvesAt": 35,
+              "evolvesTo": "Darmanitan",
+              "baseHP": 70,
+              "baseAtt": 90,
+              "baseDef": 45,
+              "baseSpA": 15,
+              "baseSpDef": 45,
+              "baseSpd": 50,
+              "types": ["Fire"]
+              },
+              "Darumaka (Galarian)": {
+              "PokeName": "Darumaka (Galarian)",
+              "evolvesAt": 35,
+              "evolvesTo": "Darmanitan (Galarian)",
+              "baseHP": 70,
+              "baseAtt": 90,
+              "baseDef": 45,
+              "baseSpA": 15,
+              "baseSpDef": 45,
+              "baseSpd": 50,
+              "types": ["Ice"]
+              },
+              "Darmanitan": {
+              "PokeName": "Darmanitan",
+              "evolvesTo": "Darmanitan (Zen Mode)",
+              "evolvesAt": 50,
+              "baseHP": 105,
+              "baseAtt": 140,
+              "baseDef": 55,
+              "baseSpA": 30,
+              "baseSpDef": 55,
+              "baseSpd": 95,
+              "types": ["Fire"]
+              },
+              "Darmanitan (Galarian)": {
+              "PokeName": "Darmanitan (Galarian)",
+              "evolvesTo": "Darmanitan (Galarian, Zen Mode)",
+              "evolvesAt": 50,
+              "baseHP": 105,
+              "baseAtt": 140,
+              "baseDef": 55,
+              "baseSpA": 30,
+              "baseSpDef": 55,
+              "baseSpd": 95,
+              "types": ["Ice"]
+              },
+              "Darmanitan (Zen Mode)": {
+              "PokeName": "Darmanitan (Zen Mode)",
+              "evolvesTo": null,
+              "baseHP": 105,
+              "baseAtt": 160,
+              "baseDef": 55,
+              "baseSpA": 90,
+              "baseSpDef": 55,
+              "baseSpd": 55,
+              "types": ["Fire", "Psychic"]
+              },
+              "Darmanitan (Galarian, Zen Mode)": {
+              "PokeName": "Darmanitan (Galarian, Zen Mode)",
+              "evolvesTo": null,
+              "baseHP": 105,
+              "baseAtt": 160,
+              "baseDef": 55,
+              "baseSpA": 30,
+              "baseSpDef": 55,
+              "baseSpd": 135,
+              "types": ["Ice", "Fire"]
+              },
+
+              "Maractus": {
+              "PokeName": "Maractus",
+              "evolvesTo": null,
+              "baseHP": 75,
+              "baseAtt": 86,
+              "baseDef": 67,
+              "baseSpA": 106,
+              "baseSpDef": 67,
+              "baseSpd": 60,
+              "types": ["Grass"]
+              },
+
+              "Dwebble": {
+              "PokeName": "Dwebble",
+              "evolvesAt": 34,
+              "evolvesTo": "Crustle",
+              "baseHP": 50,
+              "baseAtt": 65,
+              "baseDef": 85,
+              "baseSpA": 35,
+              "baseSpDef": 35,
+              "baseSpd": 55,
+              "types": ["Bug", "Rock"]
+              },
+              "Crustle": {
+              "PokeName": "Crustle",
+              "evolvesTo": null,
+              "baseHP": 70,
+              "baseAtt": 105,
+              "baseDef": 125,
+              "baseSpA": 65,
+              "baseSpDef": 75,
+              "baseSpd": 45,
+              "types": ["Bug", "Rock"]
+              },
+
+              "Scraggy": {
+              "PokeName": "Scraggy",
+              "evolvesAt": 39,
+              "evolvesTo": "Scrafty",
+              "baseHP": 50,
+              "baseAtt": 75,
+              "baseDef": 70,
+              "baseSpA": 35,
+              "baseSpDef": 70,
+              "baseSpd": 48,
+              "types": ["Dark", "Fighting"]
+              },
+              "Scrafty": {
+              "PokeName": "Scrafty",
+              "evolvesTo": null,
+              "baseHP": 65,
+              "baseAtt": 90,
+              "baseDef": 115,
+              "baseSpA": 45,
+              "baseSpDef": 115,
+              "baseSpd": 58,
+              "types": ["Dark", "Fighting"]
+              },
+
+              "Sigilyph": {
+              "PokeName": "Sigilyph",
+              "evolvesTo": null,
+              "baseHP": 72,
+              "baseAtt": 58,
+              "baseDef": 80,
+              "baseSpA": 103,
+              "baseSpDef": 80,
+              "baseSpd": 97,
+              "types": ["Psychic", "Flying"]
+              },
+
+              "Yamask": {
+              "PokeName": "Yamask",
+              "evolvesAt": 34,
+              "evolvesTo": "Cofagrigus",
+              "baseHP": 38,
+              "baseAtt": 30,
+              "baseDef": 85,
+              "baseSpA": 55,
+              "baseSpDef": 65,
+              "baseSpd": 30,
+              "types": ["Ghost"]
+              },
+              "Cofagrigus": {
+              "PokeName": "Cofagrigus",
+              "evolvesTo": null,
+              "baseHP": 58,
+              "baseAtt": 50,
+              "baseDef": 145,
+              "baseSpA": 95,
+              "baseSpDef": 105,
+              "baseSpd": 30,
+              "types": ["Ghost"]
+              },
+              "Yamask (Galarian)": {
+              "PokeName": "Yamask (Galarian)",
+              "evolvesTo": "Runerigus",
+              "evolvesAt": 34,
+              "baseHP": 38,
+              "baseAtt": 55,
+              "baseDef": 95,
+              "baseSpA": 30,
+              "baseSpDef": 65,
+              "baseSpd": 30,
+              "types": ["Ground", "Ghost"]
+              },
+              "Runerigus":{
+              "PokeName": "Runerigus",
+              "evolvesTo": null,
+              "baseHP": 58,
+              "baseAtt": 95,
+              "baseDef": 145,
+              "baseSpA": 50,
+              "baseSpDef": 105,
+              "baseSpd": 30,
+              "types": ["Ground", "Ghost"]
+              },
+
+              "Tirtouga": {
+              "PokeName": "Tirtouga",
+              "evolvesAt": 37,
+              "evolvesTo": "Carracosta",
+              "baseHP": 54,
+              "baseAtt": 78,
+              "baseDef": 103,
+              "baseSpA": 53,
+              "baseSpDef": 45,
+              "baseSpd": 22,
+              "types": ["Water", "Rock"]
+              },
+              "Carracosta": {
+              "PokeName": "Carracosta",
+              "evolvesTo": null,
+              "baseHP": 74,
+              "baseAtt": 108,
+              "baseDef": 133,
+              "baseSpA": 83,
+              "baseSpDef": 65,
+              "baseSpd": 32,
+              "types": ["Water", "Rock"]
+              },
+
+              "Archen": {
+              "PokeName": "Archen",
+              "evolvesAt": 37,
+              "evolvesTo": "Archeops",
+              "baseHP": 55,
+              "baseAtt": 112,
+              "baseDef": 45,
+              "baseSpA": 74,
+              "baseSpDef": 45,
+              "baseSpd": 70,
+              "types": ["Rock", "Flying"]
+              },
+              "Archeops": {
+              "PokeName": "Archeops",
+              "evolvesTo": null,
+              "baseHP": 75,
+              "baseAtt": 140,
+              "baseDef": 65,
+              "baseSpA": 112,
+              "baseSpDef": 65,
+              "baseSpd": 110,
+              "types": ["Rock", "Flying"]
+              },
+  
+              "Trubbish": {
+              "PokeName": "Trubbish",
+              "evolvesAt": 36,
+              "evolvesTo": "Garbodor",
+              "baseHP": 50,
+              "baseAtt": 50,
+              "baseDef": 62,
+              "baseSpA": 40,
+              "baseSpDef": 62,
+              "baseSpd": 65,
+              "types": ["Poison"]
+              },
+              "Garbodor": {
+              "PokeName": "Garbodor",
+              "evolvesTo": null,
+              "baseHP": 80,
+              "baseAtt": 95,
+              "baseDef": 82,
+              "baseSpA": 60,
+              "baseSpDef": 82,
+              "baseSpd": 75,
+              "types": ["Poison"]
+              },
+
+              "Zorua": {
+              "PokeName": "Zorua",
+              "evolvesAt": 30,
+              "evolvesTo": "Zoroark",
+              "baseHP": 40,
+              "baseAtt": 65,
+              "baseDef": 40,
+              "baseSpA": 80,
+              "baseSpDef": 40,
+              "baseSpd": 65,
+              "types": ["Dark"]
+              },
+              "Zorua (Hisuian)": {
+              "PokeName": "Zorua (Hisuian)",
+              "evolvesAt": 30,
+              "evolvesTo": "Zoroark (Hisuian)",
+              "baseHP": 35,
+              "baseAtt": 60,
+              "baseDef": 40,
+              "baseSpA": 85,
+              "baseSpDef": 40,
+              "baseSpd": 70,
+              "types": ["Normal", "Ghost"]
+              },
+              "Zoroark": {
+              "PokeName": "Zoroark",
+              "evolvesTo": null,
+              "baseHP": 60,
+              "baseAtt": 105,
+              "baseDef": 60,
+              "baseSpA": 120,
+              "baseSpDef": 60,
+              "baseSpd": 105,
+              "types": ["Dark"]
+              },
+              "Zoroark (Hisuian)": {
+              "PokeName": "Zoroark (Hisuian)",
+              "evolvesTo": null,
+              "baseHP": 70,
+              "baseAtt": 100,
+              "baseDef": 60,
+              "baseSpA": 125,
+              "baseSpDef": 60,
+              "baseSpd": 110,
+              "types": ["Normal", "Ghost"]
+              },
+
+              "Minccino": {
+              "PokeName": "Minccino",
+              "evolvesTo": "Cinccino",
+              "evolvesAt": 26,
+              "baseHP": 55,
+              "baseAtt": 50,
+              "baseDef": 40,
+              "baseSpA": 40,
+              "baseSpDef": 40,
+              "baseSpd": 75,
+              "types": ["Normal"]
+              },
+              "Cinccino": {
+              "PokeName": "Cinccino",
+              "evolvesTo": null,
+              "baseHP": 75,
+              "baseAtt": 95,
+              "baseDef": 60,
+              "baseSpA": 65,
+              "baseSpDef": 60,
+              "baseSpd": 115,
+              "types": ["Normal"]
+              },
+
+              "Gothita": {
+              "PokeName": "Gothita",
+              "evolvesAt": 32,
+              "evolvesTo": "Gothorita",
+              "baseHP": 45,
+              "baseAtt": 30,
+              "baseDef": 50,
+              "baseSpA": 55,
+              "baseSpDef": 65,
+              "baseSpd": 45,
+              "types": ["Psychic"]
+              },
+              "Gothorita": {
+              "PokeName": "Gothorita",
+              "evolvesAt": 41,
+              "evolvesTo": "Gothitelle",
+              "baseHP": 60,
+              "baseAtt": 45,
+              "baseDef": 70,
+              "baseSpA": 75,
+              "baseSpDef": 85,
+              "baseSpd": 55,
+              "types": ["Psychic"]
+              },
+              "Gothitelle": {
+              "PokeName": "Gothitelle",
+              "evolvesTo": null,
+              "baseHP": 70,
+              "baseAtt": 55,
+              "baseDef": 95,
+              "baseSpA": 95,
+              "baseSpDef": 110,
+              "baseSpd": 65,
+              "types": ["Psychic"]
+              },
+
+              "Solosis": {
+              "PokeName": "Solosis",
+              "evolvesAt": 32,
+              "evolvesTo": "Duosion",
+              "baseHP": 45,
+              "baseAtt": 30,
+              "baseDef": 40,
+              "baseSpA": 105,
+              "baseSpDef": 50,
+              "baseSpd": 20,
+              "types": ["Psychic"]
+              },
+              "Duosion": {
+              "PokeName": "Duosion",
+              "evolvesAt": 41,
+              "evolvesTo": "Reuniclus",
+              "baseHP": 65,
+              "baseAtt": 40,
+              "baseDef": 50,
+              "baseSpA": 125,
+              "baseSpDef": 60,
+              "baseSpd": 30,
+              "types": ["Psychic"]
+              },
+              "Reuniclus": {
+              "PokeName": "Reuniclus",
+              "evolvesTo": null,
+              "baseHP": 110,
+              "baseAtt": 65,
+              "baseDef": 75,
+              "baseSpA": 125,
+              "baseSpDef": 85,
+              "baseSpd": 30,
+              "types": ["Psychic"]
+              },
+
+              "Ducklett": {
+              "PokeName": "Ducklett",
+              "evolvesAt": 35,
+              "evolvesTo": "Swanna",
+              "baseHP": 62,
+              "baseAtt": 44,
+              "baseDef": 50,
+              "baseSpA": 44,
+              "baseSpDef": 50,
+              "baseSpd": 55,
+              "types": ["Water", "Flying"]
+              },
+              "Swanna": {
+              "PokeName": "Swanna",
+              "evolvesTo": null,
+              "baseHP": 75,
+              "baseAtt": 87,
+              "baseDef": 63,
+              "baseSpA": 87,
+              "baseSpDef": 63,
+              "baseSpd": 98,
+              "types": ["Water", "Flying"]
+              },
+
+              "Vanillite": {
+              "PokeName": "Vanillite",
+              "evolvesAt": 35,
+              "evolvesTo": "Vanillish",
+              "baseHP": 36,
+              "baseAtt": 50,
+              "baseDef": 50,
+              "baseSpA": 65,
+              "baseSpDef": 60,
+              "baseSpd": 44,
+              "types": ["Ice"]
+              },
+              "Vanillish": {
+              "PokeName": "Vanillish",
+              "evolvesAt": 47,
+              "evolvesTo": "Vanilluxe",
+              "baseHP": 51,
+              "baseAtt": 65,
+              "baseDef": 65,
+              "baseSpA": 80,
+              "baseSpDef": 75,
+              "baseSpd": 59,
+              "types": ["Ice"]
+              },
+              "Vanilluxe": {
+              "PokeName": "Vanilluxe",
+              "evolvesTo": null,
+              "baseHP": 71,
+              "baseAtt": 95,
+              "baseDef": 85,
+              "baseSpA": 110,
+              "baseSpDef": 95,
+              "baseSpd": 79,
+              "types": ["Ice"]
+              },
+
+              "Deerling": {
+              "PokeName": "Deerling",
+              "evolvesAt": 34,
+              "evolvesTo": "Sawsbuck",
+              "baseHP": 60,
+              "baseAtt": 60,
+              "baseDef": 50,
+              "baseSpA": 40,
+              "baseSpDef": 50,
+              "baseSpd": 75,
+              "types": ["Normal", "Grass"]
+              },
+              "Sawsbuck": {
+              "PokeName": "Sawsbuck",
+              "evolvesTo": null,
+              "baseHP": 80,
+              "baseAtt": 100,
+              "baseDef": 70,
+              "baseSpA": 60,
+              "baseSpDef": 70,
+              "baseSpd": 95,
+              "types": ["Normal", "Grass"]
+              },
+
+              "Emolga": {
+              "PokeName": "Emolga",
+              "evolvesTo": null,
+              "baseHP": 55,
+              "baseAtt": 75,
+              "baseDef": 60,
+              "baseSpA": 75,
+              "baseSpDef": 60,
+              "baseSpd": 103,
+              "types": ["Electric", "Flying"]
+              },
+
+              "Karrablast": {
+              "PokeName": "Karrablast",
+              "evolvesTo": "Escavalier",
+              "evolvesAt": 38,
+              "baseHP": 50,
+              "baseAtt": 75,
+              "baseDef": 45,
+              "baseSpA": 40,
+              "baseSpDef": 45,
+              "baseSpd": 60,
+              "types": ["Bug"]
+              },
+              "Escavalier": {
+              "PokeName": "Escavalier",
+              "evolvesTo": null,
+              "baseHP": 70,
+              "baseAtt": 135,
+              "baseDef": 105,
+              "baseSpA": 60,
+              "baseSpDef": 105,
+              "baseSpd": 20,
+              "types": ["Bug", "Steel"]
+              },
+
+              "Foongus": {
+              "PokeName": "Foongus",
+              "evolvesAt": 39,
+              "evolvesTo": "Amoonguss",
+              "baseHP": 69,
+              "baseAtt": 55,
+              "baseDef": 45,
+              "baseSpA": 55,
+              "baseSpDef": 55,
+              "baseSpd": 15,
+              "types": ["Grass", "Poison"]
+              },
+              "Amoonguss": {
+              "PokeName": "Amoonguss",
+              "evolvesTo": null,
+              "baseHP": 114,
+              "baseAtt": 85,
+              "baseDef": 70,
+              "baseSpA": 85,
+              "baseSpDef": 80,
+              "baseSpd": 30,
+              "types": ["Grass", "Poison"]
+              },
+
+              "Frillish": {
+              "PokeName": "Frillish",
+              "evolvesAt": 40,
+              "evolvesTo": "Jellicent",
+              "baseHP": 55,
+              "baseAtt": 45,
+              "baseDef": 50,
+              "baseSpA": 65,
+              "baseSpDef": 85,
+              "baseSpd": 40,
+              "types": ["Water", "Ghost"]
+              },
+              "Jellicent": {
+              "PokeName": "Jellicent",
+              "evolvesTo": null,
+              "baseHP": 100,
+              "baseAtt": 60,
+              "baseDef": 70,
+              "baseSpA": 85,
+              "baseSpDef": 105,
+              "baseSpd": 60,
+              "types": ["Water", "Ghost"]
+              },
+
+              "Alomomola": {
+              "PokeName": "Alomomola",
+              "evolvesTo": null,
+              "baseHP": 165,
+              "baseAtt": 75,
+              "baseDef": 80,
+              "baseSpA": 40,
+              "baseSpDef": 45,
+              "baseSpd": 65,
+              "types": ["Water"]
+              },
+
+              "Joltik": {
+              "PokeName": "Joltik",
+              "evolvesAt": 36,
+              "evolvesTo": "Galvantula",
+              "baseHP": 50,
+              "baseAtt": 47,
+              "baseDef": 50,
+              "baseSpA": 57,
+              "baseSpDef": 50,
+              "baseSpd": 65,
+              "types": ["Bug", "Electric"]
+              },
+              "Galvantula": {
+              "PokeName": "Galvantula",
+              "evolvesTo": null,
+              "baseHP": 70,
+              "baseAtt": 77,
+              "baseDef": 60,
+              "baseSpA": 97,
+              "baseSpDef": 60,
+              "baseSpd": 108,
+              "types": ["Bug", "Electric"]
+              },
+
+              "Ferroseed": {
+              "PokeName": "Ferroseed",
+              "evolvesAt": 40,
+              "evolvesTo": "Ferrothorn",
+              "baseHP": 44,
+              "baseAtt": 50,
+              "baseDef": 91,
+              "baseSpA": 24,
+              "baseSpDef": 86,
+              "baseSpd": 10,
+              "types": ["Grass", "Steel"]
+              },
+              "Ferrothorn": {
+              "PokeName": "Ferrothorn",
+              "evolvesTo": null,
+              "baseHP": 74,
+              "baseAtt": 94,
+              "baseDef": 131,
+              "baseSpA": 54,
+              "baseSpDef": 116,
+              "baseSpd": 20,
+              "types": ["Grass", "Steel"]
+              },
+
+              "Klink": {
+              "PokeName": "Klink",
+              "evolvesAt": 38,
+              "evolvesTo": "Klang",
+              "baseHP": 40,
+              "baseAtt": 55,
+              "baseDef": 70,
+              "baseSpA": 40,
+              "baseSpDef": 60,
+              "baseSpd": 30,
+              "types": ["Steel"]
+              },
+              "Klang": {
+              "PokeName": "Klang",
+              "evolvesAt": 49,
+              "evolvesTo": "Klinklang",
+              "baseHP": 60,
+              "baseAtt": 80,
+              "baseDef": 95,
+              "baseSpA": 70,
+              "baseSpDef": 85,
+              "baseSpd": 50,
+              "types": ["Steel"]
+              },
+              "Klinklang": {
+              "PokeName": "Klinklang",
+              "evolvesTo": null,
+              "baseHP": 60,
+              "baseAtt": 100,
+              "baseDef": 115,
+              "baseSpA": 70,
+              "baseSpDef": 85,
+              "baseSpd": 90,
+              "types": ["Steel"]
+              },
+
+              "Tynamo": {
+              "PokeName": "Tynamo",
+              "evolvesAt": 39,
+              "evolvesTo": "Eelektrik",
+              "baseHP": 35,
+              "baseAtt": 55,
+              "baseDef": 40,
+              "baseSpA": 45,
+              "baseSpDef": 40,
+              "baseSpd": 60,
+              "types": ["Electric"]
+              },
+              "Eelektrik": {
+              "PokeName": "Eelektrik",
+              "evolvesTo": "Eelektross",
+              "evolvesAt": 47,
+              "baseHP": 65,
+              "baseAtt": 85,
+              "baseDef": 70,
+              "baseSpA": 75,
+              "baseSpDef": 70,
+              "baseSpd": 40,
+              "types": ["Electric"]
+              },
+              "Eelektross": {
+              "PokeName": "Eelektross",
+              "evolvesTo": null,
+              "baseHP": 85,
+              "baseAtt": 115,
+              "baseDef": 80,
+              "baseSpA": 105,
+              "baseSpDef": 80,
+              "baseSpd": 50,
+              "types": ["Electric"]
+              },
+
+              "Elgyem": {
+              "PokeName": "Elgyem",
+              "evolvesAt": 42,
+              "evolvesTo": "Beheeyem",
+              "baseHP": 55,
+              "baseAtt": 55,
+              "baseDef": 55,
+              "baseSpA": 85,
+              "baseSpDef": 55,
+              "baseSpd": 30,
+              "types": ["Psychic"]
+              },
+              "Beheeyem": {
+              "PokeName": "Beheeyem",
+              "evolvesTo": null,
+              "baseHP": 75,
+              "baseAtt": 75,
+              "baseDef": 75,
+              "baseSpA": 125,
+              "baseSpDef": 95,
+              "baseSpd": 40,
+              "types": ["Psychic"]
+              },
+
+              "Litwick": {
+              "PokeName": "Litwick",
+              "evolvesAt": 41,
+              "evolvesTo": "Lampent",
+              "baseHP": 50,
+              "baseAtt": 30,
+              "baseDef": 55,
+              "baseSpA": 65,
+              "baseSpDef": 55,
+              "baseSpd": 20,
+              "types": ["Ghost", "Fire"]
+              },
+              "Lampent": {
+              "PokeName": "Lampent",
+              "evolvesAt": 50,
+              "evolvesTo": "Chandelure",
+              "baseHP": 60,
+              "baseAtt": 40,
+              "baseDef": 60,
+              "baseSpA": 95,
+              "baseSpDef": 60,
+              "baseSpd": 55,
+              "types": ["Ghost", "Fire"]
+              },
+              "Chandelure": {
+              "PokeName": "Chandelure",
+              "evolvesTo": null,
+              "baseHP": 60,
+              "baseAtt": 55,
+              "baseDef": 90,
+              "baseSpA": 145,
+              "baseSpDef": 90,
+              "baseSpd": 80,
+              "types": ["Ghost", "Fire"]
+              },
+
+              "Axew": {
+              "PokeName": "Axew",
+              "evolvesAt": 38,
+              "evolvesTo": "Fraxure",
+              "baseHP": 46,
+              "baseAtt": 87,
+              "baseDef": 60,
+              "baseSpA": 30,
+              "baseSpDef": 40,
+              "baseSpd": 57,
+              "types": ["Dragon"]
+              },
+              "Fraxure": {
+              "PokeName": "Fraxure",
+              "evolvesAt": 48,
+              "evolvesTo": "Haxorus",
+              "baseHP": 66,
+              "baseAtt": 117,
+              "baseDef": 70,
+              "baseSpA": 40,
+              "baseSpDef": 50,
+              "baseSpd": 67,
+              "types": ["Dragon"]
+              },
+              "Haxorus": {
+              "PokeName": "Haxorus",
+              "evolvesTo": null,
+              "baseHP": 76,
+              "baseAtt": 147,
+              "baseDef": 90,
+              "baseSpA": 60,
+              "baseSpDef": 70,
+              "baseSpd": 97,
+              "types": ["Dragon"]
+              },
+
+              "Cubchoo": {
+              "PokeName": "Cubchoo",
+              "evolvesAt": 37,
+              "evolvesTo": "Beartic",
+              "baseHP": 55,
+              "baseAtt": 70,
+              "baseDef": 40,
+              "baseSpA": 60,
+              "baseSpDef": 40,
+              "baseSpd": 40,
+              "types": ["Ice"]
+              },
+              "Beartic": {
+              "PokeName": "Beartic",
+              "evolvesTo": null,
+              "baseHP": 95,
+              "baseAtt": 130,
+              "baseDef": 80,
+              "baseSpA": 70,
+              "baseSpDef": 80,
+              "baseSpd": 50,
+              "types": ["Ice"]
+              },
+
+              "Cryogonal": {
+              "PokeName": "Cryogonal",
+              "evolvesTo": null,
+              "baseHP": 80,
+              "baseAtt": 50,
+              "baseDef": 50,
+              "baseSpA": 95,
+              "baseSpDef": 135,
+              "baseSpd": 105,
+              "types": ["Ice"]
+              },
+
+              "Shelmet": {
+              "PokeName": "Shelmet",
+              "evolvesTo": "Accelgor",
+              "evolvesAt": 38,
+              "baseHP": 50,
+              "baseAtt": 40,
+              "baseDef": 85,
+              "baseSpA": 40,
+              "baseSpDef": 65,
+              "baseSpd": 25,
+              "types": ["Bug"]
+              },
+              "Accelgor": {
+              "PokeName": "Accelgor",
+              "evolvesTo": null,
+              "baseHP": 80,
+              "baseAtt": 70,
+              "baseDef": 40,
+              "baseSpA": 100,
+              "baseSpDef": 60,
+              "baseSpd": 145,
+              "types": ["Bug"]
+              },
+
+              "Stunfisk": {
+              "PokeName": "Stunfisk",
+              "evolvesTo": null,
+              "baseHP": 109,
+              "baseAtt": 66,
+              "baseDef": 84,
+              "baseSpA": 81,
+              "baseSpDef": 99,
+              "baseSpd": 32,
+              "types": ["Ground", "Electric"]
+              },
+              "Stunfisk (Galarian)": {
+              "PokeName": "Stunfisk (Galarian)",
+              "evolvesTo": null,
+              "baseHP": 109,
+              "baseAtt": 81,
+              "baseDef": 99,
+              "baseSpA": 66,
+              "baseSpDef": 84,
+              "baseSpd": 32,
+              "types": ["Ground", "Steel"]
+              },
+
+              "Mienfoo": {
+              "PokeName": "Mienfoo",
+              "evolvesAt": 50,
+              "evolvesTo": "Mienshao",
+              "baseHP": 45,
+              "baseAtt": 85,
+              "baseDef": 50,
+              "baseSpA": 55,
+              "baseSpDef": 50,
+              "baseSpd": 65,
+              "types": ["Fighting"]
+              },
+              "Mienshao": {
+              "PokeName": "Mienshao",
+              "evolvesTo": null,
+              "baseHP": 65,
+              "baseAtt": 125,
+              "baseDef": 60,
+              "baseSpA": 95,
+              "baseSpDef": 60,
+              "baseSpd": 105,
+              "types": ["Fighting"]
+              },
+
+              "Druddigon": {
+              "PokeName": "Druddigon",
+              "evolvesTo": null,
+              "baseHP": 77,
+              "baseAtt": 120,
+              "baseDef": 90,
+              "baseSpA": 60,
+              "baseSpDef": 90,
+              "baseSpd": 48,
+              "types": ["Dragon"]
+              },
+
+              "Golett": {
+              "PokeName": "Golett",
+              "evolvesAt": 43,
+              "evolvesTo": "Golurk",
+              "baseHP": 59,
+              "baseAtt": 74,
+              "baseDef": 50,
+              "baseSpA": 35,
+              "baseSpDef": 50,
+              "baseSpd": 35,
+              "types": ["Ground", "Ghost"]
+              },
+              "Golurk": {
+              "PokeName": "Golurk",
+              "evolvesTo": null,
+              "baseHP": 89,
+              "baseAtt": 124,
+              "baseDef": 80,
+              "baseSpA": 55,
+              "baseSpDef": 80,
+              "baseSpd": 55,
+              "types": ["Ground", "Ghost"]
+              },
+
+              "Pawniard": {
+              "PokeName": "Pawniard",
+              "evolvesAt": 52,
+              "evolvesTo": "Bisharp",
+              "baseHP": 45,
+              "baseAtt": 85,
+              "baseDef": 70,
+              "baseSpA": 40,
+              "baseSpDef": 40,
+              "baseSpd": 60,
+              "types": ["Dark", "Steel"]
+              },
+              "Bisharp": {
+              "PokeName": "Bisharp",
+              "evolvesTo": "Kingambit",
+              "evolvesAt": 60,
+              "baseHP": 65,
+              "baseAtt": 125,
+              "baseDef": 100,
+              "baseSpA": 60,
+              "baseSpDef": 70,
+              "baseSpd": 70,
+              "types": ["Dark", "Steel"]
+              },
+
+              "Bouffalant": {
+              "PokeName": "Bouffalant",
+              "evolvesTo": null,
+              "baseHP": 95,
+              "baseAtt": 110,
+              "baseDef": 95,
+              "baseSpA": 40,
+              "baseSpDef": 95,
+              "baseSpd": 55,
+              "types": ["Normal"]
+              },
+
+              "Rufflet": {
+              "PokeName": "Rufflet",
+              "evolvesAt": 54,
+              "evolvesTo": "Braviary",
+              "baseHP": 70,
+              "baseAtt": 83,
+              "baseDef": 50,
+              "baseSpA": 37,
+              "baseSpDef": 50,
+              "baseSpd": 60,
+              "types": ["Normal", "Flying"]
+              },
+              "Braviary": {
+              "PokeName": "Braviary",
+              "evolvesTo": null,
+              "baseHP": 100,
+              "baseAtt": 123,
+              "baseDef": 75,
+              "baseSpA": 57,
+              "baseSpDef": 75,
+              "baseSpd": 80,
+              "types": ["Normal", "Flying"]
+              },
+              "Braviary (Hisuian)": {
+              "PokeName": "Braviary (Hisuian)",
+              "evolvesTo": null,
+              "baseHP": 110,
+              "baseAtt": 83,
+              "baseDef": 70,
+              "baseSpA": 112,
+              "baseSpDef": 65,
+              "baseSpd": 65,
+              "types": ["Psychic", "Flying"]
+              },
+
+              "Vullaby": {
+              "PokeName": "Vullaby",
+              "evolvesAt": 54,
+              "evolvesTo": "Mandibuzz",
+              "baseHP": 70,
+              "baseAtt": 55,
+              "baseDef": 75,
+              "baseSpA": 45,
+              "baseSpDef": 65,
+              "baseSpd": 60,
+              "types": ["Dark", "Flying"]
+              },
+              "Mandibuzz": {
+              "PokeName": "Mandibuzz",
+              "evolvesTo": null,
+              "baseHP": 110,
+              "baseAtt": 65,
+              "baseDef": 105,
+              "baseSpA": 55,
+              "baseSpDef": 95,
+              "baseSpd": 80,
+              "types": ["Dark", "Flying"]
+              },
+
+              "Heatmor": {
+              "PokeName": "Heatmor",
+              "evolvesTo": null,
+              "baseHP": 85,
+              "baseAtt": 97,
+              "baseDef": 66,
+              "baseSpA": 105,
+              "baseSpDef": 66,
+              "baseSpd": 65,
+              "types": ["Fire"]
+              },
+
+              "Durant": {
+              "PokeName": "Durant",
+              "evolvesTo": null,
+              "baseHP": 58,
+              "baseAtt": 109,
+              "baseDef": 112,
+              "baseSpA": 48,
+              "baseSpDef": 48,
+              "baseSpd": 109,
+              "types": ["Bug", "Steel"]
+              },
+
+              "Deino": {
+              "PokeName": "Deino",
+              "evolvesAt": 50,
+              "evolvesTo": "Zweilous",
+              "baseHP": 52,
+              "baseAtt": 65,
+              "baseDef": 50,
+              "baseSpA": 45,
+              "baseSpDef": 50,
+              "baseSpd": 38,
+              "types": ["Dark", "Dragon"]
+              },
+              "Zweilous": {
+              "PokeName": "Zweilous",
+              "evolvesAt": 64,
+              "evolvesTo": "Hydreigon",
+              "baseHP": 72,
+              "baseAtt": 85,
+              "baseDef": 70,
+              "baseSpA": 65,
+              "baseSpDef": 70,
+              "baseSpd": 58,
+              "types": ["Dark", "Dragon"]
+              },
+              "Hydreigon": {
+              "PokeName": "Hydreigon",
+              "evolvesTo": null,
+              "baseHP": 92,
+              "baseAtt": 105,
+              "baseDef": 90,
+              "baseSpA": 125,
+              "baseSpDef": 90,
+              "baseSpd": 98,
+              "types": ["Dark", "Dragon"]
+              },
+
+              "Larvesta": {
+              "PokeName": "Larvesta",
+              "evolvesAt": 59,
+              "evolvesTo": "Volcarona",
+              "baseHP": 55,
+              "baseAtt": 85,
+              "baseDef": 55,
+              "baseSpA": 50,
+              "baseSpDef": 50,
+              "baseSpd": 60,
+              "types": ["Bug"]
+              },
+              "Volcarona": {
+              "PokeName": "Volcarona",
+              "evolvesTo": null,
+              "baseHP": 85,
+              "baseAtt": 60,
+              "baseDef": 65,
+              "baseSpA": 135,
+              "baseSpDef": 105,
+              "baseSpd": 100,
+              "types": ["Bug", "Fire"]
+              },
+
+              "Cobalion": {
+              "PokeName": "Cobalion",
+              "evolvesTo": null,
+              "baseHP": 91,
+              "baseAtt": 90,
+              "baseDef": 129,
+              "baseSpA": 90,
+              "baseSpDef": 72,
+              "baseSpd": 108,
+              "types": ["Steel", "Fighting"]
+              },
+
+              "Terrakion": {
+              "PokeName": "Terrakion",
+              "evolvesTo": null,
+              "baseHP": 91,
+              "baseAtt": 129,
+              "baseDef": 90,
+              "baseSpA": 72,
+              "baseSpDef": 90,
+              "baseSpd": 108,
+              "types": ["Rock", "Fighting"]
+              },
+
+              "Virizion": {
+              "PokeName": "Virizion",
+              "evolvesTo": null,
+              "baseHP": 91,
+              "baseAtt": 90,
+              "baseDef": 72,
+              "baseSpA": 90,
+              "baseSpDef": 129,
+              "baseSpd": 108,
+              "types": ["Grass", "Fighting"]
+              },
+
+              "Tornadus (Incarnate)": {
+              "PokeName": "Tornadus (Incarnate)",
+              "evolvesTo": null,
+              "baseHP": 79,
+              "baseAtt": 115,
+              "baseDef": 70,
+              "baseSpA": 125,
+              "baseSpDef": 80,
+              "baseSpd": 111,
+              "types": ["Flying"]
+              },
+
+              "Tornadus (Therian)": {
+              "PokeName": "Tornadus (Therian)",
+              "evolvesTo": null,
+              "baseHP": 79,
+              "baseAtt": 100,
+              "baseDef": 80,
+              "baseSpA": 110,
+              "baseSpDef": 90,
+              "baseSpd": 121,
+              "types": ["Flying"]
+              },
+
+              "Thundurus (Incarnate)": {
+              "PokeName": "Thundurus (Incarnate)",
+              "evolvesTo": null,
+              "baseHP": 79,
+              "baseAtt": 115,
+              "baseDef": 70,
+              "baseSpA": 125,
+              "baseSpDef": 80,
+              "baseSpd": 111,
+              "types": ["Electric", "Flying"]
+              },
+              "Thundurus (Therian)": {
+              "PokeName": "Thundurus (Therian)",
+              "evolvesTo": null,
+              "baseHP": 79,
+              "baseAtt": 105,
+              "baseDef": 80,
+              "baseSpA": 125,
+              "baseSpDef": 90,
+              "baseSpd": 101,
+              "types": ["Electric", "Flying"]
+              },
+
+              "Reshiram": {
+              "PokeName": "Reshiram",
+              "evolvesTo": null,
+              "baseHP": 100,
+              "baseAtt": 120,
+              "baseDef": 100,
+              "baseSpA": 150,
+              "baseSpDef": 120,
+              "baseSpd": 90,
+              "types": ["Dragon", "Fire"]
+              },
+
+              "Zekrom": {
+              "PokeName": "Zekrom",
+              "evolvesTo": null,
+              "baseHP": 100,
+              "baseAtt": 150,
+              "baseDef": 120,
+              "baseSpA": 120,
+              "baseSpDef": 100,
+              "baseSpd": 90,
+              "types": ["Dragon", "Electric"]
+              },
+
+              "Landorus (Incarnate)": {
+              "PokeName": "Landorus (Incarnate)",
+              "evolvesTo": null,
+              "baseHP": 89,
+              "baseAtt": 125,
+              "baseDef": 90,
+              "baseSpA": 115,
+              "baseSpDef": 80,
+              "baseSpd": 101,
+              "types": ["Ground", "Flying"]
+              },
+              "Landorus (Therian)": {
+              "PokeName": "Landorus (Therian)",
+              "evolvesTo": null,
+              "baseHP": 89,
+              "baseAtt": 145,
+              "baseDef": 90,
+              "baseSpA": 105,
+              "baseSpDef": 80,
+              "baseSpd": 91,
+              "types": ["Ground", "Flying"]
+              },
+
+              "Kyurem": {
+              "PokeName": "Kyurem",
+              "evolvesTo": null,
+              "baseHP": 125,
+              "baseAtt": 130,
+              "baseDef": 90,
+              "baseSpA": 85,
+              "baseSpDef": 85,
+              "baseSpd": 95,
+              "types": ["Dragon", "Ice"]
+              },
+              "Kyurem (Black)": {
+              "PokeName": "Kyurem (Black)",
+              "evolvesTo": null,
+              "baseHP": 125,
+              "baseAtt": 170,
+              "baseDef": 100,
+              "baseSpA": 120,
+              "baseSpDef": 90,
+              "baseSpd": 95,
+              "types": ["Dragon", "Ice"]
+              },
+              "Kyurem (White)": {
+              "PokeName": "Kyurem (White)",
+              "evolvesTo": null,
+              "baseHP": 125,
+              "baseAtt": 120,
+              "baseDef": 90,
+              "baseSpA": 170,
+              "baseSpDef": 100,
+              "baseSpd": 95,
+              "types": ["Dragon", "Ice"]
+              },
+
+              "Keldeo": {
+              "PokeName": "Keldeo",
+              "evolvesTo": null,
+              "baseHP": 91,
+              "baseAtt": 72,
+              "baseDef": 90,
+              "baseSpA": 129,
+              "baseSpDef": 90,
+              "baseSpd": 108,
+              "types": ["Water", "Fighting"]
+              },
+
+              "Meloetta (Aria)": {
+              "PokeName": "Meloetta (Aria)",
+              "evolvesTo": null,
+              "baseHP": 100,
+              "baseAtt": 77,
+              "baseDef": 77,
+              "baseSpA": 128,
+              "baseSpDef": 128,
+              "baseSpd": 90,
+              "types": ["Normal", "Psychic"]
+              },
+              "Meloetta (Pirouette)": {
+              "PokeName": "Meloetta (Pirouette)",
+              "evolvesTo": null,
+              "baseHP": 100,
+              "baseAtt": 128,
+              "baseDef": 90,
+              "baseSpA": 77,
+              "baseSpDef": 77,
+              "baseSpd": 128,
+              "types": ["Normal", "Fighting"]
+              },
+
+              "Genesect": {
+              "PokeName": "Genesect",
+              "evolvesTo": null,
+              "baseHP": 71,
+              "baseAtt": 120,
+              "baseDef": 95,
+              "baseSpA": 120,
+              "baseSpDef": 95,
+              "baseSpd": 99,
+              "types": ["Bug", "Steel"]
+              },
+
+              "Chespin": {
+              "PokeName": "Chespin",
+              "evolvesAt": 16,
+              "evolvesTo": "Quilladin",
+              "baseHP": 56,
+              "baseAtt": 61,
+              "baseDef": 65,
+              "baseSpA": 48,
+              "baseSpDef": 45,
+              "baseSpd": 38,
+              "types": ["Grass"]
+              },
+              "Quilladin": {
+              "PokeName": "Quilladin",
+              "evolvesAt": 36,
+              "evolvesTo": "Chesnaught",
+              "baseHP": 61,
+              "baseAtt": 78,
+              "baseDef": 95,
+              "baseSpA": 56,
+              "baseSpDef": 58,
+              "baseSpd": 57,
+              "types": ["Grass"]
+              },
+              "Chesnaught": {
+              "PokeName": "Chesnaught",
+              "evolvesTo": null,
+              "baseHP": 88,
+              "baseAtt": 107,
+              "baseDef": 122,
+              "baseSpA": 74,
+              "baseSpDef": 75,
+              "baseSpd": 64,
+              "types": ["Grass", "Fighting"]
+              },
+
+              "Fennekin": {
+              "PokeName": "Fennekin",
+              "evolvesAt": 16,
+              "evolvesTo": "Braixen",
+              "baseHP": 40,
+              "baseAtt": 45,
+              "baseDef": 40,
+              "baseSpA": 62,
+              "baseSpDef": 60,
+              "baseSpd": 60,
+              "types": ["Fire"]
+              },
+              "Braixen": {
+              "PokeName": "Braixen",
+              "evolvesAt": 36,
+              "evolvesTo": "Delphox",
+              "baseHP": 59,
+              "baseAtt": 59,
+              "baseDef": 58,
+              "baseSpA": 90,
+              "baseSpDef": 70,
+              "baseSpd": 73,
+              "types": ["Fire"]
+              },
+              "Delphox": {
+              "PokeName": "Delphox",
+              "evolvesTo": null,
+              "baseHP": 75,
+              "baseAtt": 69,
+              "baseDef": 72,
+              "baseSpA": 114,
+              "baseSpDef": 100,
+              "baseSpd": 104,
+              "types": ["Fire", "Psychic"]
+              },
+
+              "Froakie": {
+              "PokeName": "Froakie",
+              "evolvesAt": 16,
+              "evolvesTo": "Frogadier",
+              "baseHP": 41,
+              "baseAtt": 56,
+              "baseDef": 40,
+              "baseSpA": 62,
+              "baseSpDef": 44,
+              "baseSpd": 71,
+              "types": ["Water"]
+              },
+              "Frogadier": {
+              "PokeName": "Frogadier",
+              "evolvesAt": 36,
+              "evolvesTo": "Greninja",
+              "baseHP": 54,
+              "baseAtt": 63,
+              "baseDef": 52,
+              "baseSpA": 83,
+              "baseSpDef": 56,
+              "baseSpd": 97,
+              "types": ["Water"]
+              },
+              "Greninja": {
+              "PokeName": "Greninja",
+              "evolvesTo": null,
+              "baseHP": 72,
+              "baseAtt": 95,
+              "baseDef": 67,
+              "baseSpA": 103,
+              "baseSpDef": 71,
+              "baseSpd": 122,
+              "types": ["Water", "Dark"]
+              },
+
+              "Ash-Greninja": {
+              "PokeName": "Ash-Greninja",
+              "evolvesTo": null,
+              "baseHP": 72,
+              "baseAtt": 145,
+              "baseDef": 67,
+              "baseSpA": 153,
+              "baseSpDef": 71,
+              "baseSpd": 132,
+              "types": ["Water", "Dark"]
+              },
+
+              "Bunnelby": {
+              "PokeName": "Bunnelby",
+              "evolvesAt": 20,
+              "evolvesTo": "Diggersby",
+              "baseHP": 38,
+              "baseAtt": 36,
+              "baseDef": 38,
+              "baseSpA": 32,
+              "baseSpDef": 36,
+              "baseSpd": 57,
+              "types": ["Normal"]
+              },
+              "Diggersby": {
+              "PokeName": "Diggersby",
+              "evolvesTo": null,
+              "baseHP": 85,
+              "baseAtt": 56,
+              "baseDef": 77,
+              "baseSpA": 50,
+              "baseSpDef": 77,
+              "baseSpd": 78,
+              "types": ["Normal", "Ground"]
+              },
+
+              "Fletchling": {
+              "PokeName": "Fletchling",
+              "evolvesAt": 17,
+              "evolvesTo": "Fletchinder",
+              "baseHP": 45,
+              "baseAtt": 50,
+              "baseDef": 43,
+              "baseSpA": 40,
+              "baseSpDef": 38,
+              "baseSpd": 62,
+              "types": ["Normal", "Flying"]
+              },
+              "Fletchinder": {
+              "PokeName": "Fletchinder",
+              "evolvesAt": 35,
+              "evolvesTo": "Talonflame",
+              "baseHP": 62,
+              "baseAtt": 73,
+              "baseDef": 55,
+              "baseSpA": 56,
+              "baseSpDef": 52,
+              "baseSpd": 84,
+              "types": ["Fire", "Flying"]
+              },
+              "Talonflame": {
+              "PokeName": "Talonflame",
+              "evolvesTo": null,
+              "baseHP": 78,
+              "baseAtt": 81,
+              "baseDef": 71,
+              "baseSpA": 74,
+              "baseSpDef": 69,
+              "baseSpd": 126,
+              "types": ["Fire", "Flying"]
+              },
+
+              "Scatterbug": {
+              "PokeName": "Scatterbug",
+              "evolvesAt": 9,
+              "evolvesTo": "Spewpa",
+              "baseHP": 38,
+              "baseAtt": 35,
+              "baseDef": 40,
+              "baseSpA": 27,
+              "baseSpDef": 25,
+              "baseSpd": 35,
+              "types": ["Bug"]
+              },
+              "Spewpa": {
+              "PokeName": "Spewpa",
+              "evolvesAt": 12,
+              "evolvesTo": "Vivillon",
+              "baseHP": 45,
+              "baseAtt": 22,
+              "baseDef": 60,
+              "baseSpA": 27,
+              "baseSpDef": 30,
+              "baseSpd": 29,
+              "types": ["Bug"]
+              },
+              "Vivillon": {
+              "PokeName": "Vivillon",
+              "evolvesTo": null,
+              "baseHP": 80,
+              "baseAtt": 52,
+              "baseDef": 50,
+              "baseSpA": 90,
+              "baseSpDef": 50,
+              "baseSpd": 89,
+              "types": ["Bug", "Flying"]
+              },
+              
+              "Litleo": {
+              "PokeName": "Litleo",
+              "evolvesAt": 35,
+              "evolvesTo": "Pyroar",
+              "baseHP": 62,
+              "baseAtt": 50,
+              "baseDef": 58,
+              "baseSpA": 73,
+              "baseSpDef": 54,
+              "baseSpd": 72,
+              "types": ["Fire", "Normal"]
+              },
+              "Pyroar": {
+              "PokeName": "Pyroar",
+              "evolvesTo": null,
+              "baseHP": 86,
+              "baseAtt": 68,
+              "baseDef": 72,
+              "baseSpA": 109,
+              "baseSpDef": 66,
+              "baseSpd": 106,
+              "types": ["Fire", "Normal"]
+              },
+
+              "Flabébé": {
+              "PokeName": "Flabébé",
+              "evolvesAt": 19,
+              "evolvesTo": "Floette",
+              "baseHP": 44,
+              "baseAtt": 38,
+              "baseDef": 39,
+              "baseSpA": 61,
+              "baseSpDef": 79,
+              "baseSpd": 42,
+              "types": ["Fairy"]
+              },
+              "Floette": {
+              "PokeName": "Floette",
+              "evolvesTo": "Florges",
+              "evolvesAt": 34,
+              "baseHP": 54,
+              "baseAtt": 45,
+              "baseDef": 47,
+              "baseSpA": 75,
+              "baseSpDef": 98,
+              "baseSpd": 52,
+              "types": ["Fairy"]
+              },
+              "Florges": {
+              "PokeName": "Florges",
+              "evolvesTo": null,
+              "baseHP": 78,
+              "baseAtt": 65,
+              "baseDef": 68,
+              "baseSpA": 112,
+              "baseSpDef": 154,
+              "baseSpd": 75,
+              "types": ["Fairy"]
+              },
+
+              "Skiddo": {
+              "PokeName": "Skiddo",
+              "evolvesAt": 32,
+              "evolvesTo": "Gogoat",
+              "baseHP": 66,
+              "baseAtt": 65,
+              "baseDef": 48,
+              "baseSpA": 62,
+              "baseSpDef": 57,
+              "baseSpd": 52,
+              "types": ["Grass"]
+              },
+              "Gogoat": {
+              "PokeName": "Gogoat",
+              "evolvesTo": null,
+              "baseHP": 123,
+              "baseAtt": 100,
+              "baseDef": 62,
+              "baseSpA": 97,
+              "baseSpDef": 81,
+              "baseSpd": 68,
+              "types": ["Grass"]
+              },
+
+              "Pancham": {
+              "PokeName": "Pancham",
+              "evolvesAt": 32,
+              "evolvesTo": "Pangoro",
+              "baseHP": 67,
+              "baseAtt": 80,
+              "baseDef": 62,
+              "baseSpA": 46,
+              "baseSpDef": 48,
+              "baseSpd": 43,
+              "types": ["Fighting"]
+              },
+              "Pangoro": {
+              "PokeName": "Pangoro",
+              "evolvesTo": null,
+              "baseHP": 95,
+              "baseAtt": 124,
+              "baseDef": 78,
+              "baseSpA": 69,
+              "baseSpDef": 71,
+              "baseSpd": 58,
+              "types": ["Fighting", "Dark"]
+              },
+
+              "Furfrou": {
+              "PokeName": "Furfrou",
+              "evolvesTo": null,
+              "baseHP": 75,
+              "baseAtt": 82,
+              "baseDef": 60,
+              "baseSpA": 65,
+              "baseSpDef": 60,
+              "baseSpd": 102,
+              "types": ["Normal"]
+              },
+
+              "Espurr": {
+              "PokeName": "Espurr",
+              "evolvesAt": 25,
+              "evolvesTo": "Meowstic",
+              "baseHP": 62,
+              "baseAtt": 48,
+              "baseDef": 54,
+              "baseSpA": 63,
+              "baseSpDef": 60,
+              "baseSpd": 68,
+              "types": ["Psychic"]
+              },
+              "Meowstic": {
+              "PokeName": "Meowstic",
+              "evolvesTo": null,
+              "baseHP": 74,
+              "baseAtt": 48,
+              "baseDef": 76,
+              "baseSpA": 83,
+              "baseSpDef": 81,
+              "baseSpd": 104,
+              "types": ["Psychic"]
+              },
+
+              "Honedge": {
+              "PokeName": "Honedge",
+              "evolvesAt": 35,
+              "evolvesTo": "Doublade",
+              "baseHP": 45,
+              "baseAtt": 80,
+              "baseDef": 100,
+              "baseSpA": 35,
+              "baseSpDef": 37,
+              "baseSpd": 28,
+              "types": ["Steel", "Ghost"]
+              },
+              "Doublade": {
+              "PokeName": "Doublade",
+              "evolvesAt": 51,
+              "evolutionArray": ["Aegislash (Shield)","Aegislash (Blade)"],
+              "baseHP": 59,
+              "baseAtt": 110,
+              "baseDef": 150,
+              "baseSpA": 45,
+              "baseSpDef": 49,
+              "baseSpd": 35,
+              "types": ["Steel", "Ghost"]
+              },
+              "Aegislash (Shield)": {
+              "PokeName": "Aegislash (Shield)",
+              "evolvesTo": null,
+              "baseHP": 60,
+              "baseAtt": 50,
+              "baseDef": 140,
+              "baseSpA": 50,
+              "baseSpDef": 140,
+              "baseSpd": 60,
+              "types": ["Steel", "Ghost"]
+              },
+              "Aegislash (Blade)": {
+              "PokeName": "Aegislash (Blade)",
+              "evolvesTo": null,
+              "baseHP": 60,
+              "baseAtt": 150,
+              "baseDef": 50,
+              "baseSpA": 150,
+              "baseSpDef": 50,
+              "baseSpd": 60,
+              "types": ["Steel", "Ghost"]
+              },
+
+              "Spritzee": {
+              "PokeName": "Spritzee",
+              "evolvesAt": 20,
+              "evolvesTo": "Aromatisse",
+              "baseHP": 78,
+              "baseAtt": 52,
+              "baseDef": 60,
+              "baseSpA": 63,
+              "baseSpDef": 65,
+              "baseSpd": 23,
+              "types": ["Fairy"]
+              },
+              "Aromatisse": {
+              "PokeName": "Aromatisse",
+              "evolvesTo": null,
+              "baseHP": 101,
+              "baseAtt": 72,
+              "baseDef": 72,
+              "baseSpA": 99,
+              "baseSpDef": 123,
+              "baseSpd": 29,
+              "types": ["Fairy"]
+              },
+
+              "Swirlix": {
+              "PokeName": "Swirlix",
+              "evolvesTo": "Slurpuff",
+              "evolvesAt": 25,
+              "baseHP": 62,
+              "baseAtt": 48,
+              "baseDef": 66,
+              "baseSpA": 59,
+              "baseSpDef": 57,
+              "baseSpd": 49,
+              "types": ["Fairy"]
+              },
+              "Slurpuff": {
+              "PokeName": "Slurpuff",
+              "evolvesTo": null,
+              "baseHP": 82,
+              "baseAtt": 80,
+              "baseDef": 86,
+              "baseSpA": 85,
+              "baseSpDef": 75,
+              "baseSpd": 72,
+              "types": ["Fairy"]
+              },
+
+              "Inkay": {
+              "PokeName": "Inkay",
+              "evolvesTo": "Malamar",
+              "evolvesAt": 30,
+              "baseHP": 53,
+              "baseAtt": 54,
+              "baseDef": 53,
+              "baseSpA": 37,
+              "baseSpDef": 46,
+              "baseSpd": 45,
+              "types": ["Dark", "Psychic"]
+              },
+              "Malamar": {
+              "PokeName": "Malamar",
+              "evolvesTo": null,
+              "baseHP": 86,
+              "baseAtt": 92,
+              "baseDef": 88,
+              "baseSpA": 68,
+              "baseSpDef": 75,
+              "baseSpd": 73,
+              "types": ["Dark", "Psychic"]
+              },
+
+              "Binacle": {
+              "PokeName": "Binacle",
+              "evolvesTo": "Barbaracle",
+              "evolvesAt": 39,
+              "baseHP": 42,
+              "baseAtt": 52,
+              "baseDef": 67,
+              "baseSpA": 39,
+              "baseSpDef": 56,
+              "baseSpd": 50,
+              "types": ["Rock", "Water"]
+              },
+              "Barbaracle": {
+              "PokeName": "Barbaracle",
+              "evolvesTo": null,
+              "baseHP": 72,
+              "baseAtt": 105,
+              "baseDef": 115,
+              "baseSpA": 54,
+              "baseSpDef": 86,
+              "baseSpd": 68,
+              "types": ["Rock", "Water"]
+              },
+
+              "Skrelp": {
+              "PokeName": "Skrelp",
+              "evolvesTo": "Dragalge",
+              "evolvesAt": 48,
+              "baseHP": 50,
+              "baseAtt": 60,
+              "baseDef": 60,
+              "baseSpA": 60,
+              "baseSpDef": 60,
+              "baseSpd": 30,
+              "types": ["Poison", "Water"]
+              },
+              "Dragalge": {
+              "PokeName": "Dragalge",
+              "evolvesTo": null,
+              "baseHP": 65,
+              "baseAtt": 75,
+              "baseDef": 90,
+              "baseSpA": 97,
+              "baseSpDef": 123,
+              "baseSpd": 44,
+              "types": ["Poison", "Dragon"]
+              },
+
+              "Clauncher": {
+              "PokeName": "Clauncher",
+              "evolvesTo": "Clawitzer",
+              "evolvesAt": 37,
+              "baseHP": 50,
+              "baseAtt": 53,
+              "baseDef": 62,
+              "baseSpA": 58,
+              "baseSpDef": 63,
+              "baseSpd": 44,
+              "types": ["Water"]
+              },
+              "Clawitzer": {
+              "PokeName": "Clawitzer",
+              "evolvesTo": null,
+              "baseHP": 71,
+              "baseAtt": 73,
+              "baseDef": 88,
+              "baseSpA": 120,
+              "baseSpDef": 89,
+              "baseSpd": 59,
+              "types": ["Water"]
+              },
+
+              "Helioptile": {
+              "PokeName": "Helioptile",
+              "evolvesTo": "Heliolisk",
+              "evolvesAt": 29,
+              "baseHP": 44,
+              "baseAtt": 38,
+              "baseDef": 33,
+              "baseSpA": 61,
+              "baseSpDef": 43,
+              "baseSpd": 70,
+              "types": ["Electric", "Normal"]
+              },
+              "Heliolisk": {
+              "PokeName": "Heliolisk",
+              "evolvesTo": null,
+              "baseHP": 62,
+              "baseAtt": 55,
+              "baseDef": 52,
+              "baseSpA": 109,
+              "baseSpDef": 94,
+              "baseSpd": 109,
+              "types": ["Electric", "Normal"]
+              },
+
+              "Tyrunt": {
+              "PokeName": "Tyrunt",
+              "evolvesTo": "Tyrantrum",
+              "evolvesAt": 39,
+              "baseHP": 58,
+              "baseAtt": 89,
+              "baseDef": 77,
+              "baseSpA": 45,
+              "baseSpDef": 45,
+              "baseSpd": 48,
+              "types": ["Rock", "Dragon"]
+              },
+              "Tyrantrum": {
+              "PokeName": "Tyrantrum",
+              "evolvesTo": null,
+              "baseHP": 82,
+              "baseAtt": 121,
+              "baseDef": 119,
+              "baseSpA": 69,
+              "baseSpDef": 59,
+              "baseSpd": 71,
+              "types": ["Rock", "Dragon"]
+              },
+
+              "Amaura": {
+              "PokeName": "Amaura",
+              "evolvesTo": "Aurorus",
+              "evolvesAt": 39,
+              "baseHP": 77,
+              "baseAtt": 59,
+              "baseDef": 50,
+              "baseSpA": 67,
+              "baseSpDef": 63,
+              "baseSpd": 46,
+              "types": ["Rock", "Ice"]
+              },
+              "Aurorus": {
+              "PokeName": "Aurorus",
+              "evolvesTo": null,
+              "baseHP": 123,
+              "baseAtt": 77,
+              "baseDef": 72,
+              "baseSpA": 99,
+              "baseSpDef": 92,
+              "baseSpd": 58,
+              "types": ["Rock", "Ice"]
+              },
+
+              "Hawlucha": {
+              "PokeName": "Hawlucha",
+              "evolvesTo": null,
+              "baseHP": 78,
+              "baseAtt": 92,
+              "baseDef": 75,
+              "baseSpA": 74,
+              "baseSpDef": 63,
+              "baseSpd": 118,
+              "types": ["Fighting", "Flying"]
+              },
+
+              "Dedenne": {
+              "PokeName": "Dedenne",
+              "evolvesTo": null,
+              "baseHP": 67,
+              "baseAtt": 58,
+              "baseDef": 57,
+              "baseSpA": 81,
+              "baseSpDef": 67,
+              "baseSpd": 101,
+              "types": ["Electric", "Fairy"]
+              },
+
+              "Carbink": {
+              "PokeName": "Carbink",
+              "evolvesTo": null,
+              "baseHP": 50,
+              "baseAtt": 50,
+              "baseDef": 150,
+              "baseSpA": 50,
+              "baseSpDef": 150,
+              "baseSpd": 50,
+              "types": ["Rock", "Fairy"]
+              },
+
+              "Goomy": {
+              "PokeName": "Goomy",
+              "evolvesTo": "Sliggoo",
+              "evolvesAt": 40,
+              "baseHP": 45,
+              "baseAtt": 50,
+              "baseDef": 35,
+              "baseSpA": 55,
+              "baseSpDef": 75,
+              "baseSpd": 40,
+              "types": ["Dragon"]
+              },
+              "Sliggoo": {
+              "PokeName": "Sliggoo",
+              "evolvesTo": "Goodra",
+              "evolvesAt": 50,
+              "baseHP": 68,
+              "baseAtt": 75,
+              "baseDef": 53,
+              "baseSpA": 83,
+              "baseSpDef": 113,
+              "baseSpd": 60,
+              "types": ["Dragon"]
+              },
+              "Sliggoo (Hisuian)": {
+              "PokeName": "Sliggoo (Hisuian)",
+              "evolvesTo": "Goodra (Hisuian)",
+              "evolvesAt": 50,
+              "baseHP": 58,
+              "baseAtt": 75,
+              "baseDef": 83,
+              "baseSpA": 75,
+              "baseSpDef": 113,
+              "baseSpd": 40,
+              "types": ["Steel", "Dragon"]
+              },
+              "Goodra": {
+              "PokeName": "Goodra",
+              "evolvesTo": null,
+              "baseHP": 90,
+              "baseAtt": 100,
+              "baseDef": 70,
+              "baseSpA": 110,
+              "baseSpDef": 150,
+              "baseSpd": 80,
+              "types": ["Dragon"]
+              },
+              "Goodra (Hisuian)": {
+              "PokeName": "Goodra (Hisuian)",
+              "evolvesTo": null,
+              "baseHP": 80,
+              "baseAtt": 100,
+              "baseDef": 100,
+              "baseSpA": 110,
+              "baseSpDef": 150,
+              "baseSpd": 60,
+              "types": ["Steel", "Dragon"]
+              },
+
+              "Klefki": {
+              "PokeName": "Klefki",
+              "evolvesTo": null,
+              "baseHP": 57,
+              "baseAtt": 80,
+              "baseDef": 91,
+              "baseSpA": 80,
+              "baseSpDef": 87,
+              "baseSpd": 75,
+              "types": ["Steel", "Fairy"]
+              },
+
+              "Phantump": {
+              "PokeName": "Phantump",
+              "evolvesTo": "Trevenant",
+              "evolvesAt": 30,
+              "baseHP": 43,
+              "baseAtt": 70,
+              "baseDef": 48,
+              "baseSpA": 50,
+              "baseSpDef": 60,
+              "baseSpd": 38,
+              "types": ["Ghost", "Grass"]
+              },
+              "Trevenant": {
+              "PokeName": "Trevenant",
+              "evolvesTo": null,
+              "baseHP": 85,
+              "baseAtt": 110,
+              "baseDef": 76,
+              "baseSpA": 65,
+              "baseSpDef": 82,
+              "baseSpd": 56,
+              "types": ["Ghost", "Grass"]
+              },
+
+              "Pumpkaboo (Small)": {
+              "PokeName": "Pumpkaboo (Small)",
+              "evolvesTo": "Gourgeist (Small)",
+              "evolvesAt": 25,
+              "baseHP": 49,
+              "baseAtt": 66,
+              "baseDef": 70,
+              "baseSpA": 44,
+              "baseSpDef": 55,
+              "baseSpd": 51,
+              "types": ["Ghost", "Grass"]
+              },
+              "Pumpkaboo (Average)": {
+              "PokeName": "Pumpkaboo (Average)",
+              "evolvesTo": "Gourgeist (Average)",
+              "evolvesAt": 27,
+              "baseHP": 50,
+              "baseAtt": 66,
+              "baseDef": 70,
+              "baseSpA": 44,
+              "baseSpDef": 55,
+              "baseSpd": 51,
+              "types": ["Ghost", "Grass"]
+              },
+              "Pumpkaboo (Large)": {
+              "PokeName": "Pumpkaboo (Large)",
+              "evolvesTo": "Gourgeist (Large)",
+              "evolvesAt": 29,
+              "baseHP": 55,
+              "baseAtt": 66,
+              "baseDef": 70,
+              "baseSpA": 44,
+              "baseSpDef": 55,
+              "baseSpd": 51,
+              "types": ["Ghost", "Grass"]
+              },
+              "Pumpkaboo (Super Size)": {
+              "PokeName": "Pumpkaboo (Super Size)",
+              "evolvesTo": "Gourgeist (Super Size)",
+              "evolvesAt": 31,
+              "baseHP": 59,
+              "baseAtt": 66,
+              "baseDef": 70,
+              "baseSpA": 44,
+              "baseSpDef": 55,
+              "baseSpd": 51,
+              "types": ["Ghost", "Grass"]
+              },
+              "Gourgeist (Small)": {
+              "PokeName": "Gourgeist (Small)",
+              "evolvesTo": null,
+              "baseHP": 55,
+              "baseAtt": 85,
+              "baseDef": 122,
+              "baseSpA": 58,
+              "baseSpDef": 75,
+              "baseSpd": 84,
+              "types": ["Ghost", "Grass"]
+              },
+              "Gourgeist (Average)": {
+              "PokeName": "Gourgeist (Average)",
+              "evolvesTo": null,
+              "baseHP": 65,
+              "baseAtt": 90,
+              "baseDef": 122,
+              "baseSpA": 58,
+              "baseSpDef": 75,
+              "baseSpd": 84,
+              "types": ["Ghost", "Grass"]
+              },
+              "Gourgeist (Large)": {
+              "PokeName": "Gourgeist (Large)",
+              "evolvesTo": null,
+              "baseHP": 75,
+              "baseAtt": 95,
+              "baseDef": 122,
+              "baseSpA": 58,
+              "baseSpDef": 75,
+              "baseSpd": 84,
+              "types": ["Ghost", "Grass"]
+              },
+              "Gourgeist (Super Size)": {
+              "PokeName": "Gourgeist (Super Size)",
+              "evolvesTo": null,
+              "baseHP": 85,
+              "baseAtt": 100,
+              "baseDef": 122,
+              "baseSpA": 58,
+              "baseSpDef": 75,
+              "baseSpd": 84,
+              "types": ["Ghost", "Grass"]
+              },
+
+              "Bergmite": {
+              "PokeName": "Bergmite",
+              "evolvesTo": "Avalugg",
+              "evolvesAt": 37,
+              "baseHP": 55,
+              "baseAtt": 69,
+              "baseDef": 85,
+              "baseSpA": 32,
+              "baseSpDef": 35,
+              "baseSpd": 28,
+              "types": ["Ice"]
+              },
+              "Avalugg": {
+              "PokeName": "Avalugg",
+              "evolvesTo": null,
+              "baseHP": 95,
+              "baseAtt": 117,
+              "baseDef": 184,
+              "baseSpA": 44,
+              "baseSpDef": 46,
+              "baseSpd": 28,
+              "types": ["Ice"]
+              },
+              "Avalugg (Hisuian)": {
+              "PokeName": "Avalugg (Hisuian)",
+              "evolvesTo": null,
+              "baseHP": 95,
+              "baseAtt": 117,
+              "baseDef": 184,
+              "baseSpA": 44,
+              "baseSpDef": 46,
+              "baseSpd": 28,
+              "types": ["Ice", "Steel"]
+              },
+
+              "Noibat": {
+              "PokeName": "Noibat",
+              "evolvesTo": "Noivern",
+              "evolvesAt": 48,
+              "baseHP": 40,
+              "baseAtt": 30,
+              "baseDef": 35,
+              "baseSpA": 45,
+              "baseSpDef": 40,
+              "baseSpd": 55,
+              "types": ["Flying", "Dragon"]
+              },
+              "Noivern": {
+              "PokeName": "Noivern",
+              "evolvesTo": null,
+              "baseHP": 85,
+              "baseAtt": 70,
+              "baseDef": 80,
+              "baseSpA": 97,
+              "baseSpDef": 80,
+              "baseSpd": 123,
+              "types": ["Flying", "Dragon"]
+              },
+
+              "Xerneas": {
+              "PokeName": "Xerneas",
+              "evolvesTo": null,
+              "baseHP": 126,
+              "baseAtt": 131,
+              "baseDef": 95,
+              "baseSpA": 131,
+              "baseSpDef": 98,
+              "baseSpd": 99,
+              "types": ["Fairy"]
+              },
+
+              "Yveltal": {
+              "PokeName": "Yveltal",
+              "evolvesTo": null,
+              "baseHP": 126,
+              "baseAtt": 131,
+              "baseDef": 95,
+              "baseSpA": 131,
+              "baseSpDef": 98,
+              "baseSpd": 99,
+              "types": ["Dark", "Flying"]
+              },
+
+              "Zygarde (10%)": {
+              "PokeName": "Zygarde (10%)",
+              "evolvesTo": "Zygarde (50%)",
+              "evolvesAt": 45,
+              "baseHP": 54,
+              "baseAtt": 100,
+              "baseDef": 121,
+              "baseSpA": 81,
+              "baseSpDef": 95,
+              "baseSpd": 95,
+              "types": ["Dragon", "Ground"]
+              },
+              "Zygarde (50%)": {
+              "PokeName": "Zygarde (50%)",
+              "evolvesTo": "Zygarde (Complete)",
+              "evolvesAt": 68,
+              "baseHP": 108,
+              "baseAtt": 100,
+              "baseDef": 121,
+              "baseSpA": 81,
+              "baseSpDef": 95,
+              "baseSpd": 95,
+              "types": ["Dragon", "Ground"]
+              },
+              "Zygarde (Complete)": {
+              "PokeName": "Zygarde (Complete)",
+              "evolvesTo": null,
+              "baseHP": 216,
+              "baseAtt": 100,
+              "baseDef": 121,
+              "baseSpA": 81,
+              "baseSpDef": 95,
+              "baseSpd": 95,
+              "types": ["Dragon", "Ground"]
+              },
+
+              "Diancie": {
+              "PokeName": "Diancie",
+              "evolvesTo": null,
+              "baseHP": 50,
+              "baseAtt": 100,
+              "baseDef": 150,
+              "baseSpA": 100,
+              "baseSpDef": 150,
+              "baseSpd": 50,
+              "types": ["Rock", "Fairy"]
+              },
+
+              "Hoopa (Confined)": {
+              "PokeName": "Hoopa (Confined)",
+              "evolvesTo": "Hoopa (Unbound)",
+              "evolvesAt": 52,
+              "baseHP": 80,
+              "baseAtt": 110,
+              "baseDef": 60,
+              "baseSpA": 150,
+              "baseSpDef": 130,
+              "baseSpd": 70,
+              "types": ["Psychic", "Ghost"]
+              },
+              "Hoopa (Unbound)": {
+              "PokeName": "Hoopa (Unbound)",
+              "evolvesTo": null,
+              "baseHP": 80,
+              "baseAtt": 160,
+              "baseDef": 60,
+              "baseSpA": 170,
+              "baseSpDef": 130,
+              "baseSpd": 80,
+              "types": ["Psychic", "Dark"]
+              },
+
+              "Volcanion": {
+              "PokeName": "Volcanion",
+              "evolvesTo": null,
+              "baseHP": 80,
+              "baseAtt": 110,
+              "baseDef": 120,
+              "baseSpA": 130,
+              "baseSpDef": 90,
+              "baseSpd": 70,
+              "types": ["Fire", "Water"]
+              }
 }

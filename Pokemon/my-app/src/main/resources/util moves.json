@@ -1,0 +1,25 @@
+{
+    "Protect":{
+        "moveName":"Protect",
+        "inflictsSecondaryStatus":true,
+        "moveTyping":"Normal",
+        "whatStatusCondition":"Protected",
+        "toVictim":false,
+        "statusType":null,
+        "PP":10,
+        "moveDescription":"Enables the user to evade all attacks. Its chance of failing rises if it is used in succession."
+    },
+
+    "Substitute":{
+        "moveName":"Substitue",
+        "inflictsSecondaryStatus":true,
+        "moveTyping":"Normal",
+        "inflictsSelfHarm":true,
+        "percentageSelfHarm":"This should be a fixed percent instead of based off dmg, same for explosion",
+        "whatStatusCondition":"Substituted",
+        "statusType":null,
+        "toVictim":false,
+        "PP":10,
+        "moveDescription":"The user makes a copy of itself using some of its HP. The copy serves as the user's decoy."
+    }
+}

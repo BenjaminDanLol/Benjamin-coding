@@ -1,0 +1,82 @@
+{
+    "Poison":{
+        "moveName":"Toxic",
+        "accuracy":90,
+        "moveTyping":"Poison",
+        "statusChance":100,
+        "inflictsStatus":true,
+        "whatStatusCondition":"badly poisoned",
+        "PP":10,
+        "moveDescription":"A move that leaves the target badly poisoned. Its poison damage worsens every turn."
+    },
+
+    "Fire":{
+        "moveName":"Will o wisp",
+        "accuracy":85,
+        "moveTyping":"Fire",
+        "inflictsStatus":true,
+        "statusChance":100,
+        "whatStatusCondition":"burn",
+        "PP":15,
+        "moveDescription":"The user shoots a sinister, bluish-white flame at the target to inflict a burn."
+    },
+
+    "Ghost":{
+        "moveName":"Confuse Ray",
+        "moveTyping":"Ghost",
+        "inflictsStatus":true,
+        "statusType":null,
+        "statusChance":100,
+        "whatStatusCondition":"Confusion",
+        "PP":10,
+        "moveDescription":"The target is exposed to a sinister ray that triggers confusion."
+    },
+
+    "Psychic":{
+        "moveName":"Hypnosis",
+        "accuracy":60,
+        "inflictsStatus":true,
+        "whatStatusCondition":"sleep",
+        "PP":20,
+        "moveDescription":"The user employs hypnotic suggestion to make the target fall into a deep sleep."
+    },
+
+    "Normal":{
+        "moveName":"Swagger",
+        "accuracy":85,
+        "inflictsStatus":true,
+        "moveTyping":"Normal",
+        "statusType":null,
+        "statChangeChance":100,
+        "statusChance":100,
+        "whatStatChanges":["att"],
+        "statModifierChange":2,
+        "whatStatusCondition":"Confusion",
+        "PP":15,
+        "moveDescription":"The user enrages and confuses the target. However, this also sharply raises the target's Attack stat."
+    },
+
+    "Grass":{
+        "moveName":"Ingrain",
+        "toVictim":false,
+        "inflictsStatus":true,
+        "statusChance":100,
+        "moveTyping":"Grass",
+        "statusType":null,
+        "whatStatusCondition":"Ingrained",
+        "PP":20,
+        "moveDescription":"The user lays roots that restore its HP on every turn. Because it's rooted, it can't switch out."
+    },
+
+    "Grass":{
+        "moveName":"Leech Seed",
+        "accuracy":90,
+        "inflictsStatus":true,
+        "statusChance":100,
+        "moveTyping":"Grass",
+        "statusType":null,
+        "whatStatusCondition":"Seeded",
+        "PP":10,
+        "moveDescription":"A seed is planted on the target. It steals some HP from the target every turn."
+    }
+}

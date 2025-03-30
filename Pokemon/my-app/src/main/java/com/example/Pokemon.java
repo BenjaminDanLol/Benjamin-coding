@@ -333,7 +333,7 @@ public class Pokemon {
                 }
             return 1;
         }
-        public void setEvasionMod(byte modifierChange) {
+        public void setEvasionMod(int modifierChange) {
             if (evasion + modifierChange > 6) {
                 evasion = 6;
                 System.out.println("Evasion is at Stage: " + evasion + ", evasion won't go higher!");
@@ -354,7 +354,7 @@ public class Pokemon {
             }
             return 1;
         }
-        public void setAccMod(byte modifierChange) {
+        public void setAccMod(int modifierChange) {
             if (accuracyMod + modifierChange > 6) {
                 accuracyMod = 6;
                 System.out.println("Accuracy is at Stage: " + accuracyMod + ", accuracy won't go higher!");
@@ -415,10 +415,10 @@ public class Pokemon {
             return (2 + AttMod) / 2;
         }
         else {
-            return (2/(2-AttMod));
+            return (2/(2+AttMod));
         }
     }
-    public void setAttMod(byte modifierChange) {
+    public void setAttMod(int modifierChange) {
         if (AttMod + modifierChange > 6) {
             AttMod = 6;
             System.out.println("Attack is at Stage: " + AttMod + ", attack won't go higher!");
@@ -437,10 +437,10 @@ public class Pokemon {
             return (2 + SpAMod) / 2;
         }
             else {
-                return (2/(2-SpAMod));
+                return (2/(2+SpAMod));
             }
     }
-    public void setSpAMod(byte modifierChange) {
+    public void setSpAMod(int modifierChange) {
         if (SpAMod + modifierChange > 6) {
             SpAMod = 6;
             System.out.println("Special Attack is at Stage: " + SpAMod + ", special attack won't go higher!");
@@ -459,10 +459,10 @@ public class Pokemon {
             return (2 + DefMod) / 2;
         }
             else {
-                return (2/(2-DefMod));
+                return (2/(2+DefMod));
             }
     }
-    public void setDefMod(byte modifierChange) {
+    public void setDefMod(int modifierChange) {
         if (DefMod + modifierChange > 6) {
             DefMod = 6;
             System.out.println("Defense is at Stage: " + DefMod + ", defense won't go higher!");
@@ -481,10 +481,10 @@ public class Pokemon {
             return (2 + SpDefMod) / 2;
         }
             else {
-                return (2/(2-SpDefMod));
+                return (2/(2+SpDefMod));
             }
     }
-    public void setSpDefMod(byte modifierChange) {
+    public void setSpDefMod(int modifierChange) {
         if (SpDefMod + modifierChange > 6) {
             SpDefMod = 6;
             System.out.println("Special Defense is at Stage: " + SpDefMod + ", special defense won't go higher!");
@@ -503,10 +503,10 @@ public class Pokemon {
             return (2 + SpdMod) / 2;
         }
             else {
-                return (2/(2-SpdMod));
+                return (2/(2+SpdMod));
             }
     }
-    public void setSpdMod(byte modifierChange) {
+    public void setSpdMod(int modifierChange) {
         if (SpdMod + modifierChange > 6) {
             SpdMod = 6;
             System.out.println("Speed is at Stage: " + SpdMod + ", speed won't go higher!");

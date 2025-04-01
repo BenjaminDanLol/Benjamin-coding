@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.Collections;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
@@ -46,7 +47,7 @@ public class Interface {
 
     InputStream moveStream;
     Map<String, Move> moveMap;
-    Move currentMove;
+    
     public static Move swapMove;
     public static Move struggle;
     public static Move fakeMove;
@@ -160,13 +161,6 @@ public class Interface {
                 }
             }
         }
-        
-        Pokemon[] execOrdPokemons = new Pokemon[executionOrder.size()];
-        int i = 0;
-        for (Pokemon p : executionOrder) {
-            execOrdPokemons[i] = p;
-            i++;
-        }
 
         // Bubble sort the prio/speed of all pokemon, essentially order the pokemon by execution of moves.
         boolean swapped;
@@ -182,17 +176,17 @@ public class Interface {
                      * For cases where the pokemon is being swapped then their moveInUsage prio is 10.
                      * Later I can have moves like pursuit or other custom moves that interfere with pokeswapping.
                      */
-                    if  (execOrdPokemons[j].getMoveInUsage().priority < execOrdPokemons[j + 1].getMoveInUsage().priority ||
-                        (execOrdPokemons[j].getMoveInUsage().priority == execOrdPokemons[j + 1].getMoveInUsage().priority &&
-                        (execOrdPokemons[j].getSpdMod() * execOrdPokemons[j].baseSpd) < 
-                        (execOrdPokemons[j + 1].getSpdMod() * execOrdPokemons[j + 1].baseSpd))) {
-                        swap(execOrdPokemons, j, (j + 1));
+                    if  (executionOrder.get(j).getMoveInUsage().priority < executionOrder.get(j + 1).getMoveInUsage().priority ||
+                        (executionOrder.get(j).getMoveInUsage().priority == executionOrder.get(j + 1).getMoveInUsage().priority &&
+                        (executionOrder.get(j).getSpdMod() * executionOrder.get(j).baseSpd) < 
+                        (executionOrder.get(j + 1).getSpdMod() * executionOrder.get(j + 1).baseSpd))) {
+                        Collections.swap(executionOrder, j, (j+1));
                         swapped = true;
                     }
             }
         } while (swapped);
-        Pokemon targetForPokemon = new Pokemon();
-        for (Pokemon pokemon : execOrdPokemons) {
+        Pokemon targetForPokemon;
+        for (Pokemon pokemon : executionOrder) {
 
             /*if (pokemon.isTeam1) {
                  TODO
@@ -325,8 +319,7 @@ public class Interface {
         }    
     }
     public Move getASpecificMove(Scanner myScanner, String theMove) {
-        currentMove = moveMap.get(theMove);
-        return currentMove;
+        return moveMap.get(theMove);
         } 
     public Pokemon filterThroughThePokemon(int filter, JsonNode typeMappingNode, 
     int amountOfPokemon, Scanner myScanner, String playerName) {

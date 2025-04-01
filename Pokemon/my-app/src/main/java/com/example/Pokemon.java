@@ -53,9 +53,7 @@ public class Pokemon {
             }
         }
     }
-    public void enterViewingMode() {
 
-    }
     public void displayPokemon() {
         System.out.printf("\nPokemon Name: %s" +
         "\nTyping(s) ", PokeName);
@@ -243,9 +241,9 @@ public class Pokemon {
     public void addMoveToPokemon(Move theMove, Player player, Scanner myScanner) {
         String playerInput;
             if (pokemonMoves.size() == 4) {
+                if (myScanner.hasNext()) {myScanner.nextLine();}
             System.out.println(PokeName + " has four moves. ");
             System.out.println(player.getPlayerName() + " do you wish to replace a move.");
-            playerInput = myScanner.nextLine();
             System.out.println("X to confirm");
             
             playerInput = myScanner.nextLine().trim().toLowerCase();
@@ -408,6 +406,11 @@ public class Pokemon {
         return HPMod;
     }
     public void setHPMod(long changeModHP) {
+        if (HPMod + changeModHP > baseHP) {
+            HPMod = baseHP;
+            System.out.println("HP cannot be increased higher than base HP.");
+            return;
+        }
         HPMod -= changeModHP;
     }
     public double getAttMod() {

@@ -5,22 +5,19 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Move{
-/* Alot of yellow but these values will def be overwrited or even modified depending on shop system.
-Likewise alot of them are null, and that's so the Json file won't be endlessly long. Alot of moves
-have simple logic, and I want to by simply specifying what is used have the compiler ignore alot
-of the functions in here. Practically they're null because I want alot of if statments to skip alot
-of functions under performMove.*/ 
+
     public String moveName = null;
     public int PP = 0;
     public int basePP;
     public int power = 0;
+
     public boolean isMultiHit = false;
-    public int[] hits = {0, 0}; // then ex pin missile hasMultiHit = true, hits[0] = 2, hits[1] = 5;
-    // I'll later have an isMultihit boolean and likewise an byte array hitsBetween, which is pr standard [2,5]
-    public boolean inflictsSelfHarm = false;
-    public byte percentageSelfHarm = 0;
-    public boolean inflictsSelfHealing = false;
-    public byte percentageSelfHealing = 0;
+    public boolean hitsThrice = false;
+    public boolean increasinglyDoesMoreDamage = false;
+    public boolean hitsTwice = false;
+
+    public boolean inflictsToSelf = false;
+    public byte percentageToSelf = 0;
     public int accuracy = 100;
     public boolean isSpecial = false;
     public byte priority = 0;
@@ -57,10 +54,23 @@ of functions under performMove.*/
         typechart = new Typechart(victim);
         // If statements since, they may all be true or only some.
         if (willHit(user, victim) || alwaysHits) {
-            if (power > 0) {moveDoesDirectDamage(user, victim);}
-            if (!statusType.equals("")) {mayApplyStatusCondition(user, victim);}
-            if (whatStatChanges != null) {statChange(user, victim);}
-            if (statusType.equals("") && whatStatusCondition != null) {applySecondaryStatusCondition(user, victim);}
+            if (power > 0 && !isMultiHit && !hitsThrice) {moveDoesDirectDamage(user, victim);}
+            if (isMultiHit) {normalMultiHit(user, victim);}
+            if (hitsThrice) {moveHitsThrice(user, victim);}
+            if (percentageToSelf != 0) {inflictsPercentageToSelf(user);}
+            if (!statusType.equals("")) {mayApplyStatusCondition(victim);}
+            if (whatStatChanges != null && whatStatChanges.length > 0) {statChange(user, victim);}
+            if (statusType == null && whatStatusCondition != null) {applySecondaryStatusCondition(user, victim);}
+
+            if (hitsTwice) { // Since some moves that hit twice have multiple effects. I.e. twineedle
+                if (power > 0 && !isMultiHit && !hitsThrice) {moveDoesDirectDamage(user, victim);}
+                if (isMultiHit) {normalMultiHit(user, victim);}
+                if (hitsThrice) {moveHitsThrice(user, victim);}
+                if (!statusType.equals("")) {mayApplyStatusCondition(victim);}
+                if (whatStatChanges != null && whatStatChanges.length > 0) {statChange(user, victim);}
+                if (statusType == null && whatStatusCondition != null) {applySecondaryStatusCondition(user, victim);}    
+            }
+
         }
         if (victim.getHPMod() <= 0) {
             victim.isFainted = true;
@@ -107,10 +117,15 @@ of functions under performMove.*/
     if (power > 0) {
         
         if (isMultiHit) {
-        System.out.printf("Has multihit and hits between %d and %d times!\n", hits[0], hits[1]);
+        System.out.printf("Has a RNG multihit, hits between 2 and 5 times!\n");
         }
-        if (inflictsSelfHarm) {
-        System.out.print(percentageSelfHarm + "% is done to the users themselves after move is performed.\n");
+        if (inflictsToSelf) {
+            if (percentageToSelf < 0) {
+            System.out.print("\n" + percentageToSelf + "% of dmg is done to the users themselves " +
+            "after move is performed.\n");
+            } else if (percentageToSelf > 0) {
+            System.out.print("\nHeals the user by a percentage of dmg dealt: " + percentageToSelf + "%.\n");
+            }
         }
 
     System.out.printf("Power %d, isSpecial %b, Crit Chance %d", power, isSpecial, critChance);
@@ -186,19 +201,33 @@ of functions under performMove.*/
         , moveName, power, accuracy, isSpecial, priority, moveTyping, inflictsStatus,statusType,statusChance,critChance,damage,
         whatStatusCondition,statChangeChance,local,toVictim,alwaysHits,statModifierChange,PP,moveDescription);
     }
-    public void applySecondaryStatusCondition(Pokemon user, Pokemon victim) {
+
+    private void applySecondaryStatusCondition(Pokemon user, Pokemon victim) {
         // These are for secondardary status conditions like seeded, cursed, charging, intargetable etc.
+        // If status type is null, and inflictstatus is true, pokemon doesn't already have this secondary
+        // and the randomSuccess of statusSchance is true then the moves secondary status condition will be added.
+
         if (randomSuccess(statusChance)) {
             if (toVictim) {
+                for (String s : user.getSecondaryCondtions()) {
+                    if (s.equals(whatStatusCondition)) {
+                        return;
+                    }
+                }
             victim.addSecondaryCondition(whatStatusCondition);
             System.out.println(victim.PokeName + " becomes " + whatStatusCondition);
             } else if (!toVictim) {
+                for (String s : victim.getSecondaryCondtions()) {
+                    if (s.equals(whatStatusCondition)) {
+                        return;
+                    }
+                }
             user.addSecondaryCondition(whatStatusCondition);
             System.out.println(user.PokeName + " becomes " + whatStatusCondition);
             }
         }
     }
-    public void statChange(Pokemon user, Pokemon victim) {
+    private void statChange(Pokemon user, Pokemon victim) {
         // I need to account for multiple stat Changes at once. There are alot of moves like that.
         // I'll prob need to have a boolean array for that tbh.
         if (statToVictim) {
@@ -248,7 +277,7 @@ of functions under performMove.*/
             }
         }
     }
-    public boolean willHit(Pokemon user, Pokemon victim) {
+    private boolean willHit(Pokemon user, Pokemon victim) {
         long realHitChance = Math.round(accuracy*(user.getAccMod()/victim.getEvasionMod()));
         int hitChance = (int) realHitChance;
         if (randomSuccess(hitChance)) {
@@ -257,7 +286,66 @@ of functions under performMove.*/
         }
         return true;
     }
-    public void moveDoesDirectDamage(Pokemon user, Pokemon victim) {
+    private void inflictsPercentageToSelf(Pokemon user) {
+        // Note this does not work as intended for multiHit moves.
+        // If needed insert this method into all damaging methods at end, then it will work.
+            user.setHPMod(damage*(percentageToSelf/100));        
+    }
+    private void normalMultiHit(Pokemon user, Pokemon victim) {
+        int rngHits = randomNum(100);
+        // Note status conditions are not applied
+        if (rngHits >= 0 && rngHits <= 37) {
+            rngHits = 2;
+        } else if (rngHits >= 38 && rngHits <= 74) {
+            rngHits = 3;
+        } else if (rngHits >= 75 && rngHits <= 87) {
+            rngHits = 4;
+        } else {
+            rngHits = 5;
+        }
+        for (int i = 0; i < rngHits; i++) {
+            moveDoesDirectDamage(user, victim);
+        }
+    }
+    private void moveHitsThrice(Pokemon user, Pokemon victim) {
+        boolean isCrit;
+        double DamageNoRand;
+        double randomMultiplier;
+        int currentPower = power;
+        for (int i = 0; i < 3; i++) {
+        isCrit = isCrit(user);
+        DamageNoRand = 0.0;
+        randomMultiplier = (217.0 + randomNum(38)) / 255.0;
+        if (currentPower > 0) {
+            DamageNoRand = (((2 * user.getLevel() * (isCrit == true ? 2.0 : 1.0)) 
+            / 5.0 + 2.0) 
+            * currentPower * (aDividedD(user, victim, isCrit)) + 100) / 50.0
+            * (typechart.detectType(user, moveTyping) == true ? 1.5 :  1 ) * (typechart.calcX(moveTyping));
+        }
+            if (DamageNoRand > 1) {
+            damage = Math.round(DamageNoRand * (randomMultiplier));
+
+            }
+            else if (DamageNoRand < 1 && DamageNoRand > 0) {
+                damage = 1;
+            }
+            else {
+                damage = 0;
+                System.out.println("Damage is < 0, revert to just 0 dmg");
+            }
+            victim.setHPMod(damage);
+            if (victim.getHPMod() >= 0) {
+                victim.setHPMod(0);
+            }
+            System.out.println(user.PokeName + " uses " + moveName + " and " +
+            victim.PokeName + " loses " + damage + " HP!");
+            System.out.println(victim.PokeName + " HP is now: " + victim.getHPMod());
+            if (increasinglyDoesMoreDamage) {
+            currentPower += power;
+            }
+        }
+    }
+    private void moveDoesDirectDamage(Pokemon user, Pokemon victim) {
         boolean isCrit = isCrit(user);
         double DamageNoRand = 0.0;
         double randomMultiplier = (217.0 + randomNum(38)) / 255.0;
@@ -286,14 +374,12 @@ of functions under performMove.*/
             victim.PokeName + " loses " + damage + " HP!");
             System.out.println(victim.PokeName + " HP is now: " + victim.getHPMod());
     }
-    public void mayApplyStatusCondition(Pokemon user, Pokemon victim){
+    private void mayApplyStatusCondition(Pokemon victim){
+        // typeChart.shouldApplyStatus conditional is checked for in method applyStatus.
         inflictsStatus = applyStatus(statusChance);
         if (!victim.getStatusCondition() && inflictsStatus){
             System.out.println(victim.PokeName + " receives " + whatStatusCondition);
                 victim.setCurrentCondition(whatStatusCondition);
-                // The method below is a boolean that is used to revert if the enemy can have
-                // a status condition at all. Where the if statement checks for if it's false i.e.
-                // enemy doesn't have a statusCondition. But below that would mean they do now.
                 victim.revertStatusCondition();
             }
 
@@ -323,18 +409,20 @@ of functions under performMove.*/
                 System.out.println("Something went wrong! isCrit = " + isCrit + " and " + isSpecial);
                 return 1;
         }
-    public boolean applyStatus(int statusChance){
+    private boolean applyStatus(int statusChance){
         int localRange = random.nextInt(100) + 1;
         return (statusChance > localRange && typechart.ShouldApplyStatus(statusType));
     }
-    public boolean isCrit(Pokemon user){
+    private boolean isCrit(Pokemon user){
+        // Worth noting that it isn't a percentage crit increase.
         return (randomSuccess(critChance + user.getCritMod()));
     }
-    public int randomNum(int range){
-        // This is per standard 0 inclusive
+
+    private int randomNum(int range){
+        // Since this is per standard 0 inclusive
         return random.nextInt(range) + 1;
     }
-    public boolean randomSuccess(int range) {
+    private boolean randomSuccess(int range) {
         return (range > randomNum(100));
     }
 }

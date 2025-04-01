@@ -10,17 +10,6 @@
         "moveDescription":"A weak electric shock that paralyzes the target."
     },
 
-    "Fire Fang":{
-        "moveName":"Fire Fang",
-        "power":65,
-        "accuracy":95,
-        "moveTyping":"Fire",
-        "inflictsStatus":true,
-        "whatStatusCondition":"Burn",
-        "PP":15,
-        "moveDescription":"The user bites with flame-cloaked fangs. It may leave the target with a burn. TODO add 10% flinch as well"
-    },
-
     "Ice Beam":{
         "moveName":"Ice Beam",
         "power":90,
@@ -286,12 +275,96 @@
         "moveDescription":"The target is stabbed with a tentacle, an arm, or the like steeped in poison. This may also poison the target."
     },
 
+    "Triple Kick":{
+        "moveName":"Triple Kick",
+        "power":10,
+        "moveTyping":"Fighting",
+        "hitsThrice":true,
+        "increasinglyDoesMoreDamage":true,
+        "accuracy":90,
+        "PP":10,
+        "moveDescription":"A consecutive three-kick attack that becomes more powerful with each successive hit."
+    },
+
+    "Triple Axel":{
+        "moveName":"Triple Axel",
+        "power":20,
+        "moveTyping":"Ice",
+        "hitsThrice":true,
+        "increasinglyDoesMoreDamage":true,
+        "accuracy":90,
+        "PP":10,
+        "moveDescription":"A consecutive three-kick attack that becomes more powerful with each successful hit."
+    },
+
+    "Surging Strikes":{
+        "moveName":"Surging Strikes",
+        "power":25,
+        "moveTyping":"Water",
+        "critChance":100,
+        "hitsThrice":true,
+        "increasinglyDoesMoreDamage":false,
+        "PP":5,
+        "moveDescription":"The user, having mastered the Water style, strikes the target with a flowing motion three times in a row. This attack always results in a critical hit."
+    },
+
+    "Twineedle":{
+        "moveName":"Twineedle",
+        "power":25,
+        "moveTyping":"Bug",
+        "hitsTwice":true,
+        "inflictsStatus":true,
+        "statusType":"Poison",
+        "whatStatusCondition":"Poison",
+        "statusChance":20,
+        "PP":20,
+        "moveDescription":"The user damages the target twice in succession by jabbing it with two spikes. It may also poison the target."
+    },
+
+    "Bonemerang":{
+        "moveName":"Bonemerang",
+        "power":50,
+        "moveTyping":"Ground",
+        "accuracy": 90,
+        "hitsTwice":true,
+        "PP":10,
+        "moveDescription":"The user throws the bone it holds. The bone loops around to hit the target twice."
+    },
+
+    "Gear Grind":{
+        "moveName":"Gear Grind",
+        "power":50,
+        "moveTyping":"Steel",
+        "accuracy":85,
+        "hitsTwice":true,
+        "PP":15,
+        "moveDescription":"The user attacks by throwing two steel gears at its target."
+    },
+
+    "Double Kick": {
+        "moveName":"Double Kick",
+        "power": 30,
+        "moveTyping":"Fighting",
+        "hitsTwice":true,
+        "PP":30,
+        "moveDescription":"The target is quickly kicked twice in succession using both feet."
+    },
+
+    "Dual Chop": {
+        "moveName":"Dual Chop",
+        "power": 40,
+        "moveTyping":"Dragon",
+        "accuracy":90,
+        "hitsTwice":true,
+        "PP":15,
+        "moveDescription":"The user attacks its target by hitting it with brutal strikes. The target is hit twice in a row."
+    },
+
     "Pin Missile":{
         "moveName":"Pin Missile",
         "power":25,
         "accuracy":95,
         "isMultiHit":true,
-        "hits":[2,5],
         "moveTyping":"Bug",
         "PP":20,
         "critChance":4,
@@ -302,8 +375,8 @@
         "moveName":"Flare Blitz",
         "power":120,
         "moveTyping":"Fire",
-        "inflictsSelfHarm":true,
-        "percentageSelfHarm":33,
+        "inflictsToSelf":true,
+        "percentageToSelf":-33,
         "inflictsStatus":true,
         "statusChance":10,
         "PP":5,
@@ -314,8 +387,8 @@
         "moveName":"Double-Edge",
         "power":120,
         "moveTyping":"Normal",
-        "inflictsSelfHarm":true,
-        "percentageSelfHarm":33,
+        "inflictsToSelf":true,
+        "percentageToSelf":-33,
         "PP":15,
         "moveDescription":"A reckless, life-risking tackle. This also damages the user quite a lot."
     },
@@ -326,7 +399,6 @@
         "moveTyping":"Water",
         "isSpecial":true,
         "isMultiHit":true,
-        "hits":[2,5],
         "priority":1,
         "PP":20,
         "moveDescription":"The user hits the target with throwing stars two to five times in a row. This move always goes first."
@@ -386,8 +458,8 @@
         "power":75,
         "moveTyping":"Grass",
         "isSpecial":true,
-        "inflictsSelfHealing":true,
-        "percentageSelfHealing":50,
+        "inflictsToSelf":true,
+        "percentageToSelf":50,
         "PP":10,
         "moveDescription":"A nutrient-draining attack. The user's HP is restored by half the damage taken by the target."
     },
@@ -397,8 +469,8 @@
         "power":40,
         "moveTyping":"Grass",
         "isSpecial":true,
-        "inflictsSelfHealing":true,
-        "percentageSelfHealing":50,
+        "inflictsToSelf":true,
+        "percentageToSelf":50,
         "PP":15,
         "moveDescription":"A nutrient-draining attack. The user's HP is restored by half the damage taken by the target."
     },
@@ -408,8 +480,8 @@
         "power":20,
         "moveTyping":"Grass",
         "isSpecial":true,
-        "inflictsSelfHealing":true,
-        "percentageSelfHealing":50,
+        "inflictsToSelf":true,
+        "percentageToSelf":50,
         "PP":25,
         "moveDescription":"A nutrient-draining attack. The user's HP is restored by half the damage taken by the target."
     },
@@ -454,8 +526,8 @@
         "power":80,
         "accuracy":100,
         "moveTyping":"Bug",
-        "inflictsSelfHealing":true,
-        "percentageSelfHealing":50,
+        "inflictsToSelf":true,
+        "percentageToSelf":50,
         "PP":10,
         "moveDescription":"The user drains the target's blood. The user's HP is restored by half the damage taken by the target."
     },
@@ -502,8 +574,8 @@
         "moveName":"Brave Bird",
         "power":120,
         "moveTyping":"Flying",
-        "inflictsSelfHarm":true,
-        "percentageSelfHarm":33,
+        "inflictsToSelf":true,
+        "percentageToSelf":-33,
         "PP":15,
         "moveDescription":"The user tucks in its wings and charges from a low altitude. This also damages the user quite a lot."
     },
@@ -550,7 +622,6 @@
         "power":25,
         "moveTyping":"Grass",
         "isMultiHit":true,
-        "hits":[2,5],
         "PP":30,
         "moveDescription":"The user forcefully shoots seeds at the target two to five times in a row."
     },
@@ -665,8 +736,8 @@
         "statChangeChance":50,
         "whatStatChanges":["-def"],
         "statModifierChange":1,
-        "PP":25,
-        "moveDescription":"(Note: I'm guessing rock smash has 25 PP).The user attacks with a punch that can shatter a rock. This may also lower the target's Defense stat."
+        "PP":15,
+        "moveDescription":"The user attacks with a punch that can shatter a rock. This may also lower the target's Defense stat."
     },
 
     "Earth Power":{
@@ -678,7 +749,7 @@
         "whatStatChanges":["-SpDef"],
         "statModifierChange":1,
         "PP":10,
-        "moveDescription":"(Note: I'm guessing earth power has 10 PP). The user makes the ground under the foe erupt with power. It may also lower the target's Sp. Def."
+        "moveDescription":"The user makes the ground under the foe erupt with power. It may also lower the target's Sp. Def."
     }
 
 }

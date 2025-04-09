@@ -64,6 +64,7 @@ public class Typechart {
     {
         switch (moveTyping)
         {
+            // I could prob simplify this down to a hashmap.
             case "Normal":
                 return NormalCalc();
 

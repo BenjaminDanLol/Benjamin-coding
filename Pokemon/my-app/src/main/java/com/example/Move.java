@@ -10,14 +10,6 @@ public class Move{
     public int PP = 0;
     public int basePP;
     public int power = 0;
-
-    public boolean isMultiHit = false;
-    public boolean hitsThrice = false;
-    public boolean increasinglyDoesMoreDamage = false;
-    public boolean hitsTwice = false;
-
-    public boolean inflictsToSelf = false;
-    public byte percentageToSelf = 0;
     public int accuracy = 100;
     public boolean isSpecial = false;
     public byte priority = 0;
@@ -37,6 +29,13 @@ public class Move{
     public byte statChangeChance = 100;
     public boolean toVictim = true;
     public boolean statToVictim = true;
+    public boolean isMultiHit = false;
+    public boolean hitsThrice = false;
+    public boolean increasinglyDoesMoreDamage = false;
+    public boolean hitsTwice = false;
+    public boolean inflictsToSelf = false;
+    public byte percentageToSelf = 0;
+    public byte percentageMaxHP = 0;
     public boolean alwaysHits = false;
     public boolean targetPokemonSwapping = false;
     public String moveDescription = "Move shouldn't exist";
@@ -70,8 +69,9 @@ public class Move{
                 if (whatStatChanges != null && whatStatChanges.length > 0) {statChange(user, victim);}
                 if (statusType == null && whatStatusCondition != null) {applySecondaryStatusCondition(user, victim);}    
             }
-
         }
+        
+        fixedHPChanged(user); // Synthesis, roost, substitute, curse, Explosion etc.
         if (victim.getHPMod() <= 0) {
             victim.isFainted = true;
             // I could even have custom messages based off of alot different things, since I have
@@ -202,6 +202,10 @@ public class Move{
         whatStatusCondition,statChangeChance,local,toVictim,alwaysHits,statModifierChange,PP,moveDescription);
     }
 
+    private void fixedHPChanged(Pokemon user) {
+        if (percentageMaxHP == 0) {return;}
+        user.setHPMod(-percentageMaxHP/100*user.baseHP); // Minus since negative percentageMaxHP make more sense.
+    }
     private void applySecondaryStatusCondition(Pokemon user, Pokemon victim) {
         // These are for secondardary status conditions like seeded, cursed, charging, intargetable etc.
         // If status type is null, and inflictstatus is true, pokemon doesn't already have this secondary
@@ -235,6 +239,7 @@ public class Move{
             if (randomSuccess(statChangeChance)) {
                 for (int i = 0, n = whatStatChanges.length; i < n; i++) {
             switch (whatStatChanges[i]) {
+                // Should prob just be a map instead, but I can't imagine how the hashmap should work with methods.
                 case "+att" -> victim.setAttMod(statModifierChange);
                 case "+SpA" -> victim.setSpAMod(statModifierChange);
                 case "+def" -> victim.setDefMod(statModifierChange);

@@ -187,18 +187,6 @@ public class Interface {
         } while (swapped);
         Pokemon targetForPokemon;
         for (Pokemon pokemon : executionOrder) {
-
-            /*if (pokemon.isTeam1) {
-                 TODO
-                if (pokemon.target.allPokemonAreFainted == true) {
-                }
-                 
-            pokemon.getMoveInUsage().performMove(pokemon, pokemon.target.pokemonInPlay);
-            }
-            else {
-            pokemon.getMoveInUsage().performMove(pokemon, pokemon.target.pokemonInPlay);
-            }
-            */
             if (pokemon.trainer.getMyTeam().equals(teamsInGame.get(teamIndexes[0]))) {
 
                 targetForPokemon = teamsInGame.get(teamIndexes[1]).getTarget(pokemon.trainer.enemyPlayerTargetInitialIndex);
@@ -263,7 +251,7 @@ public class Interface {
         myScanner.nextLine();
         if (myScanner.hasNext()) {myScanner.nextLine();}
 
-        /* TODO When the battle sequence commences, moves that force the player to switch out, should immediatly.
+        /*
         after being performed call upon playerController. And then that will make the player go through the steps
         to switch out a pokemon.
         Second edge case which can be encountered often moveInUsage needs to be set to nothing. Or a blank move

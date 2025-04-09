@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         try (Scanner myScanner = new Scanner(System.in)) {
         Interface myInterface = new Interface(myScanner);
-        int[] teamIndexes = {0, 1};
+        int[] teamIndexes = {0, 1}; // myInterface.teamsInGame.size -1 and -2.
         myInterface.startBattle2Teams(myScanner, teamIndexes);
         }
     }

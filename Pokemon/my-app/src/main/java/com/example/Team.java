@@ -65,8 +65,9 @@ import java.util.Scanner;
         public void addPlayersInternal(Scanner myScanner) {
             players = new Player[sizeOfPlayerTeam];
             for (int i = 0; i < sizeOfPlayerTeam; i++) {
-                players[i] = new Player(myScanner, i+1);
-                players[i].setTeam(this); // creation of players is easier outside of Team's constructer.
+                players[i] = new Player();
+                players[i].setTeam(this);
+                players[i].givePlayerName(myScanner, i+1);
             }
         }
 

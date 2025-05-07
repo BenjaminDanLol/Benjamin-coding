@@ -290,6 +290,7 @@ public class Interface {
         // I'll sadly have to recreate a new AtomicInteger each time the method is called.
         return filterThroughThePokemon(filter, typeMappingNode, howManyMonsInPokemonPool, myScanner, playerName);
     }
+
     private void loadPokemonData() throws IOException {
         try (InputStream pokemonStream = Interface.class.getClassLoader().getResourceAsStream("resources/PokeTieringattempt.json");
              JsonParser parser = new JsonFactory().createParser(pokemonStream)) {
@@ -306,6 +307,7 @@ public class Interface {
             }
         }    
     }
+
     public Move getASpecificMove(Scanner myScanner, String theMove) {
         return moveMap.get(theMove);
         } 
